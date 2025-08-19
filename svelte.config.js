@@ -18,10 +18,10 @@ const config = {
             precompress: false,
             strict: true
         }),
-        // Remove base path for root domain access
-        // paths: {
-        //     base: process.env.NODE_ENV === 'production' ? '/validation' : ''
-        // }
+        // GitHub Pages serves from /validation subdirectory
+        paths: {
+            base: process.env.NODE_ENV === 'production' ? '/validation' : ''
+        }
     }
 };
 
