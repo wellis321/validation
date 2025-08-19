@@ -120,39 +120,35 @@ export class FileProcessor {
     }
 
     private processRows(rows: string[][], fileName: string): FileProcessingResult {
-        const processedRows: ProcessedRow[] = [];
+        if (rows.length === 0) {
+            throw new Error('File is empty');
+        }
+
+        const headerRow = rows[0];
+        const dataRows = rows.slice(1);
         const errors: string[] = [];
 
-        // Process rows synchronously for now
-        rows.forEach((row, index) => {
-            const rowNumber = index + 1;
+        // Find the phone number column
+        const phoneColumnIndex = this.findPhoneColumn(headerRow);
+        if (phoneColumnIndex === -1) {
+            throw new Error('No phone number column found. Please ensure your CSV has a column named "phone", "phone_number", "mobile", "telephone", or similar.');
+        }
 
-            // Skip header row
-            if (index === 0) {
-                const headerResults = row.map((value, colIndex) => ({
-                    column: `Column ${colIndex + 1}`,
-                    value,
-                    isValid: false,
-                    detectedType: 'header',
-                    fixed: undefined,
-                    error: 'Header row - not validated'
-                }));
+        const processedRows: ProcessedRow[] = [];
 
-                processedRows.push({
-                    rowNumber,
-                    originalData: row.join(', '),
-                    validationResults: headerResults
-                });
+        dataRows.forEach((row, index) => {
+            const rowNumber = index + 2; // +2 because we start from row 2 (after header) and want 1-based indexing
+
+            if (row.length <= phoneColumnIndex) {
+                errors.push(`Row ${rowNumber}: Not enough columns`);
                 return;
             }
 
-            // For data rows, only validate the phone number column (Column 2)
-            // Column 1 is the ID, which we don't validate
-            const phoneValidation = autoValidate(row[1], this.phoneFormat);
+            const phoneValidation = autoValidate(row[phoneColumnIndex], this.phoneFormat);
             const validationResults = [
                 {
-                    column: 'Phone Number',
-                    value: row[1],
+                    column: headerRow[phoneColumnIndex],
+                    value: row[phoneColumnIndex],
                     isValid: phoneValidation.isValid,
                     detectedType: phoneValidation.detectedType,
                     fixed: phoneValidation.fixed,
@@ -200,6 +196,21 @@ export class FileProcessor {
         };
     }
 
+    private findPhoneColumn(headers: string[]): number {
+        const phoneKeywords = ['phone', 'mobile', 'telephone', 'tel', 'number'];
+
+        for (let i = 0; i < headers.length; i++) {
+            const header = headers[i].toLowerCase().replace(/[^a-z0-9]/g, '');
+
+            for (const keyword of phoneKeywords) {
+                if (header.includes(keyword)) {
+                    return i;
+                }
+            }
+        }
+
+        return -1; // No phone column found
+    }
 
 
     async exportResults(results: FileProcessingResult, format: 'csv' | 'json' = 'csv'): Promise<Blob> {
