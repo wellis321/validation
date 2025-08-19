@@ -297,7 +297,7 @@
 
         <!-- Navigation back to main validator -->
         <div class="mt-6">
-            <a href="/" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <a href="/validation/" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -523,9 +523,9 @@
         <div class="text-center">
             <p class="text-sm text-gray-600 mb-2">🔒 Your data is processed locally and never transmitted to our servers</p>
             <div class="space-x-4 text-sm">
-                <a href="/" class="text-blue-600 hover:text-blue-800 underline">Data Validator</a>
+                <a href="/validation/" class="text-blue-600 hover:text-blue-800 underline">Data Validator</a>
                 <span class="text-gray-400">•</span>
-                <a href="/privacy" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
+                <a href="/validation/privacy" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
                 <span class="text-gray-400">•</span>
                 <span class="text-gray-600">GDPR Compliant</span>
             </div>

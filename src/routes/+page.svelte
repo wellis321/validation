@@ -104,7 +104,7 @@
 
         <!-- Navigation Links -->
         <div class="mt-6 flex justify-center space-x-4">
-            <a href="/validation-rules" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+            <a href="/validation/validation-rules" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                         stroke-linecap="round"
@@ -358,9 +358,9 @@
         <div class="text-center">
             <p class="text-sm text-gray-600 mb-2">🔒 Your data is processed locally and never transmitted to our servers</p>
             <div class="space-x-4 text-sm">
-                <a href="/validation-rules" class="text-blue-600 hover:text-blue-800 underline">Validation Rules</a>
+                <a href="/validation/validation-rules" class="text-blue-600 hover:text-blue-800 underline">Validation Rules</a>
                 <span class="text-gray-400">•</span>
-                <a href="/privacy" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
+                <a href="/validation/privacy" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
                 <span class="text-gray-400">•</span>
                 <span class="text-gray-600">GDPR Compliant</span>
             </div>
