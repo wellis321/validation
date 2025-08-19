@@ -102,6 +102,21 @@
             what can be fixed, and what needs attention.
         </p>
 
+        <!-- Navigation Links -->
+        <div class="mt-6 flex justify-center space-x-4">
+            <a href="/validation-rules" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                </svg>
+                View Validation Rules
+            </a>
+        </div>
+
         <!-- Privacy Notice -->
         <div class="mt-6 bg-green-50 border border-green-200 rounded-lg p-4 max-w-4xl mx-auto">
             <div class="flex items-start">
@@ -343,11 +358,11 @@
         <div class="text-center">
             <p class="text-sm text-gray-600 mb-2">🔒 Your data is processed locally and never transmitted to our servers</p>
             <div class="space-x-4 text-sm">
+                <a href="/validation-rules" class="text-blue-600 hover:text-blue-800 underline">Validation Rules</a>
+                <span class="text-gray-400">•</span>
                 <a href="/privacy" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
                 <span class="text-gray-400">•</span>
                 <span class="text-gray-600">GDPR Compliant</span>
-                <span class="text-gray-400">•</span>
-                <span class="text-gray-600">No Data Storage</span>
             </div>
         </div>
     </div>
