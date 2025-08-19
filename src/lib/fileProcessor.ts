@@ -17,6 +17,8 @@ export interface FileProcessingResult {
     fileName: string;
     totalRows: number;
     processedRows: ProcessedRow[];
+    originalHeaders: string[]; // Store original column headers
+    originalData: string[][]; // Store original data structure
     summary: {
         totalValid: number;
         totalInvalid: number;
@@ -187,6 +189,8 @@ export class FileProcessor {
             fileName,
             totalRows: rows.length,
             processedRows,
+            originalHeaders: headerRow,
+            originalData: rows,
             summary: {
                 totalValid,
                 totalInvalid,
@@ -213,12 +217,58 @@ export class FileProcessor {
     }
 
 
-    async exportResults(results: FileProcessingResult, format: 'csv' | 'json' = 'csv'): Promise<Blob> {
-        if (format === 'csv') {
+    async exportResults(results: FileProcessingResult, format: 'csv' | 'json' | 'cleaned-csv' = 'csv'): Promise<Blob> {
+        if (format === 'cleaned-csv') {
+            return this.exportCleanedCSV(results);
+        } else if (format === 'csv') {
             return this.exportToCSV(results);
         } else {
             return this.exportToJSON(results);
         }
+    }
+
+    private exportCleanedCSV(results: FileProcessingResult): Blob {
+        // Create cleaned version of original file with validated data
+        const cleanedRows = [results.originalHeaders]; // Start with headers
+
+        // Process each original data row
+        for (let i = 1; i < results.originalData.length; i++) {
+            const originalRow = results.originalData[i];
+            const processedRow = results.processedRows.find(p => p.rowNumber === i + 1);
+
+            if (processedRow) {
+                // Create a copy of the original row
+                const cleanedRow = [...originalRow];
+
+                // Find the phone column index
+                const phoneColumnIndex = this.findPhoneColumn(results.originalHeaders);
+                if (phoneColumnIndex !== -1 && processedRow.validationResults[0]) {
+                    const result = processedRow.validationResults[0];
+                    // Replace the phone number with the cleaned/fixed version
+                    if (result.fixed && result.isValid) {
+                        cleanedRow[phoneColumnIndex] = result.fixed;
+                    }
+                }
+
+                cleanedRows.push(cleanedRow);
+            } else {
+                // If no processing result, keep original row
+                cleanedRows.push(originalRow);
+            }
+        }
+
+        // Convert to CSV format
+        const csvContent = cleanedRows.map(row =>
+            row.map(cell => {
+                // Handle cells that contain commas or quotes
+                if (cell.includes(',') || cell.includes('"') || cell.includes('\n')) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                }
+                return cell;
+            }).join(',')
+        ).join('\n');
+
+        return new Blob([csvContent], { type: 'text/csv' });
     }
 
     private exportToCSV(results: FileProcessingResult): Blob {

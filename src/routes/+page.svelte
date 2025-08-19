@@ -42,7 +42,7 @@
         }
     }
 
-    async function exportResults(format: "csv" | "json") {
+    async function exportResults(format: "csv" | "json" | "cleaned-csv") {
         if (!results) return;
 
         try {
@@ -50,7 +50,11 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `validation_results.${format}`;
+            // Fix filename extension for cleaned-csv format and use original filename
+            const fileExtension = format === "cleaned-csv" ? "csv" : format;
+            const originalName = selectedFile?.name.replace(/\.[^/.]+$/, "") || "validation_results";
+            const suffix = format === "cleaned-csv" ? "_cleaned" : format === "csv" ? "_validation_report" : "";
+            a.download = `${originalName}${suffix}.${fileExtension}`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -227,14 +231,24 @@
     <!-- Results Section -->
     {#if results}
         <div class="bg-white rounded-lg shadow-lg p-8">
-            <div class="flex items-center justify-between mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <h2 class="text-2xl font-semibold text-gray-800">Validation Results</h2>
-                <div class="space-x-3">
-                    <button on:click={() => exportResults("csv")} class="bg-green-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors"> Export CSV </button>
+                <div class="flex flex-wrap gap-3">
+                    <button on:click={() => exportResults("cleaned-csv")} class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                        Export Cleaned CSV
+                    </button>
+                    <button on:click={() => exportResults("csv")} class="bg-green-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                        Export Validation Report
+                    </button>
                     <button on:click={() => exportResults("json")} class="bg-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-purple-700 transition-colors"> Export JSON </button>
                     <button on:click={clearAllData} class="bg-red-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-700 transition-colors"> Clear Data </button>
                 </div>
             </div>
+            <p class="mt-2 text-sm text-gray-600 mb-6">
+                <strong>Export Cleaned CSV:</strong> Your original file with validated/cleaned data inserted |
+                <strong>Export Validation Report:</strong> Detailed validation results and errors |
+                <strong>Export JSON:</strong> Complete validation data in JSON format
+            </p>
 
             <!-- Summary -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
