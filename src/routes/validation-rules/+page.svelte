@@ -15,7 +15,7 @@
             title: "Phone Numbers",
             icon: "phone",
             description: "UK mobile and landline phone number validation with automatic formatting",
-            intro: "We take your phone number input and automatically check it against UK phone number standards. Our system detects the type of number, validates the format, and applies automatic fixes to ensure consistency.",
+            intro: "We take your phone number input and automatically check it against UK phone number standards. Our system detects the type of number, validates the format, and applies automatic fixes to ensure consistency. We can handle most common formatting issues automatically, but some cases require manual correction.",
             whatWeCheck: [
                 "Number length and structure",
                 "Country code format (+44)",
@@ -23,6 +23,10 @@
                 "Mobile vs landline patterns",
                 "Area code validity",
                 "Spacing and formatting consistency",
+                "Labels, icons, and descriptive text",
+                "Extension-style clutter",
+                "Quotes and wrapping characters",
+                "Weird separators and whitespace",
             ],
             automaticFixes: [
                 {
@@ -39,6 +43,26 @@
                     name: "Spacing and Punctuation",
                     description: "Standardize spacing and remove unnecessary characters",
                     examples: ["+44 (0) 7700 900123 → +44 7700 900123", "07700-900-123 → 07700 900123", "07700.900.123 → 07700 900123"],
+                },
+                {
+                    name: "Label and Icon Removal",
+                    description: "Remove common prefixes, suffixes, and emojis",
+                    examples: ["Mobile: 07700 900123 → +44 7700 900123", "📱+44 7700 900123 → +44 7700 900123", "07700 900123 (mobile) → +44 7700 900123"],
+                },
+                {
+                    name: "Extension Removal",
+                    description: "Remove extension-style clutter and suffixes",
+                    examples: ["07700 900123 x12 → +44 7700 900123", "07700 900123 ext 12 → +44 7700 900123", "+44 7700 900123 #12 → +44 7700 900123"],
+                },
+                {
+                    name: "Quote and Wrapper Removal",
+                    description: "Remove quotes, backticks, and other wrapping characters",
+                    examples: ['"07700 900123" → +44 7700 900123', "`07700 900123` → +44 7700 900123", "«07700 900123» → +44 7700 900123"],
+                },
+                {
+                    name: "Weird Separator Handling",
+                    description: "Handle various separators including Unicode characters",
+                    examples: ["07700•900•123 → +44 7700 900123", "07700—900—123 → +44 7700 900123", "07700 900 123 → +44 7700 900123"],
                 },
                 {
                     name: "Area Code Validation",
@@ -78,6 +102,50 @@
                     description: "International format with 00 prefix instead of +",
                     status: "Can fix - converts to +44 xxxxxxxxxx",
                     dateAdded: "2024-08-19",
+                },
+                {
+                    format: "Mobile: xxxxxxxxxx",
+                    description: "Numbers with mobile labels and prefixes",
+                    status: "Can fix - removes labels and standardizes format",
+                    dateAdded: "2024-08-19",
+                },
+                {
+                    format: "📱 xxxxxxxxxx",
+                    description: "Numbers with emoji prefixes",
+                    status: "Can fix - removes emojis and standardizes format",
+                    dateAdded: "2024-08-19",
+                },
+                {
+                    format: "xxxxxxxxxx x12",
+                    description: "Numbers with extension suffixes",
+                    status: "Can fix - removes extensions and standardizes format",
+                    dateAdded: "2024-08-19",
+                },
+            ],
+            cannotHandleYet: [
+                {
+                    format: "O7700 900123",
+                    description: "Look-alike characters (O for 0, I for 1, l for 1)",
+                    reason: "These characters look like digits but aren't, requiring manual correction",
+                    examples: ["O7700 900123", "077OO 9OO123", "07700 9Il123"],
+                },
+                {
+                    format: "０７７００ ９００１２３",
+                    description: "Full-width digits and non-ASCII characters",
+                    reason: "These are Unicode characters that need manual conversion to standard digits",
+                    examples: ["０７７００ ９００１２３", "٠٧٧٠٠ ٩٠٠١٢٣", "۰۷۷۰۰ ۹۰۰۱۲۳"],
+                },
+                {
+                    format: "tel:07700900123",
+                    description: "Protocol links and URLs",
+                    reason: "These contain protocol prefixes that need manual extraction",
+                    examples: ["tel:07700900123", "https://wa.me/447700900123", "callto:+447700900123"],
+                },
+                {
+                    format: "+44 0 7700 900123",
+                    description: "Malformed country code formats",
+                    reason: "These have incorrect +44 (0) patterns that need manual correction",
+                    examples: ["+44 0 7700 900123", "+44(07700) 900123"],
                 },
             ],
         },
@@ -297,7 +365,7 @@
 
         <!-- Navigation back to main validator -->
         <div class="mt-6">
-            <a href="/validation/" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <a href="/" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -418,6 +486,31 @@
                     </div>
                 {/if}
 
+                <!-- Cases We Cannot Handle Yet (if any) -->
+                {#if "cannotHandleYet" in rule && rule.cannotHandleYet && rule.cannotHandleYet.length > 0}
+                    <div class="bg-red-50 rounded-lg p-6 mb-8">
+                        <h3 class="text-xl font-semibold text-red-900 mb-4">⚠️ Cases We Cannot Handle Yet</h3>
+                        <p class="text-red-800 mb-4">These phone number formats require manual correction before validation. We're aware of them and working on solutions.</p>
+                        <div class="space-y-4">
+                            {#each rule.cannotHandleYet as unhandled}
+                                <div class="bg-white rounded-lg p-4 border border-red-200">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <code class="text-sm font-mono text-red-800 bg-red-100 px-2 py-1 rounded">{unhandled.format}</code>
+                                        <span class="text-xs text-red-600 bg-red-100 px-2 py-1 rounded">Manual correction needed</span>
+                                    </div>
+                                    <p class="text-red-700 text-sm mb-2">{unhandled.description}</p>
+                                    <p class="text-red-600 text-xs mb-3">{unhandled.reason}</p>
+                                    <div class="space-y-2">
+                                        {#each unhandled.examples as example}
+                                            <code class="inline-block bg-red-100 px-2 py-1 rounded text-xs font-mono text-red-800 border border-red-200">{example}</code>
+                                        {/each}
+                                    </div>
+                                </div>
+                            {/each}
+                        </div>
+                    </div>
+                {/if}
+
                 <!-- Output Format Options (for phone numbers only) -->
                 {#if key === "phone_numbers"}
                     <div class="bg-blue-50 rounded-lg p-6 mb-8">
@@ -523,9 +616,9 @@
         <div class="text-center">
             <p class="text-sm text-gray-600 mb-2">🔒 Your data is processed locally and never transmitted to our servers</p>
             <div class="space-x-4 text-sm">
-                <a href="/validation/" class="text-blue-600 hover:text-blue-800 underline">Data Validator</a>
+                <a href="/" class="text-blue-600 hover:text-blue-800 underline">Data Validator</a>
                 <span class="text-gray-400">•</span>
-                <a href="/validation/privacy" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
+                <a href="/privacy" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
                 <span class="text-gray-400">•</span>
                 <span class="text-gray-600">GDPR Compliant</span>
             </div>

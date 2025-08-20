@@ -27,62 +27,51 @@ export class PhoneNumberValidator implements DataValidator {
     }
 
     validate(value: string): ValidationResult {
-        // Handle the specific case of +44 (0) format first
-        let cleaned = value;
+        // Step 1: Remove labels, icons, and descriptive text
+        let cleaned = this.removeLabelsAndIcons(value);
+
+        // Step 2: Remove extension-style clutter
+        cleaned = this.removeExtensions(cleaned);
+
+        // Step 3: Remove quotes and wrapping characters
+        cleaned = this.removeWrapping(cleaned);
+
+        // Step 4: Handle the specific case of +44 (0) format first
         if (cleaned.includes('(0)')) {
-            // Remove the (0) and clean up the number
             cleaned = cleaned.replace(/\(0\)/g, '');
         }
 
-        // Remove all non-digit characters
+        // Step 5: Remove all non-digit characters (including weird separators)
         cleaned = cleaned.replace(/\D/g, '');
 
-        // Handle 0044 prefix (common in some systems)
-        if (cleaned.startsWith('0044') && cleaned.length === 14) {
-            cleaned = cleaned.replace(/^0044/, '44');
-        }
+        // Step 6: Handle various prefixes and formats
+        cleaned = this.normalizePrefix(cleaned);
 
-        // UK phone number patterns
-        const patterns = [
-            /^7\d{9}$/,           // Mobile: 7xxxxxxxxx
-            /^1\d{10}$/,          // UK numbers: 1xxxxxxxxxx
-            /^44\d{10}$/,         // International: 44xxxxxxxxxx
-            /^0\d{10}$/,          // UK landline: 0xxxxxxxxx
-            /^0\d{4}\s?\d{6}$/,  // UK landline with area code: 0xxx xxxxxx
-        ];
-
-        for (const pattern of patterns) {
-            if (pattern.test(cleaned)) {
-                return {
-                    isValid: true,
-                    value: cleaned,
-                    fixed: this.formatPhoneNumber(cleaned)
-                };
-            }
-        }
-
-        // Try to fix common issues
-        if (cleaned.length === 11 && cleaned.startsWith('0')) {
-            const fixed = cleaned.replace(/^0/, '44');
-            if (/^44\d{10}$/.test(fixed)) {
-                return {
-                    isValid: true,
-                    value: fixed,
-                    fixed: this.formatPhoneNumber(fixed),
-                    error: 'Added country code'
-                };
-            }
-        }
-
-        // Handle numbers that might be valid but need cleaning
-        if (cleaned.length === 10 && cleaned.startsWith('7')) {
-            // Could be a mobile number without country code
-            const fixed = `44${cleaned}`;
+        // Step 7: Validate against UK phone number patterns
+        const validationResult = this.validatePatterns(cleaned);
+        if (validationResult.isValid) {
             return {
-                isValid: true,
-                value: fixed,
-                fixed: this.formatPhoneNumber(fixed),
-                error: 'Added country code'
+                ...validationResult,
+                fixed: this.formatPhoneNumber(validationResult.value)
+            };
+        }
+
+        // Step 8: Try to fix common issues
+        const fixResult = this.attemptFixes(cleaned);
+        if (fixResult.isValid) {
+            return {
+                ...fixResult,
+                fixed: this.formatPhoneNumber(fixResult.value)
+            };
+        }
+
+        // Step 9: Check if it's a case we can't handle yet
+        const unhandledCase = this.checkUnhandledCases(value);
+        if (unhandledCase) {
+            return {
+                isValid: false,
+                value: value,
+                error: unhandledCase
             };
         }
 
@@ -91,6 +80,221 @@ export class PhoneNumberValidator implements DataValidator {
             value: value,
             error: 'Invalid UK phone number format'
         };
+    }
+
+    private removeLabelsAndIcons(value: string): string {
+        // Remove common labels and prefixes
+        const labels = [
+            /^Mobile:\s*/i,
+            /^Mob\s*/i,
+            /^M\.\s*/i,
+            /^m\/\s*/i,
+            /^Tel\s*\(mob\):\s*/i,
+            /^Cell:\s*/i,
+            /^WhatsApp:\s*/i,
+            /^UK\s+/i,
+            /^GBR\s+/i,
+            /^☎️\s*/,
+            /^📱\s*/,
+            /^\(mobile\)\s*$/i,
+            /^\(UK\)\s*$/i,
+            /^\(m\)\s*$/i,
+            /^\(M\)\s*$/i
+        ];
+
+        let cleaned = value;
+        for (const label of labels) {
+            cleaned = cleaned.replace(label, '');
+        }
+
+        return cleaned.trim();
+    }
+
+    private removeExtensions(value: string): string {
+        // Remove extension-style clutter
+        const extensions = [
+            /\s*x\d+\s*$/i,           // x12
+            /\s*ext\s*\d+\s*$/i,      // ext 12
+            /\s*\(ext\.\s*\d+\)\s*$/i, // (ext. 12)
+            /\s*#\d+\s*$/i,           // #12
+            /\s*;ext=\d+\s*$/i,       // ;ext=12
+            /\s*,\s*ext\s*\d+\s*$/i,  // , ext 12
+        ];
+
+        let cleaned = value;
+        for (const ext of extensions) {
+            cleaned = cleaned.replace(ext, '');
+        }
+
+        return cleaned.trim();
+    }
+
+    private removeWrapping(value: string): string {
+        // Remove quotes and wrapping characters
+        const wrappers = [
+            /^["'`]/,                 // Leading quotes
+            /["'`]$/,                 // Trailing quotes
+            /^[«»]/,                  // Leading guillemets
+            /[«»]$/,                  // Trailing guillemets
+            /^\(["'`]/,               // Leading ("
+            /["'`]\)$/,               // Trailing ")
+        ];
+
+        let cleaned = value;
+        for (const wrapper of wrappers) {
+            cleaned = cleaned.replace(wrapper, '');
+        }
+
+        return cleaned.trim();
+    }
+
+    private normalizePrefix(value: string): string {
+        // Handle various international prefixes
+        if (value.startsWith('0044') && value.length >= 14) {
+            return value.replace(/^0044/, '44');
+        }
+
+        if (value.startsWith('44') && value.length >= 12) {
+            return value;
+        }
+
+        // Handle cases where country code is duplicated or has stray zeros
+        if (value.startsWith('440') && value.length >= 13) {
+            return value.replace(/^440/, '44');
+        }
+
+        return value;
+    }
+
+    private validatePatterns(cleaned: string): ValidationResult {
+        // UK phone number patterns
+        const patterns = [
+            { pattern: /^7\d{9}$/, type: 'Mobile' },           // Mobile: 7xxxxxxxxx
+            { pattern: /^1\d{10}$/, type: 'UK Number' },       // UK numbers: 1xxxxxxxxxx
+            { pattern: /^44\d{10}$/, type: 'International' },  // International: 44xxxxxxxxxx
+            { pattern: /^0\d{10}$/, type: 'UK Landline' },     // UK landline: 0xxxxxxxxx
+            { pattern: /^0\d{4}\d{6}$/, type: 'UK Landline' }, // UK landline with area code: 0xxx xxxxxx
+        ];
+
+        for (const { pattern, type } of patterns) {
+            if (pattern.test(cleaned)) {
+                return {
+                    isValid: true,
+                    value: cleaned,
+                    error: undefined
+                };
+            }
+        }
+
+        return {
+            isValid: false,
+            value: cleaned,
+            error: 'Pattern validation failed'
+        };
+    }
+
+    private attemptFixes(cleaned: string): ValidationResult {
+        // Try to fix common issues
+
+        // Handle numbers that might be valid but need cleaning
+        if (cleaned.length === 10 && cleaned.startsWith('7')) {
+            // Could be a mobile number without country code
+            const fixed = `44${cleaned}`;
+            if (/^44\d{10}$/.test(fixed)) {
+                return {
+                    isValid: true,
+                    value: fixed,
+                    error: 'Added country code'
+                };
+            }
+        }
+
+        // Handle numbers starting with 0 that need country code
+        if (cleaned.length === 11 && cleaned.startsWith('0')) {
+            const fixed = cleaned.replace(/^0/, '44');
+            if (/^44\d{10}$/.test(fixed)) {
+                return {
+                    isValid: true,
+                    value: fixed,
+                    error: 'Added country code'
+                };
+            }
+        }
+
+        // Handle 9-digit numbers (might be missing a digit)
+        if (cleaned.length === 9 && cleaned.startsWith('7')) {
+            // Could be missing a digit, try adding one
+            const possibleFixes = [
+                `44${cleaned}`,      // Add country code
+                `0${cleaned}`,       // Add UK prefix
+            ];
+
+            for (const fix of possibleFixes) {
+                if (this.validatePatterns(fix).isValid) {
+                    return {
+                        isValid: true,
+                        value: fix,
+                        error: 'Added missing digit/prefix'
+                    };
+                }
+            }
+        }
+
+        return {
+            isValid: false,
+            value: cleaned,
+            error: 'Could not fix number'
+        };
+    }
+
+    private checkUnhandledCases(value: string): string | null {
+        // Check for cases we can't handle yet
+
+        // Look-alike characters (O for 0, I for 1, l for 1)
+        if (/[OIl]/.test(value)) {
+            return "Contains look-alike characters (O, I, l) that need manual correction";
+        }
+
+        // Non-ASCII digits
+        if (/[０-９]/.test(value)) {
+            return "Contains full-width digits that need manual conversion";
+        }
+
+        // Arabic-Indic digits
+        if (/[٠-٩]/.test(value)) {
+            return "Contains Arabic-Indic digits that need manual conversion";
+        }
+
+        // Eastern Arabic-Indic digits
+        if (/[۰-۹]/.test(value)) {
+            return "Contains Eastern Arabic-Indic digits that need manual conversion";
+        }
+
+        // Protocol links
+        if (/^(tel:|callto:|https?:\/\/)/.test(value)) {
+            return "Contains protocol links that need manual extraction";
+        }
+
+        // Random groupings that don't make sense - check before cleaning
+        const digitGroups = value.match(/\d+/g);
+        if (digitGroups && digitGroups.length > 4) {
+            // Check if the total length makes sense for a phone number
+            const totalDigits = digitGroups.join('').length;
+            if (totalDigits < 10 || totalDigits > 15) {
+                return "Contains unusual digit groupings that need manual review";
+            }
+        }
+
+        // Check for specific problematic patterns
+        if (value.includes('+44 0') || value.includes('+44(0')) {
+            return "Contains incorrect +44 (0) format that needs manual correction";
+        }
+
+        if (value.includes('+44(0')) {
+            return "Contains malformed country code that needs manual correction";
+        }
+
+        return null;
     }
 
     private formatPhoneNumber(phone: string): string {
