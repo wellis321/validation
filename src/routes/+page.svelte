@@ -121,15 +121,39 @@
         results = null;
 
         try {
-            // Create a modified file with only selected columns
-            const selectedIndices = selectedFields.map((field) => fileHeaders.indexOf(field));
-            const filteredData = fileData.map((row) => selectedIndices.map((index) => row[index] || ""));
+            // Process the original file but only validate selected columns
+            // This preserves the original data structure for the cleaned export
+            results = await fileProcessor.processFile(selectedFile, selectedFields);
 
-            // Create a new file with only selected columns
-            const csvContent = [selectedFields.join(","), ...filteredData.slice(1).map((row) => row.join(","))].join("\n");
+            // No need to filter results here since FileProcessor now handles it
+            // Just recalculate summary based on the processed results
+            if (results) {
+                let totalValid = 0;
+                let totalInvalid = 0;
+                let totalFixed = 0;
 
-            const filteredFile = new File([csvContent], selectedFile.name, { type: "text/csv" });
-            results = await fileProcessor.processFile(filteredFile);
+                results.processedRows.forEach((row) => {
+                    row.validationResults.forEach((result) => {
+                        if (result.detectedType === "header") return; // Skip header
+
+                        if (result.isValid) {
+                            totalValid++;
+                            if (result.fixed && result.fixed !== result.value) {
+                                totalFixed++;
+                            }
+                        } else {
+                            totalInvalid++;
+                        }
+                    });
+                });
+
+                results.summary = {
+                    totalValid,
+                    totalInvalid,
+                    totalFixed,
+                    errors: results.summary.errors,
+                };
+            }
         } catch (err) {
             error = err instanceof Error ? err.message : "An error occurred while processing the file";
         } finally {

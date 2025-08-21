@@ -39,7 +39,7 @@ export class FileProcessor {
         this.phoneFormat = format;
     }
 
-    async processFile(file: File): Promise<FileProcessingResult> {
+    async processFile(file: File, selectedColumns?: string[]): Promise<FileProcessingResult> {
         if (!this.supportedTypes.includes(file.type)) {
             throw new Error(`Unsupported file type: ${file.type}. Please upload a CSV, Excel, or text file.`);
         }
@@ -47,7 +47,7 @@ export class FileProcessor {
         const content = await this.readFileContent(file);
         const rows = this.parseContent(content, file.type);
 
-        return this.processRows(rows, file.name);
+        return this.processRows(rows, file.name, selectedColumns);
     }
 
     private async readFileContent(file: File): Promise<string> {
@@ -121,7 +121,7 @@ export class FileProcessor {
         });
     }
 
-    private processRows(rows: string[][], fileName: string): FileProcessingResult {
+    private processRows(rows: string[][], fileName: string, selectedColumns?: string[]): FileProcessingResult {
         if (rows.length === 0) {
             throw new Error('File is empty');
         }
@@ -149,6 +149,13 @@ export class FileProcessor {
             const columnsToProcess = Math.min(headerRow.length, row.length);
 
             for (let colIndex = 0; colIndex < columnsToProcess; colIndex++) {
+                const columnName = headerRow[colIndex];
+
+                // If selectedColumns is specified, only process those columns
+                if (selectedColumns && !selectedColumns.includes(columnName)) {
+                    continue;
+                }
+
                 const cellValue = row[colIndex] || '';
 
                 // Skip empty cells
@@ -160,7 +167,7 @@ export class FileProcessor {
                 const validation = autoValidate(cellValue, this.phoneFormat);
 
                 validationResults.push({
-                    column: headerRow[colIndex],
+                    column: columnName,
                     value: cellValue,
                     isValid: validation.isValid,
                     detectedType: validation.detectedType,
