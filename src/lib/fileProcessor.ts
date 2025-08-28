@@ -218,17 +218,70 @@ export class FileProcessor {
         };
     }
 
-    async exportResults(results: FileProcessingResult, format: 'csv' | 'json' | 'cleaned-csv' = 'csv'): Promise<Blob> {
-        if (format === 'cleaned-csv') {
-            return this.exportCleanedCSV(results);
-        } else if (format === 'csv') {
-            return this.exportToCSV(results);
-        } else {
-            return this.exportToJSON(results);
+    async exportResults(results: FileProcessingResult, format: 'csv' | 'json' | 'cleaned-csv' | 'excel'): Promise<Blob> {
+        switch (format) {
+            case 'csv':
+                return this.exportToCSV(results);
+            case 'json':
+                return this.exportToJSON(results);
+            case 'cleaned-csv':
+                return this.exportCleanedCSV(results);
+            case 'excel':
+                return this.exportToExcel(results);
+            default:
+                throw new Error(`Unsupported export format: ${format}`);
         }
     }
 
+    private async exportToExcel(results: FileProcessingResult): Promise<Blob> {
+        // For now, we'll use a simple approach with proper CSV formatting
+        // that Excel can import correctly
+        const csvContent = this.createExcelFriendlyCSV(results);
+        return new Blob([csvContent], { type: 'text/csv; charset=utf-8' });
+    }
+
+    private createExcelFriendlyCSV(results: FileProcessingResult): string {
+        // Create a CSV that Excel will import correctly with proper data types
+        const cleanedRows = [results.originalHeaders];
+
+        for (let i = 1; i < results.originalData.length; i++) {
+            const originalRow = results.originalData[i];
+            const processedRow = results.processedRows.find(p => p.rowNumber === i + 1);
+
+            if (processedRow) {
+                const cleanedRow = [...originalRow];
+
+                processedRow.validationResults.forEach(result => {
+                    const columnIndex = results.originalHeaders.indexOf(result.column);
+                    if (columnIndex !== -1 && result.fixed && result.isValid) {
+                        // For phone numbers, force text format by adding a space prefix
+                        if (result.fixed.match(/^0\d{10}$/)) {
+                            cleanedRow[columnIndex] = ` ${result.fixed}`; // Space prefix forces text
+                        } else {
+                            cleanedRow[columnIndex] = result.fixed;
+                        }
+                    }
+                });
+
+                cleanedRows.push(cleanedRow);
+            } else {
+                cleanedRows.push(originalRow);
+            }
+        }
+
+        return cleanedRows.map(row =>
+            row.map(cell => {
+                if (cell.includes(',') || cell.includes('"') || cell.includes('\n')) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                }
+                return cell;
+            }).join(',')
+        ).join('\n');
+    }
+
     private exportCleanedCSV(results: FileProcessingResult): Blob {
+        console.log('exportCleanedCSV - Starting export with results:', results);
+
         // Create cleaned version of original file with validated data
         const cleanedRows = [results.originalHeaders]; // Start with headers
 
@@ -246,6 +299,7 @@ export class FileProcessor {
                     // Find the column index for this validation result
                     const columnIndex = results.originalHeaders.indexOf(result.column);
                     if (columnIndex !== -1 && result.fixed && result.isValid) {
+                        console.log(`Exporting column "${result.column}": original="${originalRow[columnIndex]}" -> fixed="${result.fixed}"`);
                         // Replace the original value with the cleaned version
                         cleanedRow[columnIndex] = result.fixed;
                     }
@@ -258,9 +312,18 @@ export class FileProcessor {
             }
         }
 
+        console.log('exportCleanedCSV - Final cleaned rows:', cleanedRows);
+
         // Convert to CSV format
         const csvContent = cleanedRows.map(row =>
-            row.map(cell => {
+            row.map((cell, index) => {
+                const columnName = results.originalHeaders[index];
+
+                // Always quote phone number columns to prevent formatting issues
+                if (columnName && this.isPhoneColumn(columnName)) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                }
+
                 // Handle cells that contain commas or quotes
                 if (cell.includes(',') || cell.includes('"') || cell.includes('\n')) {
                     return `"${cell.replace(/"/g, '""')}"`;
@@ -268,6 +331,8 @@ export class FileProcessor {
                 return cell;
             }).join(',')
         ).join('\n');
+
+        console.log('exportCleanedCSV - Final CSV content:', csvContent);
 
         return new Blob([csvContent], { type: 'text/csv' });
     }
@@ -280,10 +345,11 @@ export class FileProcessor {
                 row.validationResults.map(result => [
                     row.rowNumber,
                     `"${result.column}"`,
-                    `"${result.value}"`,
+                    // Always quote phone number values to prevent formatting issues
+                    this.isPhoneColumn(result.column) ? `"${result.value}"` : result.value,
                     result.isValid ? 'Yes' : 'No',
                     result.detectedType,
-                    result.fixed ? `"${result.fixed}"` : '',
+                    result.fixed ? (this.isPhoneColumn(result.column) ? `"${result.fixed}"` : result.fixed) : '',
                     result.error ? `"${result.error}"` : ''
                 ].join(','))
             )
@@ -307,5 +373,15 @@ export class FileProcessor {
 
     updatePhoneFormat(format: "international" | "uk"): void {
         this.phoneFormat = format;
+    }
+
+    private isPhoneColumn(columnName: string): boolean {
+        const phoneColumnNames = [
+            'phone', 'phone_number', 'mobile', 'mobile_number',
+            'telephone', 'tel', 'cell', 'cellphone', 'contact_number'
+        ];
+        return phoneColumnNames.some(name =>
+            columnName.toLowerCase().includes(name.toLowerCase())
+        );
     }
 }

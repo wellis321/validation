@@ -521,17 +521,17 @@ describe('PhoneNumberValidator - Basic Functionality', () => {
 describe('PhoneNumberValidator UK Format', () => {
     const ukValidator = new PhoneNumberValidator('uk');
 
-    it('should format numbers in UK format (0xxxxxxxxx)', () => {
+    it('should format numbers in UK format with spaces (0xxxx xxxxxx)', () => {
         const result = ukValidator.validate('7700901890');
         expect(result.isValid).toBe(true);
-        expect(result.fixed).toBe('07700901890');
+        expect(result.fixed).toBe('07700 901 890');
         expect(result.error).toBeUndefined();
     });
 
-    it('should convert international format to UK format', () => {
+    it('should convert international format to UK format with spaces', () => {
         const result = ukValidator.validate('+44 7700 902678');
         expect(result.isValid).toBe(true);
-        expect(result.fixed).toBe('07700902678');
+        expect(result.fixed).toBe('07700 902 678');
         expect(result.error).toBeUndefined();
     });
 });

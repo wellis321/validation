@@ -50,18 +50,20 @@ export class PhoneNumberValidator implements DataValidator {
         // Step 7: Validate against UK phone number patterns
         const validationResult = this.validatePatterns(cleaned);
         if (validationResult.isValid) {
+            const formatted = this.formatPhoneNumber(validationResult.value);
             return {
                 ...validationResult,
-                fixed: this.formatPhoneNumber(validationResult.value)
+                fixed: formatted
             };
         }
 
         // Step 8: Try to fix common issues
         const fixResult = this.attemptFixes(cleaned);
         if (fixResult.isValid) {
+            const formatted = this.formatPhoneNumber(fixResult.value);
             return {
                 ...fixResult,
-                fixed: this.formatPhoneNumber(fixResult.value)
+                fixed: formatted
             };
         }
 
@@ -151,7 +153,8 @@ export class PhoneNumberValidator implements DataValidator {
     private normalizePrefix(value: string): string {
         // Handle various international prefixes
         if (value.startsWith('0044') && value.length >= 14) {
-            return value.replace(/^0044/, '44');
+            const result = value.replace(/^0044/, '44');
+            return result;
         }
 
         if (value.startsWith('44') && value.length >= 12) {
@@ -160,7 +163,8 @@ export class PhoneNumberValidator implements DataValidator {
 
         // Handle cases where country code is duplicated or has stray zeros
         if (value.startsWith('440') && value.length >= 13) {
-            return value.replace(/^440/, '44');
+            const result = value.replace(/^440/, '44');
+            return result;
         }
 
         return value;
@@ -317,13 +321,15 @@ export class PhoneNumberValidator implements DataValidator {
 
         // Convert to user's preferred format
         if (this.outputFormat === 'uk') {
-            // Convert to UK format (0xxxxxxxxx)
+            // Convert to UK format with spaces (0xxxx xxxxxx)
             if (formatted.startsWith('+44')) {
-                return `0${formatted.slice(3)}`;
+                const ukNumber = `0${formatted.slice(3)}`;
+                return this.addUKPhoneSpacing(ukNumber);
             } else if (formatted.startsWith('0')) {
-                return formatted;
+                return this.addUKPhoneSpacing(formatted);
             } else if (formatted.startsWith('7') && formatted.length === 10) {
-                return `0${formatted}`;
+                const ukNumber = `0${formatted}`;
+                return this.addUKPhoneSpacing(ukNumber);
             }
         } else {
             // International format (+44xxxxxxxxx)
@@ -338,6 +344,23 @@ export class PhoneNumberValidator implements DataValidator {
 
         return formatted;
     }
+
+    private addUKPhoneSpacing(phone: string): string {
+        // UK mobile numbers: 07734 728 744 (5 digits, space, 3 digits, space, 3 digits)
+        if (phone.startsWith('07') && phone.length === 11) {
+            return `${phone.slice(0, 5)} ${phone.slice(5, 8)} ${phone.slice(8)}`;
+        }
+
+        // UK landline numbers: 020 7946 0958 (3 digits, space, 4 digits, space, 4 digits)
+        if (phone.startsWith('01') || phone.startsWith('02') || phone.startsWith('03')) {
+            if (phone.length === 11) {
+                return `${phone.slice(0, 3)} ${phone.slice(3, 7)} ${phone.slice(7)}`;
+            }
+        }
+
+        // For other formats, return as is
+        return phone;
+    }
 }
 
 // UK National Insurance Number Validator
@@ -347,8 +370,9 @@ export class NINumberValidator implements DataValidator {
     }
 
     validate(value: string): ValidationResult {
-        // Remove spaces and convert to uppercase
-        const cleaned = value.replace(/\s/g, '').toUpperCase();
+        // Remove common separators but preserve letters and digits
+        // Include Unicode separators: bullet points (•), middle dots (·), colons (:), semicolons (;), etc.
+        let cleaned = value.replace(/[-._\/•·:;]/g, '').replace(/\s/g, '').toUpperCase();
 
         // NI number format: 2 letters, 6-8 digits, 1 letter (optional)
         const pattern = /^[A-Z]{2}\d{6,8}[A-Z]?$/;
@@ -376,6 +400,25 @@ export class NINumberValidator implements DataValidator {
                         error: 'Added prefix letters'
                     };
                 }
+            }
+        }
+
+        // Check if it looks like an NI number with separators but wrong format
+        // This helps catch cases like "AB-123-456-C" that might be misclassified as sort codes
+        const hasLetters = /[A-Z]/i.test(value);
+        const hasDigits = /\d/.test(value);
+        const hasSeparators = /[-._\/•·:;]/.test(value);
+
+        if (hasLetters && hasDigits && hasSeparators) {
+            // Try to extract just the alphanumeric characters
+            const extracted = value.replace(/[-._\/•·:;\s]/g, '').toUpperCase();
+            if (pattern.test(extracted)) {
+                return {
+                    isValid: true,
+                    value: extracted,
+                    fixed: this.formatNINumber(extracted),
+                    error: 'Removed separators and formatted'
+                };
             }
         }
 
@@ -471,6 +514,15 @@ export class SortCodeValidator implements DataValidator {
     }
 
     validate(value: string): ValidationResult {
+        // If the value contains letters, it's definitely not a sort code
+        if (/[A-Za-z]/.test(value)) {
+            return {
+                isValid: false,
+                value: value,
+                error: 'Sort codes cannot contain letters'
+            };
+        }
+
         // Remove all non-digit characters
         const cleaned = value.replace(/\D/g, '');
 
@@ -536,9 +588,9 @@ export function getValidator(type: string): DataValidator | null {
 export function autoValidate(value: string, phoneFormat: 'international' | 'uk' = 'international'): ValidationResult & { detectedType: string } {
     const validators = [
         new PhoneNumberValidator(phoneFormat),
-        new NINumberValidator(),
+        new NINumberValidator(),        // Check NI numbers before sort codes
         new PostcodeValidator(),
-        new SortCodeValidator()
+        new SortCodeValidator()         // Sort codes last since they're more generic
     ];
 
     for (const validator of validators) {
