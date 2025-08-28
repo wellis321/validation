@@ -76,14 +76,19 @@ export class FileProcessor {
     }
 
     private parseContent(content: string, fileType: string): string[][] {
+        let rows: string[][];
+
         if (fileType === 'text/csv') {
-            return this.parseCSV(content);
+            rows = this.parseCSV(content);
         } else if (fileType === 'text/plain') {
-            return this.parseTextFile(content);
+            rows = this.parseTextFile(content);
         } else {
             // Excel files - for now, treat as CSV
-            return this.parseCSV(content);
+            rows = this.parseCSV(content);
         }
+
+        // Fix any malformed CSV issues (like unquoted NI numbers with commas)
+        return this.fixMalformedCSV(rows);
     }
 
     private parseCSV(content: string): string[][] {
@@ -110,6 +115,78 @@ export class FileProcessor {
             result.push(current.trim());
             return result;
         });
+    }
+
+    private fixMalformedCSV(rows: string[][]): string[][] {
+        if (rows.length < 2) return rows; // Need at least header + 1 data row
+
+        const headerRow = rows[0];
+        const expectedColumns = headerRow.length;
+
+        return rows.map((row, index) => {
+            if (index === 0) return row; // Skip header row
+
+            // If this row has more columns than expected, it might be due to unquoted commas in NI numbers
+            if (row.length > expectedColumns) {
+                // Look for patterns that suggest NI numbers were split
+                const fixedRow = [...row];
+
+                // Try to detect and fix split NI numbers (pattern: letter,letter,digit,digit,digit,digit,digit,digit,letter)
+                for (let i = 0; i < fixedRow.length - 7; i++) {
+                    const potentialNI = [
+                        fixedRow[i],     // First letter
+                        fixedRow[i + 1], // Second letter
+                        fixedRow[i + 2], // First digit
+                        fixedRow[i + 3], // Second digit
+                        fixedRow[i + 4], // Third digit
+                        fixedRow[i + 5], // Fourth digit
+                        fixedRow[i + 6], // Fifth digit
+                        fixedRow[i + 7]  // Sixth digit
+                    ];
+
+                    // Check if this looks like a split NI number
+                    if (this.isSplitNINumber(potentialNI)) {
+                        // Combine the split parts
+                        const combinedNI = potentialNI.join('');
+
+                        // Remove the split parts and insert the combined NI
+                        fixedRow.splice(i, 8, combinedNI);
+
+                        // Adjust the loop since we modified the array
+                        i = i - 7;
+                    }
+                }
+
+                // If we still have too many columns, try to merge the last few
+                while (fixedRow.length > expectedColumns) {
+                    const last = fixedRow.pop();
+                    const secondLast = fixedRow.pop();
+                    if (last && secondLast) {
+                        fixedRow.push(secondLast + last);
+                    }
+                }
+
+                return fixedRow;
+            }
+
+            return row;
+        });
+    }
+
+    private isSplitNINumber(parts: string[]): boolean {
+        if (parts.length !== 8) return false;
+
+        // Check if it matches NI number pattern: 2 letters + 6 digits
+        const firstTwo = parts[0] + parts[1];
+        const lastSix = parts[2] + parts[3] + parts[4] + parts[5] + parts[6] + parts[7];
+
+        // First two should be letters
+        if (!/^[A-Za-z]{2}$/.test(firstTwo)) return false;
+
+        // Last six should be digits
+        if (!/^\d{6}$/.test(lastSix)) return false;
+
+        return true;
     }
 
     private parseTextFile(content: string): string[][] {
@@ -338,7 +415,7 @@ export class FileProcessor {
     }
 
     private exportToCSV(results: FileProcessingResult): Blob {
-        const headers = ['Row', 'Column', 'Original Value', 'Is Valid', 'Detected Type', 'Fixed Value', 'Error'];
+        const headers = ['Row', 'Column', 'Original Value', 'Is Valid', 'Detected Type', 'Fixed Value', 'Error', 'Compliance Standard'];
         const csvContent = [
             headers.join(','),
             ...results.processedRows.flatMap(row =>
@@ -350,12 +427,29 @@ export class FileProcessor {
                     result.isValid ? 'Yes' : 'No',
                     result.detectedType,
                     result.fixed ? (this.isPhoneColumn(result.column) ? `"${result.fixed}"` : result.fixed) : '',
-                    result.error ? `"${result.error}"` : ''
+                    result.error ? `"${result.error}"` : '',
+                    this.getComplianceStandard(result.column, result.detectedType)
                 ].join(','))
             )
         ].join('\n');
 
         return new Blob([csvContent], { type: 'text/csv' });
+    }
+
+    private getComplianceStandard(columnName: string, detectedType: string): string {
+        const column = columnName.toLowerCase();
+
+        if (column.includes('ni') || column.includes('insurance')) {
+            return 'HMRC National Insurance Standards';
+        } else if (column.includes('phone') || column.includes('mobile') || column.includes('tel')) {
+            return 'UK Phone Number Standards';
+        } else if (column.includes('postcode') || column.includes('post_code')) {
+            return 'UK Postcode Standards';
+        } else if (column.includes('sort') || column.includes('bank')) {
+            return 'UK Banking Standards';
+        } else {
+            return 'Industry Standards';
+        }
     }
 
     private exportToJSON(results: FileProcessingResult): Blob {

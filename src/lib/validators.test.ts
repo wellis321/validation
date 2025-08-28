@@ -557,11 +557,10 @@ describe('NINumberValidator', () => {
         expect(result.fixed).toBe('AB 123456 C');
     });
 
-    it('should fix numbers with just digits', () => {
+    it('should reject numbers with just digits (no fake NI numbers)', () => {
         const result = validator.validate('12345678');
-        expect(result.isValid).toBe(true);
-        expect(result.fixed).toBe('AB 123456 78');
-        expect(result.error).toBe('Added prefix letters');
+        expect(result.isValid).toBe(false);
+        expect(result.error).toBe('Invalid NI number format (should be 2 letters + 6 digits + optional letter)');
     });
 
     it('should reject invalid formats', () => {

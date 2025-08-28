@@ -14,16 +14,17 @@
     let selectedFields: string[] = [];
     let showFieldSelection = false;
     let fileData: string[][] = [];
+    let activeTab: "summary" | "cleaned" | "issues" = "summary";
 
     const fileProcessor = new FileProcessor(phoneFormat);
     const phoneValidator = new PhoneNumberValidator(phoneFormat);
 
     // Simple examples that show the value
     const examples = [
-        { before: "07700 900123", after: "+44 7700 900123", type: "Phone Number" },
-        { before: "ab123cd", after: "AB12 3CD", type: "Postcode" },
+        { before: "07700 900123", after: "07700 900 123", type: "Phone Number" },
+        { before: "AB-123-456-C", after: "AB 123456 C", type: "NI Number" },
         { before: "123456", after: "12-34-56", type: "Sort Code" },
-        { before: "ab 12 34 56 c", after: "AB123456C", type: "NI Number" },
+        { before: "SW1A1AA", after: "SW1A 1AA", type: "Postcode" },
     ];
 
     function testPhoneNumber(input: string) {
@@ -75,7 +76,8 @@
     }
 
     function selectAllFields() {
-        selectedFields = [...fileHeaders];
+        // Only select fields that we can actually clean
+        selectedFields = fileHeaders.filter((field) => /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field));
     }
 
     function clearFieldSelection() {
@@ -184,20 +186,20 @@
                 <span class="text-blue-600">Instantly</span>
             </h1>
             <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
-                Upload your CSV file and we'll automatically clean and format your UK phone numbers, postcodes, NI numbers, and bank sort codes. No more messy data.
+                Upload your CSV file and we'll automatically clean and format your UK phone numbers, NI numbers, postcodes, and bank sort codes. HMRC compliant validation included.
             </p>
 
             <!-- CTA Button -->
             <div class="mb-12">
-                <button
-                    on:click={() => fileInput?.click()}
-                    class="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                <a
+                    href="#upload-section"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 inline-block"
                 >
                     <svg class="w-6 h-6 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                     </svg>
-                    Upload Your File Now
-                </button>
+                    Start Cleaning Your Data
+                </a>
             </div>
 
             <!-- Examples Grid -->
@@ -230,7 +232,7 @@
                         <span class="text-2xl font-bold text-blue-600">2</span>
                     </div>
                     <h3 class="text-xl font-semibold mb-3">Process</h3>
-                    <p class="text-gray-600">We automatically detect and clean your data</p>
+                    <p class="text-gray-600">We automatically detect and clean UK-specific data</p>
                 </div>
                 <div class="text-center">
                     <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
@@ -244,10 +246,10 @@
     </div>
 
     <!-- File Upload Section -->
-    <div class="bg-gray-50 py-16">
+    <div id="upload-section" class="bg-gray-50 py-16">
         <div class="container mx-auto px-4 max-w-4xl">
             <div class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">Ready to Clean Your Data?</h2>
+                <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">Upload & Clean Your Data</h2>
 
                 <!-- Hidden file input -->
                 <input bind:this={fileInput} type="file" accept=".csv,.xlsx,.txt" on:change={handleFileSelect} class="hidden" />
@@ -259,18 +261,26 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                         </svg>
                         <p class="text-lg text-gray-600 mb-2">Drop your file here or click to browse</p>
-                        <p class="text-sm text-gray-500">Supports CSV, Excel, and text files</p>
-                        <button on:click={() => fileInput?.click()} class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"> Choose File </button>
+                        <p class="text-sm text-gray-500 mb-4">Supports CSV, Excel, and text files</p>
+                        <button on:click={() => fileInput?.click()} class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors text-lg"> Choose File </button>
                     {:else}
-                        <div class="bg-green-50 rounded-lg p-4">
-                            <div class="flex items-center justify-center mb-2">
-                                <svg class="w-8 h-8 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-green-50 rounded-lg p-6 border border-green-200">
+                            <div class="flex items-center justify-center mb-3">
+                                <svg class="w-10 h-10 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                <span class="text-lg font-semibold text-green-800">File Selected!</span>
+                                <span class="text-xl font-semibold text-green-800">File Selected Successfully!</span>
                             </div>
-                            <p class="text-green-700 mb-3">{selectedFile.name}</p>
-                            <button on:click={resetForm} class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors text-sm"> Choose Different File </button>
+                            <p class="text-green-700 mb-4 text-lg">{selectedFile.name}</p>
+                            <div class="flex gap-3 justify-center">
+                                <button on:click={resetForm} class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"> Choose Different File </button>
+                                <button
+                                    on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                                    class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg font-medium transition-colors"
+                                >
+                                    Back to Top
+                                </button>
+                            </div>
                         </div>
                     {/if}
                 </div>
@@ -278,13 +288,27 @@
                 <!-- Field Selection -->
                 {#if showFieldSelection}
                     <div class="bg-blue-50 rounded-xl p-6 mb-6 border border-blue-200">
-                        <h3 class="text-lg font-semibold text-blue-800 mb-4 text-center">
-                            <svg class="w-5 h-5 inline mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                            Select Fields to Clean
-                        </h3>
-                        <p class="text-sm text-blue-700 mb-4 text-center">Choose which columns you want us to validate and clean:</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold text-blue-800">
+                                <svg class="w-5 h-5 inline mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                                Select Fields to Clean
+                            </h3>
+                            <button
+                                on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                                class="text-xs text-blue-600 hover:text-blue-800 bg-blue-100 hover:bg-blue-200 px-2 py-1 rounded transition-colors"
+                            >
+                                ↑ Back to Top
+                            </button>
+                        </div>
+                        <p class="text-sm text-blue-700 mb-4 text-center">Choose which columns you want us to validate and clean. We can clean:</p>
+                        <div class="text-xs text-blue-600 mb-4 text-center space-y-1">
+                            <div>📱 <strong>Phone numbers:</strong> mobile, telephone, contact_number</div>
+                            <div>🆔 <strong>NI numbers:</strong> national_insurance, ni_number, insurance</div>
+                            <div>📍 <strong>Postcodes:</strong> postcode, post_code, zip</div>
+                            <div>🏦 <strong>Sort codes:</strong> sort_code, bank, account</div>
+                        </div>
 
                         <!-- Field Selection Controls -->
                         <div class="flex gap-2 mb-4 justify-center">
@@ -292,7 +316,7 @@
                             <button on:click={clearFieldSelection} class="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-400 transition-colors"> Clear All </button>
                             <button
                                 on:click={() => {
-                                    selectedFields = fileHeaders.filter((field) => /phone|mobile|tel|number|ni|insurance|postcode|sort|code|address/i.test(field));
+                                    selectedFields = fileHeaders.filter((field) => /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field));
                                 }}
                                 class="px-3 py-1 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200 transition-colors"
                             >
@@ -301,18 +325,17 @@
                         </div>
 
                         <!-- Field Checkboxes -->
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-                            {#each fileHeaders as field}
-                                {@const isLikelyCleanable = /phone|mobile|tel|number|ni|insurance|postcode|sort|code|address/i.test(field)}
-                                <label class="flex items-center space-x-2 cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedFields.includes(field)}
-                                        on:change={() => toggleFieldSelection(field)}
-                                        class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                    />
-                                    <span class="text-sm text-gray-700">{field}</span>
-                                    {#if isLikelyCleanable}
+                        {#if fileHeaders.filter((field) => /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)).length > 0}
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                                {#each fileHeaders.filter((field) => /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)) as field}
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedFields.includes(field)}
+                                            on:change={() => toggleFieldSelection(field)}
+                                            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                        />
+                                        <span class="text-sm text-gray-700">{field}</span>
                                         <svg class="w-4 h-4 text-blue-600 bg-blue-100 p-0.5 rounded" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path
                                                 stroke-linecap="round"
@@ -321,10 +344,17 @@
                                                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
                                             ></path>
                                         </svg>
-                                    {/if}
-                                </label>
-                            {/each}
-                        </div>
+                                    </label>
+                                {/each}
+                            </div>
+                        {:else}
+                            <div class="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                                <p class="text-sm text-yellow-800">
+                                    ⚠️ <strong>No cleanable fields found</strong><br />
+                                    This file doesn't contain columns we can clean (phone numbers, NI numbers, postcodes, or sort codes).
+                                </p>
+                            </div>
+                        {/if}
 
                         <!-- Smart Suggestions -->
                         <div class="text-center p-3 bg-blue-100 rounded-lg border border-blue-200">
@@ -337,16 +367,7 @@
                                         d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
                                     ></path>
                                 </svg>
-                                <strong>Smart Suggestions:</strong> Fields with the
-                                <svg class="w-3 h-3 inline mx-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                                    ></path>
-                                </svg>
-                                icon are likely to contain data that can be cleaned
+                                <strong>Smart Selection:</strong> Only fields we can actually clean are shown above
                             </p>
                         </div>
 
@@ -435,35 +456,172 @@
                         <button on:click={clearResults} class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"> Process New File </button>
                     </div>
 
-                    <!-- Sample Results -->
+                    <!-- Detailed Results Tabs -->
                     <div class="bg-white rounded-lg p-6 shadow">
-                        <h3 class="text-lg font-semibold mb-4">Sample of What We Cleaned:</h3>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Row</th>
-                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Column</th>
-                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Before</th>
-                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">After</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    {#each results.processedRows.slice(0, 5) as row}
-                                        {#each row.validationResults.slice(0, 2) as result}
-                                            {#if result.fixed && result.fixed !== result.value}
-                                                <tr class="hover:bg-gray-50">
-                                                    <td class="px-4 py-2 text-sm text-gray-500">{row.rowNumber}</td>
-                                                    <td class="px-4 py-2 text-sm font-medium">{result.column}</td>
-                                                    <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">{result.value}</code></td>
-                                                    <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">{result.fixed}</code></td>
-                                                </tr>
-                                            {/if}
-                                        {/each}
-                                    {/each}
-                                </tbody>
-                            </table>
+                        <div class="border-b border-gray-200 mb-4">
+                            <nav class="-mb-px flex space-x-8">
+                                <button
+                                    class="py-2 px-1 border-b-2 font-medium text-sm {activeTab === 'summary'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}"
+                                    on:click={() => (activeTab = "summary")}
+                                >
+                                    Summary
+                                </button>
+                                <button
+                                    class="py-2 px-1 border-b-2 font-medium text-sm {activeTab === 'cleaned'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}"
+                                    on:click={() => (activeTab = "cleaned")}
+                                >
+                                    Cleaned Data ({results.summary.totalFixed})
+                                </button>
+                                <button
+                                    class="py-2 px-1 border-b-2 font-medium text-sm {activeTab === 'issues'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}"
+                                    on:click={() => (activeTab = "issues")}
+                                >
+                                    Issues Found ({results.summary.totalInvalid})
+                                </button>
+                            </nav>
                         </div>
+
+                        <!-- Summary Tab -->
+                        {#if activeTab === "summary"}
+                            <div class="space-y-4">
+                                <h3 class="text-lg font-semibold">What We Cleaned:</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Row</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Column</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Before</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">After</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-200">
+                                            {#each results.processedRows.slice(0, 5) as row}
+                                                {#each row.validationResults.slice(0, 2) as result}
+                                                    {#if result.fixed && result.fixed !== result.value}
+                                                        <tr class="hover:bg-gray-50">
+                                                            <td class="px-4 py-2 text-sm text-gray-500">{row.rowNumber}</td>
+                                                            <td class="px-4 py-2 text-sm font-medium">{result.column}</td>
+                                                            <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">{result.value}</code></td>
+                                                            <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">{result.fixed}</code></td>
+                                                        </tr>
+                                                    {/if}
+                                                {/each}
+                                            {/each}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        {/if}
+
+                        <!-- Cleaned Data Tab -->
+                        {#if activeTab === "cleaned"}
+                            <div class="space-y-4">
+                                <h3 class="text-lg font-semibold">Successfully Cleaned Data:</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Row</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Column</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Original</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Cleaned</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-200">
+                                            {#each results.processedRows as row}
+                                                {#each row.validationResults as result}
+                                                    {#if result.fixed && result.isValid}
+                                                        <tr class="hover:bg-gray-50">
+                                                            <td class="px-4 py-2 text-sm text-gray-500">{row.rowNumber}</td>
+                                                            <td class="px-4 py-2 text-sm font-medium">{result.column}</td>
+                                                            <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">{result.value}</code></td>
+                                                            <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">{result.fixed}</code></td>
+                                                            <td class="px-4 py-2 text-sm text-blue-600">{result.detectedType}</td>
+                                                        </tr>
+                                                    {/if}
+                                                {/each}
+                                            {/each}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        {/if}
+
+                        <!-- Issues Tab -->
+                        {#if activeTab === "issues"}
+                            <div class="space-y-4">
+                                <h3 class="text-lg font-semibold">Issues Found & Why They Were Rejected:</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Row</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Column</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Value</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Issue</th>
+                                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">HMRC Standard</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-200">
+                                            {#each results.processedRows as row}
+                                                {#each row.validationResults as result}
+                                                    {#if !result.isValid}
+                                                        <tr class="hover:bg-gray-50">
+                                                            <td class="px-4 py-2 text-sm text-gray-500">{row.rowNumber}</td>
+                                                            <td class="px-4 py-2 text-sm font-medium">{result.column}</td>
+                                                            <td class="px-4 py-2 text-sm"><code class="bg-red-100 px-2 py-1 rounded text-red-800">{result.value}</code></td>
+                                                            <td class="px-4 py-2 text-sm text-red-600">{result.error}</td>
+                                                            <td class="px-4 py-2 text-sm">
+                                                                {#if result.column.toLowerCase().includes("ni") || result.column.toLowerCase().includes("insurance")}
+                                                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"> HMRC Compliant </span>
+                                                                {:else if result.column.toLowerCase().includes("phone") || result.column.toLowerCase().includes("mobile")}
+                                                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800"> UK Standard </span>
+                                                                {:else}
+                                                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                                        Industry Standard
+                                                                    </span>
+                                                                {/if}
+                                                            </td>
+                                                        </tr>
+                                                    {/if}
+                                                {/each}
+                                            {/each}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- HMRC Compliance Info -->
+                                {#if results.processedRows.some((row) => row.validationResults.some((r) => !r.isValid && (r.column.toLowerCase().includes("ni") || r.column
+                                                    .toLowerCase()
+                                                    .includes("insurance"))))}
+                                    <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                        <h4 class="text-sm font-semibold text-blue-800 mb-2">ℹ️ About HMRC National Insurance Standards</h4>
+                                        <p class="text-sm text-blue-700 mb-2">Your NI numbers were validated against official HMRC standards. Common rejection reasons:</p>
+                                        <ul class="text-sm text-blue-700 space-y-1 ml-4">
+                                            <li>• <strong>Banned prefixes:</strong> BG, GB, KN, NK, NT, TN, ZZ</li>
+                                            <li>• <strong>Invalid letters:</strong> D, F, I, Q, U, V in first position; O in second position</li>
+                                            <li>• <strong>TRN format:</strong> 11 a1 11 11 (not a valid NI number)</li>
+                                            <li>• <strong>Administrative prefixes:</strong> OO, FY, NC, PZ (special use only)</li>
+                                        </ul>
+                                        <p class="text-sm text-blue-700 mt-2">
+                                            For more details, see <a
+                                                href="https://www.gov.uk/hmrc-internal-manuals/national-insurance-manual/nim39110"
+                                                target="_blank"
+                                                class="underline hover:text-blue-800">HMRC guidance</a
+                                            >.
+                                        </p>
+                                    </div>
+                                {/if}
+                            </div>
+                        {/if}
                     </div>
                 </div>
             </div>
@@ -575,7 +733,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold mb-2">Phone Numbers</h3>
-                    <p class="text-gray-600 text-sm">Format UK mobile and landline numbers consistently</p>
+                    <p class="text-gray-600 text-sm">Format UK mobile and landline numbers with proper spacing</p>
                 </div>
 
                 <div class="bg-white rounded-xl p-6 text-center shadow-lg">
@@ -601,7 +759,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold mb-2">NI Numbers</h3>
-                    <p class="text-gray-600 text-sm">Clean National Insurance number formats</p>
+                    <p class="text-gray-600 text-sm">HMRC compliant validation with proper formatting</p>
                 </div>
 
                 <div class="bg-white rounded-xl p-6 text-center shadow-lg">
@@ -611,7 +769,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold mb-2">Sort Codes</h3>
-                    <p class="text-gray-600 text-sm">Format bank sort codes consistently</p>
+                    <p class="text-gray-600 text-sm">Format bank sort codes with proper hyphens</p>
                 </div>
             </div>
         </div>

@@ -374,10 +374,68 @@ export class NINumberValidator implements DataValidator {
         // Include Unicode separators: bullet points (•), middle dots (·), colons (:), semicolons (;), etc.
         let cleaned = value.replace(/[-._\/•·:;]/g, '').replace(/\s/g, '').toUpperCase();
 
+        // Check for TRN (Temporary Reference Number) format: 11 a1 11 11
+        if (/^11[A-Z]\d{1}\d{2}\d{2}$/.test(cleaned)) {
+            return {
+                isValid: false,
+                value: value,
+                error: 'This is a TRN (Temporary Reference Number), not a valid NI number'
+            };
+        }
+
         // NI number format: 2 letters, 6-8 digits, 1 letter (optional)
         const pattern = /^[A-Z]{2}\d{6,8}[A-Z]?$/;
 
         if (pattern.test(cleaned)) {
+            // Check for invalid prefixes according to HMRC standards
+            const prefix = cleaned.slice(0, 2);
+            const invalidPrefixes = ['BG', 'GB', 'KN', 'NK', 'NT', 'TN', 'ZZ'];
+            const invalidFirstLetters = ['D', 'F', 'I', 'Q', 'U', 'V'];
+            const invalidSecondLetters = ['D', 'F', 'I', 'O', 'Q', 'U', 'V'];
+
+            if (invalidPrefixes.includes(prefix)) {
+                return {
+                    isValid: false,
+                    value: value,
+                    error: `Invalid prefix '${prefix}' - banned by HMRC standards`
+                };
+            }
+
+            if (invalidFirstLetters.includes(prefix[0])) {
+                return {
+                    isValid: false,
+                    value: value,
+                    error: `Invalid first letter '${prefix[0]}' - not used in NI number prefixes`
+                };
+            }
+
+            if (invalidSecondLetters.includes(prefix[1])) {
+                return {
+                    isValid: false,
+                    value: value,
+                    error: `Invalid second letter '${prefix[1]}' - not used in NI number prefixes`
+                };
+            }
+
+            // Check for administrative prefixes that are not valid NI numbers
+            const adminPrefixes = ['OO', 'FY', 'NC', 'PZ'];
+            if (adminPrefixes.includes(prefix)) {
+                return {
+                    isValid: false,
+                    value: value,
+                    error: `'${prefix}' is an administrative prefix, not a valid NI number`
+                };
+            }
+
+            // Special case: PP999999P is not valid despite PP being a valid prefix
+            if (prefix === 'PP' && cleaned === 'PP999999P') {
+                return {
+                    isValid: false,
+                    value: value,
+                    error: 'PP999999P is not a valid NI number (administrative reference only)'
+                };
+            }
+
             return {
                 isValid: true,
                 value: cleaned,
@@ -385,23 +443,9 @@ export class NINumberValidator implements DataValidator {
             };
         }
 
-        // Try to fix common issues
-        if (/^\d{8,9}$/.test(cleaned)) {
-            // If it's just digits, try to add letters
-            // For 8 digits: AB + 8 digits = 10 characters (valid)
-            // For 9 digits: AB + 9 digits = 11 characters (invalid)
-            if (cleaned.length === 8) {
-                const fixed = `AB${cleaned}`;
-                if (pattern.test(fixed)) {
-                    return {
-                        isValid: true,
-                        value: fixed,
-                        fixed: this.formatNINumber(fixed),
-                        error: 'Added prefix letters'
-                    };
-                }
-            }
-        }
+        // Note: We do NOT try to "fix" random digits by adding letters
+        // This would create fake NI numbers which is dangerous and misleading
+        // Only genuine NI numbers with valid prefixes should be accepted
 
         // Check if it looks like an NI number with separators but wrong format
         // This helps catch cases like "AB-123-456-C" that might be misclassified as sort codes
