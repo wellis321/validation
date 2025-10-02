@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Data Cleaner - Clean Phone Numbers, Postcodes & More</title>
+    <meta name="description"
+        content="Instantly clean and format UK data including phone numbers, postcodes, NI numbers, and bank sort codes. Upload your CSV and get clean data back.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+    <style>
+        /* Custom styles for better UX */
+        .file-drop-zone {
+            transition: all 0.3s ease;
+        }
+
+        .file-drop-zone.dragover {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-16 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Clean Your UK Data
+                <span class="text-blue-600">Instantly</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+                Upload your CSV file and we'll automatically clean and format your UK phone numbers, NI numbers,
+                postcodes, and bank sort codes. HMRC compliant validation included.
+            </p>
+
+            <!-- CTA Button -->
+            <div class="mb-12">
+                <a href="#upload-section"
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 inline-block">
+                    <svg class="w-6 h-6 inline mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                        </path>
+                    </svg>
+                    Start Cleaning Your Data
+                </a>
+            </div>
+
+            <!-- Examples Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="text-sm text-gray-500 mb-2">Phone Number</div>
+                    <div class="text-lg font-mono text-gray-400 mb-2">07700 900123</div>
+                    <div class="text-lg font-mono text-green-600 font-semibold">07700 900 123</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="text-sm text-gray-500 mb-2">NI Number</div>
+                    <div class="text-lg font-mono text-gray-400 mb-2">AB-123-456-C</div>
+                    <div class="text-lg font-mono text-green-600 font-semibold">AB 123456 C</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="text-sm text-gray-500 mb-2">Sort Code</div>
+                    <div class="text-lg font-mono text-gray-400 mb-2">123456</div>
+                    <div class="text-lg font-mono text-green-600 font-semibold">12-34-56</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="text-sm text-gray-500 mb-2">Postcode</div>
+                    <div class="text-lg font-mono text-gray-400 mb-2">SW1A1AA</div>
+                    <div class="text-lg font-mono text-green-600 font-semibold">SW1A 1AA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="bg-white py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-blue-600">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Upload</h3>
+                    <p class="text-gray-600">Drop your CSV file with messy UK data</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-blue-600">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Process</h3>
+                    <p class="text-gray-600">We automatically detect and clean UK-specific data</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-blue-600">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Download</h3>
+                    <p class="text-gray-600">Get your clean, formatted data back</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Upload Section -->
+    <div id="upload-section" class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">Upload & Clean Your Data</h2>
+
+                <!-- Hidden file input -->
+                <input type="file" id="fileInput" accept=".csv,.xlsx,.txt" class="hidden">
+
+                <!-- File Upload Area -->
+                <div id="fileDropZone"
+                    class="file-drop-zone border-2 border-dashed border-gray-300 rounded-xl p-8 text-center mb-6 hover:border-blue-400 transition-colors">
+                    <div id="uploadPrompt">
+                        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                            </path>
+                        </svg>
+                        <p class="text-lg text-gray-600 mb-2">Drop your file here or click to browse</p>
+                        <p class="text-sm text-gray-500 mb-4">Supports CSV, Excel, and text files</p>
+                        <button id="chooseFileBtn"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors text-lg">Choose
+                            File</button>
+                    </div>
+                    <div id="fileSelected" class="hidden">
+                        <div class="bg-green-50 rounded-lg p-6 border border-green-200">
+                            <div class="flex items-center justify-center mb-3">
+                                <svg class="w-10 h-10 text-green-600 mr-3" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-xl font-semibold text-green-800">File Selected Successfully!</span>
+                            </div>
+                            <p id="fileName" class="text-green-700 mb-4 text-lg"></p>
+                            <div class="flex gap-3 justify-center">
+                                <button id="chooseDifferentBtn"
+                                    class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">Choose
+                                    Different File</button>
+                                <button id="backToTopBtn"
+                                    class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg font-medium transition-colors">Back
+                                    to Top</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Field Selection -->
+                <div id="fieldSelection" class="hidden bg-blue-50 rounded-xl p-6 mb-6 border border-blue-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-blue-800">
+                            <svg class="w-5 h-5 inline mr-2 text-blue-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Select Fields to Clean
+                        </h3>
+                        <button id="backToTopBtn2"
+                            class="text-xs text-blue-600 hover:text-blue-800 bg-blue-100 hover:bg-blue-200 px-2 py-1 rounded transition-colors">↑
+                            Back to Top</button>
+                    </div>
+                    <p class="text-sm text-blue-700 mb-4 text-center">Choose which columns you want us to validate and
+                        clean. We can clean:</p>
+                    <div class="text-xs text-blue-600 mb-4 text-center space-y-1">
+                        <div>📱 <strong>Phone numbers:</strong> mobile, telephone, contact_number</div>
+                        <div>🆔 <strong>NI numbers:</strong> national_insurance, ni_number, insurance</div>
+                        <div>📍 <strong>Postcodes:</strong> postcode, post_code, zip</div>
+                        <div>🏦 <strong>Sort codes:</strong> sort_code, bank, account</div>
+                    </div>
+
+                    <!-- Field Selection Controls -->
+                    <div class="flex gap-2 mb-4 justify-center">
+                        <button id="selectAllBtn"
+                            class="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200 transition-colors">Select
+                            All</button>
+                        <button id="clearAllBtn"
+                            class="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-400 transition-colors">Clear
+                            All</button>
+                        <button id="autoSelectBtn"
+                            class="px-3 py-1 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200 transition-colors">Auto-Select
+                            Cleanable</button>
+                    </div>
+
+                    <!-- Field Checkboxes -->
+                    <div id="fieldCheckboxes" class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4"></div>
+
+                    <!-- Smart Suggestions -->
+                    <div class="text-center p-3 bg-blue-100 rounded-lg border border-blue-200">
+                        <p class="text-sm text-blue-800">
+                            <svg class="w-4 h-4 inline mr-1 text-blue-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                </path>
+                            </svg>
+                            <strong>Smart Selection:</strong> Only fields we can actually clean are shown above
+                        </p>
+                    </div>
+
+                    <p id="fieldSelectionStatus" class="text-sm text-orange-600 mt-3 text-center">⚠️ Please select at
+                        least one field to clean</p>
+                </div>
+
+                <!-- Phone Format Option -->
+                <div class="text-center mb-6">
+                    <p class="text-sm text-gray-600 mb-2">Phone number format preference:</p>
+                    <div class="flex justify-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="phoneFormat" value="international" checked
+                                class="mr-2 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">International (+44)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="phoneFormat" value="uk"
+                                class="mr-2 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">UK (0)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Process Button -->
+                <button id="processBtn"
+                    class="hidden w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-lg">
+                    Clean My Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="hidden bg-white py-16">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="bg-green-50 rounded-2xl p-8 border border-green-200">
+                <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">🎉 Your Data Has Been Cleaned!</h2>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div id="totalRows" class="text-2xl font-bold text-blue-600">0</div>
+                        <div class="text-blue-600 text-sm">Total Rows</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div id="totalValid" class="text-2xl font-bold text-green-600">0</div>
+                        <div class="text-green-600 text-sm">Valid Data</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div id="totalFixed" class="text-2xl font-bold text-yellow-600">0</div>
+                        <div class="text-yellow-600 text-sm">Cleaned Data</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div id="totalInvalid" class="text-2xl font-bold text-red-600">0</div>
+                        <div class="text-red-600 text-sm">Issues Found</div>
+                    </div>
+                </div>
+
+                <!-- Export Buttons -->
+                <div class="flex flex-wrap gap-4 justify-center mb-6">
+                    <button id="exportCleanedBtn"
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        Download Cleaned CSV
+                    </button>
+                    <button id="exportReportBtn"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">Download
+                        Report</button>
+                    <button id="exportExcelBtn"
+                        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">Download
+                        Excel-Friendly CSV</button>
+                    <button id="exportJsonBtn"
+                        class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">Download
+                        JSON</button>
+                    <button id="processNewBtn"
+                        class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">Process
+                        New File</button>
+                </div>
+
+                <!-- Detailed Results Tabs -->
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <div class="border-b border-gray-200 mb-4">
+                        <nav class="-mb-px flex space-x-8">
+                            <button
+                                class="tab-btn active py-2 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600"
+                                data-tab="summary">Summary</button>
+                            <button
+                                class="tab-btn py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                                data-tab="cleaned">Cleaned Data (<span id="cleanedCount">0</span>)</button>
+                            <button
+                                class="tab-btn py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                                data-tab="issues">Issues Found (<span id="issuesCount">0</span>)</button>
+                        </nav>
+                    </div>
+
+                    <!-- Summary Tab -->
+                    <div id="summaryTab" class="tab-content active">
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold">What We Cleaned:</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Row</th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Column
+                                            </th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Before
+                                            </th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">After</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="summaryTableBody" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cleaned Data Tab -->
+                    <div id="cleanedTab" class="tab-content">
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold">Successfully Cleaned Data:</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Row</th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Column
+                                            </th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Original
+                                            </th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Cleaned
+                                            </th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cleanedTableBody" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Issues Tab -->
+                    <div id="issuesTab" class="tab-content">
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold">Issues Found & Why They Were Rejected:</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Row</th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Column
+                                            </th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Value</th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Issue</th>
+                                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">HMRC
+                                                Standard</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="issuesTableBody" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Display -->
+    <div id="errorDisplay" class="hidden bg-red-50 border border-red-200 rounded-lg p-4 mx-4 mb-8 max-w-4xl mx-auto">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800">Error</h3>
+                <p id="errorMessage" class="text-sm text-red-700 mt-1"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Section -->
+    <div class="bg-white py-16">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Try It Out</h2>
+            <div class="bg-gray-50 rounded-2xl p-8">
+                <p class="text-center text-gray-600 mb-6">Test how we clean phone numbers:</p>
+
+                <div class="flex space-x-4 mb-4">
+                    <input type="text" id="testInput" placeholder="Enter a phone number to test..."
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div id="testResult" class="hidden bg-white rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-lg font-semibold">Test Result:</span>
+                        <span id="testStatus" class="font-medium flex items-center"></span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">Input:</div>
+                            <code id="testInputValue" class="bg-gray-100 px-3 py-2 rounded text-sm"></code>
+                        </div>
+                        <div id="testOutput" class="hidden">
+                            <div class="text-sm text-gray-500 mb-1">Cleaned:</div>
+                            <code id="testOutputValue"
+                                class="bg-green-100 px-3 py-2 rounded text-sm text-green-800"></code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600 mb-3">Quick test examples:</p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button
+                            class="test-example text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded hover:bg-blue-200 transition-colors"
+                            data-example="07700 900123">07700 900123</button>
+                        <button
+                            class="test-example text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded hover:bg-blue-200 transition-colors"
+                            data-example="Mobile: 07700 900123">Mobile: 07700 900123</button>
+                        <button
+                            class="test-example text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded hover:bg-blue-200 transition-colors"
+                            data-example="07700-900-123">07700-900-123</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">What We Clean</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg">
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Phone Numbers</h3>
+                    <p class="text-gray-600 text-sm">Format UK mobile and landline numbers with proper spacing</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg">
+                    <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Postcodes</h3>
+                    <p class="text-gray-600 text-sm">Validate and format UK postcodes correctly</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg">
+                    <div class="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 12a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M15 11h3m-3 4h2">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">NI Numbers</h3>
+                    <p class="text-gray-600 text-sm">HMRC compliant validation with proper formatting</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg">
+                    <div class="bg-yellow-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Sort Codes</h3>
+                    <p class="text-gray-600 text-sm">Format bank sort codes with proper hyphens</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-lg mb-4">🔒 Your data is processed locally and never sent to our servers</p>
+            <div class="space-x-6 text-sm text-gray-400">
+                <a href="validation-rules.html" class="hover:text-white transition-colors">Validation Rules</a>
+                <span>•</span>
+                <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+                <span>•</span>
+                <span>GDPR Compliant</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="validators.js"></script>
+    <script src="fileProcessor.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

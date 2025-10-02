@@ -1,0 +1,609 @@
+// Main Application Logic
+// Converted from SvelteKit to vanilla JavaScript for cPanel hosting
+
+class UKDataCleanerApp {
+    constructor() {
+        this.fileProcessor = new FileProcessor('international');
+        this.phoneValidator = new PhoneNumberValidator('international');
+        this.selectedFile = null;
+        this.results = null;
+        this.error = null;
+        this.fileHeaders = [];
+        this.selectedFields = [];
+        this.fileData = [];
+        this.activeTab = 'summary';
+
+        this.initializeEventListeners();
+    }
+
+    initializeEventListeners() {
+        // File input and upload
+        const fileInput = document.getElementById('fileInput');
+        const chooseFileBtn = document.getElementById('chooseFileBtn');
+        const chooseDifferentBtn = document.getElementById('chooseDifferentBtn');
+        const fileDropZone = document.getElementById('fileDropZone');
+        const processBtn = document.getElementById('processBtn');
+
+        chooseFileBtn?.addEventListener('click', () => fileInput?.click());
+        chooseDifferentBtn?.addEventListener('click', () => this.resetForm());
+        fileInput?.addEventListener('change', (e) => this.handleFileSelect(e));
+        processBtn?.addEventListener('click', () => this.processFile());
+
+        // Drag and drop
+        fileDropZone?.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileDropZone.classList.add('dragover');
+        });
+
+        fileDropZone?.addEventListener('dragleave', () => {
+            fileDropZone.classList.remove('dragover');
+        });
+
+        fileDropZone?.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileDropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                this.handleFile(files[0]);
+            }
+        });
+
+        // Field selection
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const autoSelectBtn = document.getElementById('autoSelectBtn');
+
+        selectAllBtn?.addEventListener('click', () => this.selectAllFields());
+        clearAllBtn?.addEventListener('click', () => this.clearFieldSelection());
+        autoSelectBtn?.addEventListener('click', () => this.autoSelectCleanableFields());
+
+        // Phone format
+        const phoneFormatRadios = document.querySelectorAll('input[name="phoneFormat"]');
+        phoneFormatRadios.forEach(radio => {
+            radio.addEventListener('change', () => this.updatePhoneFormat());
+        });
+
+        // Export buttons
+        const exportCleanedBtn = document.getElementById('exportCleanedBtn');
+        const exportReportBtn = document.getElementById('exportReportBtn');
+        const exportExcelBtn = document.getElementById('exportExcelBtn');
+        const exportJsonBtn = document.getElementById('exportJsonBtn');
+        const processNewBtn = document.getElementById('processNewBtn');
+
+        exportCleanedBtn?.addEventListener('click', () => this.exportResults('cleaned-csv'));
+        exportReportBtn?.addEventListener('click', () => this.exportResults('csv'));
+        exportExcelBtn?.addEventListener('click', () => this.exportResults('excel'));
+        exportJsonBtn?.addEventListener('click', () => this.exportResults('json'));
+        processNewBtn?.addEventListener('click', () => this.resetForm());
+
+        // Tab navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => this.switchTab(e.target.dataset.tab));
+        });
+
+        // Test functionality
+        const testInput = document.getElementById('testInput');
+        const testExamples = document.querySelectorAll('.test-example');
+
+        testInput?.addEventListener('input', (e) => this.testPhoneNumber(e.target.value));
+        testExamples.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const example = e.target.dataset.example;
+                testInput.value = example;
+                this.testPhoneNumber(example);
+            });
+        });
+
+        // Back to top buttons
+        const backToTopBtns = document.querySelectorAll('#backToTopBtn, #backToTopBtn2');
+        backToTopBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+
+    async handleFileSelect(event) {
+        const target = event.target;
+        if (target.files && target.files.length > 0) {
+            await this.handleFile(target.files[0]);
+        }
+    }
+
+    async handleFile(file) {
+        this.selectedFile = file;
+        this.error = null;
+        this.results = null;
+        this.hideFieldSelection();
+        this.selectedFields = [];
+
+        // Update UI
+        this.showFileSelected(file.name);
+
+        // Parse file headers to show field selection
+        try {
+            const text = await this.readFileAsText(file);
+            const lines = text.split('\n').filter(line => line.trim());
+            if (lines.length > 0) {
+                // Use proper CSV parsing for headers
+                this.fileHeaders = this.parseCSVLine(lines[0]);
+                // Parse all data rows properly
+                this.fileData = lines.map(line => this.parseCSVLine(line));
+                this.showFieldSelection();
+            }
+        } catch (err) {
+            this.showError('Could not read file headers');
+        }
+    }
+
+    readFileAsText(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = () => reject(new Error('Failed to read file'));
+            reader.readAsText(file);
+        });
+    }
+
+    parseCSVLine(line) {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                result.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+
+        result.push(current.trim());
+        return result;
+    }
+
+    showFileSelected(fileName) {
+        const uploadPrompt = document.getElementById('uploadPrompt');
+        const fileSelected = document.getElementById('fileSelected');
+        const fileName = document.getElementById('fileName');
+
+        if (uploadPrompt) uploadPrompt.style.display = 'none';
+        if (fileSelected) fileSelected.classList.remove('hidden');
+        if (fileName) fileName.textContent = fileName;
+    }
+
+    showFieldSelection() {
+        const fieldSelection = document.getElementById('fieldSelection');
+        const fieldCheckboxes = document.getElementById('fieldCheckboxes');
+
+        if (fieldSelection) fieldSelection.classList.remove('hidden');
+        if (fieldCheckboxes) {
+            this.renderFieldCheckboxes();
+        }
+    }
+
+    hideFieldSelection() {
+        const fieldSelection = document.getElementById('fieldSelection');
+        if (fieldSelection) fieldSelection.classList.add('hidden');
+    }
+
+    renderFieldCheckboxes() {
+        const fieldCheckboxes = document.getElementById('fieldCheckboxes');
+        if (!fieldCheckboxes) return;
+
+        // Filter fields that we can actually clean
+        const cleanableFields = this.fileHeaders.filter(field =>
+            /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)
+        );
+
+        if (cleanableFields.length === 0) {
+            fieldCheckboxes.innerHTML = `
+                <div class="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-200 col-span-full">
+                    <p class="text-sm text-yellow-800">
+                        ⚠️ <strong>No cleanable fields found</strong><br />
+                        This file doesn't contain columns we can clean (phone numbers, NI numbers, postcodes, or sort codes).
+                    </p>
+                </div>
+            `;
+            return;
+        }
+
+        fieldCheckboxes.innerHTML = cleanableFields.map(field => `
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input
+                    type="checkbox"
+                    value="${field}"
+                    class="field-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span class="text-sm text-gray-700">${field}</span>
+                <svg class="w-4 h-4 text-blue-600 bg-blue-100 p-0.5 rounded" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+            </label>
+        `).join('');
+
+        // Add event listeners to checkboxes
+        const checkboxes = fieldCheckboxes.querySelectorAll('.field-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => this.updateFieldSelection());
+        });
+
+        this.updateFieldSelection();
+    }
+
+    updateFieldSelection() {
+        const checkboxes = document.querySelectorAll('.field-checkbox');
+        this.selectedFields = Array.from(checkboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+
+        this.updateFieldSelectionStatus();
+        this.updateProcessButton();
+    }
+
+    updateFieldSelectionStatus() {
+        const status = document.getElementById('fieldSelectionStatus');
+        if (!status) return;
+
+        if (this.selectedFields.length === 0) {
+            status.textContent = '⚠️ Please select at least one field to clean';
+            status.className = 'text-sm text-orange-600 mt-3 text-center';
+        } else {
+            status.textContent = `✅ ${this.selectedFields.length} field(s) selected for cleaning`;
+            status.className = 'text-sm text-green-600 mt-3 text-center';
+        }
+    }
+
+    updateProcessButton() {
+        const processBtn = document.getElementById('processBtn');
+        if (!processBtn) return;
+
+        if (this.selectedFields.length > 0) {
+            processBtn.classList.remove('hidden');
+        } else {
+            processBtn.classList.add('hidden');
+        }
+    }
+
+    selectAllFields() {
+        const checkboxes = document.querySelectorAll('.field-checkbox');
+        checkboxes.forEach(cb => cb.checked = true);
+        this.updateFieldSelection();
+    }
+
+    clearFieldSelection() {
+        const checkboxes = document.querySelectorAll('.field-checkbox');
+        checkboxes.forEach(cb => cb.checked = false);
+        this.updateFieldSelection();
+    }
+
+    autoSelectCleanableFields() {
+        this.selectedFields = this.fileHeaders.filter(field =>
+            /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)
+        );
+
+        const checkboxes = document.querySelectorAll('.field-checkbox');
+        checkboxes.forEach(cb => {
+            cb.checked = this.selectedFields.includes(cb.value);
+        });
+
+        this.updateFieldSelection();
+    }
+
+    updatePhoneFormat() {
+        const selectedFormat = document.querySelector('input[name="phoneFormat"]:checked')?.value || 'international';
+        this.fileProcessor.updatePhoneFormat(selectedFormat);
+        this.phoneValidator.setOutputFormat(selectedFormat);
+    }
+
+    async processFile() {
+        if (!this.selectedFile || this.selectedFields.length === 0) return;
+
+        const processBtn = document.getElementById('processBtn');
+        if (processBtn) {
+            processBtn.disabled = true;
+            processBtn.textContent = 'Processing...';
+        }
+
+        this.hideError();
+
+        try {
+            // Ensure phone format is synchronized before processing
+            this.updatePhoneFormat();
+            // Process the file with selected columns
+            this.results = await this.fileProcessor.processFile(this.selectedFile, this.selectedFields);
+            this.showResults();
+        } catch (err) {
+            this.showError(err instanceof Error ? err.message : 'An error occurred while processing the file');
+        } finally {
+            if (processBtn) {
+                processBtn.disabled = false;
+                processBtn.textContent = 'Clean My Data';
+            }
+        }
+    }
+
+    showResults() {
+        const resultsSection = document.getElementById('resultsSection');
+        if (!resultsSection || !this.results) return;
+
+        resultsSection.classList.remove('hidden');
+
+        // Update summary cards
+        this.updateSummaryCards();
+
+        // Update tab counts
+        this.updateTabCounts();
+
+        // Render tables
+        this.renderSummaryTable();
+        this.renderCleanedTable();
+        this.renderIssuesTable();
+
+        // Scroll to results
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    updateSummaryCards() {
+        const totalRows = document.getElementById('totalRows');
+        const totalValid = document.getElementById('totalValid');
+        const totalFixed = document.getElementById('totalFixed');
+        const totalInvalid = document.getElementById('totalInvalid');
+
+        if (totalRows) totalRows.textContent = this.results.totalRows;
+        if (totalValid) totalValid.textContent = this.results.summary.totalValid;
+        if (totalFixed) totalFixed.textContent = this.results.summary.totalFixed;
+        if (totalInvalid) totalInvalid.textContent = this.results.summary.totalInvalid;
+    }
+
+    updateTabCounts() {
+        const cleanedCount = document.getElementById('cleanedCount');
+        const issuesCount = document.getElementById('issuesCount');
+
+        if (cleanedCount) cleanedCount.textContent = this.results.summary.totalFixed;
+        if (issuesCount) issuesCount.textContent = this.results.summary.totalInvalid;
+    }
+
+    renderSummaryTable() {
+        const tbody = document.getElementById('summaryTableBody');
+        if (!tbody) return;
+
+        const summaryData = this.results.processedRows
+            .slice(0, 5)
+            .flatMap(row =>
+                row.validationResults
+                    .slice(0, 2)
+                    .filter(result => result.fixed && result.fixed !== result.value)
+                    .map(result => ({ row, result }))
+            );
+
+        tbody.innerHTML = summaryData.map(({ row, result }) => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2 text-sm text-gray-500">${row.rowNumber}</td>
+                <td class="px-4 py-2 text-sm font-medium">${result.column}</td>
+                <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">${result.value}</code></td>
+                <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">${result.fixed}</code></td>
+            </tr>
+        `).join('');
+    }
+
+    renderCleanedTable() {
+        const tbody = document.getElementById('cleanedTableBody');
+        if (!tbody) return;
+
+        const cleanedData = this.results.processedRows
+            .flatMap(row =>
+                row.validationResults
+                    .filter(result => result.fixed && result.isValid)
+                    .map(result => ({ row, result }))
+            );
+
+        tbody.innerHTML = cleanedData.map(({ row, result }) => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2 text-sm text-gray-500">${row.rowNumber}</td>
+                <td class="px-4 py-2 text-sm font-medium">${result.column}</td>
+                <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">${result.value}</code></td>
+                <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">${result.fixed}</code></td>
+                <td class="px-4 py-2 text-sm text-blue-600">${result.detectedType}</td>
+            </tr>
+        `).join('');
+    }
+
+    renderIssuesTable() {
+        const tbody = document.getElementById('issuesTableBody');
+        if (!tbody) return;
+
+        const issuesData = this.results.processedRows
+            .flatMap(row =>
+                row.validationResults
+                    .filter(result => !result.isValid)
+                    .map(result => ({ row, result }))
+            );
+
+        tbody.innerHTML = issuesData.map(({ row, result }) => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2 text-sm text-gray-500">${row.rowNumber}</td>
+                <td class="px-4 py-2 text-sm font-medium">${result.column}</td>
+                <td class="px-4 py-2 text-sm"><code class="bg-red-100 px-2 py-1 rounded text-red-800">${result.value}</code></td>
+                <td class="px-4 py-2 text-sm text-red-600">${result.error}</td>
+                <td class="px-4 py-2 text-sm">
+                    ${this.getComplianceStandard(result.column, result.detectedType)}
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    getComplianceStandard(columnName, detectedType) {
+        const column = columnName.toLowerCase();
+
+        if (column.includes('ni') || column.includes('insurance')) {
+            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">HMRC Compliant</span>';
+        } else if (column.includes('phone') || column.includes('mobile')) {
+            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">UK Standard</span>';
+        } else {
+            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Industry Standard</span>';
+        }
+    }
+
+    switchTab(tabName) {
+        // Update active tab button
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            if (btn.dataset.tab === tabName) {
+                btn.classList.add('border-blue-500', 'text-blue-600');
+                btn.classList.remove('border-transparent', 'text-gray-500');
+            } else {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            }
+        });
+
+        // Update active tab content
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => {
+            if (content.id === `${tabName}Tab`) {
+                content.classList.add('active');
+            } else {
+                content.classList.remove('active');
+            }
+        });
+
+        this.activeTab = tabName;
+    }
+
+    async exportResults(format) {
+        if (!this.results) return;
+
+        try {
+            const blob = await this.fileProcessor.exportResults(this.results, format);
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+
+            const fileExtension = format === 'cleaned-csv' ? 'csv' : format === 'excel' ? 'csv' : format;
+            const originalName = this.selectedFile?.name.replace(/\.[^/.]+$/, '') || 'validation_results';
+            const suffix = format === 'cleaned-csv' ? '_cleaned' :
+                format === 'csv' ? '_validation_report' :
+                    format === 'excel' ? '_excel_friendly' : '';
+
+            a.download = `${originalName}${suffix}.${fileExtension}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (err) {
+            this.showError('Failed to export results');
+        }
+    }
+
+    testPhoneNumber(input) {
+        const testResult = document.getElementById('testResult');
+        const testStatus = document.getElementById('testStatus');
+        const testInputValue = document.getElementById('testInputValue');
+        const testOutput = document.getElementById('testOutput');
+        const testOutputValue = document.getElementById('testOutputValue');
+
+        if (!input.trim()) {
+            if (testResult) testResult.classList.add('hidden');
+            return;
+        }
+
+        const result = this.phoneValidator.validate(input);
+
+        if (testResult) testResult.classList.remove('hidden');
+        if (testInputValue) testInputValue.textContent = result.value;
+
+        if (result.isValid) {
+            if (testStatus) {
+                testStatus.innerHTML = `
+                    <span class="text-green-600 font-medium flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Valid & Cleaned
+                    </span>
+                `;
+            }
+            if (testOutput) testOutput.classList.remove('hidden');
+            if (testOutputValue) testOutputValue.textContent = result.fixed;
+        } else {
+            if (testStatus) {
+                testStatus.innerHTML = `
+                    <span class="text-red-600 font-medium flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Cannot Process
+                    </span>
+                `;
+            }
+            if (testOutput) testOutput.classList.add('hidden');
+        }
+    }
+
+    showError(message) {
+        const errorDisplay = document.getElementById('errorDisplay');
+        const errorMessage = document.getElementById('errorMessage');
+
+        if (errorDisplay) errorDisplay.classList.remove('hidden');
+        if (errorMessage) errorMessage.textContent = message;
+
+        this.error = message;
+    }
+
+    hideError() {
+        const errorDisplay = document.getElementById('errorDisplay');
+        if (errorDisplay) errorDisplay.classList.add('hidden');
+        this.error = null;
+    }
+
+    resetForm() {
+        this.selectedFile = null;
+        this.results = null;
+        this.error = null;
+        this.fileHeaders = [];
+        this.selectedFields = [];
+        this.fileData = [];
+
+        // Reset UI
+        const fileInput = document.getElementById('fileInput');
+        const uploadPrompt = document.getElementById('uploadPrompt');
+        const fileSelected = document.getElementById('fileSelected');
+        const resultsSection = document.getElementById('resultsSection');
+        const processBtn = document.getElementById('processBtn');
+
+        if (fileInput) fileInput.value = '';
+        if (uploadPrompt) uploadPrompt.style.display = 'block';
+        if (fileSelected) fileSelected.classList.add('hidden');
+        if (resultsSection) resultsSection.classList.add('hidden');
+        if (processBtn) processBtn.classList.add('hidden');
+
+        this.hideFieldSelection();
+        this.hideError();
+    }
+}
+
+// Initialize the app when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new UKDataCleanerApp();
+});

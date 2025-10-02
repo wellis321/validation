@@ -1,45 +1,17 @@
-import { autoValidate } from './validators';
+// File Processing Library
+// Converted from TypeScript to vanilla JavaScript for cPanel hosting
 
-export interface ProcessedRow {
-    rowNumber: number;
-    originalData: string;
-    validationResults: Array<{
-        column: string;
-        value: string;
-        isValid: boolean;
-        detectedType: string;
-        fixed?: string;
-        error?: string;
-    }>;
-}
-
-export interface FileProcessingResult {
-    fileName: string;
-    totalRows: number;
-    processedRows: ProcessedRow[];
-    originalHeaders: string[]; // Store original column headers
-    originalData: string[][]; // Store original data structure
-    summary: {
-        totalValid: number;
-        totalInvalid: number;
-        totalFixed: number;
-        errors: string[];
-    };
-}
-
-export class FileProcessor {
-    private supportedTypes = ['text/csv', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-    private phoneFormat: 'international' | 'uk' = 'international';
-
-    constructor(phoneFormat: 'international' | 'uk' = 'international') {
+class FileProcessor {
+    constructor(phoneFormat = 'international') {
+        this.supportedTypes = ['text/csv', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
         this.phoneFormat = phoneFormat;
     }
 
-    setPhoneFormat(format: 'international' | 'uk') {
+    setPhoneFormat(format) {
         this.phoneFormat = format;
     }
 
-    async processFile(file: File, selectedColumns?: string[]): Promise<FileProcessingResult> {
+    async processFile(file, selectedColumns = null) {
         if (!this.supportedTypes.includes(file.type)) {
             throw new Error(`Unsupported file type: ${file.type}. Please upload a CSV, Excel, or text file.`);
         }
@@ -50,7 +22,7 @@ export class FileProcessor {
         return this.processRows(rows, file.name, selectedColumns);
     }
 
-    private async readFileContent(file: File): Promise<string> {
+    async readFileContent(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
@@ -75,8 +47,8 @@ export class FileProcessor {
         });
     }
 
-    private parseContent(content: string, fileType: string): string[][] {
-        let rows: string[][];
+    parseContent(content, fileType) {
+        let rows;
 
         if (fileType === 'text/csv') {
             rows = this.parseCSV(content);
@@ -91,11 +63,11 @@ export class FileProcessor {
         return this.fixMalformedCSV(rows);
     }
 
-    private parseCSV(content: string): string[][] {
+    parseCSV(content) {
         const lines = content.split('\n').filter(line => line.trim());
         return lines.map(line => {
             // Simple CSV parsing - split by comma, handle quoted values
-            const result: string[] = [];
+            const result = [];
             let current = '';
             let inQuotes = false;
 
@@ -117,7 +89,7 @@ export class FileProcessor {
         });
     }
 
-    private fixMalformedCSV(rows: string[][]): string[][] {
+    fixMalformedCSV(rows) {
         if (rows.length < 2) return rows; // Need at least header + 1 data row
 
         const headerRow = rows[0];
@@ -173,7 +145,7 @@ export class FileProcessor {
         });
     }
 
-    private isSplitNINumber(parts: string[]): boolean {
+    isSplitNINumber(parts) {
         if (parts.length !== 8) return false;
 
         // Check if it matches NI number pattern: 2 letters + 6 digits
@@ -189,7 +161,7 @@ export class FileProcessor {
         return true;
     }
 
-    private parseTextFile(content: string): string[][] {
+    parseTextFile(content) {
         const lines = content.split('\n').filter(line => line.trim());
         return lines.map(line => {
             // For text files, assume tab or space separated
@@ -198,29 +170,22 @@ export class FileProcessor {
         });
     }
 
-    private processRows(rows: string[][], fileName: string, selectedColumns?: string[]): FileProcessingResult {
+    processRows(rows, fileName, selectedColumns = null) {
         if (rows.length === 0) {
             throw new Error('File is empty');
         }
 
         const headerRow = rows[0];
         const dataRows = rows.slice(1);
-        const errors: string[] = [];
+        const errors = [];
 
         // Process all columns, not just phone numbers
-        const processedRows: ProcessedRow[] = [];
+        const processedRows = [];
 
         dataRows.forEach((row, index) => {
             const rowNumber = index + 2; // +2 because we start from row 2 (after header) and want 1-based indexing
 
-            const validationResults: Array<{
-                column: string;
-                value: string;
-                isValid: boolean;
-                detectedType: string;
-                fixed?: string;
-                error?: string;
-            }> = [];
+            const validationResults = [];
 
             // Process each column in the row (up to the number of columns the row actually has)
             const columnsToProcess = Math.min(headerRow.length, row.length);
@@ -295,7 +260,7 @@ export class FileProcessor {
         };
     }
 
-    async exportResults(results: FileProcessingResult, format: 'csv' | 'json' | 'cleaned-csv' | 'excel'): Promise<Blob> {
+    async exportResults(results, format) {
         switch (format) {
             case 'csv':
                 return this.exportToCSV(results);
@@ -310,14 +275,14 @@ export class FileProcessor {
         }
     }
 
-    private async exportToExcel(results: FileProcessingResult): Promise<Blob> {
+    async exportToExcel(results) {
         // For now, we'll use a simple approach with proper CSV formatting
         // that Excel can import correctly
         const csvContent = this.createExcelFriendlyCSV(results);
         return new Blob([csvContent], { type: 'text/csv; charset=utf-8' });
     }
 
-    private createExcelFriendlyCSV(results: FileProcessingResult): string {
+    createExcelFriendlyCSV(results) {
         // Create a CSV that Excel will import correctly with proper data types
         const cleanedRows = [results.originalHeaders];
 
@@ -356,7 +321,7 @@ export class FileProcessor {
         ).join('\n');
     }
 
-    private exportCleanedCSV(results: FileProcessingResult): Blob {
+    exportCleanedCSV(results) {
         console.log('exportCleanedCSV - Starting export with results:', results);
 
         // Create cleaned version of original file with validated data
@@ -414,7 +379,7 @@ export class FileProcessor {
         return new Blob([csvContent], { type: 'text/csv' });
     }
 
-    private exportToCSV(results: FileProcessingResult): Blob {
+    exportToCSV(results) {
         const headers = ['Row', 'Column', 'Original Value', 'Is Valid', 'Detected Type', 'Fixed Value', 'Error', 'Compliance Standard'];
         const csvContent = [
             headers.join(','),
@@ -436,7 +401,7 @@ export class FileProcessor {
         return new Blob([csvContent], { type: 'text/csv' });
     }
 
-    private getComplianceStandard(columnName: string, detectedType: string): string {
+    getComplianceStandard(columnName, detectedType) {
         const column = columnName.toLowerCase();
 
         if (column.includes('ni') || column.includes('insurance')) {
@@ -452,24 +417,24 @@ export class FileProcessor {
         }
     }
 
-    private exportToJSON(results: FileProcessingResult): Blob {
+    exportToJSON(results) {
         const jsonContent = JSON.stringify(results, null, 2);
         return new Blob([jsonContent], { type: 'application/json' });
     }
 
-    getSupportedFileTypes(): string[] {
+    getSupportedFileTypes() {
         return this.supportedTypes;
     }
 
-    getFileTypeDescription(): string {
+    getFileTypeDescription() {
         return 'Supported formats: CSV, Excel (.xlsx), and plain text files';
     }
 
-    updatePhoneFormat(format: "international" | "uk"): void {
+    updatePhoneFormat(format) {
         this.phoneFormat = format;
     }
 
-    private isPhoneColumn(columnName: string): boolean {
+    isPhoneColumn(columnName) {
         const phoneColumnNames = [
             'phone', 'phone_number', 'mobile', 'mobile_number',
             'telephone', 'tel', 'cell', 'cellphone', 'contact_number'
@@ -478,4 +443,9 @@ export class FileProcessor {
             columnName.toLowerCase().includes(name.toLowerCase())
         );
     }
+}
+
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { FileProcessor };
 }

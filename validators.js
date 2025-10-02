@@ -1,20 +1,18 @@
-export interface ValidationResult {
-    isValid: boolean;
-    value: string;
-    error?: string;
-    fixed?: string;
-}
+// UK Data Validation Library
+// Converted from TypeScript to vanilla JavaScript for cPanel hosting
 
-export interface DataValidator {
-    validate(value: string): ValidationResult;
-    getType(): string;
+class ValidationResult {
+    constructor(isValid, value, error = null, fixed = null) {
+        this.isValid = isValid;
+        this.value = value;
+        this.error = error;
+        this.fixed = fixed;
+    }
 }
 
 // UK Phone Number Validator
-export class PhoneNumberValidator implements DataValidator {
-    private outputFormat: 'international' | 'uk' = 'international'; // +44 or 0
-
-    constructor(outputFormat: 'international' | 'uk' = 'international') {
+class PhoneNumberValidator {
+    constructor(outputFormat = 'international') {
         this.outputFormat = outputFormat;
     }
 
@@ -22,11 +20,11 @@ export class PhoneNumberValidator implements DataValidator {
         return 'phone_number';
     }
 
-    setOutputFormat(format: 'international' | 'uk') {
+    setOutputFormat(format) {
         this.outputFormat = format;
     }
 
-    validate(value: string): ValidationResult {
+    validate(value) {
         // Step 1: Remove labels, icons, and descriptive text
         let cleaned = this.removeLabelsAndIcons(value);
 
@@ -51,40 +49,26 @@ export class PhoneNumberValidator implements DataValidator {
         const validationResult = this.validatePatterns(cleaned);
         if (validationResult.isValid) {
             const formatted = this.formatPhoneNumber(validationResult.value);
-            return {
-                ...validationResult,
-                fixed: formatted
-            };
+            return new ValidationResult(true, cleaned, null, formatted);
         }
 
         // Step 8: Try to fix common issues
         const fixResult = this.attemptFixes(cleaned);
         if (fixResult.isValid) {
             const formatted = this.formatPhoneNumber(fixResult.value);
-            return {
-                ...fixResult,
-                fixed: formatted
-            };
+            return new ValidationResult(true, fixResult.value, fixResult.error, formatted);
         }
 
         // Step 9: Check if it's a case we can't handle yet
         const unhandledCase = this.checkUnhandledCases(value);
         if (unhandledCase) {
-            return {
-                isValid: false,
-                value: value,
-                error: unhandledCase
-            };
+            return new ValidationResult(false, value, unhandledCase);
         }
 
-        return {
-            isValid: false,
-            value: value,
-            error: 'Invalid UK phone number format'
-        };
+        return new ValidationResult(false, value, 'Invalid UK phone number format');
     }
 
-    private removeLabelsAndIcons(value: string): string {
+    removeLabelsAndIcons(value) {
         // Remove common labels and prefixes
         const labels = [
             /^Mobile:\s*/i,
@@ -112,7 +96,7 @@ export class PhoneNumberValidator implements DataValidator {
         return cleaned.trim();
     }
 
-    private removeExtensions(value: string): string {
+    removeExtensions(value) {
         // Remove extension-style clutter
         const extensions = [
             /\s*x\d+\s*$/i,           // x12
@@ -131,7 +115,7 @@ export class PhoneNumberValidator implements DataValidator {
         return cleaned.trim();
     }
 
-    private removeWrapping(value: string): string {
+    removeWrapping(value) {
         // Remove quotes and wrapping characters
         const wrappers = [
             /^["'`]/,                 // Leading quotes
@@ -150,7 +134,7 @@ export class PhoneNumberValidator implements DataValidator {
         return cleaned.trim();
     }
 
-    private normalizePrefix(value: string): string {
+    normalizePrefix(value) {
         // Handle various international prefixes
         if (value.startsWith('0044') && value.length >= 14) {
             const result = value.replace(/^0044/, '44');
@@ -170,7 +154,7 @@ export class PhoneNumberValidator implements DataValidator {
         return value;
     }
 
-    private validatePatterns(cleaned: string): ValidationResult {
+    validatePatterns(cleaned) {
         // UK phone number patterns
         const patterns = [
             { pattern: /^7\d{9}$/, type: 'Mobile' },           // Mobile: 7xxxxxxxxx
@@ -182,22 +166,14 @@ export class PhoneNumberValidator implements DataValidator {
 
         for (const { pattern, type } of patterns) {
             if (pattern.test(cleaned)) {
-                return {
-                    isValid: true,
-                    value: cleaned,
-                    error: undefined
-                };
+                return new ValidationResult(true, cleaned);
             }
         }
 
-        return {
-            isValid: false,
-            value: cleaned,
-            error: 'Pattern validation failed'
-        };
+        return new ValidationResult(false, cleaned, 'Pattern validation failed');
     }
 
-    private attemptFixes(cleaned: string): ValidationResult {
+    attemptFixes(cleaned) {
         // Try to fix common issues
 
         // Handle numbers that might be valid but need cleaning
@@ -205,11 +181,7 @@ export class PhoneNumberValidator implements DataValidator {
             // Could be a mobile number without country code
             const fixed = `44${cleaned}`;
             if (/^44\d{10}$/.test(fixed)) {
-                return {
-                    isValid: true,
-                    value: fixed,
-                    error: 'Added country code'
-                };
+                return new ValidationResult(true, fixed, 'Added country code');
             }
         }
 
@@ -217,11 +189,7 @@ export class PhoneNumberValidator implements DataValidator {
         if (cleaned.length === 11 && cleaned.startsWith('0')) {
             const fixed = cleaned.replace(/^0/, '44');
             if (/^44\d{10}$/.test(fixed)) {
-                return {
-                    isValid: true,
-                    value: fixed,
-                    error: 'Added country code'
-                };
+                return new ValidationResult(true, fixed, 'Added country code');
             }
         }
 
@@ -235,23 +203,15 @@ export class PhoneNumberValidator implements DataValidator {
 
             for (const fix of possibleFixes) {
                 if (this.validatePatterns(fix).isValid) {
-                    return {
-                        isValid: true,
-                        value: fix,
-                        error: 'Added missing digit/prefix'
-                    };
+                    return new ValidationResult(true, fix, 'Added missing digit/prefix');
                 }
             }
         }
 
-        return {
-            isValid: false,
-            value: cleaned,
-            error: 'Could not fix number'
-        };
+        return new ValidationResult(false, cleaned, 'Could not fix number');
     }
 
-    private checkUnhandledCases(value: string): string | null {
+    checkUnhandledCases(value) {
         // Check for cases we can't handle yet
 
         // Look-alike characters (O for 0, I for 1, l for 1)
@@ -301,9 +261,9 @@ export class PhoneNumberValidator implements DataValidator {
         return null;
     }
 
-    private formatPhoneNumber(phone: string): string {
+    formatPhoneNumber(phone) {
         // Ensure all numbers are consistently formatted
-        let formatted: string;
+        let formatted;
 
         if (phone.startsWith('44')) {
             // International format starting with 44
@@ -345,7 +305,7 @@ export class PhoneNumberValidator implements DataValidator {
         return formatted;
     }
 
-    private addUKPhoneSpacing(phone: string): string {
+    addUKPhoneSpacing(phone) {
         // UK mobile numbers: 07734 728 744 (5 digits, space, 3 digits, space, 3 digits)
         if (phone.startsWith('07') && phone.length === 11) {
             return `${phone.slice(0, 5)} ${phone.slice(5, 8)} ${phone.slice(8)}`;
@@ -364,23 +324,19 @@ export class PhoneNumberValidator implements DataValidator {
 }
 
 // UK National Insurance Number Validator
-export class NINumberValidator implements DataValidator {
+class NINumberValidator {
     getType() {
         return 'ni_number';
     }
 
-    validate(value: string): ValidationResult {
+    validate(value) {
         // Remove common separators but preserve letters and digits
         // Include Unicode separators: bullet points (•), middle dots (·), colons (:), semicolons (;), etc.
         let cleaned = value.replace(/[-._\/•·:;]/g, '').replace(/\s/g, '').toUpperCase();
 
         // Check for TRN (Temporary Reference Number) format: 11 a1 11 11
         if (/^11[A-Z]\d{1}\d{2}\d{2}$/.test(cleaned)) {
-            return {
-                isValid: false,
-                value: value,
-                error: 'This is a TRN (Temporary Reference Number), not a valid NI number'
-            };
+            return new ValidationResult(false, value, 'This is a TRN (Temporary Reference Number), not a valid NI number');
         }
 
         // NI number format: 2 letters, 6-8 digits, 1 letter (optional)
@@ -394,58 +350,30 @@ export class NINumberValidator implements DataValidator {
             const invalidSecondLetters = ['D', 'F', 'I', 'O', 'Q', 'U', 'V'];
 
             if (invalidPrefixes.includes(prefix)) {
-                return {
-                    isValid: false,
-                    value: value,
-                    error: `Invalid prefix '${prefix}' - banned by HMRC standards`
-                };
+                return new ValidationResult(false, value, `Invalid prefix '${prefix}' - banned by HMRC standards`);
             }
 
             if (invalidFirstLetters.includes(prefix[0])) {
-                return {
-                    isValid: false,
-                    value: value,
-                    error: `Invalid first letter '${prefix[0]}' - not used in NI number prefixes`
-                };
+                return new ValidationResult(false, value, `Invalid first letter '${prefix[0]}' - not used in NI number prefixes`);
             }
 
             if (invalidSecondLetters.includes(prefix[1])) {
-                return {
-                    isValid: false,
-                    value: value,
-                    error: `Invalid second letter '${prefix[1]}' - not used in NI number prefixes`
-                };
+                return new ValidationResult(false, value, `Invalid second letter '${prefix[1]}' - not used in NI number prefixes`);
             }
 
             // Check for administrative prefixes that are not valid NI numbers
             const adminPrefixes = ['OO', 'FY', 'NC', 'PZ'];
             if (adminPrefixes.includes(prefix)) {
-                return {
-                    isValid: false,
-                    value: value,
-                    error: `'${prefix}' is an administrative prefix, not a valid NI number`
-                };
+                return new ValidationResult(false, value, `'${prefix}' is an administrative prefix, not a valid NI number`);
             }
 
             // Special case: PP999999P is not valid despite PP being a valid prefix
             if (prefix === 'PP' && cleaned === 'PP999999P') {
-                return {
-                    isValid: false,
-                    value: value,
-                    error: 'PP999999P is not a valid NI number (administrative reference only)'
-                };
+                return new ValidationResult(false, value, 'PP999999P is not a valid NI number (administrative reference only)');
             }
 
-            return {
-                isValid: true,
-                value: cleaned,
-                fixed: this.formatNINumber(cleaned)
-            };
+            return new ValidationResult(true, cleaned, null, this.formatNINumber(cleaned));
         }
-
-        // Note: We do NOT try to "fix" random digits by adding letters
-        // This would create fake NI numbers which is dangerous and misleading
-        // Only genuine NI numbers with valid prefixes should be accepted
 
         // Check if it looks like an NI number with separators but wrong format
         // This helps catch cases like "AB-123-456-C" that might be misclassified as sort codes
@@ -457,23 +385,14 @@ export class NINumberValidator implements DataValidator {
             // Try to extract just the alphanumeric characters
             const extracted = value.replace(/[-._\/•·:;\s]/g, '').toUpperCase();
             if (pattern.test(extracted)) {
-                return {
-                    isValid: true,
-                    value: extracted,
-                    fixed: this.formatNINumber(extracted),
-                    error: 'Removed separators and formatted'
-                };
+                return new ValidationResult(true, extracted, 'Removed separators and formatted', this.formatNINumber(extracted));
             }
         }
 
-        return {
-            isValid: false,
-            value: value,
-            error: 'Invalid NI number format (should be 2 letters + 6 digits + optional letter)'
-        };
+        return new ValidationResult(false, value, 'Invalid NI number format (should be 2 letters + 6 digits + optional letter)');
     }
 
-    private formatNINumber(ni: string): string {
+    formatNINumber(ni) {
         if (ni.length === 9) {
             return `${ni.slice(0, 2)} ${ni.slice(2, 8)} ${ni.slice(8)}`;
         } else if (ni.length === 10) {
@@ -485,12 +404,12 @@ export class NINumberValidator implements DataValidator {
 }
 
 // UK Postcode Validator
-export class PostcodeValidator implements DataValidator {
+class PostcodeValidator {
     getType() {
         return 'postcode';
     }
 
-    validate(value: string): ValidationResult {
+    validate(value) {
         // Remove extra spaces and convert to uppercase
         const cleaned = value.replace(/\s+/g, ' ').trim().toUpperCase();
 
@@ -502,11 +421,7 @@ export class PostcodeValidator implements DataValidator {
 
         for (const pattern of patterns) {
             if (pattern.test(cleaned)) {
-                return {
-                    isValid: true,
-                    value: cleaned,
-                    fixed: this.formatPostcode(cleaned)
-                };
+                return new ValidationResult(true, cleaned, null, this.formatPostcode(cleaned));
             }
         }
 
@@ -514,33 +429,19 @@ export class PostcodeValidator implements DataValidator {
         const noSpaces = cleaned.replace(/\s/g, '');
         if (/^[A-Z]{1,2}\d{1,2}\d[A-Z]{2}$/.test(noSpaces)) {
             const fixed = this.formatPostcode(noSpaces);
-            return {
-                isValid: true,
-                value: fixed,
-                fixed: fixed,
-                error: 'Added proper spacing'
-            };
+            return new ValidationResult(true, fixed, 'Added proper spacing', fixed);
         }
 
         // Handle cases like "M11AA" -> "M1 1AA"
         if (/^[A-Z]\d\d[A-Z]{2}$/.test(noSpaces)) {
             const fixed = this.formatPostcode(noSpaces);
-            return {
-                isValid: true,
-                value: fixed,
-                fixed: fixed,
-                error: 'Added proper spacing'
-            };
+            return new ValidationResult(true, fixed, 'Added proper spacing', fixed);
         }
 
-        return {
-            isValid: false,
-            value: value,
-            error: 'Invalid UK postcode format'
-        };
+        return new ValidationResult(false, value, 'Invalid UK postcode format');
     }
 
-    private formatPostcode(postcode: string): string {
+    formatPostcode(postcode) {
         // Insert space before the last 3 characters
         if (postcode.length >= 5) {
             const formatted = `${postcode.slice(0, -3)} ${postcode.slice(-3)}`;
@@ -552,19 +453,15 @@ export class PostcodeValidator implements DataValidator {
 }
 
 // UK Bank Sort Code Validator
-export class SortCodeValidator implements DataValidator {
+class SortCodeValidator {
     getType() {
         return 'sort_code';
     }
 
-    validate(value: string): ValidationResult {
+    validate(value) {
         // If the value contains letters, it's definitely not a sort code
         if (/[A-Za-z]/.test(value)) {
-            return {
-                isValid: false,
-                value: value,
-                error: 'Sort codes cannot contain letters'
-            };
+            return new ValidationResult(false, value, 'Sort codes cannot contain letters');
         }
 
         // Remove all non-digit characters
@@ -572,11 +469,7 @@ export class SortCodeValidator implements DataValidator {
 
         // Sort code should be exactly 6 digits
         if (/^\d{6}$/.test(cleaned)) {
-            return {
-                isValid: true,
-                value: cleaned,
-                fixed: this.formatSortCode(cleaned)
-            };
+            return new ValidationResult(true, cleaned, null, this.formatSortCode(cleaned));
         }
 
         // Try to fix common issues
@@ -584,29 +477,20 @@ export class SortCodeValidator implements DataValidator {
             // Sometimes sort codes are written as 00-00-00
             const fixed = cleaned.replace(/00/g, '');
             if (/^\d{6}$/.test(fixed)) {
-                return {
-                    isValid: true,
-                    value: fixed,
-                    fixed: this.formatSortCode(fixed),
-                    error: 'Removed extra zeros'
-                };
+                return new ValidationResult(true, fixed, 'Removed extra zeros', this.formatSortCode(fixed));
             }
         }
 
-        return {
-            isValid: false,
-            value: value,
-            error: 'Sort code must be exactly 6 digits'
-        };
+        return new ValidationResult(false, value, 'Sort code must be exactly 6 digits');
     }
 
-    private formatSortCode(sortCode: string): string {
+    formatSortCode(sortCode) {
         return `${sortCode.slice(0, 2)}-${sortCode.slice(2, 4)}-${sortCode.slice(4)}`;
     }
 }
 
 // Factory function to get appropriate validator
-export function getValidator(type: string): DataValidator | null {
+function getValidator(type) {
     switch (type.toLowerCase()) {
         case 'phone_number':
         case 'phone':
@@ -629,7 +513,7 @@ export function getValidator(type: string): DataValidator | null {
 }
 
 // Auto-detect data type and validate
-export function autoValidate(value: string, phoneFormat: 'international' | 'uk' = 'international'): ValidationResult & { detectedType: string } {
+function autoValidate(value, phoneFormat = 'international') {
     const validators = [
         new PhoneNumberValidator(phoneFormat),
         new NINumberValidator(),        // Check NI numbers before sort codes
@@ -649,5 +533,18 @@ export function autoValidate(value: string, phoneFormat: 'international' | 'uk' 
         value: value,
         error: 'Could not determine data type',
         detectedType: 'unknown'
+    };
+}
+
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        ValidationResult,
+        PhoneNumberValidator,
+        NINumberValidator,
+        PostcodeValidator,
+        SortCodeValidator,
+        getValidator,
+        autoValidate
     };
 }
