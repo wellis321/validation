@@ -1,0 +1,125 @@
+usual entry
+07700900123
+07700 900123
+07700  900  123
+07 700 900 123
+07700-900-123
+07700.900.123
+07700/900/123
+07700_900_123
+(07700) 900123
+(07700)900123
+07700 (900) 123
+07700(900)123
+
+international correct and commenly wrong
++447700900123
++44 7700 900123
++44-7700-900-123
++44 (0)7700 900123           ← common but wrong (the “(0)” should be dropped)
+(+44) 7700 900123
+(+44)7700 900123
+00447700900123
+00 44 7700 900123
+44 7700 900123
++ 44 7700 900123
+0+44 7700 900123             ← wrong
++44 07 700 900 123           ← wrong (kept the leading 0)
+(+44) (0)7700 900123         ← wrong
+
+Weird separators & whitespace
+07700 900 123                ← thin spaces
+07700 900 123                ← narrow no-break spaces
+07700 900 123                ← no-break spaces
+07700-900-123                ← non-breaking hyphens
+07700–900–123                ← en dashes
+07700—900—123                ← em dashes
+07700•900•123
+07700·900·123
+07700:900:123
+07700;900;123
+07700,900,123
+ 07700 900123                ← leading space
+07700 900123                 ← trailing space
+,07700 900123,
+
+Labels, words, and icons stuck on
+Mobile: 07700 900123
+Mob 07700 900123
+M. 07700 900123
+m/ 07700 900123
+Tel (mob): 07700 900123
+Cell: +44 7700 900123
+WhatsApp: 07700 900 123
+☎️ 07700 900123
+📱+44 7700 900123
+UK +44 7700 900123
+GBR +44 7700 900123
+07700 900123 (mobile)
+07700 900123 (UK)
+
+“Extension”-style clutter (seen in CRMs & signatures)
+07700 900123 x12
+07700 900123 ext 12
+07700 900123 (ext. 12)
++44 7700 900123 #12
++44 7700 900123;ext=12
+07700 900123, ext 12
+
+Newlines, tabs, zero-width characters
+07700
+900123                      ← newline inside
+07700\t900\t123             ← tabs between groups
+07700​900​123               ← zero-width spaces between groups
+07700 900 123               ← hair spaces
+07700 900 123               ← en spaces
+
+Parentheses & bracket soup
+(07700 900123)
+[07700] 900123
+{07700} 900123
+<07700 900123>
+(+44)-7700-(900)-(123)
+(0)7700 900123
+
+Country code duplication / stray zeros
++44 0 7700 900123           ← wrong
+0044 (0) 7700 900 123       ← wrong
++44(0) 7700 900123          ← wrong
++447700 900123
++44(07700) 900123           ← wrong
+
+Look-alike characters (people often type these)
+O7700 900123                 ← letter O for zero
+077OO 9OO123                 ← multiple letter O’s for zeros
+07700 9OOI23                 ← O and capital I
+07700 9Il123                 ← I (eye) and l (ell) for 1
+07700 900I23                 ← trailing I for 1/3
+
+Non-ASCII digits / widths
+０７７００ ９００１２３            ← full-width digits
+07７00 9０0123                    ← mixed half/full-width digits
+٠٧٧٠٠ ٩٠٠١٢٣                      ← Arabic-Indic digits
+۰۷۷۰۰ ۹۰۰۱۲۳                      ← Eastern Arabic-Indic digits
+
+Protocols, links & app formats
+tel:07700900123
+tel:+447700900123
+callto:+447700900123
+https://wa.me/447700900123
+
+Random groupings & odd splits
+077 009 001 23
+0 7700 900123
+07-700-900-123
+07700-900123
+07700 900-123
+0770 090 0123
+07 7009 00123
+
+Quoted or wrapped
+"07700 900123"
+'07700 900123'
+`07700 900123`
+«07700 900123»
+(“07700 900123”)
