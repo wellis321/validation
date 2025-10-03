@@ -200,6 +200,14 @@ class UKDataCleanerApp {
         if (fieldCheckboxes) {
             this.renderFieldCheckboxes();
         }
+
+        // Auto-scroll to field selection section after a short delay
+        setTimeout(() => {
+            fieldSelection?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 300);
     }
 
     hideFieldSelection() {

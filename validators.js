@@ -339,8 +339,8 @@ class NINumberValidator {
             return new ValidationResult(false, value, 'This is a TRN (Temporary Reference Number), not a valid NI number');
         }
 
-        // NI number format: 2 letters, 6-8 digits, 1 letter (optional)
-        const pattern = /^[A-Z]{2}\d{6,8}[A-Z]?$/;
+        // NI number format: 2 letters, 6 digits, 1 letter (required)
+        const pattern = /^[A-Z]{2}\d{6}[A-Z]$/;
 
         if (pattern.test(cleaned)) {
             // Check for invalid prefixes according to HMRC standards
@@ -389,14 +389,12 @@ class NINumberValidator {
             }
         }
 
-        return new ValidationResult(false, value, 'Invalid NI number format (should be 2 letters + 6 digits + optional letter)');
+        return new ValidationResult(false, value, 'Invalid NI number format (should be 2 letters + 6 digits + 1 letter)');
     }
 
     formatNINumber(ni) {
         if (ni.length === 9) {
-            return `${ni.slice(0, 2)} ${ni.slice(2, 8)} ${ni.slice(8)}`;
-        } else if (ni.length === 10) {
-            // For 10 characters like "AB12345678", format as "AB 123456 78"
+            // Standard format: AB123456C -> AB 123456 C
             return `${ni.slice(0, 2)} ${ni.slice(2, 8)} ${ni.slice(8)}`;
         }
         return `${ni.slice(0, 2)} ${ni.slice(2)}`;
