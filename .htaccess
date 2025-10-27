@@ -1,0 +1,36 @@
+# Enable PHP execution
+AddType application/x-httpd-php .php
+
+# Enable rewrite engine
+RewriteEngine On
+
+# Ensure HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Set default index files
+DirectoryIndex index.php index.html
+
+# PHP error reporting
+php_flag display_errors on
+php_value error_reporting E_ALL
+
+# Allow .php files to be executed
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+# Protect sensitive files
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect config directory
+<FilesMatch "^config/">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Enable Cross-Origin Resource Sharing (CORS)
+Header set Access-Control-Allow-Origin "*"
