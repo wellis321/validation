@@ -1,6 +1,6 @@
-# UK Data Cleaner - cPanel Version
+# Simple Data Cleaner - PHP Application
 
-A vanilla HTML/JavaScript application for cleaning and validating UK data formats including phone numbers, National Insurance numbers, postcodes, and bank sort codes. This version has been converted from SvelteKit to work on standard cPanel hosting.
+A complete PHP application for cleaning and validating UK data formats including phone numbers, National Insurance numbers, postcodes, and bank sort codes. Features user authentication, subscription management, and 100% client-side data processing for maximum privacy.
 
 ## Features
 
