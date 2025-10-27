@@ -18,6 +18,21 @@ Thumbs.db
 !.env.example
 !.env.test
 
+# Logs
+logs/*.log
+*.log
+
+# IDE
+.cursor/
+.vscode/
+.idea/
+
+# Misc
+*.zip
+MAILTRAP_SETUP.md
+.nojekyll
+.npmrc
+
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
