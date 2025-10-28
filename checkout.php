@@ -33,8 +33,10 @@ $priceMapping = [
 $priceId = $priceMapping[$plan['name']] ?? null;
 
 if (!$priceId) {
-    error_log("No price mapping found for plan: " . $plan['name']);
-    die('Invalid plan configuration. Please contact support.');
+    error_log("No price mapping found for plan ID: " . $plan['id'] . ", name: " . $plan['name']);
+    error_log("Available plans: " . json_encode(array_keys($priceMapping)));
+    error_log("Plan data: " . json_encode($plan));
+    die('Invalid plan configuration. Plan: ' . htmlspecialchars($plan['name']) . '. Please contact support.');
 }
 
 // Create Stripe Checkout Session
