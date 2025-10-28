@@ -27,8 +27,14 @@ class FileProcessor {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                const result = e.target?.result;
+                let result = e.target?.result;
                 if (typeof result === 'string') {
+                    // Fix scientific notation that Excel might have added
+                    // This converts numbers like 4.47701E+11 back to full numbers
+                    result = result.replace(/([\d.]+[Ee][\+\-]?\d+)/gi, (match) => {
+                        const num = parseFloat(match);
+                        return num.toFixed(0);
+                    });
                     resolve(result);
                 } else {
                     reject(new Error('Failed to read file content'));
@@ -260,14 +266,14 @@ class FileProcessor {
         };
     }
 
-    async exportResults(results, format) {
+    async exportResults(results, format, includeCleanedColumn = false) {
         switch (format) {
             case 'csv':
                 return this.exportToCSV(results);
             case 'json':
                 return this.exportToJSON(results);
             case 'cleaned-csv':
-                return this.exportCleanedCSV(results);
+                return this.exportCleanedCSV(results, includeCleanedColumn);
             case 'excel':
                 return this.exportToExcel(results);
             default:
@@ -321,11 +327,29 @@ class FileProcessor {
         ).join('\n');
     }
 
-    exportCleanedCSV(results) {
+    exportCleanedCSV(results, includeCleanedColumn = false) {
         console.log('exportCleanedCSV - Starting export with results:', results);
 
+        // Collect all columns that were cleaned
+        const cleanedColumns = new Set();
+        results.processedRows.forEach(row => {
+            row.validationResults.forEach(result => {
+                if (result.isValid && result.fixed) {
+                    cleanedColumns.add(result.column);
+                }
+            });
+        });
+
+        // Create headers with optional "Cleaned" columns
+        const cleanedHeaders = [...results.originalHeaders];
+        if (includeCleanedColumn) {
+            cleanedColumns.forEach(col => {
+                cleanedHeaders.push(`${col}_Cleaned`);
+            });
+        }
+
         // Create cleaned version of original file with validated data
-        const cleanedRows = [results.originalHeaders]; // Start with headers
+        const cleanedRows = [cleanedHeaders]; // Start with headers
 
         // Process each original data row
         for (let i = 1; i < results.originalData.length; i++) {
@@ -336,21 +360,41 @@ class FileProcessor {
                 // Create a copy of the original row
                 const cleanedRow = [...originalRow];
 
-                // Apply all validation results to the row
+                // Apply all validation results to the row and track what was cleaned
+                const cleanedFlags = {};
                 processedRow.validationResults.forEach(result => {
                     // Find the column index for this validation result
                     const columnIndex = results.originalHeaders.indexOf(result.column);
-                    if (columnIndex !== -1 && result.fixed && result.isValid) {
-                        console.log(`Exporting column "${result.column}": original="${originalRow[columnIndex]}" -> fixed="${result.fixed}"`);
-                        // Replace the original value with the cleaned version
-                        cleanedRow[columnIndex] = result.fixed;
+                    if (columnIndex !== -1) {
+                        // Only replace if valid and has fixed value
+                        if (result.fixed && result.isValid) {
+                            console.log(`Exporting column "${result.column}": original="${originalRow[columnIndex]}" -> fixed="${result.fixed}"`);
+                            // Replace the original value with the cleaned version
+                            cleanedRow[columnIndex] = result.fixed;
+                            cleanedFlags[result.column] = 'Yes';
+                        } else {
+                            cleanedFlags[result.column] = 'No';
+                        }
                     }
                 });
 
+                // Add "Cleaned" columns if requested
+                if (includeCleanedColumn) {
+                    cleanedColumns.forEach(col => {
+                        cleanedRow.push(cleanedFlags[col] || 'No');
+                    });
+                }
+
                 cleanedRows.push(cleanedRow);
             } else {
-                // If no processing result, keep original row
-                cleanedRows.push(originalRow);
+                // If no processing result, keep original row and add "No" for all cleaned columns
+                const originalRowWithFlags = [...originalRow];
+                if (includeCleanedColumn) {
+                    cleanedColumns.forEach(() => {
+                        originalRowWithFlags.push('No');
+                    });
+                }
+                cleanedRows.push(originalRowWithFlags);
             }
         }
 

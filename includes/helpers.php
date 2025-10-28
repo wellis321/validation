@@ -97,7 +97,9 @@ function require_subscription() {
         redirect('/login.php');
     }
 
-    $subscription = (new User())->getCurrentSubscription();
+    $userModel = new User();
+    $userModel->id = $user['id'];
+    $subscription = $userModel->getCurrentSubscription();
     if (!$subscription) {
         redirect('/pricing.php');
     }

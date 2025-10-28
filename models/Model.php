@@ -4,6 +4,7 @@ abstract class Model {
     protected $table;
     protected $fillable = [];
     protected $hidden = ['password'];
+    public $id = null;
 
     public function __construct() {
         $this->db = Database::getInstance();

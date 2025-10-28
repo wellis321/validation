@@ -5,8 +5,10 @@ require_once __DIR__ . '/includes/init.php';
 $subscription = null;
 $remainingRequests = 0;
 if ($user) {
-    $subscription = (new User())->getCurrentSubscription();
-    $remainingRequests = (new User())->getRemainingRequests();
+    $userModel = new User();
+    $userModel->id = $user['id']; // Set the user ID
+    $subscription = $userModel->getCurrentSubscription();
+    $remainingRequests = $userModel->getRemainingRequests();
 }
 ?>
 <!DOCTYPE html>
@@ -52,7 +54,6 @@ if ($user) {
                             </button>
                             <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <a href="/account.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Account Settings</a>
-                                <a href="/api-docs.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">API Documentation</a>
                                 <hr class="my-2">
                                 <a href="/logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a>
                             </div>
@@ -78,23 +79,35 @@ if ($user) {
                 </h1>
                 <p class="text-xl text-gray-600 mb-6 max-w-3xl mx-auto">
                     The only UK data validation tool that processes everything in your browser.
-                    Your sensitive PII data <strong>never leaves your device</strong> - perfect for GDPR compliance.
+                   Personally Identifiable Information (PII) <strong>never leaves your device</strong> - perfect for GDPR compliance.
                 </p>
 
                 <!-- Key Benefit Highlights -->
                 <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-green-50 border-2 border-green-200 rounded-lg p-6">
-                        <div class="text-3xl mb-2">🔒</div>
+                    <div class="bg-green-50 border-2 border-green-200 rounded-lg p-6 text-center">
+                        <div class="flex justify-center mb-3">
+                            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
                         <h3 class="font-bold text-green-800 mb-2">100% Private Processing</h3>
                         <p class="text-sm text-green-700">All validation happens in your browser. We never see, store, or process your data.</p>
                     </div>
-                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
-                        <div class="text-3xl mb-2">⚖️</div>
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 text-center">
+                        <div class="flex justify-center mb-3">
+                            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
                         <h3 class="font-bold text-blue-800 mb-2">GDPR Compliant</h3>
                         <p class="text-sm text-blue-700">We're not a data processor - you maintain full control and compliance responsibility.</p>
                     </div>
-                    <div class="bg-purple-50 border-2 border-purple-200 rounded-lg p-6">
-                        <div class="text-3xl mb-2">💼</div>
+                    <div class="bg-purple-50 border-2 border-purple-200 rounded-lg p-6 text-center">
+                        <div class="flex justify-center mb-3">
+                            <svg class="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
                         <h3 class="font-bold text-purple-800 mb-2">Perfect for Businesses</h3>
                         <p class="text-sm text-purple-700">Clean NI numbers, bank details, and sensitive customer data without security risks.</p>
                     </div>
@@ -116,11 +129,13 @@ if ($user) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                            <span class="text-2xl mr-3">🔐</span>
+                            <svg class="w-7 h-7 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
                             Zero Data Transmission
                         </h3>
                         <p class="text-gray-700 mb-4">
-                            Unlike cloud-based solutions, your sensitive PII data (NI numbers, bank sort codes, phone numbers)
+                            Unlike cloud-based solutions, your sensitive Personally Identifiable Information (NI numbers, bank sort codes, phone numbers)
                             stays entirely on your device. No upload risks, no data breaches, no third-party exposure.
                         </p>
                         <ul class="space-y-2 text-gray-600">
@@ -147,11 +162,13 @@ if ($user) {
 
                     <div>
                         <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                            <span class="text-2xl mr-3">⚡</span>
+                            <svg class="w-7 h-7 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
                             Instant Processing
                         </h3>
                         <p class="text-gray-700 mb-4">
-                            Process unlimited data instantly in your browser. No file size limits, no upload wait times,
+                            Process data instantly in your browser. No upload wait times,
                             no network bottlenecks. Your browser's processing power handles everything.
                         </p>
                         <ul class="space-y-2 text-gray-600">
@@ -159,7 +176,7 @@ if ($user) {
                                 <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                Works with files of any size
+                                Works with files up to several hundred MB
                             </li>
                             <li class="flex items-start">
                                 <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -209,15 +226,16 @@ if ($user) {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                             </svg>
                             <p class="text-lg text-gray-600">Drop your file here or click to browse</p>
-                            <p class="text-sm text-gray-500 mt-2">Supports CSV, Excel, and text files (any size!)</p>
+                            <p class="text-sm text-gray-500 mt-2">Supports CSV, Excel, and text files</p>
+                            <p id="fileSizeLimit" class="text-xs text-gray-400 mt-1"></p>
                         </label>
                     </div>
 
                     <?php if ($subscription): ?>
-                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                             <h3 class="font-semibold text-green-800 mb-2">✓ Your Plan Benefits:</h3>
                             <ul class="space-y-2 text-sm text-gray-700">
-                                <li>✓ Unlimited file size (processed in your browser)</li>
+                                <li>✓ Large files supported (processed in your browser)</li>
                                 <li>✓ Unlimited files</li>
                                 <li>✓ All data types: Phone, NI, Postcodes, Sort Codes</li>
                                 <?php
@@ -228,6 +246,146 @@ if ($user) {
                             </ul>
                         </div>
                     <?php endif; ?>
+
+                    <!-- File Selected State (hidden by default) -->
+                    <div id="fileSelected" class="hidden bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p class="text-blue-800"><strong>Selected:</strong> <span id="fileName"></span> <span id="fileSize"></span></p>
+                    </div>
+
+                    <!-- Field Selection (hidden by default) -->
+                    <div id="fieldSelection" class="hidden">
+                        <h3 class="text-lg font-bold mb-4">Select columns to clean:</h3>
+                        <div id="fieldCheckboxes"></div>
+                        <div class="flex gap-2 mt-4">
+                            <button type="button" id="selectAllBtn" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" style="cursor: pointer;">Select All</button>
+                            <button type="button" id="clearAllBtn" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" style="cursor: pointer;">Clear All</button>
+                            <button type="button" id="autoSelectBtn" class="px-4 py-2 bg-blue-200 rounded hover:bg-blue-300" style="cursor: pointer;">Auto-Select</button>
+                        </div>
+                        <div id="fieldSelectionStatus" class="mt-3"></div>
+
+                        <!-- Phone Number Format Selection -->
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-3">Phone Number Format:</h4>
+                            <div class="flex gap-6">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="phoneFormat" value="international" checked class="mr-2">
+                                    <span>International (+44 7700 900123)</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="phoneFormat" value="uk" class="mr-2">
+                                    <span>UK (07700 900123)</span>
+                                </label>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-2">Choose how you want phone numbers formatted in the output</p>
+                        </div>
+                    </div>
+
+                    <!-- Process Button (hidden by default) -->
+                    <button type="button" id="processBtn" class="hidden w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-semibold">
+                        Clean My Data
+                    </button>
+
+                    <!-- Error Display (hidden by default) -->
+                    <div id="errorDisplay" class="hidden bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p id="errorMessage" class="text-red-800"></p>
+                    </div>
+
+                    <!-- Results Section (hidden by default) -->
+                    <div id="resultsSection" class="hidden mt-8">
+                        <h3 class="text-2xl font-bold mb-4">Results</h3>
+                        <div id="summaryCards" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <p class="text-sm text-gray-600">Total Rows</p>
+                                <p class="text-2xl font-bold" id="totalRows">0</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <p class="text-sm text-gray-600">Valid</p>
+                                <p class="text-2xl font-bold text-green-600" id="totalValid">0</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <p class="text-sm text-gray-600">Fixed</p>
+                                <p class="text-2xl font-bold text-blue-600" id="totalFixed">0</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <p class="text-sm text-gray-600">Invalid</p>
+                                <p class="text-2xl font-bold text-red-600" id="totalInvalid">0</p>
+                            </div>
+                        </div>
+
+                        <!-- Tabs -->
+                        <div class="border-b mb-4">
+                            <button type="button" class="tab-btn border-b-2 border-blue-500 text-blue-600 px-4 py-2 font-semibold" data-tab="summary">Summary</button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="cleaned">Cleaned <span id="cleanedCount">0</span></button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="issues">Issues <span id="issuesCount">0</span></button>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div id="summaryTab" class="tab-content active">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-4 py-2 text-left">Row</th>
+                                            <th class="px-4 py-2 text-left">Column</th>
+                                            <th class="px-4 py-2 text-left">Original</th>
+                                            <th class="px-4 py-2 text-left">Cleaned</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="summaryTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="cleanedTab" class="tab-content hidden">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-4 py-2 text-left">Row</th>
+                                            <th class="px-4 py-2 text-left">Column</th>
+                                            <th class="px-4 py-2 text-left">Original</th>
+                                            <th class="px-4 py-2 text-left">Cleaned</th>
+                                            <th class="px-4 py-2 text-left">Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cleanedTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="issuesTab" class="tab-content hidden">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-4 py-2 text-left">Row</th>
+                                            <th class="px-4 py-2 text-left">Column</th>
+                                            <th class="px-4 py-2 text-left">Value</th>
+                                            <th class="px-4 py-2 text-left">Error</th>
+                                            <th class="px-4 py-2 text-left">Standard</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="issuesTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Export Options -->
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" id="includeCleanedColumn" class="mr-2" checked>
+                                <span class="text-sm text-gray-700">Include "Cleaned" columns in download (shows "Yes"/"No" for each cleaned field)</span>
+                            </label>
+                        </div>
+
+                        <!-- Export Buttons -->
+                        <div class="mt-8 space-x-4">
+                            <button type="button" id="exportCleanedBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">Download Cleaned CSV</button>
+                            <button type="button" id="exportExcelBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Download Excel</button>
+                            <button type="button" id="exportJsonBtn" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700">Download JSON</button>
+                            <button type="button" id="processNewBtn" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700">Upload New File</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         <?php endif; ?>
@@ -319,7 +477,7 @@ if ($user) {
                         <h3 class="text-lg font-semibold mb-4">Resources</h3>
                         <ul class="space-y-2 text-gray-400">
                             <li><a href="/api-docs.php" class="hover:text-white transition-colors">API Documentation</a></li>
-                            <li><a href="/validation-rules.html" class="hover:text-white transition-colors">Validation Rules</a></li>
+                            <li><a href="/validation-rules.php" class="hover:text-white transition-colors">Validation Rules</a></li>
                             <li><a href="/pricing.php" class="hover:text-white transition-colors">Pricing</a></li>
                             <li><a href="/support.php" class="hover:text-white transition-colors">Support</a></li>
                         </ul>
@@ -328,7 +486,7 @@ if ($user) {
                         <h3 class="text-lg font-semibold mb-4">Legal</h3>
                         <ul class="space-y-2 text-gray-400">
                             <li><a href="/terms.php" class="hover:text-white transition-colors">Terms of Service</a></li>
-                            <li><a href="/privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="/privacy.php" class="hover:text-white transition-colors">Privacy Policy</a></li>
                             <li><a href="/gdpr.php" class="hover:text-white transition-colors">GDPR Compliance</a></li>
                             <li><a href="/security.php" class="hover:text-white transition-colors">Security</a></li>
                         </ul>
@@ -367,8 +525,10 @@ if ($user) {
     </footer>
 
     <!-- Scripts -->
-    <script src="validators.js"></script>
-    <script src="fileProcessor.js"></script>
-    <script src="app.js"></script>
+    <script src="validators.js?v=<?php echo time(); ?>"></script>
+    <script src="fileProcessor.js?v=<?php echo time(); ?>"></script>
+    <script src="app.js?v=<?php echo time(); ?>"></script>
+
+    <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>
 </html>

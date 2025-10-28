@@ -11,8 +11,8 @@ require_once __DIR__ . '/../models/Model.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/Auth.php';
 
-// Start session
-session_start();
+// Security will handle session initialization with proper settings
+// Don't call session_start() here as Security class handles it
 
 // Initialize error handler
 $errorHandler = ErrorHandler::getInstance();
@@ -23,12 +23,12 @@ header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 
+// Initialize security first (this starts the session with secure settings)
+$security = Security::getInstance();
+
 // Initialize authentication
 $auth = Auth::getInstance();
 $user = $auth->getCurrentUser();
-
-// Initialize security
-$security = Security::getInstance();
 
 // Set timezone
 date_default_timezone_set('Europe/London');

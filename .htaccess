@@ -11,8 +11,8 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # Set default index files
 DirectoryIndex index.php index.html
 
-# PHP error reporting
-php_flag display_errors on
+# PHP error reporting (disable display in production)
+php_flag display_errors off
 php_value error_reporting E_ALL
 
 # Allow .php files to be executed
@@ -32,5 +32,7 @@ php_value error_reporting E_ALL
     Deny from all
 </FilesMatch>
 
-# Enable Cross-Origin Resource Sharing (CORS)
-Header set Access-Control-Allow-Origin "*"
+# Security headers (removed permissive CORS)
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "DENY"
+Header set X-XSS-Protection "1; mode=block"

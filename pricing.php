@@ -15,7 +15,9 @@ $plans = $stmt->fetchAll();
 // Get user's current subscription if logged in
 $currentPlan = null;
 if ($user) {
-    $currentPlan = (new User())->getCurrentSubscription();
+    $userModel = new User();
+    $userModel->id = $user['id'];
+    $currentPlan = $userModel->getCurrentSubscription();
 }
 ?>
 <!DOCTYPE html>
@@ -52,7 +54,7 @@ if ($user) {
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-gray-900 mb-4">Simple, Transparent Pricing</h1>
             <p class="text-xl text-gray-600">All processing happens in your browser - your data never leaves your device!</p>
-            <p class="text-lg text-green-600 mt-2">✓ No file size limits ✓ Unlimited files ✓ Complete privacy</p>
+            <p class="text-lg text-green-600 mt-2">✓ Large files supported ✓ Unlimited files ✓ Complete privacy</p>
         </div>
 
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -166,31 +168,64 @@ if ($user) {
             <h2 class="text-2xl font-bold text-gray-900 mb-8">Frequently Asked Questions</h2>
             <div class="max-w-3xl mx-auto space-y-6 text-left">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">💻 How does client-side processing work?</h3>
+                    <div class="flex items-center mb-2">
+                        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900">How does client-side processing work?</h3>
+                    </div>
                     <p class="text-gray-600 mt-2">Your files are processed entirely in your browser using JavaScript. No data is ever uploaded to our servers - we only handle authentication. This means your sensitive data stays 100% private and secure on your device.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">📁 Are there any file size limits?</h3>
-                    <p class="text-gray-600 mt-2">No! Since processing happens on your device, there are no file size restrictions. You can clean files of any size - limited only by your browser's memory.</p>
+                    <div class="flex items-center mb-2">
+                        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900">Are there any file size limits?</h3>
+                    </div>
+                    <p class="text-gray-600 mt-2">Since processing happens on your device, file size limits depend on your device's memory. We automatically detect your device capabilities and recommend appropriate file sizes. Most modern computers can handle files of several hundred MB, while devices with less memory may be better suited for smaller files.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">💳 What payment methods do you accept?</h3>
+                    <div class="flex items-center mb-2">
+                        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900">What payment methods do you accept?</h3>
+                    </div>
                     <p class="text-gray-600 mt-2">We accept all major credit cards and PayPal.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">🔄 Can I cancel my subscription?</h3>
+                    <div class="flex items-center mb-2">
+                        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900">Can I cancel my subscription?</h3>
+                    </div>
                     <p class="text-gray-600 mt-2">Yes! Monthly and Annual plans can be cancelled at any time. You'll continue to have access until the end of your billing period.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">💰 What's the difference between Pay Per Use and subscriptions?</h3>
+                    <div class="flex items-center mb-2">
+                        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900">What's the difference between Pay Per Use and subscriptions?</h3>
+                    </div>
                     <p class="text-gray-600 mt-2">Pay Per Use (£0.99) gives you one-time access - perfect for quick jobs. Monthly (£4.99) and Annual (£39.99) plans give you unlimited access, priority support, and API access.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">🔒 Is my data really secure?</h3>
+                    <div class="flex items-center mb-2">
+                        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900">Is my data really secure?</h3>
+                    </div>
                     <p class="text-gray-600 mt-2">Absolutely! Your files never leave your computer. All cleaning and validation happens in your browser. We only verify your subscription status - we never see or store your data.</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+    <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>
 </html>

@@ -25,6 +25,17 @@ class PhoneNumberValidator {
     }
 
     validate(value) {
+        // Step 0: Handle scientific notation (e.g., 4.47701E+11 from Excel)
+        if (typeof value === 'number') {
+            // Convert number to string
+            value = value.toString();
+        }
+        if (/^[\d.]+[Ee]\+?\d+$/.test(value)) {
+            // It's in scientific notation, convert it
+            const num = parseFloat(value);
+            value = num.toFixed(0); // Convert to integer string
+        }
+
         // Step 1: Remove labels, icons, and descriptive text
         let cleaned = this.removeLabelsAndIcons(value);
 
@@ -408,8 +419,8 @@ class PostcodeValidator {
     }
 
     validate(value) {
-        // Remove extra spaces and convert to uppercase
-        const cleaned = value.replace(/\s+/g, ' ').trim().toUpperCase();
+        // Replace dashes with spaces and convert to uppercase
+        let cleaned = value.replace(/-/g, ' ').replace(/\s+/g, ' ').trim().toUpperCase();
 
         // UK postcode patterns
         const patterns = [
@@ -423,7 +434,7 @@ class PostcodeValidator {
             }
         }
 
-        // Try to fix common issues
+        // Try to fix common issues (no spaces at all)
         const noSpaces = cleaned.replace(/\s/g, '');
         if (/^[A-Z]{1,2}\d{1,2}\d[A-Z]{2}$/.test(noSpaces)) {
             const fixed = this.formatPostcode(noSpaces);
@@ -462,27 +473,52 @@ class SortCodeValidator {
             return new ValidationResult(false, value, 'Sort codes cannot contain letters');
         }
 
-        // Remove all non-digit characters
-        const cleaned = value.replace(/\D/g, '');
-
-        // Sort code should be exactly 6 digits
-        if (/^\d{6}$/.test(cleaned)) {
-            return new ValidationResult(true, cleaned, null, this.formatSortCode(cleaned));
+        // Handle scientific notation
+        if (typeof value === 'number') {
+            value = value.toString();
+        }
+        if (/^[\d.]+[Ee]\+?\d+$/.test(value)) {
+            const num = parseFloat(value);
+            value = num.toFixed(0);
         }
 
-        // Try to fix common issues
-        if (cleaned.length === 8 && cleaned.includes('00')) {
-            // Sometimes sort codes are written as 00-00-00
-            const fixed = cleaned.replace(/00/g, '');
-            if (/^\d{6}$/.test(fixed)) {
-                return new ValidationResult(true, fixed, 'Removed extra zeros', this.formatSortCode(fixed));
+        // Remove all non-digit characters to get just the digits
+        const digits = value.replace(/\D/g, '');
+
+        // Sort code must be exactly 6 digits
+        if (digits.length === 6) {
+            // Validate it's a valid UK sort code format
+            if (/^[0-9]{6}$/.test(digits)) {
+                return new ValidationResult(true, digits, null, this.formatSortCode(digits));
             }
         }
 
-        return new ValidationResult(false, value, 'Sort code must be exactly 6 digits');
+        // If it's 7 digits, might have an extra leading zero
+        if (digits.length === 7 && digits.startsWith('0')) {
+            const fixed = digits.slice(1); // Remove leading zero
+            if (/^[0-9]{6}$/.test(fixed)) {
+                return new ValidationResult(true, fixed, 'Removed leading zero', this.formatSortCode(fixed));
+            }
+        }
+
+        // If it's 8 digits with leading zeros like 00-00-12-34-56
+        if (digits.length >= 8 && digits.startsWith('00')) {
+            // Try to extract the last 6 digits
+            const fixed = digits.slice(-6);
+            if (/^[0-9]{6}$/.test(fixed)) {
+                return new ValidationResult(true, fixed, 'Extracted last 6 digits', this.formatSortCode(fixed));
+            }
+        }
+
+        return new ValidationResult(false, value, `Sort code must be exactly 6 digits (found ${digits.length} digits)`);
     }
 
     formatSortCode(sortCode) {
+        // Sort code should be exactly 6 digits
+        if (sortCode.length !== 6) {
+            return sortCode; // Don't format if not 6 digits
+        }
+        // Format as XX-XX-XX
         return `${sortCode.slice(0, 2)}-${sortCode.slice(2, 4)}-${sortCode.slice(4)}`;
     }
 }

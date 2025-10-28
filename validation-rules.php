@@ -1,12 +1,18 @@
+<?php
+require_once __DIR__ . '/includes/init.php';
+
+// Set page meta
+$pageTitle = 'Validation Rules & Standards';
+$pageDescription = 'Comprehensive guide to all validation rules for UK data formats including phone numbers, NI numbers, postcodes, and bank sort codes';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validation Rules - File Data Validator</title>
-    <meta name="description"
-        content="Comprehensive guide to all validation rules for UK data formats including phone numbers, NI numbers, postcodes, and bank sort codes">
+    <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
@@ -33,13 +39,13 @@
 
             <!-- Navigation back to main validator -->
             <div class="mt-6">
-                <a href="index.html"
+                <a href="index.php"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Back to Data Validator
+                    Back to Data Cleaner
                 </a>
             </div>
         </header>
@@ -501,22 +507,8 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-50 border-t border-gray-200 mt-16">
-        <div class="container mx-auto px-4 py-8 max-w-6xl">
-            <div class="text-center">
-                <p class="text-sm text-gray-600 mb-2">🔒 Your data is processed locally and never transmitted to our
-                    servers</p>
-                <div class="space-x-4 text-sm">
-                    <a href="index.html" class="text-blue-600 hover:text-blue-800 underline">Data Validator</a>
-                    <span class="text-gray-400">•</span>
-                    <a href="privacy.html" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>
-                    <span class="text-gray-400">•</span>
-                    <span class="text-gray-600">GDPR Compliant</span>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+    <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 
     <script>
         // Tab functionality

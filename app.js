@@ -8,6 +8,7 @@ class UKDataCleanerApp {
         this.selectedFile = null;
         this.results = null;
         this.error = null;
+        this.maxFileSizeMB = this.calculateMaxFileSize();
         this.fileHeaders = [];
         this.selectedFields = [];
         this.fileData = [];
@@ -79,7 +80,15 @@ class UKDataCleanerApp {
         // Tab navigation
         const tabBtns = document.querySelectorAll('.tab-btn');
         tabBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => this.switchTab(e.target.dataset.tab));
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // Get tab name from button itself or closest parent
+                const tabName = e.target.dataset.tab || e.target.closest('.tab-btn')?.dataset.tab;
+                if (tabName) {
+                    this.switchTab(tabName);
+                }
+            });
         });
 
         // Test functionality
@@ -119,13 +128,71 @@ class UKDataCleanerApp {
     }
 
     async handleFileSelect(event) {
+        console.log('handleFileSelect called');
         const target = event.target;
         if (target.files && target.files.length > 0) {
+            console.log('File selected:', target.files[0].name);
             await this.handleFile(target.files[0]);
         }
     }
 
+    calculateMaxFileSize() {
+        // Detect available memory and calculate safe file size limit
+        const deviceMemory = navigator.deviceMemory || 2; // Default to 2GB if not available
+        const chromeMemory = navigator.hardwareConcurrency || 4; // CPU cores
+
+        // Conservative calculation: use 10% of device memory for file processing
+        // Assume 1 byte of raw data expands to ~3 bytes when parsed into objects/arrays
+        let estimatedMaxMB = (deviceMemory * 1024 * 0.1) / 3;
+
+        // Apply floor and ceiling based on device capabilities
+        if (deviceMemory <= 2) {
+            estimatedMaxMB = Math.min(estimatedMaxMB, 50); // 50MB for low-end devices
+        } else if (deviceMemory <= 4) {
+            estimatedMaxMB = Math.min(estimatedMaxMB, 100); // 100MB for mid-range
+        } else {
+            estimatedMaxMB = Math.min(estimatedMaxMB, 500); // 500MB for high-end
+        }
+
+        // Never go below 10MB - even old devices can handle that
+        return Math.max(estimatedMaxMB, 10);
+    }
+
+    checkFileSize(file) {
+        const fileSizeMB = file.size / (1024 * 1024);
+        const maxMB = this.maxFileSizeMB;
+
+        if (fileSizeMB > maxMB) {
+            return {
+                safe: false,
+                message: `⚠️ Warning: This file (${fileSizeMB.toFixed(1)} MB) exceeds the recommended limit of ${maxMB.toFixed(0)} MB for your device. Processing may be slow or cause your browser to become unresponsive.`,
+                canStillProcess: fileSizeMB < maxMB * 2 // Allow up to 2x with warning
+            };
+        } else if (fileSizeMB > maxMB * 0.8) {
+            return {
+                safe: true,
+                warning: true,
+                message: `ℹ️ This file (${fileSizeMB.toFixed(1)} MB) is close to the recommended limit. Processing may take a moment.`
+            };
+        }
+
+        return {
+            safe: true,
+            warning: false,
+            message: null
+        };
+    }
+
     async handleFile(file) {
+        console.log('handleFile called with:', file.name);
+
+        // Check file size
+        const sizeCheck = this.checkFileSize(file);
+        if (!sizeCheck.safe && !sizeCheck.canStillProcess) {
+            this.showError(sizeCheck.message);
+            return;
+        }
+
         this.selectedFile = file;
         this.error = null;
         this.results = null;
@@ -133,20 +200,31 @@ class UKDataCleanerApp {
         this.selectedFields = [];
 
         // Update UI
-        this.showFileSelected(file.name);
+        this.showFileSelected(file.name, file.size);
+
+        // Show file size info
+        if (sizeCheck.warning || !sizeCheck.safe) {
+            this.showError(sizeCheck.message);
+        }
 
         // Parse file headers to show field selection
         try {
+            console.log('Reading file...');
             const text = await this.readFileAsText(file);
+            console.log('File read, parsing...');
             const lines = text.split('\n').filter(line => line.trim());
+            console.log('Found', lines.length, 'lines');
             if (lines.length > 0) {
                 // Use proper CSV parsing for headers
                 this.fileHeaders = this.parseCSVLine(lines[0]);
+                console.log('Headers:', this.fileHeaders);
                 // Parse all data rows properly
                 this.fileData = lines.map(line => this.parseCSVLine(line));
+                console.log('Showing field selection...');
                 this.showFieldSelection();
             }
         } catch (err) {
+            console.error('Error reading file:', err);
             this.showError('Could not read file headers');
         }
     }
@@ -182,14 +260,20 @@ class UKDataCleanerApp {
         return result;
     }
 
-    showFileSelected(fileName) {
+    showFileSelected(fileName, fileSize = null) {
         const uploadPrompt = document.getElementById('uploadPrompt');
         const fileSelected = document.getElementById('fileSelected');
         const fileNameElement = document.getElementById('fileName');
+        const fileSizeElement = document.getElementById('fileSize');
 
         if (uploadPrompt) uploadPrompt.style.display = 'none';
         if (fileSelected) fileSelected.classList.remove('hidden');
         if (fileNameElement) fileNameElement.textContent = fileName;
+
+        if (fileSizeElement && fileSize) {
+            const sizeMB = (fileSize / (1024 * 1024)).toFixed(1);
+            fileSizeElement.textContent = `(${sizeMB} MB)`;
+        }
     }
 
     showFieldSelection() {
@@ -428,6 +512,12 @@ class UKDataCleanerApp {
         this.renderCleanedTable();
         this.renderIssuesTable();
 
+        // Set initial tab visibility
+        document.getElementById('summaryTab')?.classList.remove('hidden');
+        document.getElementById('summaryTab')?.classList.add('active');
+        document.getElementById('cleanedTab')?.classList.add('hidden');
+        document.getElementById('issuesTab')?.classList.add('hidden');
+
         // Scroll to results
         resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -550,8 +640,10 @@ class UKDataCleanerApp {
         const tabContents = document.querySelectorAll('.tab-content');
         tabContents.forEach(content => {
             if (content.id === `${tabName}Tab`) {
+                content.classList.remove('hidden');
                 content.classList.add('active');
             } else {
+                content.classList.add('hidden');
                 content.classList.remove('active');
             }
         });
@@ -563,7 +655,10 @@ class UKDataCleanerApp {
         if (!this.results) return;
 
         try {
-            const blob = await this.fileProcessor.exportResults(this.results, format);
+            // Check if user wants to include "Cleaned" columns
+            const includeCleanedColumn = document.getElementById('includeCleanedColumn')?.checked || false;
+
+            const blob = await this.fileProcessor.exportResults(this.results, format, includeCleanedColumn);
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -666,6 +761,12 @@ class UKDataCleanerApp {
         if (resultsSection) resultsSection.classList.add('hidden');
         if (processBtn) processBtn.classList.add('hidden');
 
+        // Reset tabs to default state
+        document.getElementById('summaryTab')?.classList.remove('hidden');
+        document.getElementById('summaryTab')?.classList.add('active');
+        document.getElementById('cleanedTab')?.classList.add('hidden');
+        document.getElementById('issuesTab')?.classList.add('hidden');
+
         this.hideFieldSelection();
         this.hideError();
     }
@@ -673,5 +774,11 @@ class UKDataCleanerApp {
 
 // Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new UKDataCleanerApp();
+    const app = new UKDataCleanerApp();
+
+    // Display file size limit info
+    const fileSizeLimit = document.getElementById('fileSizeLimit');
+    if (fileSizeLimit) {
+        fileSizeLimit.textContent = `Recommended limit: ${app.maxFileSizeMB.toFixed(0)} MB (calculated for your device)`;
+    }
 });

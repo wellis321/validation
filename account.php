@@ -8,8 +8,10 @@ if (!$auth->isLoggedIn()) {
 }
 
 // Get user's subscription
-$subscription = (new User())->getCurrentSubscription();
-$remainingRequests = (new User())->getRemainingRequests();
+$userModel = new User();
+$userModel->id = $user['id'];
+$subscription = $userModel->getCurrentSubscription();
+$remainingRequests = $userModel->getRemainingRequests();
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -188,5 +190,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </main>
+
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+    <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>
 </html>

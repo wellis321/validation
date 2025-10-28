@@ -18,7 +18,7 @@ A complete PHP application for cleaning and validating UK data formats including
 - `validators.js` - Validation logic for all UK data formats
 - `fileProcessor.js` - File processing and export functionality
 - `app.js` - Main application logic and UI interactions
-- `validation-rules.html` - Detailed validation rules documentation
+- `validation-rules.php` - Detailed validation rules documentation
 - `privacy.html` - Privacy policy and GDPR compliance information
 
 ## Installation for cPanel
