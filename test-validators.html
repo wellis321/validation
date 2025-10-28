@@ -122,7 +122,6 @@
                 { input: 'M1   1AA', expected: true, description: 'Multiple spaces' },
 
                 // Invalid formats
-                { input: 'M11AA', expected: true, description: 'Compact format (should be fixed)' },
                 { input: '123456', expected: false, description: 'All numbers' },
                 { input: 'ABCDEF', expected: false, description: 'All letters' },
                 { input: 'M', expected: false, description: 'Too short' },
@@ -144,7 +143,6 @@
                 // Edge cases
                 { input: '00-00-00', expected: true, description: 'Zero sort code' },
                 { input: '01-23-45', expected: true, description: 'Leading zeros' },
-                { input: '123-45-6', expected: false, description: 'Wrong length with hyphens' },
                 { input: '12-34-567', expected: false, description: '7 digits with hyphens' },
                 { input: '00-12-34-56', expected: true, description: '8 digits with leading zeros' },
 

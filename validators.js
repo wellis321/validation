@@ -36,6 +36,11 @@ class PhoneNumberValidator {
             value = num.toFixed(0); // Convert to integer string
         }
 
+        // Step 0.5: Check for invalid multiple plus signs
+        if (value.match(/\+/g) && value.match(/\+/g).length > 1) {
+            return new ValidationResult(false, value, 'Invalid phone number: multiple plus signs');
+        }
+
         // Step 1: Remove labels, icons, and descriptive text
         let cleaned = this.removeLabelsAndIcons(value);
 
@@ -468,12 +473,7 @@ class SortCodeValidator {
     }
 
     validate(value) {
-        // If the value contains letters, it's definitely not a sort code
-        if (/[A-Za-z]/.test(value)) {
-            return new ValidationResult(false, value, 'Sort codes cannot contain letters');
-        }
-
-        // Handle scientific notation
+        // Handle scientific notation first (before letter check)
         if (typeof value === 'number') {
             value = value.toString();
         }
@@ -482,8 +482,18 @@ class SortCodeValidator {
             value = num.toFixed(0);
         }
 
+        // If the value contains letters (after scientific notation conversion), it's not a sort code
+        if (/[A-Za-z]/.test(value)) {
+            return new ValidationResult(false, value, 'Sort codes cannot contain letters');
+        }
+
         // Remove all non-digit characters to get just the digits
         const digits = value.replace(/\D/g, '');
+
+        // If we have 5 digits or less, don't try to fix it
+        if (digits.length < 6) {
+            return new ValidationResult(false, value, `Sort code must be exactly 6 digits (found ${digits.length} digits)`);
+        }
 
         // Sort code must be exactly 6 digits
         if (digits.length === 6) {
@@ -501,7 +511,7 @@ class SortCodeValidator {
             }
         }
 
-        // If it's 8 digits with leading zeros like 00-00-12-34-56
+        // If it's 8 or more digits with leading zeros like 00-00-12-34-56
         if (digits.length >= 8 && digits.startsWith('00')) {
             // Try to extract the last 6 digits
             const fixed = digits.slice(-6);
@@ -510,6 +520,7 @@ class SortCodeValidator {
             }
         }
 
+        // For any other length, reject it
         return new ValidationResult(false, value, `Sort code must be exactly 6 digits (found ${digits.length} digits)`);
     }
 
