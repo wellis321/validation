@@ -24,7 +24,7 @@ if ($user) {
     <meta property="og:type" content="website">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2'><path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/></svg>">
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
     <!-- Navigation -->
@@ -39,8 +39,11 @@ if ($user) {
                 <div class="flex items-center space-x-4">
                     <?php if ($user): ?>
                         <?php if ($subscription): ?>
-                            <span class="text-sm text-green-600 font-medium">
-                                ✓ Active Subscription
+                            <span class="text-sm text-green-600 font-medium flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                Active Subscription
                             </span>
                             <a href="/dashboard.php" class="text-gray-700 hover:text-gray-900">Dashboard</a>
                         <?php else: ?>
@@ -201,8 +204,11 @@ if ($user) {
         <?php if ($user): ?>
             <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
                 <h2 class="text-2xl font-bold text-center mb-2">Upload & Clean Your Data</h2>
-                <p class="text-center text-green-600 mb-6">
-                    🔒 Your files are processed in your browser - 100% private & secure
+                <p class="text-center text-green-600 mb-6 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    Your files are processed in your browser - 100% private & secure
                 </p>
 
                 <?php if (!$subscription): ?>
@@ -234,16 +240,50 @@ if ($user) {
 
                     <?php if ($subscription): ?>
                         <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                            <h3 class="font-semibold text-green-800 mb-2">✓ Your Plan Benefits:</h3>
+                            <h3 class="font-semibold text-green-800 mb-2 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                Your Plan Benefits:
+                            </h3>
                             <ul class="space-y-2 text-sm text-gray-700">
-                                <li>✓ Large files supported (processed in your browser)</li>
-                                <li>✓ Unlimited files</li>
-                                <li>✓ All data types: Phone, NI, Postcodes, Sort Codes</li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Large files supported (processed in your browser)
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Unlimited files
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    All data types: Phone, NI, Postcodes, Sort Codes
+                                </li>
                                 <?php
                                 $features = json_decode($subscription['features'], true);
-                                if ($features['api_access']) echo '<li>✓ API access enabled</li>';
-                                if ($features['priority_support']) echo '<li>✓ Priority email support</li>';
+                                if ($features['api_access']):
                                 ?>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    API access enabled
+                                </li>
+                                <?php endif; ?>
+                                <?php if ($features['priority_support']): ?>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Priority email support
+                                </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     <?php endif; ?>
@@ -517,7 +557,9 @@ if ($user) {
                                 API Access
                             </a>
                             <div class="flex items-center space-x-2">
-                                <span class="text-green-400">🔒</span>
+                                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
                                 <p class="text-gray-300 text-sm">
                                     <strong>GDPR Compliant:</strong> Browser-based processing - Your data never leaves your device
                                 </p>
