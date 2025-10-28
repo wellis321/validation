@@ -266,14 +266,14 @@ class FileProcessor {
         };
     }
 
-    async exportResults(results, format, includeCleanedColumn = false) {
+    async exportResults(results, format, includeIssuesColumn = false, onlyRowsWithIssues = false) {
         switch (format) {
             case 'csv':
                 return this.exportToCSV(results);
             case 'json':
                 return this.exportToJSON(results);
             case 'cleaned-csv':
-                return this.exportCleanedCSV(results, includeCleanedColumn);
+                return this.exportCleanedCSV(results, includeIssuesColumn, onlyRowsWithIssues);
             case 'excel':
                 return this.exportToExcel(results);
             default:
@@ -327,25 +327,13 @@ class FileProcessor {
         ).join('\n');
     }
 
-    exportCleanedCSV(results, includeCleanedColumn = false) {
+    exportCleanedCSV(results, includeIssuesColumn = false, onlyRowsWithIssues = false) {
         console.log('exportCleanedCSV - Starting export with results:', results);
 
-        // Collect all columns that were cleaned
-        const cleanedColumns = new Set();
-        results.processedRows.forEach(row => {
-            row.validationResults.forEach(result => {
-                if (result.isValid && result.fixed) {
-                    cleanedColumns.add(result.column);
-                }
-            });
-        });
-
-        // Create headers with optional "Cleaned" columns
+        // Create headers with optional "Issues" column
         const cleanedHeaders = [...results.originalHeaders];
-        if (includeCleanedColumn) {
-            cleanedColumns.forEach(col => {
-                cleanedHeaders.push(`${col}_Cleaned`);
-            });
+        if (includeIssuesColumn) {
+            cleanedHeaders.push('Issues');
         }
 
         // Create cleaned version of original file with validated data
@@ -359,9 +347,9 @@ class FileProcessor {
             if (processedRow) {
                 // Create a copy of the original row
                 const cleanedRow = [...originalRow];
+                const issuesList = [];
 
-                // Apply all validation results to the row and track what was cleaned
-                const cleanedFlags = {};
+                // Apply all validation results to the row and collect issues
                 processedRow.validationResults.forEach(result => {
                     // Find the column index for this validation result
                     const columnIndex = results.originalHeaders.indexOf(result.column);
@@ -371,30 +359,31 @@ class FileProcessor {
                             console.log(`Exporting column "${result.column}": original="${originalRow[columnIndex]}" -> fixed="${result.fixed}"`);
                             // Replace the original value with the cleaned version
                             cleanedRow[columnIndex] = result.fixed;
-                            cleanedFlags[result.column] = 'Yes';
-                        } else {
-                            cleanedFlags[result.column] = 'No';
+                        } else if (!result.isValid) {
+                            // Track fields that still have issues
+                            issuesList.push(result.column);
                         }
                     }
                 });
 
-                // Add "Cleaned" columns if requested
-                if (includeCleanedColumn) {
-                    cleanedColumns.forEach(col => {
-                        cleanedRow.push(cleanedFlags[col] || 'No');
-                    });
-                }
+                // Only include this row if we're not filtering or if it has issues
+                if (!onlyRowsWithIssues || issuesList.length > 0) {
+                    // Add "Issues" column if requested
+                    if (includeIssuesColumn) {
+                        cleanedRow.push(issuesList.join(', '));
+                    }
 
-                cleanedRows.push(cleanedRow);
-            } else {
-                // If no processing result, keep original row and add "No" for all cleaned columns
-                const originalRowWithFlags = [...originalRow];
-                if (includeCleanedColumn) {
-                    cleanedColumns.forEach(() => {
-                        originalRowWithFlags.push('No');
-                    });
+                    cleanedRows.push(cleanedRow);
                 }
-                cleanedRows.push(originalRowWithFlags);
+            } else {
+                // If no processing result, keep original row
+                if (!onlyRowsWithIssues) {
+                    // Add empty issues if requested
+                    if (includeIssuesColumn) {
+                        originalRow.push('');
+                    }
+                    cleanedRows.push(originalRow);
+                }
             }
         }
 
@@ -403,10 +392,20 @@ class FileProcessor {
         // Convert to CSV format
         const csvContent = cleanedRows.map(row =>
             row.map((cell, index) => {
-                const columnName = results.originalHeaders[index];
+                const columnName = cleanedHeaders[index];
 
                 // Always quote phone number columns to prevent formatting issues
                 if (columnName && this.isPhoneColumn(columnName)) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                }
+
+                // Always quote account number columns to prevent formatting issues
+                if (columnName && this.isAccountColumn(columnName)) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                }
+
+                // Always quote Issues column (often contains commas)
+                if (columnName === 'Issues') {
                     return `"${cell.replace(/"/g, '""')}"`;
                 }
 
@@ -431,11 +430,11 @@ class FileProcessor {
                 row.validationResults.map(result => [
                     row.rowNumber,
                     `"${result.column}"`,
-                    // Always quote phone number values to prevent formatting issues
-                    this.isPhoneColumn(result.column) ? `"${result.value}"` : result.value,
+                    // Always quote phone number and account number values to prevent formatting issues
+                    (this.isPhoneColumn(result.column) || this.isAccountColumn(result.column)) ? `"${result.value}"` : result.value,
                     result.isValid ? 'Yes' : 'No',
                     result.detectedType,
-                    result.fixed ? (this.isPhoneColumn(result.column) ? `"${result.fixed}"` : result.fixed) : '',
+                    result.fixed ? ((this.isPhoneColumn(result.column) || this.isAccountColumn(result.column)) ? `"${result.fixed}"` : result.fixed) : '',
                     result.error ? `"${result.error}"` : '',
                     this.getComplianceStandard(result.column, result.detectedType)
                 ].join(','))
@@ -454,6 +453,8 @@ class FileProcessor {
             return 'UK Phone Number Standards';
         } else if (column.includes('postcode') || column.includes('post_code')) {
             return 'UK Postcode Standards';
+        } else if (column.includes('account') && (column.includes('number') || column.includes('acc'))) {
+            return 'UK Banking Standards';
         } else if (column.includes('sort') || column.includes('bank')) {
             return 'UK Banking Standards';
         } else {
@@ -484,6 +485,16 @@ class FileProcessor {
             'telephone', 'tel', 'cell', 'cellphone', 'contact_number'
         ];
         return phoneColumnNames.some(name =>
+            columnName.toLowerCase().includes(name.toLowerCase())
+        );
+    }
+
+    isAccountColumn(columnName) {
+        const accountColumnNames = [
+            'account_number', 'account', 'bank_account',
+            'acc', 'bank_acc', 'acc_number'
+        ];
+        return accountColumnNames.some(name =>
             columnName.toLowerCase().includes(name.toLowerCase())
         );
     }

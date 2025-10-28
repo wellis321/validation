@@ -744,6 +744,99 @@ class PostcodeValidator {
     }
 }
 
+// UK Bank Account Number Validator
+class BankAccountValidator {
+    getType() {
+        return 'bank_account';
+    }
+
+    validate(value) {
+        // Step 1: Handle scientific notation first (before any other processing)
+        if (typeof value === 'number') {
+            value = value.toString();
+        }
+        if (/^[\d.]+[Ee]\+?\d+$/.test(value)) {
+            const num = parseFloat(value);
+            value = num.toFixed(0);
+        }
+
+        // Step 2: Remove labels and prefixes
+        let cleaned = this.removeLabelsAndPrefixes(value);
+
+        // Step 3: Remove wrapping characters
+        cleaned = this.removeWrapping(cleaned);
+
+        // Step 4: Remove all non-digit characters to get just the digits
+        const digits = cleaned.replace(/\D/g, '');
+
+        // Step 5: If the value contains letters (after cleaning), it's not valid
+        if (/[A-Za-z]/.test(value) && digits.length === 0) {
+            return new ValidationResult(false, value, 'Bank account numbers cannot contain letters');
+        }
+
+        // Step 6: UK bank account numbers are typically 7-12 digits
+        // Most common are 8 digits
+        if (digits.length < 7) {
+            return new ValidationResult(false, value, `Bank account number must be 7-12 digits (found ${digits.length} digits)`);
+        }
+
+        // Step 7: Accept 7-12 digit account numbers
+        if (digits.length >= 7 && digits.length <= 12) {
+            // Remove any spaces for validation
+            const formatted = this.formatAccountNumber(digits);
+            return new ValidationResult(true, digits, null, formatted);
+        }
+
+        // Step 8: Reject anything too long
+        return new ValidationResult(false, value, `Bank account number must be 7-12 digits (found ${digits.length} digits)`);
+    }
+
+    removeLabelsAndPrefixes(value) {
+        const labels = [
+            /^Account\s+Number:\s*/i,
+            /^Account:\s*/i,
+            /^Acc:\s*/i,
+            /^A\/C:\s*/i,
+            /^A\.C:\s*/i,
+            /^Bank\s+Account:\s*/i,
+            /^Bank\s+Account\s+Number:\s*/i,
+            /^Account\s+No:\s*/i,
+            /^Account\s+#:\s*/i,
+            /^ACC\s+/i,
+            /^ACCOUNT\s+/i,
+        ];
+
+        let cleaned = value;
+        for (const label of labels) {
+            cleaned = cleaned.replace(label, '');
+        }
+        return cleaned.trim();
+    }
+
+    removeWrapping(value) {
+        // Remove wrapping characters like quotes, parentheses, brackets
+        return value
+            .replace(/^["'`]+|["'`]+$/g, '') // Quotes
+            .replace(/^\(+|\)+$/g, '')        // Parentheses
+            .replace(/^\[+|\]+$/g, '')        // Square brackets
+            .replace(/^\{+|\}+$/g, '')        // Curly brackets
+            .replace(/^[*-]+|[*-]+$/g, '')    // Asterisks and dashes
+            .trim();
+    }
+
+    formatAccountNumber(account) {
+        // Format account numbers with spaces every 4 digits for readability
+        // e.g., 12345678 -> 1234 5678
+        if (account.length === 8) {
+            return `${account.slice(0, 4)} ${account.slice(4)}`;
+        } else if (account.length === 10) {
+            return `${account.slice(0, 4)} ${account.slice(4, 8)} ${account.slice(8)}`;
+        }
+        // For other lengths, return as-is or with basic spacing
+        return account;
+    }
+}
+
 // UK Bank Sort Code Validator
 class SortCodeValidator {
     getType() {
@@ -941,8 +1034,11 @@ function getValidator(type) {
             return new PostcodeValidator();
         case 'sort_code':
         case 'sortcode':
-        case 'bank':
             return new SortCodeValidator();
+        case 'bank_account':
+        case 'account_number':
+        case 'account':
+            return new BankAccountValidator();
         default:
             return null;
     }
@@ -952,8 +1048,9 @@ function getValidator(type) {
 function autoValidate(value, phoneFormat = 'international') {
     const validators = [
         new PhoneNumberValidator(phoneFormat),
-        new NINumberValidator(),        // Check NI numbers before sort codes
+        new NINumberValidator(),        // Check NI numbers before bank codes
         new PostcodeValidator(),
+        new BankAccountValidator(),     // Check account numbers before sort codes
         new SortCodeValidator()         // Sort codes last since they're more generic
     ];
 
@@ -979,6 +1076,7 @@ if (typeof module !== 'undefined' && module.exports) {
         PhoneNumberValidator,
         NINumberValidator,
         PostcodeValidator,
+        BankAccountValidator,
         SortCodeValidator,
         getValidator,
         autoValidate

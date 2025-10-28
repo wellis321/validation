@@ -371,10 +371,14 @@ if ($user) {
                         </div>
 
                         <!-- Export Options -->
-                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg space-y-3">
                             <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" id="includeCleanedColumn" class="mr-2" checked>
-                                <span class="text-sm text-gray-700">Include "Cleaned" columns in download (shows "Yes"/"No" for each cleaned field)</span>
+                                <input type="checkbox" id="includeIssuesColumn" class="mr-2" checked>
+                                <span class="text-sm text-gray-700">Include "Issues" column (lists fields that still need attention)</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" id="onlyRowsWithIssues" class="mr-2">
+                                <span class="text-sm text-gray-700">Export only rows with issues (optional - for review file)</span>
                             </label>
                         </div>
 

@@ -682,10 +682,11 @@ class UKDataCleanerApp {
         if (!this.results) return;
 
         try {
-            // Check if user wants to include "Cleaned" columns
-            const includeCleanedColumn = document.getElementById('includeCleanedColumn')?.checked || false;
+            // Check export options
+            const includeIssuesColumn = document.getElementById('includeIssuesColumn')?.checked || false;
+            const onlyRowsWithIssues = document.getElementById('onlyRowsWithIssues')?.checked || false;
 
-            const blob = await this.fileProcessor.exportResults(this.results, format, includeCleanedColumn);
+            const blob = await this.fileProcessor.exportResults(this.results, format, includeIssuesColumn, onlyRowsWithIssues);
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
