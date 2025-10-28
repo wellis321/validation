@@ -505,13 +505,37 @@ class PostcodeValidator {
     }
 
     validate(value) {
-        // Replace dashes with spaces and convert to uppercase
-        let cleaned = value.replace(/-/g, ' ').replace(/\s+/g, ' ').trim().toUpperCase();
+        // Step 1: Remove wrapping characters first
+        let cleaned = this.removeWrapping(value);
 
-        // UK postcode patterns
+        // Step 2: Remove labels and prefixes
+        cleaned = this.removeLabelsAndPrefixes(cleaned);
+
+        // Step 3: Replace all common separators with spaces (this helps extraction)
+        cleaned = cleaned.replace(/[._\/•·:;|+&,\(\)\[\]{}"]/g, ' ');
+
+        // Step 4: Replace dashes with spaces
+        cleaned = cleaned.replace(/-/g, ' ');
+
+        // Step 5: Normalize multiple spaces first
+        cleaned = cleaned.replace(/\s+/g, ' ').trim();
+
+        // Step 6: Extract postcode from strings that contain addresses
+        cleaned = this.extractPostcode(cleaned);
+
+        // Step 7: Normalize any remaining multiple spaces and uppercase
+        cleaned = cleaned.replace(/\s+/g, ' ').trim().toUpperCase();
+
+        // Debug logging for specific failing cases
+        if (value.includes('SW1A') || value.includes('Downing')) {
+            console.log('Postcode validator debug:', { original: value, cleaned });
+        }
+
+        // Step 8: Try to validate with spaces
+        // After normalization, there should be exactly one space
+        // UK postcode formats: [1-2 letters][1-2 digits][0-1 letter] [1 digit][2 letters]
         const patterns = [
-            /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/,  // Standard format
-            /^[A-Z]{1,2}\d{1,2}\s?\d[A-Z]{2}$/,      // Alternative format
+            /^[A-Z]{1,2}\d{1,2}[A-Z]?\s\d[A-Z]{2}$/,  // SW1A 1AA, M1 1AA, M60 1AA, W1A 1AA, EC1A 1BB
         ];
 
         for (const pattern of patterns) {
@@ -520,20 +544,192 @@ class PostcodeValidator {
             }
         }
 
-        // Try to fix common issues (no spaces at all)
+        // Step 9: Try without spaces (no space variation)
         const noSpaces = cleaned.replace(/\s/g, '');
-        if (/^[A-Z]{1,2}\d{1,2}\d[A-Z]{2}$/.test(noSpaces)) {
+
+        // Pattern for A999 format (like M601AA)
+        if (/^[A-Z]\d{2,3}[A-Z]{2}$/.test(noSpaces)) {
             const fixed = this.formatPostcode(noSpaces);
             return new ValidationResult(true, fixed, 'Added proper spacing', fixed);
         }
 
-        // Handle cases like "M11AA" -> "M1 1AA"
-        if (/^[A-Z]\d\d[A-Z]{2}$/.test(noSpaces)) {
+        // Pattern for AA99 format (like CR26XH - should be CR2 6XH)
+        // 2 letters, 2 digits, 2 letters = 6 chars total
+        if (/^[A-Z]{2}\d{2}[A-Z]{2}$/.test(noSpaces)) {
+            const fixed = this.formatPostcode(noSpaces);
+            return new ValidationResult(true, fixed, 'Added proper spacing', fixed);
+        }
+
+        // Pattern for AA99#AA format (like DN551PT - AA## #AA)
+        if (/^[A-Z]{2}\d{2}\d[A-Z]{2}$/.test(noSpaces)) {
+            const fixed = this.formatPostcode(noSpaces);
+            return new ValidationResult(true, fixed, 'Added proper spacing', fixed);
+        }
+
+        // Pattern for A9A9AA format (like W1A1AA)
+        if (/^[A-Z]\d[A-Z]\d[A-Z]{2}$/.test(noSpaces)) {
+            const fixed = this.formatPostcode(noSpaces);
+            return new ValidationResult(true, fixed, 'Added proper spacing', fixed);
+        }
+
+        // Pattern for AA9A9AA format (like EC1A1BB)
+        if (/^[A-Z]{2}\d[A-Z]\d[A-Z]{2}$/.test(noSpaces)) {
             const fixed = this.formatPostcode(noSpaces);
             return new ValidationResult(true, fixed, 'Added proper spacing', fixed);
         }
 
         return new ValidationResult(false, value, 'Invalid UK postcode format');
+    }
+
+    extractPostcode(value) {
+        // Don't uppercase here - that happens later
+        // Try to find a UK postcode pattern in the string
+        // At this point, all separators should already be converted to spaces
+
+        // Try all patterns (case-insensitive) and return the first match
+        const patterns = [
+            /([A-Z]{1,2}\d{1,2}[A-Z]?\s+\d[A-Z]{2})/i,   // SW1A 1AA, M1 1AA, M60 1AA, W1A 1AA, EC1A 1BB
+            /([A-Z]{2}\d{2}[A-Z]{2})\b/i,                 // CR26XH (no space)
+            /([A-Z]{2}\d[A-Z]\d[A-Z]{2})\b/i,             // SW1A1AA (no space)
+            /([A-Z]\d{2}[A-Z]{2})\b/i,                    // M11AA (no space)
+            /([A-Z]\d{3}[A-Z]{2})\b/i,                    // M601AA (no space)
+            /([A-Z]{2}\d{3}[A-Z]{2})\b/i,                 // DN551PT (no space)
+        ];
+
+        for (const pattern of patterns) {
+            const match = value.match(pattern);
+            if (match) {
+                const postcode = match[1];
+                // Normalize spaces in the extracted postcode
+                return postcode.replace(/\s+/g, ' ').trim();
+            }
+        }
+
+        // If no pattern found, return original value for further processing
+        return value;
+    }
+
+    removeLabelsAndPrefixes(value) {
+        const labels = [
+            /^Postcode:\s*/i,
+            /^Post\s+Code:\s*/i,
+            /^PC:\s*/i,
+            /^P\.C:\s*/i,
+            /^P\/C:\s*/i,
+            /^Postal\s+Code:\s*/i,
+            /^ZIP:\s*/i,
+            /^Code:\s*/i,
+            /^Address:\s*/i,
+            /^Del\.\s*Postcode:\s*/i,
+            /^postcode:\s*/i,
+            /^post_code\s+/i,
+            /^postal_code:\s*/i,
+            /^zip_code:\s*/i,
+            /^Area:\s*/i,
+            /^District:\s*/i,
+            /^Zone:\s*/i,
+            /^Delivery:\s*/i,
+            /^Personal:\s*/i,
+            /^No:\s*/i,
+            /^#\s*/,
+            /^PC\s+/i,
+            /^POSTCODE:\s*/i,
+            /^POST\s+CODE\s+/i,
+            /^UK\s+/i,
+            /^GB\s+/i,
+            /^UK:\s*/i,
+            /^GB:\s*/i,
+            /^GB-\s*/i,
+            /^\(UK\)\s+/i,
+            /^United\s+Kingdom\s+/i,
+            /\s*\(postcode\)\s*$/i,
+            /\s*\(verified\)\s*$/i,
+            /\s*\(Home\)\s*$/i,
+            /\s*\(Office\)\s*$/i,
+            /\s*-\s*Office\s*$/i,
+            /\s*-\s*Branch\s*$/i,
+            /\s*,\s*UK$/i,
+            /\s*,\s*England$/i,
+            /\s*,\s*United\s+Kingdom$/i,
+        ];
+
+        // Remove city names (common UK cities)
+        const cities = [
+            /^London\s+/i,
+            /^Manchester\s+/i,
+            /^Birmingham\s+/i,
+            /^Liverpool\s+/i,
+            /^Leeds\s+/i,
+            /^Sheffield\s+/i,
+            /^Edinburgh\s+/i,
+            /^Glasgow\s+/i,
+            /^Bristol\s+/i,
+            /^Cardiff\s+/i,
+            /^Belfast\s+/i,
+        ];
+
+        let cleaned = value;
+
+        for (const label of labels) {
+            cleaned = cleaned.replace(label, '');
+        }
+
+        for (const city of cities) {
+            cleaned = cleaned.replace(city, '');
+        }
+
+        // Remove context text in parentheses or after dashes
+        cleaned = cleaned.replace(/\s*\([^)]*\)\s*/g, '');
+        cleaned = cleaned.replace(/\s*-\s*[A-Za-z\s]+$/, '');
+
+        // Remove city names at the end (but also handle street addresses)
+        // This will match ", London", ", 10 Downing Street", etc.
+        cleaned = cleaned.replace(/\s*,\s*[A-Za-z0-9\s]+$/, '');
+
+        // Try to remove address-like prefixes (numbers followed by words)
+        // This handles patterns like "10 Downing Street, SW1A 1AA"
+        // Match: digits + space + letters + optional spaces and letters + comma + space
+        const addressPattern = /^\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*,\s*/i;
+        cleaned = cleaned.replace(addressPattern, '');
+
+        // Try without comma: "10 Downing Street SW1A 1AA"
+        // Match: digits + space + letters + optional spaces and letters + space before postcode
+        const addressPattern2 = /^\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*\s+/i;
+        cleaned = cleaned.replace(addressPattern2, '');
+
+        return cleaned.trim();
+    }
+
+    removeWrapping(value) {
+        let cleaned = value;
+
+        // Remove quotes
+        cleaned = cleaned.replace(/^["']|["']$/g, '');
+
+        // Remove asterisks and hashes from start/end
+        cleaned = cleaned.replace(/^[*#]+|[*#]+$/g, '');
+
+        // Remove leading apostrophe (Excel artifact)
+        cleaned = cleaned.replace(/^['']/, '');
+
+        // Remove tab characters and normalize multiple spaces
+        cleaned = cleaned.replace(/\t/g, ' ');
+        cleaned = cleaned.replace(/\s{2,}/g, ' ');
+
+        // Remove validation markers
+        cleaned = cleaned.replace(/^[✓✔]\s*|\s*[✓✔]$/g, '');
+        cleaned = cleaned.replace(/^Valid:\s*/i, '');
+
+        // Remove form field markers
+        cleaned = cleaned.replace(/^[☐•~]\s*/g, '');
+
+        // Remove currency and special symbols
+        cleaned = cleaned.replace(/^[£$@]\s*/g, '');
+
+        // Remove special Unicode dashes and spaces
+        cleaned = cleaned.replace(/[–—−]/g, '-');
+
+        return cleaned.trim();
     }
 
     formatPostcode(postcode) {
