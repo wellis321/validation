@@ -521,21 +521,23 @@ class PostcodeValidator {
         cleaned = cleaned.replace(/\s+/g, ' ').trim();
 
         // Step 6: Extract postcode from strings that contain addresses
+        const beforeExtract = cleaned;
         cleaned = this.extractPostcode(cleaned);
+        const afterExtract = cleaned;
 
         // Step 7: Normalize any remaining multiple spaces and uppercase
         cleaned = cleaned.replace(/\s+/g, ' ').trim().toUpperCase();
+        const afterNormalize = cleaned;
 
         // Debug logging for specific failing cases
         if (value.includes('SW1A') || value.includes('Downing')) {
             console.log('Postcode validator debug:', {
                 original: value,
-                cleaned,
-                afterStep1: this.removeWrapping(value),
-                afterStep2: this.removeLabelsAndPrefixes(this.removeWrapping(value)),
-                afterStep3: this.removeLabelsAndPrefixes(this.removeWrapping(value)).replace(/[._\/•·:;|+&,\(\)\[\]{}"]/g, ' '),
-                afterStep4: this.removeLabelsAndPrefixes(this.removeWrapping(value)).replace(/[._\/•·:;|+&,\(\)\[\]{}"]/g, ' ').replace(/-/g, ' '),
-                afterStep5: this.removeLabelsAndPrefixes(this.removeWrapping(value)).replace(/[._\/•·:;|+&,\(\)\[\]{}"]/g, ' ').replace(/-/g, ' ').replace(/\s+/g, ' ').trim(),
+                beforeExtract,
+                afterExtract,
+                afterNormalize,
+                finalCleaned: cleaned,
+                patternMatches: /^[A-Z]{1,2}\d{1,2}[A-Z]?\s\d[A-Z]{2}$/.test(cleaned)
             });
         }
 
