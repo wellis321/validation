@@ -13,12 +13,6 @@ $userModel->id = $user['id'];
 $subscription = $userModel->getCurrentSubscription();
 $remainingRequests = $userModel->getRemainingRequests();
 
-// Get password hash directly from database (not hidden by Model)
-$db = Database::getInstance();
-$passwordStmt = $db->query("SELECT password FROM users WHERE id = ?", [$user['id']]);
-$passwordData = $passwordStmt->fetch();
-$passwordHash = $passwordData['password'] ?? null;
-
 // Handle form submission
 $passwordError = null;
 $profileUpdated = false;
@@ -47,6 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Change password
         if (!empty($currentPassword) || !empty($newPassword) || !empty($confirmPassword)) {
+            // Get password hash from database only when needed for verification
+            $db = Database::getInstance();
+            $passwordStmt = $db->query("SELECT password FROM users WHERE id = ?", [$user['id']]);
+            $passwordData = $passwordStmt->fetch();
+            $passwordHash = $passwordData['password'] ?? null;
+
             // Validate that all password fields are filled
             if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
                 $passwordError = 'All password fields are required';
@@ -61,14 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'password' => $newPassword
                     ]);
                     $passwordUpdated = true;
-                    // Refresh password hash after successful update
-                    $passwordStmt = $db->query("SELECT password FROM users WHERE id = ?", [$user['id']]);
-                    $passwordData = $passwordStmt->fetch();
-                    $passwordHash = $passwordData['password'] ?? null;
                 } catch (Exception $e) {
                     $passwordError = $e->getMessage();
                 }
             }
+
+            // Clear password hash from memory after use
+            unset($passwordHash);
         }
 
         // Refresh user data
@@ -124,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h2 class="text-xl font-semibold mb-4">Profile Information</h2>
                     <form method="POST" class="space-y-4">
                         <?php echo csrf_field(); ?>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
                                 <input type="text" id="first_name" name="first_name"
@@ -192,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h2 class="text-xl font-semibold mb-4">Subscription Details</h2>
                     <?php if ($subscription): ?>
                         <div class="bg-white border border-gray-200 rounded-lg p-4">
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <p class="text-sm text-gray-600">Current Plan</p>
                                     <p class="font-semibold"><?php echo htmlspecialchars($subscription['name']); ?></p>
