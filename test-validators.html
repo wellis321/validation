@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validator Tests - Simple Data Cleaner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="validators.js"></script>
+</head>
+
+<body class="min-h-screen bg-gray-50 p-8">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8">UK Data Validator Tests</h1>
+
+        <div class="mb-8">
+            <button id="runAllTests" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Run All
+                Tests</button>
+            <button id="runFailedOnly"
+                class="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 ml-4">Run Failed Tests
+                Only</button>
+        </div>
+
+        <div id="testResults"></div>
+    </div>
+
+    <script>
+        const phoneValidator = new PhoneNumberValidator('international');
+        const niValidator = new NINumberValidator();
+        const postcodeValidator = new PostcodeValidator();
+        const sortCodeValidator = new SortCodeValidator();
+
+        const testCases = {
+            phone_numbers: [
+                // Valid formats
+                { input: '07700 900123', expected: true, description: 'Standard UK mobile with spaces' },
+                { input: '7700 900123', expected: true, description: 'UK mobile without leading 0' },
+                { input: '+44 7700 900123', expected: true, description: 'International format' },
+                { input: '00447700900123', expected: true, description: 'Double zero prefix' },
+                { input: '07700900123', expected: true, description: 'UK mobile no spaces' },
+                { input: '020 7946 0958', expected: true, description: 'London landline' },
+                { input: '02079460958', expected: true, description: 'London landline no spaces' },
+                { input: '+44 20 7946 0958', expected: true, description: 'International London format' },
+                { input: '+44 (0) 20 7946 0958', expected: true, description: 'International with (0) notation' },
+                { input: '+44 (0)20 7946 0958', expected: true, description: 'International with (0) no space' },
+
+                // Scientific notation from Excel
+                { input: '4.47701E+11', expected: true, description: 'Excel scientific notation' },
+                { input: '4.47700900123E+11', expected: true, description: 'Excel scientific notation long' },
+
+                // Labels and prefixes
+                { input: 'Mobile: 07700 900123', expected: true, description: 'Mobile label prefix' },
+                { input: '📱 07700 900123', expected: true, description: 'Emoji prefix' },
+                { input: 'Mob: 07700 900123', expected: true, description: 'Mob label prefix' },
+                { input: 'Tel (mob): 07700 900123', expected: true, description: 'Tel label with modifier' },
+                { input: 'Cell: 07700 900123', expected: true, description: 'Cell label prefix' },
+                { input: '(mobile) 07700 900123', expected: true, description: 'Mobile suffix' },
+
+                // Separators and punctuation
+                { input: '07700-900-123', expected: true, description: 'Hyphen separators' },
+                { input: '07700.900.123', expected: true, description: 'Dot separators' },
+                { input: '(07700) 900123', expected: true, description: 'Parentheses' },
+                { input: '07700 900-123', expected: true, description: 'Mixed separators' },
+
+                // Wrapping characters
+                { input: '"07700 900123"', expected: true, description: 'Double quotes' },
+                { input: "'07700 900123'", expected: true, description: 'Single quotes' },
+
+                // Extensions
+                { input: '020 7946 0958 ext 123', expected: true, description: 'Landline with ext' },
+                { input: '07700 900123 x456', expected: true, description: 'Mobile with extension' },
+
+                // Invalid formats
+                { input: '123', expected: false, description: 'Too short' },
+                { input: '123456789', expected: false, description: 'Wrong length' },
+                { input: 'abcdefghij', expected: false, description: 'All letters' },
+                { input: '++447700900123', expected: false, description: 'Double plus' },
+                { input: '44770090012', expected: false, description: 'Wrong length international' },
+            ],
+
+            ni_numbers: [
+                // Valid formats
+                { input: 'AB123456C', expected: true, description: 'Standard format no spaces' },
+                { input: 'AB 123456 C', expected: true, description: 'With spaces' },
+                { input: 'ab123456c', expected: true, description: 'Lowercase' },
+                { input: 'AB123456C', expected: true, description: 'Standard uppercase' },
+                { input: 'AB-123-456-C', expected: true, description: 'With hyphens' },
+                { input: 'AB.123.456.C', expected: true, description: 'With dots' },
+                { input: 'AB/123/456/C', expected: true, description: 'With slashes' },
+
+                // Invalid formats
+                { input: 'BG123456C', expected: false, description: 'Banned prefix BG' },
+                { input: 'GB123456C', expected: false, description: 'Banned prefix GB' },
+                { input: 'KN123456C', expected: false, description: 'Banned prefix KN' },
+                { input: 'NK123456C', expected: false, description: 'Banned prefix NK' },
+                { input: 'NT123456C', expected: false, description: 'Banned prefix NT' },
+                { input: 'TN123456C', expected: false, description: 'Banned prefix TN' },
+                { input: 'ZZ123456C', expected: false, description: 'Banned prefix ZZ' },
+                { input: 'OO123456C', expected: false, description: 'Admin prefix OO' },
+                { input: 'FY123456C', expected: false, description: 'Admin prefix FY' },
+                { input: 'NC123456C', expected: false, description: 'Admin prefix NC' },
+                { input: 'PZ123456C', expected: false, description: 'Admin prefix PZ' },
+                { input: 'PP999999P', expected: false, description: 'Special invalid PP number' },
+                { input: '11a11111', expected: false, description: 'TRN format' },
+                { input: '123456C', expected: false, description: 'Missing first letters' },
+                { input: 'AB123456', expected: false, description: 'Missing last letter' },
+                { input: 'ABCDEFGHI', expected: false, description: 'All letters' },
+                { input: '123456789', expected: false, description: 'All numbers' },
+            ],
+
+            postcodes: [
+                // Valid formats
+                { input: 'M1 1AA', expected: true, description: 'Standard postcode' },
+                { input: 'M11AA', expected: true, description: 'No space' },
+                { input: 'M1-1AA', expected: true, description: 'Dash instead of space' },
+                { input: 'SW1A 1AA', expected: true, description: 'London postcode' },
+                { input: 'SW1A1AA', expected: true, description: 'London no space' },
+                { input: 'W1A 1AA', expected: true, description: 'Central London' },
+                { input: 'B33 8TH', expected: true, description: 'Birmingham area' },
+                { input: 'EC1A 1BB', expected: true, description: 'Central London EC area' },
+                { input: 'E1W 2WW', expected: true, description: 'East London' },
+                { input: 'M1   1AA', expected: true, description: 'Multiple spaces' },
+
+                // Invalid formats
+                { input: 'M11AA', expected: true, description: 'Compact format (should be fixed)' },
+                { input: '123456', expected: false, description: 'All numbers' },
+                { input: 'ABCDEF', expected: false, description: 'All letters' },
+                { input: 'M', expected: false, description: 'Too short' },
+                { input: 'M1', expected: false, description: 'Too short' },
+            ],
+
+            sort_codes: [
+                // Valid formats
+                { input: '12-34-56', expected: true, description: 'Standard format with hyphens' },
+                { input: '123456', expected: true, description: 'No separators' },
+                { input: '12:34:56', expected: true, description: 'Colon separators' },
+                { input: '12 34 56', expected: true, description: 'Space separators' },
+                { input: '12.34.56', expected: true, description: 'Dot separators' },
+                { input: '23-45-67', expected: true, description: 'Another valid code' },
+
+                // Scientific notation
+                { input: '1.23456E+5', expected: true, description: 'Excel scientific notation' },
+
+                // Edge cases
+                { input: '00-00-00', expected: true, description: 'Zero sort code' },
+                { input: '01-23-45', expected: true, description: 'Leading zeros' },
+                { input: '123-45-6', expected: false, description: 'Wrong length with hyphens' },
+                { input: '12-34-567', expected: false, description: '7 digits with hyphens' },
+                { input: '00-12-34-56', expected: true, description: '8 digits with leading zeros' },
+
+                // Invalid formats
+                { input: '12345', expected: false, description: 'Too short (5 digits)' },
+                { input: '1234567', expected: false, description: 'Too long (7 digits)' },
+                { input: 'AB-34-56', expected: false, description: 'Contains letters' },
+                { input: '12-3X-56', expected: false, description: 'Invalid character' },
+                { input: '12', expected: false, description: 'Too short' },
+            ]
+        };
+
+        function runTest(validator, input, expected, description) {
+            const result = validator.validate(input);
+            const passed = (result.isValid === expected);
+
+            return {
+                passed,
+                description,
+                input,
+                expected,
+                got: result.isValid,
+                error: result.error,
+                fixed: result.fixed
+            };
+        }
+
+        function runAllTests() {
+            const results = {
+                phone_numbers: [],
+                ni_numbers: [],
+                postcodes: [],
+                sort_codes: []
+            };
+
+            // Run phone number tests
+            const phoneValidator = new PhoneNumberValidator('international');
+            results.phone_numbers = testCases.phone_numbers.map(test =>
+                runTest(phoneValidator, test.input, test.expected, test.description)
+            );
+
+            // Run NI number tests
+            const niValidator = new NINumberValidator();
+            results.ni_numbers = testCases.ni_numbers.map(test =>
+                runTest(niValidator, test.input, test.expected, test.description)
+            );
+
+            // Run postcode tests
+            const postcodeValidator = new PostcodeValidator();
+            results.postcodes = testCases.postcodes.map(test =>
+                runTest(postcodeValidator, test.input, test.expected, test.description)
+            );
+
+            // Run sort code tests
+            const sortCodeValidator = new SortCodeValidator();
+            results.sort_codes = testCases.sort_codes.map(test =>
+                runTest(sortCodeValidator, test.input, test.expected, test.description)
+            );
+
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            const output = document.getElementById('testResults');
+            let html = '';
+
+            for (const [category, tests] of Object.entries(results)) {
+                const passed = tests.filter(t => t.passed).length;
+                const total = tests.length;
+                const percentage = Math.round((passed / total) * 100);
+
+                html += `
+                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                        <h2 class="text-2xl font-bold mb-4">${category.replace(/_/g, ' ').toUpperCase()}</h2>
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold ${percentage === 100 ? 'text-green-600' : 'text-orange-600'}">
+                                ${passed}/${total}
+                            </span>
+                            <span class="text-gray-600">tests passed (${percentage}%)</span>
+                        </div>
+                `;
+
+                const failedTests = tests.filter(t => !t.passed);
+
+                if (failedTests.length > 0) {
+                    html += `
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                            <h3 class="font-semibold text-red-900 mb-2">Failed Tests:</h3>
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left p-2">Input</th>
+                                        <th class="text-left p-2">Expected</th>
+                                        <th class="text-left p-2">Got</th>
+                                        <th class="text-left p-2">Error/Fixed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+
+                    failedTests.forEach(test => {
+                        html += `
+                            <tr class="border-b">
+                                <td class="p-2 font-mono">${escapeHtml(test.input)}</td>
+                                <td class="p-2">${test.expected ? 'Valid' : 'Invalid'}</td>
+                                <td class="p-2">${test.got ? 'Valid' : 'Invalid'}</td>
+                                <td class="p-2 text-red-600">${escapeHtml(test.error || test.fixed || 'N/A')}</td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+
+                html += `</div>`;
+            }
+
+            output.innerHTML = html;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        document.getElementById('runAllTests').addEventListener('click', runAllTests);
+
+        runAllTests(); // Run on page load
+    </script>
+</body>
+
+</html>
