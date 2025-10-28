@@ -23,16 +23,17 @@ if (!$plan) {
     exit;
 }
 
-// Map database plan to Stripe Price ID
+// Map plan name to Stripe Price ID
 $priceMapping = [
-    1 => STRIPE_PRICE_PAY_PER_USE,  // Pay Per Use
-    2 => STRIPE_PRICE_MONTHLY,       // Monthly
-    3 => STRIPE_PRICE_ANNUAL         // Annual
+    'Pay Per Use' => STRIPE_PRICE_PAY_PER_USE,
+    'Monthly' => STRIPE_PRICE_MONTHLY,
+    'Annual' => STRIPE_PRICE_ANNUAL
 ];
 
-$priceId = $priceMapping[$plan['id']] ?? null;
+$priceId = $priceMapping[$plan['name']] ?? null;
 
 if (!$priceId) {
+    error_log("No price mapping found for plan: " . $plan['name']);
     die('Invalid plan configuration. Please contact support.');
 }
 
