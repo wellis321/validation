@@ -13,7 +13,17 @@ $userModel->id = $user['id'];
 $subscription = $userModel->getCurrentSubscription();
 $remainingRequests = $userModel->getRemainingRequests();
 
+// Get password hash directly from database (not hidden by Model)
+$db = Database::getInstance();
+$passwordStmt = $db->query("SELECT password FROM users WHERE id = ?", [$user['id']]);
+$passwordData = $passwordStmt->fetch();
+$passwordHash = $passwordData['password'] ?? null;
+
 // Handle form submission
+$passwordError = null;
+$profileUpdated = false;
+$passwordUpdated = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Validate CSRF token
@@ -32,26 +42,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'first_name' => $firstName,
                 'last_name' => $lastName
             ]);
-            add_success('Profile updated successfully');
+            $profileUpdated = true;
         }
 
         // Change password
-        if (!empty($currentPassword) && !empty($newPassword)) {
-            if ($newPassword !== $confirmPassword) {
-                throw new Exception('New passwords do not match');
+        if (!empty($currentPassword) || !empty($newPassword) || !empty($confirmPassword)) {
+            // Validate that all password fields are filled
+            if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
+                $passwordError = 'All password fields are required';
+            } elseif ($newPassword !== $confirmPassword) {
+                $passwordError = 'New passwords do not match';
+            } elseif (!password_verify($currentPassword, $passwordHash)) {
+                $passwordError = 'Current password is incorrect';
+            } else {
+                try {
+                    $security->validatePassword($newPassword);
+                    $auth->updateProfile($user['id'], [
+                        'password' => $newPassword
+                    ]);
+                    $passwordUpdated = true;
+                    // Refresh password hash after successful update
+                    $passwordStmt = $db->query("SELECT password FROM users WHERE id = ?", [$user['id']]);
+                    $passwordData = $passwordStmt->fetch();
+                    $passwordHash = $passwordData['password'] ?? null;
+                } catch (Exception $e) {
+                    $passwordError = $e->getMessage();
+                }
             }
-
-            if (!$auth->verifyPassword($currentPassword, $user['password'])) {
-                throw new Exception('Current password is incorrect');
-            }
-
-            $security->validatePassword($newPassword);
-
-            $auth->updateProfile($user['id'], [
-                'password' => $newPassword
-            ]);
-
-            add_success('Password changed successfully');
         }
 
         // Refresh user data
@@ -95,6 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php display_messages(); ?>
 
+            <?php if ($profileUpdated): ?>
+                <div class="mx-6 mt-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                    Profile updated successfully
+                </div>
+            <?php endif; ?>
+
             <div class="p-6">
                 <!-- Profile Section -->
                 <div class="mb-8">
@@ -126,14 +149,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <!-- Change Password -->
-                <div class="mb-8">
+                <div id="password-section" class="mb-8">
                     <h2 class="text-xl font-semibold mb-4">Change Password</h2>
+
+                    <?php if ($passwordUpdated): ?>
+                        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
+                            Password changed successfully
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($passwordError): ?>
+                        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+                            <?php echo htmlspecialchars($passwordError); ?>
+                        </div>
+                    <?php endif; ?>
+
                     <form method="POST" class="space-y-4">
                         <?php echo csrf_field(); ?>
                         <div>
                             <label for="current_password" class="block text-sm font-medium text-gray-700">Current Password</label>
                             <input type="password" id="current_password" name="current_password" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                class="mt-1 block w-full rounded-md <?php echo $passwordError ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'; ?> shadow-sm">
                         </div>
                         <div>
                             <label for="new_password" class="block text-sm font-medium text-gray-700">New Password</label>
@@ -225,5 +261,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
+
+    <?php if ($passwordError || $passwordUpdated): ?>
+    <script>
+        // Scroll to password section when there's an error or success
+        window.addEventListener('load', function() {
+            const passwordSection = document.getElementById('password-section');
+            if (passwordSection) {
+                passwordSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    </script>
+    <?php endif; ?>
 </body>
 </html>
