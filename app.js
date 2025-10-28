@@ -137,25 +137,52 @@ class UKDataCleanerApp {
     }
 
     calculateMaxFileSize() {
-        // Detect available memory and calculate safe file size limit
-        const deviceMemory = navigator.deviceMemory || 2; // Default to 2GB if not available
-        const chromeMemory = navigator.hardwareConcurrency || 4; // CPU cores
+        // Detect available memory and browser capabilities
+        const deviceMemory = navigator.deviceMemory || null;
+        const hardwareConcurrency = navigator.hardwareConcurrency || 4;
+        const userAgent = navigator.userAgent.toLowerCase();
 
-        // Conservative calculation: use 10% of device memory for file processing
-        // Assume 1 byte of raw data expands to ~3 bytes when parsed into objects/arrays
-        let estimatedMaxMB = (deviceMemory * 1024 * 0.1) / 3;
-
-        // Apply floor and ceiling based on device capabilities
-        if (deviceMemory <= 2) {
-            estimatedMaxMB = Math.min(estimatedMaxMB, 50); // 50MB for low-end devices
-        } else if (deviceMemory <= 4) {
-            estimatedMaxMB = Math.min(estimatedMaxMB, 100); // 100MB for mid-range
-        } else {
-            estimatedMaxMB = Math.min(estimatedMaxMB, 500); // 500MB for high-end
+        // Detect browser
+        let browser = 'unknown';
+        if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
+            browser = 'Chrome';
+        } else if (userAgent.includes('firefox')) {
+            browser = 'Firefox';
+        } else if (userAgent.includes('safari') && !userAgent.includes('chrome')) {
+            browser = 'Safari';
+        } else if (userAgent.includes('edg')) {
+            browser = 'Edge';
         }
 
-        // Never go below 10MB - even old devices can handle that
-        return Math.max(estimatedMaxMB, 10);
+        // Calculate based on browser and device capabilities
+        let estimatedMaxMB;
+        let recommendation = '';
+
+        if (deviceMemory !== null) {
+            // Chrome/Edge: deviceMemory API is available (accurate)
+            estimatedMaxMB = Math.min(deviceMemory * 30, 500);
+            recommendation = `${browser} detected with ${deviceMemory}GB RAM`;
+        } else {
+            // Firefox/Safari: deviceMemory API not available, use conservative estimate
+            estimatedMaxMB = 50;
+            recommendation = `${browser} detected (conservative limit)`;
+
+            // Try to be slightly more generous for higher core counts
+            if (hardwareConcurrency >= 8) {
+                estimatedMaxMB = 75;
+            }
+        }
+
+        // Store browser info for display
+        this.browserInfo = {
+            name: browser,
+            hasDeviceMemory: deviceMemory !== null,
+            cores: hardwareConcurrency,
+            memoryGB: deviceMemory || 'unknown',
+            recommendation: recommendation
+        };
+
+        return Math.max(estimatedMaxMB, 10); // Minimum 10MB
     }
 
     checkFileSize(file) {
@@ -778,7 +805,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Display file size limit info
     const fileSizeLimit = document.getElementById('fileSizeLimit');
-    if (fileSizeLimit) {
-        fileSizeLimit.textContent = `Recommended limit: ${app.maxFileSizeMB.toFixed(0)} MB (calculated for your device)`;
+    if (fileSizeLimit && app.browserInfo) {
+        const browserText = app.browserInfo.hasDeviceMemory
+            ? `${app.browserInfo.name} with ${app.browserInfo.memoryGB}GB RAM`
+            : `${app.browserInfo.name} (conservative estimate)`;
+        fileSizeLimit.textContent = `Recommended limit: ${app.maxFileSizeMB.toFixed(0)} MB (${browserText})`;
     }
 });
