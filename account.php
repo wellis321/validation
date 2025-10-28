@@ -174,9 +174,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <p class="font-semibold text-green-600">Active</p>
                                 </div>
                             </div>
-                            <div class="mt-4">
-                                <a href="/pricing.php" class="text-blue-600 hover:text-blue-800">View Plans</a>
-                            </div>
+                            <?php if (isset($subscription['end_date']) && !empty($subscription['end_date'])): ?>
+                                <?php
+                                $endDate = new DateTime($subscription['end_date']);
+                                $now = new DateTime();
+                                $daysLeft = $now->diff($endDate)->days;
+                                $isAnnual = $subscription['duration_months'] == 12;
+                                $isMonthly = $subscription['duration_months'] == 1;
+                                $isRecurring = $isAnnual || $isMonthly;
+                                ?>
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <p class="text-sm text-gray-600 mb-1">
+                                        <?php if ($isRecurring && $subscription['duration_months'] != 0 && $subscription['duration_months'] != 0.033): ?>
+                                            Subscription renews: <span class="font-semibold"><?php echo $endDate->format('F j, Y'); ?></span>
+                                        <?php elseif ($subscription['duration_months'] == 0.033): ?>
+                                            Expires: <span class="font-semibold"><?php echo $endDate->format('F j, Y \a\t g:i A'); ?></span>
+                                        <?php else: ?>
+                                            Valid until: <span class="font-semibold"><?php echo $endDate->format('F j, Y'); ?></span>
+                                        <?php endif; ?>
+                                    </p>
+                                    <?php if ($isRecurring): ?>
+                                        <p class="text-xs text-gray-500 mb-3">
+                                            You'll have access until <?php echo $endDate->format('F j, Y'); ?> (<?php echo $daysLeft; ?> days remaining)
+                                        </p>
+                                        <a href="/cancel-subscription.php" class="inline-block text-red-600 hover:text-red-800 text-sm font-medium">
+                                            Cancel Subscription
+                                        </a>
+                                    <?php endif; ?>
+                                    <span class="text-gray-400 mx-2">|</span>
+                                    <a href="/pricing.php" class="text-blue-600 hover:text-blue-800 text-sm">View Plans</a>
+                                </div>
+                            <?php else: ?>
+                                <div class="mt-4">
+                                    <a href="/pricing.php" class="text-blue-600 hover:text-blue-800">View Plans</a>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     <?php else: ?>
                         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
