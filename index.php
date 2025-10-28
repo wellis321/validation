@@ -444,49 +444,49 @@ if ($user) {
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                 <!-- Phone Numbers -->
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="text-blue-600 mb-4">
+                <a href="/validation-rules.php#phone_numbersTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
+                    <div class="text-blue-600 mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Phone Numbers</h3>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors">Phone Numbers</h3>
                     <p class="text-gray-600">Format UK mobile and landline numbers with proper spacing</p>
-                </div>
+                </a>
 
                 <!-- NI Numbers -->
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="text-purple-600 mb-4">
+                <a href="/validation-rules.php#national_insuranceTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
+                    <div class="text-purple-600 mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a2 2 0 100-4 2 2 0 000 4z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">NI Numbers</h3>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-purple-600 transition-colors">NI Numbers</h3>
                     <p class="text-gray-600">HMRC compliant validation with proper formatting</p>
-                </div>
+                </a>
 
                 <!-- Postcodes -->
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="text-green-600 mb-4">
+                <a href="/validation-rules.php#postcodesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
+                    <div class="text-green-600 mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Postcodes</h3>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-green-600 transition-colors">Postcodes</h3>
                     <p class="text-gray-600">Validate and format UK postcodes correctly</p>
-                </div>
+                </a>
 
                 <!-- Sort Codes -->
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="text-yellow-600 mb-4">
+                <a href="/validation-rules.php#sort_codesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
+                    <div class="text-yellow-600 mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Sort Codes</h3>
+                    <h3 class="text-xl font-semibold mb-2 group-hover:text-yellow-600 transition-colors">Sort Codes</h3>
                     <p class="text-gray-600">Format bank sort codes with proper hyphens</p>
-                </div>
+                </a>
             </div>
         </div>
     </main>
