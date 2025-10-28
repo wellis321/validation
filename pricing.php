@@ -154,9 +154,9 @@ if ($user) {
                                 Current Plan
                             </button>
                         <?php else: ?>
-                            <a href="/subscribe.php?plan=<?php echo $plan['id']; ?>"
+                            <a href="/checkout.php?plan=<?php echo $plan['id']; ?>"
                                 class="block w-full <?php echo $isPopular ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-900'; ?> text-white text-center py-3 px-6 rounded-lg font-medium transition-colors">
-                                <?php echo $plan['name'] === 'Pay Per Use' ? 'Pay £0.99' : 'Subscribe Now'; ?>
+                                <?php echo $plan['name'] === 'Pay Per Use' ? 'Pay £' . number_format($plan['price'], 2) : 'Subscribe Now'; ?>
                             </a>
                         <?php endif; ?>
                     </div>
