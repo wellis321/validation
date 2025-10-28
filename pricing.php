@@ -83,7 +83,7 @@ if ($user) {
                             <span class="text-4xl font-bold text-gray-900">£<?php echo number_format($plan['price'], 2); ?></span>
                             <span class="text-gray-500 ml-2">
                                 <?php if ($plan['name'] === 'Pay Per Use'): ?>
-                                    one-time
+                                    /24 hours
                                 <?php elseif ($plan['duration_months'] === 12): ?>
                                     /year
                                 <?php else: ?>

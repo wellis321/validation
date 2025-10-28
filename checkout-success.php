@@ -70,11 +70,14 @@ $paymentStatus = $session['payment_status'] ?? 'unpaid';
 if ($paymentStatus === 'paid') {
     // Calculate subscription dates
     $startDate = date('Y-m-d H:i:s');
-    $durationMonths = $plan['duration_months'] ?? 1;
+    $durationMonths = floatval($plan['duration_months'] ?? 1);
 
     if ($durationMonths === 0) {
         // One-time payment - expires immediately after use
         $endDate = $startDate;
+    } elseif ($durationMonths < 1) {
+        // For durations less than 1 month (24 hours = 1 day)
+        $endDate = date('Y-m-d H:i:s', strtotime('+1 day', strtotime($startDate)));
     } else {
         $endDate = date('Y-m-d H:i:s', strtotime("+{$durationMonths} months"));
     }
