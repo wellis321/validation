@@ -368,9 +368,16 @@ class NINumberValidator {
     }
 
     validate(value) {
-        // Remove common separators but preserve letters and digits
+        // Step 1: Remove labels and prefixes
+        let cleaned = this.removeLabelsAndPrefixes(value);
+
+        // Step 2: Remove wrapping characters
+        cleaned = this.removeWrapping(cleaned);
+
+        // Step 3: Remove all separators and normalize
         // Include Unicode separators: bullet points (•), middle dots (·), colons (:), semicolons (;), etc.
-        let cleaned = value.replace(/[-._\/•·:;]/g, '').replace(/\s/g, '').toUpperCase();
+        // Also handle pipes (|), plus signs (+), ampersands (&), asterisks (*), hashes (#), commas (,), parentheses, brackets, etc.
+        cleaned = cleaned.replace(/[-._\/•·:;|+&*#,\()\[\]{}"]/g, '').replace(/\s+/g, '').trim().toUpperCase();
 
         // Check for TRN (Temporary Reference Number) format: 11 a1 11 11
         if (/^11[A-Z]\d{1}\d{2}\d{2}$/.test(cleaned)) {
@@ -428,6 +435,58 @@ class NINumberValidator {
         }
 
         return new ValidationResult(false, value, 'Invalid NI number format (should be 2 letters + 6 digits + 1 letter)');
+    }
+
+    removeLabelsAndPrefixes(value) {
+        const labels = [
+            /^NI:\s*/i,
+            /^NI\s+Number:\s*/i,
+            /^NINO:\s*/i,
+            /^National\s+Insurance:\s*/i,
+            /^NINo:\s*/i,
+            /^N\.I:\s*/i,
+            /^N\.I\.N:\s*/i,
+            /^No:\s*/i,
+            /^Number:\s*/i,
+            /^NI\s+/i,
+            /^NINO\s+/i,
+            /^N\.I\.\s+/i,
+            /^N\.I\.N\.O\s+/i,
+            /^UK\s+/i,
+            /^GB\s+/i,
+            /^UK:\s*/i,
+            /^GB:\s*/i,
+            /^\(UK\)\s+/i,
+            /^\s*\(NI\)\s*$/i,
+            /\s*\(NI\)\s*$/i,
+            /\s*-\s*NI\s*$/i,
+        ];
+
+        let cleaned = value;
+        for (const label of labels) {
+            cleaned = cleaned.replace(label, '');
+        }
+
+        return cleaned.trim();
+    }
+
+    removeWrapping(value) {
+        let cleaned = value;
+
+        // Remove quotes
+        cleaned = cleaned.replace(/^["']|["']$/g, '');
+
+        // Remove asterisks and hashes from start/end
+        cleaned = cleaned.replace(/^[*#]+|[*#]+$/g, '');
+
+        // Remove leading apostrophe (Excel artifact)
+        cleaned = cleaned.replace(/^['']/, '');
+
+        // Remove tab characters and normalize multiple spaces
+        cleaned = cleaned.replace(/\t/g, ' ');
+        cleaned = cleaned.replace(/\s{2,}/g, ' ');
+
+        return cleaned.trim();
     }
 
     formatNINumber(ni) {
