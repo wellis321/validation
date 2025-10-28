@@ -210,7 +210,7 @@ if ($user) {
                         </svg>
                         <h3 class="text-lg font-semibold text-gray-900">What's the difference between Pay Per Use and subscriptions?</h3>
                     </div>
-                    <p class="text-gray-600 mt-2">Pay Per Use (£0.99) gives you one-time access - perfect for quick jobs. Monthly (£4.99) and Annual (£39.99) plans give you unlimited access, priority support, and API access.</p>
+                    <p class="text-gray-600 mt-2">Pay Per Use (£4.99) gives you 24-hour access - perfect for quick jobs or trying the service. Monthly (£29.99) and Annual (£249.99) plans give you unlimited access, priority support, and API access.</p>
                 </div>
                 <div>
                     <div class="flex items-center mb-2">
