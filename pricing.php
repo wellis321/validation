@@ -124,14 +124,6 @@ if ($user) {
                                     <span class="text-gray-700">Phone numbers, NI numbers, postcodes & sort codes</span>
                                 </li>
                             <?php endif; ?>
-                            <?php if ($features['api_access']): ?>
-                                <li class="flex items-start">
-                                    <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span class="text-gray-700">API access</span>
-                                </li>
-                            <?php endif; ?>
                             <?php if ($features['priority_support']): ?>
                                 <li class="flex items-start">
                                     <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -210,7 +202,7 @@ if ($user) {
                         </svg>
                         <h3 class="text-lg font-semibold text-gray-900">What's the difference between Pay Per Use and subscriptions?</h3>
                     </div>
-                    <p class="text-gray-600 mt-2">Pay Per Use (£4.99) gives you 24-hour access - perfect for quick jobs or trying the service. Monthly (£29.99) and Annual (£249.99) plans give you unlimited access, priority support, and API access.</p>
+                    <p class="text-gray-600 mt-2">Pay Per Use (£4.99) gives you 24-hour access - perfect for quick jobs or trying the service. Monthly (£29.99) and Annual (£249.99) plans give you unlimited access and priority support.</p>
                 </div>
                 <div>
                     <div class="flex items-center mb-2">

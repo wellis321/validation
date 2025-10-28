@@ -267,15 +267,7 @@ if ($user) {
                                 </li>
                                 <?php
                                 $features = json_decode($subscription['features'], true);
-                                if ($features['api_access']):
                                 ?>
-                                <li class="flex items-start">
-                                    <svg class="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                    </svg>
-                                    API access enabled
-                                </li>
-                                <?php endif; ?>
                                 <?php if ($features['priority_support']): ?>
                                 <li class="flex items-start">
                                     <svg class="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -521,7 +513,6 @@ if ($user) {
                     <div>
                         <h3 class="text-lg font-semibold mb-4">Resources</h3>
                         <ul class="space-y-2 text-gray-400">
-                            <li><a href="/api-docs.php" class="hover:text-white transition-colors">API Documentation</a></li>
                             <li><a href="/validation-rules.php" class="hover:text-white transition-colors">Validation Rules</a></li>
                             <li><a href="/pricing.php" class="hover:text-white transition-colors">Pricing</a></li>
                             <li><a href="/support.php" class="hover:text-white transition-colors">Support</a></li>
@@ -553,9 +544,6 @@ if ($user) {
                                     Choose a Plan
                                 </a>
                             <?php endif; ?>
-                            <a href="/api-docs.php" class="text-white hover:text-blue-400 transition-colors">
-                                API Access
-                            </a>
                             <div class="flex items-center space-x-2">
                                 <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
