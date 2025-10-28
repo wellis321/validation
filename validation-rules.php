@@ -259,7 +259,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 <div class="bg-blue-50 rounded-lg p-6 mb-8">
                     <h3 class="text-xl font-semibold text-blue-900 mb-4">Output Format Options</h3>
                     <p class="text-blue-700 mb-4">Choose how you want your phone numbers formatted in the results:</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div class="bg-white rounded-lg p-4">
                             <h4 class="font-medium text-blue-800 mb-2">International (+44)</h4>
                             <p class="text-blue-700 text-sm mb-2">Always includes +44 country code</p>
@@ -272,6 +272,18 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                             <code
                                 class="inline-block bg-blue-100 px-2 py-1 rounded text-sm font-mono text-blue-800">07700 900123</code>
                         </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 mt-4 border border-blue-200">
+                        <p class="text-blue-800">
+                            <strong>Supported formats:</strong> We clean 100+ phone number variations including Excel scientific notation,
+                            labels, names, extensions, and multiple formats.
+                        </p>
+                        <a href="phone-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            See Full List of Supported Formats
+                        </a>
                     </div>
                 </div>
             </div>
