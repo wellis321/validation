@@ -73,7 +73,7 @@ if ($user) {
                     <?php endif; ?>
                     <?php if ($isAnnual): ?>
                         <div class="bg-green-500 text-white text-center py-2 text-sm font-semibold">
-                            BEST VALUE - SAVE £111!
+                            BEST VALUE - SAVE £109.89!
                         </div>
                     <?php endif; ?>
                     <div class="p-8">
@@ -92,7 +92,7 @@ if ($user) {
                             </span>
                         </div>
                         <?php if ($isAnnual): ?>
-                            <p class="text-sm text-green-600 mb-6">That's just £20.75/month!</p>
+                            <p class="text-sm text-green-600 mb-6">That's just £20.83/month!</p>
                         <?php else: ?>
                             <div class="mb-6"></div>
                         <?php endif; ?>
