@@ -78,9 +78,9 @@ CREATE TABLE IF NOT EXISTS rate_limits (
 
 -- Insert default subscription plans
 INSERT INTO subscription_plans (name, description, price, duration_months, features) VALUES
-('Pay Per Use', 'One-time payment for quick data cleaning tasks', 0.99, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": false, "expires_after_use": true}'),
-('Monthly', 'Unlimited data cleaning, billed monthly', 4.99, 1, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true}'),
-('Annual', 'Best value - save £20 per year!', 39.99, 12, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true, "annual_discount": true}');
+('Pay Per Use', 'One-time payment for quick data cleaning tasks', 4.99, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": false, "expires_after_use": true}'),
+('Monthly', 'Unlimited data cleaning, billed monthly', 29.99, 1, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true}'),
+('Annual', 'Best value - save £60 per year!', 249.00, 12, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true, "annual_discount": true}');
 
 -- Create indexes for better performance (skip if already exist)
 CREATE INDEX IF NOT EXISTS idx_user_email ON users(email);
