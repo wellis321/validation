@@ -156,14 +156,72 @@
             ],
 
             ni_numbers: [
-                // Valid formats
+                // Basic spacing variations
+                { input: 'AB 12 34 56 C', expected: true, description: 'Spaces between all groups' },
+                { input: 'AB12 34 56 C', expected: true, description: 'Letters together, spaced digits' },
+                { input: 'AB 123456 C', expected: true, description: 'Digits together' },
+                { input: 'AB 12 3456 C', expected: true, description: 'Mixed digit spacing' },
+                { input: 'AB 1234 56 C', expected: true, description: 'Alternative digit spacing' },
+                { input: 'AB123 456 C', expected: true, description: 'First digits together' },
                 { input: 'AB123456C', expected: true, description: 'Standard format no spaces' },
-                { input: 'AB 123456 C', expected: true, description: 'With spaces' },
-                { input: 'ab123456c', expected: true, description: 'Lowercase' },
-                { input: 'AB123456C', expected: true, description: 'Standard uppercase' },
-                { input: 'AB-123-456-C', expected: true, description: 'With hyphens' },
-                { input: 'AB.123.456.C', expected: true, description: 'With dots' },
-                { input: 'AB/123/456/C', expected: true, description: 'With slashes' },
+                { input: 'A B 12 34 56 C', expected: true, description: 'Space between letters' },
+
+                // Separator types
+                { input: 'AB-12-34-56-C', expected: true, description: 'Hyphens' },
+                { input: 'AB-123456-C', expected: true, description: 'Hyphens with digits together' },
+                { input: 'AB.12.34.56.C', expected: true, description: 'Dots' },
+                { input: 'AB.123456.C', expected: true, description: 'Dots with digits together' },
+                { input: 'AB/12/34/56/C', expected: true, description: 'Slashes' },
+                { input: 'AB/123456/C', expected: true, description: 'Slashes with digits together' },
+                { input: 'AB_12_34_56_C', expected: true, description: 'Underscores' },
+                { input: 'AB:12:34:56:C', expected: true, description: 'Colons' },
+                { input: 'AB;12;34;56;C', expected: true, description: 'Semicolons' },
+                { input: 'AB,12,34,56,C', expected: true, description: 'Commas' },
+                { input: 'AB|12|34|56|C', expected: true, description: 'Pipes' },
+
+                // Parentheses and brackets
+                { input: '(AB)12 34 56 C', expected: true, description: 'Parentheses around letters' },
+                { input: 'AB(12)34 56 C', expected: true, description: 'Parentheses around first digits' },
+                { input: 'AB 12 34 56(C)', expected: true, description: 'Parentheses around last letter' },
+                { input: '(AB123456C)', expected: true, description: 'Parentheses around whole number' },
+                { input: '[AB]12 34 56 C', expected: true, description: 'Square brackets around letters' },
+                { input: '{AB}12 34 56 C', expected: true, description: 'Curly brackets around letters' },
+                { input: 'AB[123456]C', expected: true, description: 'Square brackets around digits' },
+
+                // Mixed formatting
+                { input: 'AB 12-34-56 C', expected: true, description: 'Mixed spaces and hyphens' },
+                { input: 'AB-12 34 56-C', expected: true, description: 'Alternating hyphens and spaces' },
+                { input: 'AB.12-34.56-C', expected: true, description: 'Mixed dots and hyphens' },
+                { input: 'AB 12.34.56 C', expected: true, description: 'Mixed spaces and dots' },
+                { input: 'AB-123456 C', expected: true, description: 'Hyphen before digits together' },
+
+                // Lowercase variations
+                { input: 'ab123456c', expected: true, description: 'All lowercase' },
+                { input: 'ab 12 34 56 c', expected: true, description: 'Lowercase with spaces' },
+                { input: 'Ab123456C', expected: true, description: 'First letter lowercase' },
+                { input: 'aB123456C', expected: true, description: 'Second letter lowercase' },
+                { input: 'AB123456c', expected: true, description: 'Last letter lowercase' },
+                { input: 'ab123456C', expected: true, description: 'First two letters lowercase' },
+
+                // Wrapping characters
+                { input: '"AB123456C"', expected: true, description: 'Double quotes' },
+                { input: "'AB123456C'", expected: true, description: 'Single quotes' },
+                { input: ' AB123456C', expected: true, description: 'Leading space' },
+                { input: 'AB123456C ', expected: true, description: 'Trailing space' },
+                { input: ' AB123456C ', expected: true, description: 'Leading and trailing spaces' },
+                { input: '*AB123456C', expected: true, description: 'Leading asterisk' },
+                { input: '#AB123456C', expected: true, description: 'Leading hash' },
+                { input: "'AB123456C", expected: true, description: 'Leading apostrophe (Excel)' },
+
+                // Labels and prefixes
+                { input: 'NI: AB123456C', expected: true, description: 'NI prefix with colon' },
+                { input: 'NI Number: AB123456C', expected: true, description: 'NI Number prefix' },
+                { input: 'NINO: AB123456C', expected: true, description: 'NINO prefix' },
+                { input: 'National Insurance: AB123456C', expected: true, description: 'Full label prefix' },
+                { input: 'AB123456C (NI)', expected: true, description: 'NI suffix' },
+                { input: 'NI - AB123456C', expected: true, description: 'NI with dash' },
+                { input: 'UK AB123456C', expected: true, description: 'UK prefix' },
+                { input: 'GB: AB123456C', expected: true, description: 'GB prefix with colon' },
 
                 // Invalid formats
                 { input: 'BG123456C', expected: false, description: 'Banned prefix BG' },
