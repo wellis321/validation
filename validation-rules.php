@@ -631,31 +631,60 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
+            function switchTab(targetTab) {
+                // Update active tab button
+                tabBtns.forEach(b => {
+                    if (b.dataset.tab === targetTab) {
+                        b.classList.add('border-blue-500', 'text-blue-600');
+                        b.classList.remove('border-transparent', 'text-gray-500');
+                    } else {
+                        b.classList.remove('border-blue-500', 'text-blue-600');
+                        b.classList.add('border-transparent', 'text-gray-500');
+                    }
+                });
+
+                // Update active tab content
+                tabContents.forEach(content => {
+                    if (content.id === `${targetTab}Tab`) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+            }
+
+            // Add click listeners to tab buttons
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
                     const targetTab = this.dataset.tab;
-
-                    // Update active tab button
-                    tabBtns.forEach(b => {
-                        if (b.dataset.tab === targetTab) {
-                            b.classList.add('border-blue-500', 'text-blue-600');
-                            b.classList.remove('border-transparent', 'text-gray-500');
-                        } else {
-                            b.classList.remove('border-blue-500', 'text-blue-600');
-                            b.classList.add('border-transparent', 'text-gray-500');
-                        }
-                    });
-
-                    // Update active tab content
-                    tabContents.forEach(content => {
-                        if (content.id === `${targetTab}Tab`) {
-                            content.classList.add('active');
-                        } else {
-                            content.classList.remove('active');
-                        }
-                    });
+                    switchTab(targetTab);
                 });
             });
+
+            // Handle hash anchor links (for footer navigation)
+            function handleHashNavigation() {
+                const hash = window.location.hash;
+                if (hash && hash.startsWith('#')) {
+                    const tabName = hash.replace('#', '').replace('Tab', '');
+                    if (tabName && tabBtns.length > 0) {
+                        switchTab(tabName);
+
+                        // Scroll to the tab section after a brief delay to ensure tab is visible
+                        setTimeout(() => {
+                            const tabSection = document.querySelector('.bg-white.rounded-lg.shadow-lg.p-6.mb-8');
+                            if (tabSection) {
+                                tabSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }, 100);
+                    }
+                }
+            }
+
+            // Handle hash on page load
+            handleHashNavigation();
+
+            // Handle hash changes (when clicking links on the same page)
+            window.addEventListener('hashchange', handleHashNavigation);
         });
     </script>
 </body>

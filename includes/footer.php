@@ -10,14 +10,18 @@
                 </p>
             </div>
             <div>
-                <h4 class="font-semibold mb-3">Product</h4>
+                <h4 class="font-semibold mb-3">Features</h4>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="/pricing.php" class="hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="/validation-rules.php#phone_numbersTab" class="hover:text-white transition-colors">Phone Numbers</a></li>
+                    <li><a href="/validation-rules.php#national_insuranceTab" class="hover:text-white transition-colors">NI Numbers</a></li>
+                    <li><a href="/validation-rules.php#postcodesTab" class="hover:text-white transition-colors">Postcodes</a></li>
+                    <li><a href="/validation-rules.php#sort_codesTab" class="hover:text-white transition-colors">Sort Codes</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="font-semibold mb-3">Company</h4>
                 <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="/pricing.php" class="hover:text-white transition-colors">Pricing</a></li>
                     <li><a href="/security.php" class="hover:text-white transition-colors">Security & Privacy</a></li>
                     <li><a href="/terms.php" class="hover:text-white transition-colors">Terms of Service</a></li>
                     <li><a href="/gdpr.php" class="hover:text-white transition-colors">GDPR Compliance</a></li>

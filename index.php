@@ -467,10 +467,10 @@ if ($user) {
                     <div>
                         <h3 class="text-lg font-semibold mb-4">Features</h3>
                         <ul class="space-y-2 text-gray-400">
-                            <li><a href="#" class="hover:text-white transition-colors">Phone Numbers</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">NI Numbers</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Postcodes</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Sort Codes</a></li>
+                            <li><a href="/validation-rules.php#phone_numbersTab" class="hover:text-white transition-colors">Phone Numbers</a></li>
+                            <li><a href="/validation-rules.php#national_insuranceTab" class="hover:text-white transition-colors">NI Numbers</a></li>
+                            <li><a href="/validation-rules.php#postcodesTab" class="hover:text-white transition-colors">Postcodes</a></li>
+                            <li><a href="/validation-rules.php#sort_codesTab" class="hover:text-white transition-colors">Sort Codes</a></li>
                         </ul>
                     </div>
                     <div>
