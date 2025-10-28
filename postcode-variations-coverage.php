@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/init.php';
 
-$pageTitle = 'Bank Sort Code Format Support';
+$pageTitle = 'UK Postcode Format Support';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,9 +62,9 @@ $pageTitle = 'Bank Sort Code Format Support';
 
     <main class="container mx-auto px-4 py-8 max-w-6xl">
         <header class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Bank Sort Code Format Support</h1>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">UK Postcode Format Support</h1>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                We clean UK bank sort codes from many different input formats. See what we support below.
+                We clean UK postcodes from many different input formats. See what we support below.
             </p>
         </header>
 
@@ -85,12 +85,12 @@ $pageTitle = 'Bank Sort Code Format Support';
                     Spacing Variations
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12 34 56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">123 456</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12 3456</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">1234 56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">123456</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">  12  34  56</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW 1A 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A  1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">M1 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">M11AA</code></div>
                 </div>
             </div>
 
@@ -103,14 +103,14 @@ $pageTitle = 'Bank Sort Code Format Support';
                     Separator Types Handled
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12-34-56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12.34.56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12/34/56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12:34:56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12;34;56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12,34,56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12|34|56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12_34_56</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A-1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A.1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A/1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A_1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A:1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A;1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A,1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A|1AA</code></div>
                 </div>
             </div>
 
@@ -123,14 +123,14 @@ $pageTitle = 'Bank Sort Code Format Support';
                     Labels & Prefixes Removed
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Sort Code: 12-34-56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SC: 123456</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Bank: 12-34-56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">12-34-56 (sort code)</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SC - 123456</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">UK 12-34-56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Barclays 12-34-56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">HSBC: 12-34-56</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Postcode: SW1A 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">PC: SW1A1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Address: SW1A 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA (postcode)</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">UK SW1A 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">London SW1A 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA, UK</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA, London</code></div>
                 </div>
             </div>
 
@@ -143,12 +143,51 @@ $pageTitle = 'Bank Sort Code Format Support';
                     Wrapping Characters
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">"12-34-56"</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">'123456'</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">*12-34-56</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">#123456</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm"> 12-34-56 </code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">'12-34-56</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">"SW1A 1AA"</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">'SW1A1AA'</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">*SW1A 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">#SW1A1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm"> SW1A 1AA </code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">'SW1A 1AA</code></div>
+                </div>
+            </div>
+
+            <!-- Lowercase Variations -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                    </svg>
+                    Lowercase & Case Variations
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sw1a 1aa</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sw1a1aa</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Sw1a 1aa</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1a 1AA</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sw1A 1aa</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Sw1A 1Aa</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sW1a 1Aa</code></div>
+                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">m1 1aa</code></div>
+                </div>
+                <p class="text-sm text-gray-600 mt-3">All postcodes are normalized to uppercase during validation.</p>
+            </div>
+
+            <!-- Different Postcode Formats -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    All UK Postcode Formats
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">M1 1AA</code><br><small class="text-gray-600">A# #AA</small></div>
+                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">M60 1AA</code><br><small class="text-gray-600">A## #AA</small></div>
+                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">CR2 6XH</code><br><small class="text-gray-600">AA# #AA</small></div>
+                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">DN55 1PT</code><br><small class="text-gray-600">AA## #AA</small></div>
+                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">W1A 1AA</code><br><small class="text-gray-600">A#A #AA</small></div>
+                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">EC1A 1BB</code><br><small class="text-gray-600">AA#A #AA</small></div>
                 </div>
             </div>
 
@@ -162,20 +201,20 @@ $pageTitle = 'Bank Sort Code Format Support';
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-blue-50 p-3 rounded">
-                        <strong>Excel Scientific Notation:</strong><br>
-                        <code class="text-sm">1.23456E+5</code> → <code class="text-sm">12-34-56</code>
+                        <strong>No Space Variation:</strong><br>
+                        <code class="text-sm">SW1A1AA</code> → <code class="text-sm">SW1A 1AA</code>
                     </div>
                     <div class="bg-blue-50 p-3 rounded">
-                        <strong>Leading Zeros:</strong><br>
-                        <code class="text-sm">012345</code> → <code class="text-sm">12-34-56</code>
+                        <strong>Missing Space:</strong><br>
+                        <code class="text-sm">M11AA</code> → <code class="text-sm">M1 1AA</code>
                     </div>
                     <div class="bg-blue-50 p-3 rounded">
-                        <strong>Extra Leading Zeros:</strong><br>
-                        <code class="text-sm">00-12-34-56</code> → <code class="text-sm">12-34-56</code>
+                        <strong>With Address:</strong><br>
+                        <code class="text-sm">10 Downing Street, SW1A 1AA</code> → <code class="text-sm">SW1A 1AA</code>
                     </div>
                     <div class="bg-blue-50 p-3 rounded">
-                        <strong>With Account Number:</strong><br>
-                        <code class="text-sm">12-34-56 / 12345678</code> → <code class="text-sm">12-34-56</code>
+                        <strong>With City:</strong><br>
+                        <code class="text-sm">London SW1A 1AA</code> → <code class="text-sm">SW1A 1AA</code>
                     </div>
                 </div>
             </div>
@@ -189,9 +228,13 @@ $pageTitle = 'Bank Sort Code Format Support';
                     Output Format
                 </h3>
                 <div class="bg-gray-50 p-4 rounded-lg">
-                    <p class="mb-2">All sort codes are formatted consistently as:</p>
-                    <code class="text-2xl font-mono bg-white px-4 py-2 rounded block text-center">12-34-56</code>
-                    <p class="text-sm text-gray-600 mt-3">Two digits, hyphen, two digits, hyphen, two digits.</p>
+                    <p class="mb-2">All postcodes are formatted consistently with proper spacing:</p>
+                    <div class="space-y-2">
+                        <code class="text-xl font-mono bg-white px-4 py-2 rounded block text-center">SW1A 1AA</code>
+                        <code class="text-xl font-mono bg-white px-4 py-2 rounded block text-center">M1 1AA</code>
+                        <code class="text-xl font-mono bg-white px-4 py-2 rounded block text-center">EC1A 1BB</code>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">Outward code (area), space, inward code (3 characters).</p>
                 </div>
             </div>
         </div>
@@ -205,7 +248,7 @@ $pageTitle = 'Bank Sort Code Format Support';
                 Have a Format We Don't Support?
             </h2>
             <p class="text-blue-800 mb-4">
-                If you have sort code data in a format we don't currently handle, please
+                If you have postcode data in a format we don't currently handle, please
                 <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a>
                 with examples and we'll add support!
             </p>

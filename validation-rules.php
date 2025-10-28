@@ -28,6 +28,54 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
 </head>
 
 <body class="min-h-screen bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-2xl font-bold text-blue-600">Simple Data Cleaner</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <?php if ($user): ?>
+                        <?php
+                        $userModel = new User();
+                        $userModel->id = $user['id'];
+                        $subscription = $userModel->getCurrentSubscription();
+                        ?>
+                        <?php if ($subscription): ?>
+                            <span class="text-sm text-green-600 font-medium">
+                                ✓ Active Subscription
+                            </span>
+                            <a href="/dashboard.php" class="text-gray-700 hover:text-gray-900">Dashboard</a>
+                        <?php else: ?>
+                            <a href="/pricing.php" class="text-blue-600 hover:text-blue-800 font-medium">Choose a Plan</a>
+                        <?php endif; ?>
+                        <div class="relative group">
+                            <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900">
+                                <span><?php echo htmlspecialchars($user['email']); ?></span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="/account.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Account Settings</a>
+                                <hr class="my-2">
+                                <a href="/logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <a href="/login.php" class="text-gray-700 hover:text-gray-900">Login</a>
+                        <a href="/register.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            Sign Up Free
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <main class="container mx-auto px-4 py-8 max-w-7xl">
         <!-- Header -->
         <header class="text-center mb-12">
@@ -444,6 +492,20 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Supported Variations -->
+                <div class="bg-white rounded-lg p-4 border border-blue-200">
+                    <p class="text-blue-800">
+                        <strong>Supported formats:</strong> We clean postcodes from many variations including different
+                        separators (dashes, dots, slashes, and more), labels and prefixes (Postcode:, PC:, UK:, city names), wrapping characters, and even with addresses attached.
+                    </p>
+                    <a href="postcode-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        See Full List of Supported Formats
+                    </a>
                 </div>
             </div>
         </div>
