@@ -658,9 +658,6 @@ class PostcodeValidator {
             /\s*\(Office\)\s*$/i,
             /\s*-\s*Office\s*$/i,
             /\s*-\s*Branch\s*$/i,
-            /\s*,\s*UK$/i,
-            /\s*,\s*England$/i,
-            /\s*,\s*United\s+Kingdom$/i,
         ];
 
         // Remove city names (common UK cities)
@@ -692,20 +689,29 @@ class PostcodeValidator {
         cleaned = cleaned.replace(/\s*\([^)]*\)\s*/g, '');
         cleaned = cleaned.replace(/\s*-\s*[A-Za-z\s]+$/, '');
 
-        // Remove city names at the end (but also handle street addresses)
-        // This will match ", London", ", 10 Downing Street", etc.
-        cleaned = cleaned.replace(/\s*,\s*[A-Za-z0-9\s]+$/, '');
+        // Remove specific suffixes after comma (do NOT remove postcode parts)
+        // Only remove if it's NOT a postcode format
+        const suffixPatterns = [
+            /\s*,\s*UK$/i,
+            /\s*,\s*England$/i,
+            /\s*,\s*Wales$/i,
+            /\s*,\s*Scotland$/i,
+            /\s*,\s*United Kingdom$/i,
+        ];
+
+        for (const pattern of suffixPatterns) {
+            cleaned = cleaned.replace(pattern, '');
+        }
 
         // Try to remove address-like prefixes (numbers followed by words)
         // This handles patterns like "10 Downing Street, SW1A 1AA"
         // Match: digits + space + letters + optional spaces and letters + comma + space
-        const addressPattern = /^\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*,\s*/i;
-        cleaned = cleaned.replace(addressPattern, '');
+        // But only if we can see a postcode pattern after it (lookahead doesn't consume)
+        cleaned = cleaned.replace(/^\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*,\s*(?=[A-Z]{1,2}\d)/i, '');
 
         // Try without comma: "10 Downing Street SW1A 1AA"
         // Match: digits + space + letters + optional spaces and letters + space before postcode
-        const addressPattern2 = /^\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*\s+/i;
-        cleaned = cleaned.replace(addressPattern2, '');
+        cleaned = cleaned.replace(/^\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*\s+(?=[A-Z]{1,2}\d)/i, '');
 
         return cleaned.trim();
     }
