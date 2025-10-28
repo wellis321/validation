@@ -492,7 +492,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </p>
             </div>
 
-            <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Chrome -->
                 <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
                     <div class="flex items-center mb-3">
