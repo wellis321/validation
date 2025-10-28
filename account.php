@@ -162,12 +162,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <p class="font-semibold"><?php echo htmlspecialchars($subscription['name']); ?></p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-600">Requests Remaining Today</p>
-                                    <p class="font-semibold"><?php echo number_format($remainingRequests); ?></p>
+                                    <p class="text-sm text-gray-600">Files Per Day</p>
+                                    <p class="font-semibold"><?php echo ($subscription['max_requests_per_day'] ?? 0) == 0 ? 'Unlimited' : number_format($remainingRequests); ?></p>
                                 </div>
                                 <div>
                                     <p class="text-sm text-gray-600">Max File Size</p>
-                                    <p class="font-semibold"><?php echo $subscription['max_file_size_mb']; ?>MB</p>
+                                    <p class="font-semibold"><?php echo ($subscription['max_file_size_mb'] ?? 0) == 0 ? 'Device-based (varies by browser)' : ($subscription['max_file_size_mb'] . 'MB'); ?></p>
                                 </div>
                                 <div>
                                     <p class="text-sm text-gray-600">Status</p>
