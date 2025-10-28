@@ -11,9 +11,9 @@ require_once __DIR__ . '/includes/Auth.php';
 $auth = Auth::getInstance();
 $errorHandler = ErrorHandler::getInstance();
 
-// If already logged in, redirect to dashboard
+// If already logged in, redirect to homepage
 if ($auth->isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: index.php');
     exit;
 }
 

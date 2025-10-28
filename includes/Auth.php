@@ -22,8 +22,22 @@ class Auth {
         }
 
         if (isset($_SESSION['user_id'])) {
-            $user = new User();
-            $this->user = $user->find($_SESSION['user_id']);
+            try {
+                $user = new User();
+                $foundUser = $user->find($_SESSION['user_id']);
+                // Only set user if we actually found a valid user record
+                if ($foundUser && isset($foundUser['id'])) {
+                    $this->user = $foundUser;
+                } else {
+                    // Invalid session data, clear it
+                    session_destroy();
+                    session_start();
+                }
+            } catch (Exception $e) {
+                // Session data is corrupted, clear it
+                session_destroy();
+                session_start();
+            }
         }
     }
 

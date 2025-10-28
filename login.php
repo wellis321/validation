@@ -10,9 +10,10 @@ require_once __DIR__ . '/includes/Auth.php';
 $auth = Auth::getInstance();
 $errorHandler = ErrorHandler::getInstance();
 
-// If already logged in, redirect to dashboard
-if ($auth->isLoggedIn()) {
-    header('Location: dashboard.php');
+// If already logged in with valid session, redirect to homepage
+// Check for valid user session (not just session ID from Brave's cookie blocking)
+if ($auth->isLoggedIn() && $auth->getCurrentUser() && isset($auth->getCurrentUser()['id'])) {
+    header('Location: index.php');
     exit;
 }
 
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $auth->login($email, $password);
         add_success('Login successful! Redirecting...');
-        header('Location: dashboard.php');
+        header('Location: index.php');
         exit;
     } catch (Exception $e) {
         add_error($e->getMessage());
