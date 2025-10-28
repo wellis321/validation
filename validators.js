@@ -521,25 +521,10 @@ class PostcodeValidator {
         cleaned = cleaned.replace(/\s+/g, ' ').trim();
 
         // Step 6: Extract postcode from strings that contain addresses
-        const beforeExtract = cleaned;
         cleaned = this.extractPostcode(cleaned);
-        const afterExtract = cleaned;
 
         // Step 7: Normalize any remaining multiple spaces and uppercase
         cleaned = cleaned.replace(/\s+/g, ' ').trim().toUpperCase();
-        const afterNormalize = cleaned;
-
-        // Debug logging for specific failing cases
-        if (value.includes('SW1A') || value.includes('Downing')) {
-            console.log('Postcode validator debug:', {
-                original: value,
-                beforeExtract,
-                afterExtract,
-                afterNormalize,
-                finalCleaned: cleaned,
-                patternMatches: /^[A-Z]{1,2}\d{1,2}[A-Z]?\s\d[A-Z]{2}$/.test(cleaned)
-            });
-        }
 
         // Step 8: Try to validate with spaces
         // After normalization, there should be exactly one space
