@@ -528,7 +528,15 @@ class PostcodeValidator {
 
         // Debug logging for specific failing cases
         if (value.includes('SW1A') || value.includes('Downing')) {
-            console.log('Postcode validator debug:', { original: value, cleaned });
+            console.log('Postcode validator debug:', {
+                original: value,
+                cleaned,
+                afterStep1: this.removeWrapping(value),
+                afterStep2: this.removeLabelsAndPrefixes(this.removeWrapping(value)),
+                afterStep3: this.removeLabelsAndPrefixes(this.removeWrapping(value)).replace(/[._\/•·:;|+&,\(\)\[\]{}"]/g, ' '),
+                afterStep4: this.removeLabelsAndPrefixes(this.removeWrapping(value)).replace(/[._\/•·:;|+&,\(\)\[\]{}"]/g, ' ').replace(/-/g, ' '),
+                afterStep5: this.removeLabelsAndPrefixes(this.removeWrapping(value)).replace(/[._\/•·:;|+&,\(\)\[\]{}"]/g, ' ').replace(/-/g, ' ').replace(/\s+/g, ' ').trim(),
+            });
         }
 
         // Step 8: Try to validate with spaces
