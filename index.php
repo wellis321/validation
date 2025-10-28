@@ -116,7 +116,7 @@ if ($user) {
 
                 <div class="space-x-4">
                     <a href="/register.php" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold">
-                        Get Started - From £0.99
+                        Get Started
                     </a>
                     <a href="/pricing.php" class="inline-block text-blue-600 hover:text-blue-800 font-semibold">
                         View Pricing
@@ -210,7 +210,7 @@ if ($user) {
                     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
                         <h3 class="text-lg font-semibold text-blue-800 mb-2">Choose a Plan to Get Started</h3>
                         <p class="text-blue-700 mb-4">
-                            Starting from just £0.99 for one-time use, or £4.99/month for unlimited access.
+                            Starting from just £4.99 for one-time use, or £29.99/month for unlimited access.
                         </p>
                         <a href="/pricing.php" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
                             View Plans
