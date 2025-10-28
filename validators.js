@@ -92,22 +92,44 @@ class PhoneNumberValidator {
             /^M\.\s*/i,
             /^m\/\s*/i,
             /^Tel\s*\(mob\):\s*/i,
+            /^Tel\s*\(mobile\):\s*/i,
             /^Cell:\s*/i,
             /^WhatsApp:\s*/i,
             /^UK\s+/i,
             /^GBR\s+/i,
+            /^GB:\s*/i,
+            /^Phone:\s*/i,
+            /^No:\s*/i,
+            /^#\s*/,
+            /^Call\s+/i,
+            /^Contact:\s*/i,
             /^☎️\s*/,
             /^📱\s*/,
             /^\(mobile\)\s*$/i,
             /^\(UK\)\s*$/i,
             /^\(m\)\s*$/i,
-            /^\(M\)\s*$/i
+            /^\(M\)\s*$/i,
+            /^\s*-\s*mobile\s*$/i,
+            /^\s*- work mobile\s*$/i
         ];
 
         let cleaned = value;
         for (const label of labels) {
             cleaned = cleaned.replace(label, '');
         }
+
+        // Remove names in parentheses or after dash (e.g., "(John)", "- John Smith", "Sarah 07123...")
+        cleaned = cleaned.replace(/\s*\([A-Za-z\s]+\)\s*/, ''); // Remove (John)
+        cleaned = cleaned.replace(/\s*-\s*[A-Za-z\s]+$/, ''); // Remove - John Smith
+        cleaned = cleaned.replace(/^[A-Za-z\s:]+\s/, ''); // Remove leading "John: " or "Sarah "
+
+        // Remove or/brackets containing other numbers (handle both international +44 and UK 0 formats)
+        // Match patterns like: " / +44...", " / 07...", "or +44...", "or 07...", etc.
+        cleaned = cleaned.replace(/\s*\/\s*(\+\d+|0\d+)[\s\d-]*\d+$/, ''); // Remove " / +44..." or " / 07..." (second number)
+        cleaned = cleaned.replace(/\s*or\s*(\+\d+|0\d+)[\s\d-]*\d+$/i, ''); // Remove " or +44..." or " or 07..." (second number)
+        cleaned = cleaned.replace(/\s*;\s*(\+\d+|0\d+)[\s\d-]*\d+$/, ''); // Remove " ; +44..." or " ; 07..." (second number)
+        cleaned = cleaned.replace(/\s*,\s*(\+\d+|0\d+)[\s\d-]*\d+$/, ''); // Remove " , +44..." or " , 07..." (second number)
+        cleaned = cleaned.replace(/\s*&\s*(\+\d+|0\d+)[\s\d-]*\d+$/i, ''); // Remove " & +44..." or " & 07..." (second number)
 
         return cleaned.trim();
     }

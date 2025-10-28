@@ -32,43 +32,115 @@
 
         const testCases = {
             phone_numbers: [
-                // Valid formats
-                { input: '07700 900123', expected: true, description: 'Standard UK mobile with spaces' },
+                // Basic variations - UK format
+                { input: '07123 456789', expected: true, description: 'Standard UK mobile with spaces' },
+                { input: '0712 345 6789', expected: true, description: 'UK mobile with more spaces' },
+                { input: '07 123 456 789', expected: true, description: 'UK mobile with extra spaces' },
+                { input: '0 7123 456789', expected: true, description: 'UK mobile with space after leading 0' },
+                { input: '07123456789', expected: true, description: 'UK mobile no spaces' },
                 { input: '7700 900123', expected: true, description: 'UK mobile without leading 0' },
-                { input: '+44 7700 900123', expected: true, description: 'International format' },
+                { input: '7123456789', expected: true, description: 'UK mobile missing leading 0 entirely' },
+
+                // International format
+                { input: '+44 7700 900123', expected: true, description: 'International format with spaces' },
+                { input: '+44 7123 456789', expected: true, description: 'International mobile format' },
+                { input: '+447 123 456 789', expected: true, description: 'International with unusual spacing' },
                 { input: '00447700900123', expected: true, description: 'Double zero prefix' },
-                { input: '07700900123', expected: true, description: 'UK mobile no spaces' },
-                { input: '020 7946 0958', expected: true, description: 'London landline' },
-                { input: '02079460958', expected: true, description: 'London landline no spaces' },
-                { input: '+44 20 7946 0958', expected: true, description: 'International London format' },
-                { input: '+44 (0) 20 7946 0958', expected: true, description: 'International with (0) notation' },
-                { input: '+44 (0)20 7946 0958', expected: true, description: 'International with (0) no space' },
+                { input: '0044 7123 456789', expected: true, description: 'Double zero with spaces' },
+                { input: '447123456789', expected: true, description: 'Missing + from country code' },
+                { input: '44 7123456789', expected: true, description: 'Country code without + or 00' },
+
+                // Dashes/Hyphens
+                { input: '07123-456789', expected: true, description: 'UK format with hyphen' },
+                { input: '0712-345-6789', expected: true, description: 'UK format multiple hyphens' },
+                { input: '07-123-456-789', expected: true, description: 'UK format many hyphens' },
+                { input: '+44-7123-456789', expected: true, description: 'International with hyphens' },
+                { input: '+44-712-345-6789', expected: true, description: 'International multiple hyphens' },
+
+                // Dots/Periods
+                { input: '07123.456789', expected: true, description: 'UK format with dots' },
+                { input: '0712.345.6789', expected: true, description: 'UK format multiple dots' },
+                { input: '+44.7123.456789', expected: true, description: 'International with dots' },
+
+                // Parentheses
+                { input: '(07123) 456789', expected: true, description: 'UK format with parentheses' },
+                { input: '(0712) 345 6789', expected: true, description: 'UK format parentheses with space' },
+                { input: '+44 (0)7123 456789', expected: true, description: 'International with (0) notation' },
+                { input: '+44(0)7123456789', expected: true, description: 'International (0) no spaces' },
+                { input: '+44 (0) 7123 456789', expected: true, description: 'International (0) with spaces' },
+                { input: '+44(7123)456789', expected: true, description: 'International whole number in brackets' },
+
+                // Underscores
+                { input: '07123_456789', expected: true, description: 'UK format with underscores' },
+                { input: '0712_345_6789', expected: true, description: 'UK format multiple underscores' },
+                { input: '+44_7123_456789', expected: true, description: 'International with underscores' },
+
+                // Slashes
+                { input: '07123/456789', expected: true, description: 'UK format with slashes' },
+                { input: '0712/345/6789', expected: true, description: 'UK format multiple slashes' },
+                { input: '+44/7123/456789', expected: true, description: 'International with slashes' },
+
+                // Commas
+                { input: '07123,456789', expected: true, description: 'UK format with commas' },
+                { input: '0712,345,6789', expected: true, description: 'UK format multiple commas' },
+
+                // Mixed formatting
+                { input: '07123-456 789', expected: true, description: 'Mixed hyphens and spaces' },
+                { input: '07 123-456-789', expected: true, description: 'Mixed spaces and hyphens' },
+                { input: '(07123) 456-789', expected: true, description: 'Mixed parentheses and hyphens' },
+                { input: '+44 (0)7123-456789', expected: true, description: 'Mixed (0) and hyphens' },
+                { input: '+44 7123-456-789', expected: true, description: 'International mixed separators' },
+
+                // Wrapping characters
+                { input: '"07123456789"', expected: true, description: 'Double quotes' },
+                { input: "'07123456789'", expected: true, description: 'Single quotes' },
+                { input: ' 07123456789', expected: true, description: 'Leading space' },
+                { input: '07123456789 ', expected: true, description: 'Trailing space' },
+                { input: ' 07123456789 ', expected: true, description: 'Leading and trailing spaces' },
 
                 // Scientific notation from Excel
                 { input: '4.47701E+11', expected: true, description: 'Excel scientific notation' },
                 { input: '4.47700900123E+11', expected: true, description: 'Excel scientific notation long' },
 
                 // Labels and prefixes
-                { input: 'Mobile: 07700 900123', expected: true, description: 'Mobile label prefix' },
-                { input: '📱 07700 900123', expected: true, description: 'Emoji prefix' },
-                { input: 'Mob: 07700 900123', expected: true, description: 'Mob label prefix' },
-                { input: 'Tel (mob): 07700 900123', expected: true, description: 'Tel label with modifier' },
-                { input: 'Cell: 07700 900123', expected: true, description: 'Cell label prefix' },
-                { input: '(mobile) 07700 900123', expected: true, description: 'Mobile suffix' },
-
-                // Separators and punctuation
-                { input: '07700-900-123', expected: true, description: 'Hyphen separators' },
-                { input: '07700.900.123', expected: true, description: 'Dot separators' },
-                { input: '(07700) 900123', expected: true, description: 'Parentheses' },
-                { input: '07700 900-123', expected: true, description: 'Mixed separators' },
-
-                // Wrapping characters
-                { input: '"07700 900123"', expected: true, description: 'Double quotes' },
-                { input: "'07700 900123'", expected: true, description: 'Single quotes' },
+                { input: 'Mobile: 07123456789', expected: true, description: 'Mobile label prefix' },
+                { input: 'Mob: 07123456789', expected: true, description: 'Mob label prefix' },
+                { input: 'M: 07123456789', expected: true, description: 'M label prefix' },
+                { input: 'Tel: 07123456789', expected: true, description: 'Tel label prefix' },
+                { input: 'Phone: 07123456789', expected: true, description: 'Phone label prefix' },
+                { input: 'Cell: 07123456789', expected: true, description: 'Cell label prefix' },
+                { input: 'UK: 07123456789', expected: true, description: 'UK label prefix' },
+                { input: 'Call 07123456789', expected: true, description: 'Call prefix' },
+                { input: 'Contact: 07123456789', expected: true, description: 'Contact prefix' },
+                { input: '#07123456789', expected: true, description: 'Hash prefix' },
+                { input: 'No: 07123456789', expected: true, description: 'No label prefix' },
+                { input: '07123456789 (mobile)', expected: true, description: 'Mobile suffix parentheses' },
+                { input: '07123456789 (UK)', expected: true, description: 'UK suffix parentheses' },
+                { input: '07123456789 - mobile', expected: true, description: 'Mobile suffix with dash' },
 
                 // Extensions
-                { input: '020 7946 0958 ext 123', expected: true, description: 'Landline with ext' },
-                { input: '07700 900123 x456', expected: true, description: 'Mobile with extension' },
+                { input: '07123456789 ext 123', expected: true, description: 'Mobile with ext extension' },
+                { input: '07123456789 x123', expected: true, description: 'Mobile with x extension' },
+                { input: '07123456789 #123', expected: true, description: 'Mobile with hash extension' },
+
+                // Names and context
+                { input: '07123456789 (John)', expected: true, description: 'Phone with name in parentheses' },
+                { input: '07123456789 - John Smith', expected: true, description: 'Phone with name after dash' },
+                { input: 'John: 07123456789', expected: true, description: 'Name before phone with colon' },
+                { input: 'Sarah 07123456789', expected: true, description: 'Name before phone no colon' },
+
+                // Multiple numbers
+                { input: '07123456789 / 07987654321', expected: true, description: 'Two numbers with slash' },
+                { input: '07123456789 or 07987654321', expected: true, description: 'Two numbers with or' },
+                { input: '07123456789; 07987654321', expected: true, description: 'Two numbers with semicolon' },
+                { input: '07123456789, 07987654321', expected: true, description: 'Two numbers with comma' },
+                { input: '07123456789 & 07987654321', expected: true, description: 'Two numbers with ampersand' },
+
+                // Landline variations
+                { input: '020 7946 0958', expected: true, description: 'London landline' },
+                { input: '02079460958', expected: true, description: 'London landline no spaces' },
+                { input: '+44 20 7946 0958', expected: true, description: 'International London format' },
+                { input: '020-7946-0958', expected: true, description: 'London landline with hyphens' },
 
                 // Invalid formats
                 { input: '123', expected: false, description: 'Too short' },
@@ -76,6 +148,11 @@
                 { input: 'abcdefghij', expected: false, description: 'All letters' },
                 { input: '++447700900123', expected: false, description: 'Double plus' },
                 { input: '44770090012', expected: false, description: 'Wrong length international' },
+                { input: '+440 7123456789', expected: false, description: 'Extra 0 after country code' },
+                { input: '+440 07123456789', expected: false, description: 'Includes 0 after country code' },
+                { input: '007123456789', expected: false, description: 'Extra 0 at start' },
+                { input: '+4447123456789', expected: false, description: 'Extra 4 in country code' },
+                { input: '071234567890', expected: false, description: 'Extra digit at end' },
             ],
 
             ni_numbers: [
