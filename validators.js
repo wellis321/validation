@@ -554,7 +554,7 @@ class SortCodeValidator {
     }
 
     validate(value) {
-        // Handle scientific notation first (before letter check)
+        // Step 1: Handle scientific notation first (before any other processing)
         if (typeof value === 'number') {
             value = value.toString();
         }
@@ -563,20 +563,26 @@ class SortCodeValidator {
             value = num.toFixed(0);
         }
 
-        // If the value contains letters (after scientific notation conversion), it's not a sort code
-        if (/[A-Za-z]/.test(value)) {
+        // Step 2: Remove labels and prefixes
+        let cleaned = this.removeLabelsAndPrefixes(value);
+
+        // Step 3: Remove wrapping characters
+        cleaned = this.removeWrapping(cleaned);
+
+        // Step 4: Remove all non-digit characters to get just the digits
+        const digits = cleaned.replace(/\D/g, '');
+
+        // Step 5: If the value contains letters (after cleaning), it's not a sort code
+        if (/[A-Za-z]/.test(value) && digits.length === 0) {
             return new ValidationResult(false, value, 'Sort codes cannot contain letters');
         }
 
-        // Remove all non-digit characters to get just the digits
-        const digits = value.replace(/\D/g, '');
-
-        // If we have 5 digits or less, don't try to fix it
+        // Step 6: If we have 5 digits or less, don't try to fix it
         if (digits.length < 6) {
             return new ValidationResult(false, value, `Sort code must be exactly 6 digits (found ${digits.length} digits)`);
         }
 
-        // Sort code must be exactly 6 digits
+        // Step 7: Sort code must be exactly 6 digits
         if (digits.length === 6) {
             // Validate it's a valid UK sort code format
             if (/^[0-9]{6}$/.test(digits)) {
@@ -584,7 +590,7 @@ class SortCodeValidator {
             }
         }
 
-        // If it's 7 digits, might have an extra leading zero
+        // Step 8: If it's 7 digits, might have an extra leading zero
         if (digits.length === 7 && digits.startsWith('0')) {
             const fixed = digits.slice(1); // Remove leading zero
             if (/^[0-9]{6}$/.test(fixed)) {
@@ -592,7 +598,7 @@ class SortCodeValidator {
             }
         }
 
-        // If it's 8 or more digits with leading zeros like 00-00-12-34-56
+        // Step 9: If it's 8 or more digits with leading zeros like 00-00-12-34-56
         if (digits.length >= 8 && digits.startsWith('00')) {
             // Try to extract the last 6 digits
             const fixed = digits.slice(-6);
@@ -601,8 +607,115 @@ class SortCodeValidator {
             }
         }
 
-        // For any other length, reject it
+        // Step 10: For any other length, reject it
         return new ValidationResult(false, value, `Sort code must be exactly 6 digits (found ${digits.length} digits)`);
+    }
+
+    removeLabelsAndPrefixes(value) {
+        const labels = [
+            /^Sort\s+Code:\s*/i,
+            /^SC:\s*/i,
+            /^Sort:\s*/i,
+            /^S\/C:\s*/i,
+            /^S\.C:\s*/i,
+            /^S\.C\.:\s*/i,
+            /^Bank\s+Sort\s+Code:\s*/i,
+            /^Bank\s+Code:\s*/i,
+            /^Bank\s+Sort:\s*/i,
+            /^Bank:\s*/i,
+            /^sortcode:\s*/i,
+            /^sort_code:\s*/i,
+            /^bank_sort_code:\s*/i,
+            /^Branch:\s*/i,
+            /^Location:\s*/i,
+            /^Office:\s*/i,
+            /^Personal:\s*/i,
+            /^Code:\s*/i,
+            /^No:\s*/i,
+            /^#\s*/,
+            /^SC\s+/i,
+            /^SORTCODE:\s*/i,
+            /^SORT\s+CODE\s+/i,
+            /^UK\s+/i,
+            /^GB\s+/i,
+            /^UK:\s*/i,
+            /^GB:\s*/i,
+            /^GB-\s*/i,
+            /^\(UK\)\s+/i,
+            /\s*\(sort\s+code\)\s*$/i,
+            /\s*\(code\)\s*$/i,
+            /\s*-\s*sort\s+code\s*$/i,
+            /\s*- sort\s+code\s*$/i,
+            /\s+sort\s+code$/i,
+            /\s+code$/i,
+            /\s*\/\s*\d{8,}$/i, // Remove account numbers after sort code (e.g., "12-34-56 / 12345678")
+            /\s*:\s*\d{8,}$/i, // Remove account numbers (e.g., "Sort: 12-34-56 Account: 12345678")
+            /\s*Acc:\s*\d+$/i,
+            /\s*Account:\s*\d+$/i,
+        ];
+
+        // Remove bank names (common UK banks)
+        const bankNames = [
+            /^Barclays\s+/i,
+            /^HSBC:\s*/i,
+            /^Lloyds\s*-\s*/i,
+            /^NatWest\s+/i,
+            /^Natwest\s+/i,
+            /^RBS\s+/i,
+            /^Santander\s+/i,
+            /^Halifax\s+/i,
+            /^Nationwide\s+/i,
+            /^TSB\s+/i,
+        ];
+
+        let cleaned = value;
+
+        for (const label of labels) {
+            cleaned = cleaned.replace(label, '');
+        }
+
+        for (const bank of bankNames) {
+            cleaned = cleaned.replace(bank, '');
+        }
+
+        // Remove context text in parentheses or after dashes
+        cleaned = cleaned.replace(/\s*\([^)]*\)\s*/g, ''); // Remove (Main Account), (verified), etc.
+        cleaned = cleaned.replace(/\s*-\s*[A-Za-z\s]+$/, ''); // Remove - Business, - Branch, etc.
+        cleaned = cleaned.replace(/^[A-Za-z\s]+\s+/, ''); // Remove leading names like "John Smith 12-34-56"
+
+        return cleaned.trim();
+    }
+
+    removeWrapping(value) {
+        let cleaned = value;
+
+        // Remove quotes
+        cleaned = cleaned.replace(/^["']|["']$/g, '');
+
+        // Remove asterisks and hashes from start/end
+        cleaned = cleaned.replace(/^[*#]+|[*#]+$/g, '');
+
+        // Remove leading apostrophe (Excel artifact)
+        cleaned = cleaned.replace(/^['']/, '');
+
+        // Remove tab characters and normalize multiple spaces
+        cleaned = cleaned.replace(/\t/g, ' ');
+        cleaned = cleaned.replace(/\s{2,}/g, ' ');
+
+        // Remove validation markers
+        cleaned = cleaned.replace(/^[✓✔]\s*|\s*[✓✔]$/g, '');
+        cleaned = cleaned.replace(/^Valid:\s*/i, '');
+
+        // Remove form field markers
+        cleaned = cleaned.replace(/^[☐•]\s*/g, '');
+
+        // Remove currency and special symbols
+        cleaned = cleaned.replace(/^[£$@]\s*/g, '');
+
+        // Remove special Unicode dashes
+        cleaned = cleaned.replace(/[–—−]/g, '-');
+
+        return cleaned.trim();
     }
 
     formatSortCode(sortCode) {

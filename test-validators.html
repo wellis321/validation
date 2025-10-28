@@ -264,28 +264,65 @@
             ],
 
             sort_codes: [
-                // Valid formats
-                { input: '12-34-56', expected: true, description: 'Standard format with hyphens' },
+                // Spacing variations
+                { input: '12 34 56', expected: true, description: 'Standard spaces' },
+                { input: '123 456', expected: true, description: 'Uneven spacing' },
+                { input: '12 3456', expected: true, description: 'Last group together' },
+                { input: '1234 56', expected: true, description: 'First group together' },
                 { input: '123456', expected: true, description: 'No separators' },
-                { input: '12:34:56', expected: true, description: 'Colon separators' },
-                { input: '12 34 56', expected: true, description: 'Space separators' },
-                { input: '12.34.56', expected: true, description: 'Dot separators' },
-                { input: '23-45-67', expected: true, description: 'Another valid code' },
+
+                // Separator types
+                { input: '12-34-56', expected: true, description: 'Hyphens' },
+                { input: '12.34.56', expected: true, description: 'Dots' },
+                { input: '12/34/56', expected: true, description: 'Slashes' },
+                { input: '12:34:56', expected: true, description: 'Colons' },
+                { input: '12;34;56', expected: true, description: 'Semicolons' },
+                { input: '12,34,56', expected: true, description: 'Commas' },
+                { input: '12|34|56', expected: true, description: 'Pipes' },
+                { input: '12_34_56', expected: true, description: 'Underscores' },
+
+                // Mixed formatting
+                { input: '12-34 56', expected: true, description: 'Mixed hyphens and spaces' },
+                { input: '12 34-56', expected: true, description: 'Mixed spaces and hyphens' },
+                { input: '12.34-56', expected: true, description: 'Mixed dots and hyphens' },
+
+                // Labels and prefixes
+                { input: 'Sort Code: 12-34-56', expected: true, description: 'Sort Code label' },
+                { input: 'SC: 123456', expected: true, description: 'SC prefix' },
+                { input: 'Bank: 12-34-56', expected: true, description: 'Bank label' },
+                { input: '12-34-56 (sort code)', expected: true, description: 'Sort code suffix' },
+                { input: 'SC - 123456', expected: true, description: 'SC with dash' },
+                { input: 'UK 12-34-56', expected: true, description: 'UK prefix' },
+                { input: 'Barclays 12-34-56', expected: true, description: 'Barclays bank name' },
+                { input: 'HSBC: 12-34-56', expected: true, description: 'HSBC bank name' },
+
+                // Wrapping characters
+                { input: '"12-34-56"', expected: true, description: 'Double quotes' },
+                { input: "'123456'", expected: true, description: 'Single quotes' },
+                { input: '*12-34-56', expected: true, description: 'Leading asterisk' },
+                { input: '#123456', expected: true, description: 'Leading hash' },
+                { input: ' 12-34-56', expected: true, description: 'Leading space' },
+                { input: '12-34-56 ', expected: true, description: 'Trailing space' },
+                { input: ' 12-34-56 ', expected: true, description: 'Leading and trailing spaces' },
+                { input: "'12-34-56", expected: true, description: 'Leading apostrophe (Excel)' },
 
                 // Scientific notation
                 { input: '1.23456E+5', expected: true, description: 'Excel scientific notation' },
 
-                // Edge cases
+                // Leading zeros and edge cases
                 { input: '00-00-00', expected: true, description: 'Zero sort code' },
                 { input: '01-23-45', expected: true, description: 'Leading zeros' },
-                { input: '12-34-567', expected: false, description: '7 digits with hyphens' },
+                { input: '012345', expected: true, description: 'Leading zero no separators' },
                 { input: '00-12-34-56', expected: true, description: '8 digits with leading zeros' },
+
+                // With account numbers (should extract sort code)
+                { input: '12-34-56 / 12345678', expected: true, description: 'Sort code with account number' },
+                { input: 'Sort: 12-34-56 Account: 12345678', expected: true, description: 'Multiple fields' },
 
                 // Invalid formats
                 { input: '12345', expected: false, description: 'Too short (5 digits)' },
                 { input: '1234567', expected: false, description: 'Too long (7 digits)' },
-                { input: 'AB-34-56', expected: false, description: 'Contains letters' },
-                { input: '12-3X-56', expected: false, description: 'Invalid character' },
+                { input: '12-34-567', expected: false, description: '7 digits with hyphens' },
                 { input: '12', expected: false, description: 'Too short' },
             ]
         };
