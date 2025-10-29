@@ -378,23 +378,91 @@ class FileProcessor {
     async exportResults(results, format, includeIssuesColumn = false, onlyRowsWithIssues = false) {
         switch (format) {
             case 'csv':
-                return this.exportToCSV(results);
+                return this.exportCleanedCSV(results, includeIssuesColumn, onlyRowsWithIssues);
             case 'json':
-                return this.exportToJSON(results);
+                return this.exportCleanedJSON(results, includeIssuesColumn, onlyRowsWithIssues);
+            case 'excel':
+                return await this.exportToExcel(results, includeIssuesColumn, onlyRowsWithIssues);
             case 'cleaned-csv':
                 return this.exportCleanedCSV(results, includeIssuesColumn, onlyRowsWithIssues);
-            case 'excel':
-                return this.exportToExcel(results);
             default:
                 throw new Error(`Unsupported export format: ${format}`);
         }
     }
 
-    async exportToExcel(results) {
-        // For now, we'll use a simple approach with proper CSV formatting
-        // that Excel can import correctly
-        const csvContent = this.createExcelFriendlyCSV(results);
-        return new Blob([csvContent], { type: 'text/csv; charset=utf-8' });
+    async exportToExcel(results, includeIssuesColumn = false, onlyRowsWithIssues = false) {
+        // Check if SheetJS is available
+        if (typeof XLSX === 'undefined') {
+            // Fallback to CSV if SheetJS not loaded
+            const csvContent = this.createExcelFriendlyCSV(results);
+            return new Blob([csvContent], { type: 'text/csv; charset=utf-8' });
+        }
+
+        // Create headers with optional "Issues" column
+        const cleanedHeaders = [...results.originalHeaders];
+        if (includeIssuesColumn) {
+            cleanedHeaders.push('Issues');
+        }
+
+        // Build worksheet data
+        const worksheetData = [cleanedHeaders];
+
+        // Process each original data row
+        for (let i = 1; i < results.originalData.length; i++) {
+            const originalRow = results.originalData[i];
+            const processedRow = results.processedRows.find(p => p.rowNumber === i + 1);
+            const issuesList = [];
+
+            if (processedRow) {
+                const cleanedRow = [...originalRow];
+
+                processedRow.validationResults.forEach(result => {
+                    const columnIndex = results.originalHeaders.indexOf(result.column);
+                    if (columnIndex !== -1) {
+                        if (result.fixed && result.isValid) {
+                            cleanedRow[columnIndex] = result.fixed;
+                        } else if (!result.isValid) {
+                            issuesList.push(result.column);
+                        }
+                    }
+                });
+
+                if (!onlyRowsWithIssues || issuesList.length > 0) {
+                    if (includeIssuesColumn) {
+                        cleanedRow.push(issuesList.join(', '));
+                    }
+                    worksheetData.push(cleanedRow);
+                }
+            } else {
+                if (!onlyRowsWithIssues) {
+                    if (includeIssuesColumn) {
+                        originalRow.push('');
+                    }
+                    worksheetData.push(originalRow);
+                }
+            }
+        }
+
+        // Create workbook and worksheet
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(worksheetData);
+
+        // Set column widths
+        const colWidths = cleanedHeaders.map((header, index) => {
+            const maxLength = Math.max(
+                header.length,
+                ...worksheetData.slice(1).map(row => (row[index] || '').toString().length)
+            );
+            return { wch: Math.min(maxLength + 2, 50) };
+        });
+        ws['!cols'] = colWidths;
+
+        // Add worksheet to workbook
+        XLSX.utils.book_append_sheet(wb, ws, 'Cleaned Data');
+
+        // Generate Excel file
+        const excelBuffer = XLSX.write(wb, { type: 'array', bookType: 'xlsx' });
+        return new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     }
 
     createExcelFriendlyCSV(results) {
@@ -573,6 +641,56 @@ class FileProcessor {
 
     exportToJSON(results) {
         const jsonContent = JSON.stringify(results, null, 2);
+        return new Blob([jsonContent], { type: 'application/json' });
+    }
+
+    exportCleanedJSON(results, includeIssuesColumn = false, onlyRowsWithIssues = false) {
+        // Create headers with optional "Issues" column
+        const cleanedHeaders = [...results.originalHeaders];
+        if (includeIssuesColumn) {
+            cleanedHeaders.push('Issues');
+        }
+
+        // Build array of objects
+        const jsonData = [];
+
+        // Process each original data row
+        for (let i = 1; i < results.originalData.length; i++) {
+            const originalRow = results.originalData[i];
+            const processedRow = results.processedRows.find(p => p.rowNumber === i + 1);
+            const rowObject = {};
+            const issuesList = [];
+
+            if (processedRow) {
+                // Map each column
+                results.originalHeaders.forEach((header, index) => {
+                    const result = processedRow.validationResults.find(r => r.column === header);
+                    if (result && result.fixed && result.isValid) {
+                        rowObject[header] = result.fixed;
+                    } else {
+                        rowObject[header] = originalRow[index] || '';
+                    }
+                    if (result && !result.isValid) {
+                        issuesList.push(header);
+                    }
+                });
+            } else {
+                // No processing, use original row
+                results.originalHeaders.forEach((header, index) => {
+                    rowObject[header] = originalRow[index] || '';
+                });
+            }
+
+            // Only include this row if we're not filtering or if it has issues
+            if (!onlyRowsWithIssues || issuesList.length > 0) {
+                if (includeIssuesColumn) {
+                    rowObject['Issues'] = issuesList.join(', ');
+                }
+                jsonData.push(rowObject);
+            }
+        }
+
+        const jsonContent = JSON.stringify(jsonData, null, 2);
         return new Blob([jsonContent], { type: 'application/json' });
     }
 

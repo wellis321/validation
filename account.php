@@ -86,22 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="/" class="text-2xl font-bold text-blue-600">UK Data Cleaner</a>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <a href="/dashboard.php" class="text-gray-700 hover:text-gray-900 mr-4">Dashboard</a>
-                    <a href="/logout.php" class="text-gray-700 hover:text-gray-900">Logout</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/includes/header.php'; ?>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         <div class="bg-white rounded-lg shadow">

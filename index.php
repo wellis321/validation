@@ -28,51 +28,7 @@ if ($user) {
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2'><path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/></svg>">
 </head>
 <body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-    <!-- Navigation -->
-    <nav class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="/" class="text-2xl font-bold text-slate-800">Simple Data Cleaner</a>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <?php if ($user): ?>
-                        <?php if ($subscription): ?>
-                            <span class="text-sm text-slate-700 font-medium flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                </svg>
-                                Active Subscription
-                            </span>
-                            <a href="/dashboard.php" class="text-gray-700 hover:text-gray-900">Dashboard</a>
-                        <?php else: ?>
-                            <a href="/pricing.php" class="text-slate-700 hover:text-slate-900 font-medium">Choose a Plan</a>
-                        <?php endif; ?>
-                        <div class="relative group">
-                            <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900">
-                                <span><?php echo htmlspecialchars($user['email']); ?></span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <a href="/account.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Account Settings</a>
-                                <hr class="my-2">
-                                <a href="/logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <a href="/login.php" class="text-gray-700 hover:text-gray-900">Login</a>
-                        <a href="/register.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg font-medium">
-                            Sign Up Free
-                        </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/includes/header.php'; ?>
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
@@ -82,10 +38,15 @@ if ($user) {
                 <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                     Clean Your UK Data <span class="text-slate-700">Instantly</span>
                 </h1>
-                <p class="text-xl text-gray-600 mb-6 max-w-3xl mx-auto">
-                    The only UK data validation tool that processes everything in your browser.
-                   Personally Identifiable Information (PII) <strong>never leaves your device</strong> - perfect for GDPR compliance.
-                </p>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-6 max-w-4xl mx-auto">
+                    <p class="text-xl text-gray-600 text-center md:text-left flex-1">
+                        The only UK data validation tool that processes everything in your browser.
+                       Personally Identifiable Information (PII) <strong>never leaves your device</strong> - perfect for GDPR compliance.
+                    </p>
+                    <div class="flex-shrink-0">
+                        <img src="/assets/images/transparent-logo.png" alt="Simple Data Cleaner Logo" class="h-24 w-auto">
+                    </div>
+                </div>
 
                 <!-- Key Benefit Highlights -->
                 <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -404,24 +365,77 @@ if ($user) {
                             </div>
                         </div>
 
+                        <!-- Important Warning -->
+                        <div class="mt-6 bg-red-50 border-2 border-red-200 rounded-lg p-4">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <div>
+                                    <p class="text-red-900 font-semibold mb-1">Important: Download and Save Your File</p>
+                                    <p class="text-red-800 text-sm">
+                                        Your cleaned data is only available in your browser session. Once you close this tab or refresh the page, your cleaned data will be gone. We don't store files on our servers - <strong>make sure to download and save your file immediately!</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Export Options -->
-                        <div class="mt-6 p-4 bg-gray-50 rounded-lg space-y-3">
-                            <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" id="includeIssuesColumn" class="mr-2" checked>
-                                <span class="text-sm text-gray-700">Include "Issues" column (lists fields that still need attention)</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" id="onlyRowsWithIssues" class="mr-2">
-                                <span class="text-sm text-gray-700">Export only rows with issues (optional - for review file)</span>
-                            </label>
+                        <div class="mt-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-6 space-y-5">
+                            <div>
+                                <h4 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>
+                                    Download Options - Customize Your Export
+                                </h4>
+                                <p class="text-sm text-gray-700 mb-4">Choose your preferred format and export options before downloading your cleaned file:</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-900 mb-2">Select Your Download Format:</label>
+                                <select id="downloadFormat" class="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white font-medium text-gray-900">
+                                    <option value="csv">CSV (Comma Separated Values)</option>
+                                    <option value="excel">Excel (.xlsx)</option>
+                                    <option value="json">JSON</option>
+                                </select>
+                                <p class="text-xs text-blue-700 mt-2 flex items-center gap-1 font-medium">
+                                    <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                    </svg>
+                                    <span>You can download in any format, regardless of what you uploaded!</span>
+                                </p>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                <h5 class="text-sm font-semibold text-gray-900 mb-3">Export Customization:</h5>
+                                <div class="space-y-4">
+                                    <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                        <input type="checkbox" id="includeIssuesColumn" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
+                                        <div class="flex-1">
+                                            <span class="text-sm font-medium text-gray-900 block">Include "Issues" Column</span>
+                                            <span class="text-xs text-gray-600 block mt-1">Add a column listing any fields that still need attention. This helps you identify which rows may require manual review.</span>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                        <input type="checkbox" id="onlyRowsWithIssues" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                        <div class="flex-1">
+                                            <span class="text-sm font-medium text-gray-900 block">Export Only Rows With Issues (Optional)</span>
+                                            <span class="text-xs text-gray-600 block mt-1">When checked, you'll download <strong>only</strong> the rows that have validation issues (instead of the full file). Perfect for creating a focused review file to fix manually before merging back into your main dataset.</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Export Buttons -->
-                        <div class="mt-8 space-x-4">
-                            <button type="button" id="exportCleanedBtn" class="bg-slate-700 text-white px-6 py-2 rounded-lg hover:bg-slate-800 transition-colors">Download Cleaned CSV</button>
-                            <button type="button" id="exportExcelBtn" class="bg-slate-700 text-white px-6 py-2 rounded-lg hover:bg-slate-800 transition-colors">Download Excel</button>
-                            <button type="button" id="exportJsonBtn" class="bg-slate-700 text-white px-6 py-2 rounded-lg hover:bg-slate-800 transition-colors">Download JSON</button>
-                            <button type="button" id="processNewBtn" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700">Upload New File</button>
+                        <div class="mt-8 flex flex-wrap gap-4">
+                            <button type="button" id="exportBtn" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl font-semibold">
+                                Download Cleaned File
+                            </button>
+                            <button type="button" id="processNewBtn" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                                Upload New File
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -484,81 +498,7 @@ if ($user) {
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white mt-16 py-12">
-        <div class="container mx-auto px-4">
-            <div class="max-w-6xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Simple Data Cleaner</h3>
-                        <p class="text-gray-400 mb-4">
-                            Professional browser-based data validation for UK businesses.
-                            Your data never leaves your device - guaranteed privacy and GDPR compliance.
-                        </p>
-                        <div class="flex items-center space-x-2 text-green-400">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                            </svg>
-                            <span class="text-sm font-semibold">100% Private Processing</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Features</h3>
-                        <ul class="space-y-2 text-gray-400">
-                            <li><a href="/validation-rules.php#phone_numbersTab" class="hover:text-white transition-colors">Phone Numbers</a></li>
-                            <li><a href="/validation-rules.php#national_insuranceTab" class="hover:text-white transition-colors">NI Numbers</a></li>
-                            <li><a href="/validation-rules.php#postcodesTab" class="hover:text-white transition-colors">Postcodes</a></li>
-                            <li><a href="/validation-rules.php#sort_codesTab" class="hover:text-white transition-colors">Sort Codes</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Resources</h3>
-                        <ul class="space-y-2 text-gray-400">
-                            <li><a href="/validation-rules.php" class="hover:text-white transition-colors">Validation Rules</a></li>
-                            <li><a href="/pricing.php" class="hover:text-white transition-colors">Pricing</a></li>
-                            <li><a href="/support.php" class="hover:text-white transition-colors">Support</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Legal</h3>
-                        <ul class="space-y-2 text-gray-400">
-                            <li><a href="/terms.php" class="hover:text-white transition-colors">Terms of Service</a></li>
-                            <li><a href="/privacy.php" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                            <li><a href="/gdpr.php" class="hover:text-white transition-colors">GDPR Compliance</a></li>
-                            <li><a href="/security.php" class="hover:text-white transition-colors">Security</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="border-t border-gray-800 pt-8">
-                    <div class="flex flex-col md:flex-row justify-between items-center">
-                        <p class="text-gray-400 mb-4 md:mb-0">
-                            © <?php echo date('Y'); ?> Simple Data Cleaner. All rights reserved.
-                        </p>
-                        <div class="flex items-center space-x-6 flex-wrap justify-center gap-4">
-                            <?php if (!$user): ?>
-                                <a href="/register.php" class="text-white hover:text-blue-400 transition-colors">
-                                    Get Started
-                                </a>
-                            <?php elseif (!$subscription): ?>
-                                <a href="/pricing.php" class="text-white hover:text-blue-400 transition-colors">
-                                    Choose a Plan
-                                </a>
-                            <?php endif; ?>
-                            <div class="flex items-center space-x-2">
-                                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                                <p class="text-gray-300 text-sm">
-                                    <strong>GDPR Compliant:</strong> Browser-based processing - Your data never leaves your device
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <!-- Scripts -->
     <script src="validators.js?v=<?php echo time(); ?>"></script>

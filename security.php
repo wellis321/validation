@@ -11,37 +11,7 @@ require_once __DIR__ . '/includes/init.php';
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-blue-600">Simple Data Cleaner</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <?php if ($user): ?>
-                        <a href="/dashboard.php" class="text-gray-700 hover:text-gray-900">Dashboard</a>
-                        <div class="relative group">
-                            <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900">
-                                <span><?php echo htmlspecialchars($user['email']); ?></span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <a href="/account.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Account Settings</a>
-                                <hr class="my-2">
-                                <a href="/logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Logout</a>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <a href="/login.php" class="text-gray-700 hover:text-gray-900">Login</a>
-                        <a href="/register.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Sign Up</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/includes/header.php'; ?>
 
     <!-- Main Content -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

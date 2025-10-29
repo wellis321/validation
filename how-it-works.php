@@ -1,0 +1,222 @@
+<?php
+require_once __DIR__ . '/includes/init.php';
+
+// Set page meta
+$pageTitle = 'How It Works';
+$pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clean your data in your browser, and download in any format. 100% private, no data leaves your device.';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2'><path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/></svg>">
+</head>
+<body class="bg-gray-50">
+    <?php include __DIR__ . '/includes/header.php'; ?>
+
+    <main class="container mx-auto px-4 py-12 max-w-4xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">How It Works</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Clean your UK data in 4 simple steps. Everything happens in your browser - your data never leaves your device.
+            </p>
+        </header>
+
+        <!-- Steps -->
+        <div class="space-y-8">
+            <!-- Step 1 -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                            1
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-3">Upload Your File</h2>
+                        <p class="text-gray-600 mb-4">
+                            Upload your CSV, Excel (.xlsx, .xls), or JSON file containing UK phone numbers, National Insurance numbers, postcodes, or bank sort codes.
+                        </p>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <p class="text-sm text-blue-900">
+                                <strong>💡 Tip:</strong> We support files up to several hundred MB, depending on your browser and device memory. All processing happens in your browser, so larger files may take a bit longer.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                            2
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-3">Select Columns to Clean</h2>
+                        <p class="text-gray-600 mb-4">
+                            Choose which columns you want to clean. Our system can automatically detect phone numbers, NI numbers, postcodes, and sort codes, or you can manually select the columns.
+                        </p>
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <p class="text-sm text-indigo-900">
+                                <strong>✨ Auto-Select:</strong> Click "Auto-Select" to have our system automatically detect and select all cleanable columns based on column names and content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                            3
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-3">Process in Your Browser</h2>
+                        <p class="text-gray-600 mb-4">
+                            Click "Clean My Data" and watch as your data is validated and cleaned instantly - all in your browser. We never see, store, or transmit your data. It's 100% private.
+                        </p>
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                            <p class="text-sm text-purple-900">
+                                <strong>🔒 Privacy First:</strong> Your file is processed entirely in your browser using JavaScript. No uploads to our servers, no database storage, no third-party access.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                            4
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-3">Download Your Cleaned Data</h2>
+                        <p class="text-gray-600 mb-4">
+                            Review the results, see what was cleaned, and customize your download options before exporting your file.
+                        </p>
+
+                        <!-- Format Selection -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm font-semibold text-blue-900 mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Select Your Download Format:
+                            </p>
+                            <ul class="text-sm text-blue-800 space-y-1 ml-7">
+                                <li>• <strong>CSV</strong> - Comma Separated Values (great for spreadsheets)</li>
+                                <li>• <strong>Excel (.xlsx)</strong> - Native Excel format (ready to open in Excel)</li>
+                                <li>• <strong>JSON</strong> - Structured data format (perfect for developers)</li>
+                            </ul>
+                            <p class="text-xs text-blue-700 mt-2 ml-7">
+                                <strong>Format Conversion:</strong> Upload in CSV? Download as Excel or JSON. Upload in Excel? Download as CSV or JSON. We support complete format conversion!
+                            </p>
+                        </div>
+
+                        <!-- Export Options -->
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                    Export Customization Options:
+                            </p>
+                            <div class="space-y-3 ml-7">
+                                <div>
+                                    <p class="text-sm text-gray-800 font-medium">✓ Include "Issues" Column</p>
+                                    <p class="text-xs text-gray-600">Adds an "Issues" column that lists any fields that still need attention. This helps you quickly identify which rows may require manual review after downloading.</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-800 font-medium">○ Export Only Rows With Issues (Optional)</p>
+                                    <p class="text-xs text-gray-600">When enabled, you'll download <strong>only</strong> the rows that have validation issues (instead of the complete cleaned file). Perfect for creating a focused review file that you can fix manually and merge back into your main dataset.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Important Warning -->
+                        <div class="bg-red-50 border-2 border-red-200 rounded-lg p-4">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <div>
+                                    <p class="text-sm text-red-900 font-semibold mb-1">Important: Download and Save Your File</p>
+                                    <p class="text-xs text-red-800">
+                                        Your cleaned data is only available in your browser session. <strong>Once you close the browser tab or refresh the page, your cleaned data will be gone.</strong> We don't store files on our servers - make sure to download and save your cleaned file immediately after processing!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Features -->
+        <div class="mt-16 bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start gap-4">
+                    <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-2">100% Private</h3>
+                        <p class="text-gray-600 text-sm">All processing happens in your browser. Your data never leaves your device.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-2">GDPR Compliant</h3>
+                        <p class="text-gray-600 text-sm">We're not a data processor - you maintain full control and compliance.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <svg class="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Format Conversion</h3>
+                        <p class="text-gray-600 text-sm">Upload CSV, download Excel. Upload Excel, download JSON. We support format conversion.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <svg class="w-6 h-6 text-indigo-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Instant Processing</h3>
+                        <p class="text-gray-600 text-sm">No upload wait times, no network bottlenecks. Process instantly in your browser.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-12 text-center">
+            <a href="/register.php" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl font-semibold text-lg">
+                Get Started Free
+            </a>
+        </div>
+    </main>
+
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+    <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
+</body>
+</html>

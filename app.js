@@ -64,17 +64,14 @@ class UKDataCleanerApp {
             radio.addEventListener('change', () => this.updatePhoneFormat());
         });
 
-        // Export buttons
-        const exportCleanedBtn = document.getElementById('exportCleanedBtn');
-        const exportReportBtn = document.getElementById('exportReportBtn');
-        const exportExcelBtn = document.getElementById('exportExcelBtn');
-        const exportJsonBtn = document.getElementById('exportJsonBtn');
+        // Export button
+        const exportBtn = document.getElementById('exportBtn');
         const processNewBtn = document.getElementById('processNewBtn');
 
-        exportCleanedBtn?.addEventListener('click', () => this.exportResults('cleaned-csv'));
-        exportReportBtn?.addEventListener('click', () => this.exportResults('csv'));
-        exportExcelBtn?.addEventListener('click', () => this.exportResults('excel'));
-        exportJsonBtn?.addEventListener('click', () => this.exportResults('json'));
+        exportBtn?.addEventListener('click', () => {
+            const format = document.getElementById('downloadFormat')?.value || 'csv';
+            this.exportResults(format);
+        });
         processNewBtn?.addEventListener('click', () => this.resetForm());
 
         // Tab navigation
@@ -445,10 +442,24 @@ class UKDataCleanerApp {
         if (!status) return;
 
         if (this.selectedFields.length === 0) {
-            status.textContent = '⚠️ Please select at least one field to clean';
+            status.innerHTML = `
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>Please select at least one field to clean</span>
+                </div>
+            `;
             status.className = 'text-sm text-orange-600 mt-3 text-center';
         } else {
-            status.textContent = `✅ ${this.selectedFields.length} field(s) selected for cleaning`;
+            status.innerHTML = `
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span>${this.selectedFields.length} field(s) selected for cleaning</span>
+                </div>
+            `;
             status.className = 'text-sm text-green-600 mt-3 text-center';
         }
     }
@@ -691,19 +702,29 @@ class UKDataCleanerApp {
             const a = document.createElement('a');
             a.href = url;
 
-            const fileExtension = format === 'cleaned-csv' ? 'csv' : format === 'excel' ? 'csv' : format;
-            const originalName = this.selectedFile?.name.replace(/\.[^/.]+$/, '') || 'validation_results';
-            const suffix = format === 'cleaned-csv' ? '_cleaned' :
-                format === 'csv' ? '_validation_report' :
-                    format === 'excel' ? '_excel_friendly' : '';
+            // Determine file extension and suffix
+            let fileExtension = format;
+            let suffix = '_cleaned';
 
+            if (format === 'csv') {
+                fileExtension = 'csv';
+                suffix = '_cleaned';
+            } else if (format === 'excel') {
+                fileExtension = 'xlsx';
+                suffix = '_cleaned';
+            } else if (format === 'json') {
+                fileExtension = 'json';
+                suffix = '_cleaned';
+            }
+
+            const originalName = this.selectedFile?.name.replace(/\.[^/.]+$/, '') || 'validation_results';
             a.download = `${originalName}${suffix}.${fileExtension}`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         } catch (err) {
-            this.showError('Failed to export results');
+            this.showError('Failed to export results: ' + err.message);
         }
     }
 

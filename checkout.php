@@ -73,11 +73,19 @@ curl_setopt_array($ch, [
 
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$curlError = curl_error($ch);
 curl_close($ch);
 
 if ($httpCode !== 200) {
-    error_log("Stripe API Error: " . $response);
-    die('Unable to create checkout session. Please try again later or contact support.');
+    error_log("Stripe API HTTP Code: " . $httpCode);
+    error_log("Stripe API Response: " . $response);
+    error_log("cURL Error: " . $curlError);
+    error_log("Stripe Secret Key (first 10 chars): " . substr(STRIPE_SECRET_KEY, 0, 10));
+
+    $errorData = json_decode($response, true);
+    $errorMessage = isset($errorData['error']['message']) ? $errorData['error']['message'] : 'Unknown error';
+
+    die('Unable to create checkout session. Error: ' . htmlspecialchars($errorMessage) . '. Please contact support.');
 }
 
 $session = json_decode($response, true);

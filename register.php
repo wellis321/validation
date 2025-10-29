@@ -1,12 +1,5 @@
 <?php
-require_once __DIR__ . '/includes/Database.php';
-require_once __DIR__ . '/includes/Security.php';
-require_once __DIR__ . '/includes/ErrorHandler.php';
-require_once __DIR__ . '/includes/helpers.php';
-require_once __DIR__ . '/models/Model.php';
-require_once __DIR__ . '/models/User.php';
-require_once __DIR__ . '/includes/Email.php';
-require_once __DIR__ . '/includes/Auth.php';
+require_once __DIR__ . '/includes/init.php';
 
 $auth = Auth::getInstance();
 $errorHandler = ErrorHandler::getInstance();
@@ -72,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <?php include __DIR__ . '/includes/header.php'; ?>
     <div class="container mx-auto px-4 py-16">
         <div class="max-w-md mx-auto">
             <div class="text-center mb-8">

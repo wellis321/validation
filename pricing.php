@@ -29,26 +29,7 @@ if ($user) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-    <!-- Navigation -->
-    <nav class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="/" class="text-2xl font-bold text-blue-600">UK Data Cleaner</a>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <?php if ($user): ?>
-                        <a href="/dashboard.php" class="text-gray-700 hover:text-gray-900 mr-4">Dashboard</a>
-                        <a href="/logout.php" class="text-gray-700 hover:text-gray-900">Logout</a>
-                    <?php else: ?>
-                        <a href="/login.php" class="text-gray-700 hover:text-gray-900">Login</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/includes/header.php'; ?>
 
     <div class="container mx-auto px-4 py-16">
         <div class="text-center mb-12">
