@@ -3,7 +3,13 @@
 
 class FileProcessor {
     constructor(phoneFormat = 'international') {
-        this.supportedTypes = ['text/csv', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+        this.supportedTypes = [
+            'text/csv',
+            'text/plain',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.ms-excel',
+            'application/json'
+        ];
         this.phoneFormat = phoneFormat;
     }
 
@@ -12,8 +18,16 @@ class FileProcessor {
     }
 
     async processFile(file, selectedColumns = null) {
-        if (!this.supportedTypes.includes(file.type)) {
-            throw new Error(`Unsupported file type: ${file.type}. Please upload a CSV, Excel, or text file.`);
+        // Check MIME type and file extension as fallback
+        const isValidType = this.supportedTypes.includes(file.type) ||
+            file.name.endsWith('.csv') ||
+            file.name.endsWith('.xlsx') ||
+            file.name.endsWith('.xls') ||
+            file.name.endsWith('.json') ||
+            file.name.endsWith('.txt');
+
+        if (!isValidType) {
+            throw new Error(`Unsupported file type. Please upload a CSV, Excel (XLSX/XLS), JSON, or text file.`);
         }
 
         const content = await this.readFileContent(file);
@@ -24,49 +38,144 @@ class FileProcessor {
 
     async readFileContent(file) {
         return new Promise((resolve, reject) => {
-            const reader = new FileReader();
+            // Check if it's an Excel file (XLSX or XLS)
+            const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                file.type === 'application/vnd.ms-excel' ||
+                file.name.endsWith('.xlsx') ||
+                file.name.endsWith('.xls');
 
-            reader.onload = (e) => {
-                let result = e.target?.result;
-                if (typeof result === 'string') {
-                    // Fix scientific notation that Excel might have added
-                    // This converts numbers like 4.47701E+11 back to full numbers
-                    result = result.replace(/([\d.]+[Ee][\+\-]?\d+)/gi, (match) => {
-                        const num = parseFloat(match);
-                        return num.toFixed(0);
-                    });
-                    resolve(result);
-                } else {
-                    reject(new Error('Failed to read file content'));
-                }
-            };
+            // Check if it's a JSON file
+            const isJson = file.type === 'application/json' || file.name.endsWith('.json');
 
-            reader.onerror = () => reject(new Error('Failed to read file'));
-
-            if (file.type === 'text/csv' || file.type === 'text/plain') {
-                reader.readAsText(file);
+            if (isExcel && typeof XLSX !== 'undefined') {
+                // Handle Excel files with SheetJS
+                this.readExcelFile(file, resolve, reject);
+            } else if (isJson) {
+                // Handle JSON files
+                this.readJsonFile(file, resolve, reject);
             } else {
-                // For Excel files, we'll need to handle differently
-                // For now, we'll read as text and let the user know
-                reader.readAsText(file);
+                // Handle CSV and text files
+                this.readTextFile(file, resolve, reject);
             }
         });
+    }
+
+    readTextFile(file, resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            let result = e.target?.result;
+            if (typeof result === 'string') {
+                // Fix scientific notation that Excel might have added
+                result = result.replace(/([\d.]+[Ee][\+\-]?\d+)/gi, (match) => {
+                    const num = parseFloat(match);
+                    return num.toFixed(0);
+                });
+                resolve(result);
+            } else {
+                reject(new Error('Failed to read file content'));
+            }
+        };
+        reader.onerror = () => reject(new Error('Failed to read file'));
+        reader.readAsText(file);
+    }
+
+    readExcelFile(file, resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+
+                // Get the first sheet
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert to JSON (array of objects)
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+
+                // Convert to our row-based format
+                resolve({ type: 'excel', data: jsonData });
+            } catch (error) {
+                reject(new Error('Failed to parse Excel file: ' + error.message));
+            }
+        };
+        reader.onerror = () => reject(new Error('Failed to read Excel file'));
+        reader.readAsArrayBuffer(file);
+    }
+
+    readJsonFile(file, resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const jsonContent = e.target.result;
+                const jsonData = JSON.parse(jsonContent);
+                resolve({ type: 'json', data: jsonData });
+            } catch (error) {
+                reject(new Error('Failed to parse JSON file: ' + error.message));
+            }
+        };
+        reader.onerror = () => reject(new Error('Failed to read JSON file'));
+        reader.readAsText(file);
     }
 
     parseContent(content, fileType) {
         let rows;
 
-        if (fileType === 'text/csv') {
+        // Check if content is an object (from Excel or JSON)
+        if (typeof content === 'object' && content !== null) {
+            if (content.type === 'excel') {
+                // Excel file already converted to row-based format
+                rows = content.data;
+            } else if (content.type === 'json') {
+                // Parse JSON data
+                rows = this.parseJSON(content.data);
+            } else {
+                throw new Error('Unknown content type');
+            }
+        } else if (fileType === 'text/csv') {
             rows = this.parseCSV(content);
         } else if (fileType === 'text/plain') {
             rows = this.parseTextFile(content);
         } else {
-            // Excel files - for now, treat as CSV
+            // Default: treat as CSV
             rows = this.parseCSV(content);
         }
 
         // Fix any malformed CSV issues (like unquoted NI numbers with commas)
         return this.fixMalformedCSV(rows);
+    }
+
+    parseJSON(jsonData) {
+        // Check if it's an array of objects or a single object
+        if (Array.isArray(jsonData)) {
+            if (jsonData.length === 0) {
+                throw new Error('JSON file is empty');
+            }
+
+            // Check if first item is an object
+            if (typeof jsonData[0] === 'object' && jsonData[0] !== null) {
+                // Array of objects - convert to row-based format
+                const headers = Object.keys(jsonData[0]);
+                const rows = [headers];
+
+                jsonData.forEach(obj => {
+                    const row = headers.map(key => obj[key] ?? '');
+                    rows.push(row);
+                });
+
+                return rows;
+            } else {
+                // Array of arrays - already in correct format
+                return jsonData;
+            }
+        } else if (typeof jsonData === 'object' && jsonData !== null) {
+            // Single object - treat keys as headers, values as single row
+            const headers = Object.keys(jsonData);
+            const row = headers.map(key => jsonData[key] ?? '');
+            return [headers, row];
+        } else {
+            throw new Error('JSON file format not supported. Expected array of objects or array of arrays.');
+        }
     }
 
     parseCSV(content) {

@@ -24,6 +24,7 @@ if ($user) {
     <meta property="og:type" content="website">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2'><path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/></svg>">
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -227,13 +228,13 @@ if ($user) {
                 <!-- File Upload Form (always visible to authenticated users) -->
                 <form id="uploadForm" class="space-y-6 <?php echo !$subscription ? 'opacity-50 pointer-events-none' : ''; ?>">
                     <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors">
-                        <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.txt" <?php echo !$subscription ? 'disabled' : ''; ?>>
+                        <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.xls,.txt,.json" <?php echo !$subscription ? 'disabled' : ''; ?>>
                         <label for="fileInput" class="cursor-pointer">
                             <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                             </svg>
                             <p class="text-lg text-gray-600">Drop your file here or click to browse</p>
-                            <p class="text-sm text-gray-500 mt-2">Supports CSV, Excel, and text files</p>
+                            <p class="text-sm text-gray-500 mt-2">Supports CSV, Excel, JSON, and text files</p>
                             <p id="fileSizeLimit" class="text-xs text-gray-400 mt-1"></p>
                         </label>
                     </div>
