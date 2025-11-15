@@ -16,6 +16,7 @@ if ($user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://simple-data-cleaner.com/">
     <title>Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant</title>
     <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, and bank sort codes in your browser. 100% private - your data never leaves your device. Perfect for businesses handling sensitive PII. GDPR compliant data cleaning.">
     <meta name="keywords" content="UK data validation, phone number cleaning, NI number validation, GDPR compliant data cleaning, browser-based data processing, UK postcode validation">
@@ -25,7 +26,11 @@ if ($user) {
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2'><path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/></svg>">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
 </head>
 <body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
@@ -35,56 +40,37 @@ if ($user) {
         <?php if (!$user): ?>
             <!-- Hero Section for Non-Authenticated Users -->
             <div class="text-center mb-16">
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-amber-100 text-amber-900 text-sm font-semibold tracking-wide uppercase mb-5">
+                    Open Beta - lifetime access available now
+                </div>
                 <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                     Clean Your UK Data <span class="text-slate-700">Instantly</span>
                 </h1>
                 <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-6 max-w-4xl mx-auto">
                     <p class="text-xl text-gray-600 text-center md:text-left flex-1">
                         The only UK data validation tool that processes everything in your browser.
-                       Personally Identifiable Information (PII) <strong>never leaves your device</strong> - perfect for GDPR compliance.
+                        Personally Identifiable Information (PII) <strong>never leaves your device</strong> - perfect for GDPR compliance.
+                        Join our beta to lock in lifetime access to phone numbers, bank sort codes, NI numbers, and postcode cleaning for just £99.99.
                     </p>
                     <div class="flex-shrink-0">
                         <img src="/assets/images/transparent-logo.png" alt="Simple Data Cleaner Logo" class="h-24 w-auto">
                     </div>
                 </div>
-
-                <!-- Key Benefit Highlights -->
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                        <div class="flex justify-center mb-3">
-                            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                        </div>
-                        <h3 class="font-bold text-gray-900 mb-2">100% Private Processing</h3>
-                        <p class="text-sm text-gray-600">All validation happens in your browser. We never see, store, or process your data.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                        <div class="flex justify-center mb-3">
-                            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
-                        </div>
-                        <h3 class="font-bold text-gray-900 mb-2">GDPR Compliant</h3>
-                        <p class="text-sm text-gray-600">We're not a data processor - you maintain full control and compliance responsibility.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                        <div class="flex justify-center mb-3">
-                            <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <h3 class="font-bold text-gray-900 mb-2">Perfect for Businesses</h3>
-                        <p class="text-sm text-gray-600">Clean NI numbers, bank details, and sensitive customer data without security risks.</p>
-                    </div>
+                <div class="max-w-3xl mx-auto bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-4 mb-8">
+                    <p class="text-sm md:text-base">
+                        Lifetime beta licence covers today's feature set forever. As we add new data types, you'll be first in line to preview them, and we'll use your feedback to shape the roadmap.
+                    </p>
                 </div>
 
-                <div class="space-x-4">
-                    <a href="/register.php" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
-                        Get Started
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="/beta-offer.php" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                        Join Lifetime Beta (£99.99)
+                    </a>
+                    <a href="/feedback.php" class="inline-block bg-white text-slate-700 border border-slate-300 px-8 py-3 rounded-lg hover:border-slate-500 font-semibold transition-colors">
+                        Share Your Feedback
                     </a>
                     <a href="/pricing.php" class="inline-block text-slate-700 hover:text-slate-900 font-semibold border-b-2 border-transparent hover:border-slate-700 transition-colors">
-                        View Pricing
+                        View Full Pricing
                     </a>
                 </div>
             </div>
@@ -160,6 +146,54 @@ if ($user) {
                     </div>
                 </div>
             </div>
+
+            <div class="max-w-6xl mx-auto bg-slate-900 text-white rounded-2xl shadow-xl p-8 md:p-12 mb-16" id="beta-program">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
+                    <div class="lg:w-1/2">
+                        <h2 class="text-3xl font-bold mb-4">Help Shape Simple Data Cleaner</h2>
+                        <p class="text-slate-200 text-base md:text-lg mb-6">
+                            We're in active beta and focused on the core UK data validators you already use daily. Purchase the lifetime licence once, keep access to phone numbers, NI numbers, postcodes, and sort codes forever, and tell us what to improve next.
+                        </p>
+                        <ul class="space-y-4 text-sm md:text-base text-slate-200">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                Lifetime access to today's feature set (phone numbers, NI numbers, postcodes, sort codes)
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                Direct feedback channel with the product team - influence our roadmap
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lg:w-2/5 bg-white/10 border border-white/10 rounded-xl p-6">
+                        <h3 class="text-xl font-semibold mb-4">How the beta works</h3>
+                        <ol class="space-y-4 text-slate-100 text-sm md:text-base">
+                            <li>
+                                <span class="block font-semibold text-sky-300">1. Purchase the lifetime beta licence</span>
+                                <span class="block mt-1">One-time £99.99 payment - no renewals. Access stays active for all current validators forever.</span>
+                            </li>
+                            <li>
+                                <span class="block font-semibold text-sky-300">2. Clean your data securely</span>
+                                <span class="block mt-1">Run files locally in your browser and see improvements as we ship them.</span>
+                            </li>
+                            <li>
+                                <span class="block font-semibold text-sky-300">3. Share feedback any time</span>
+                                <span class="block mt-1">Use our feedback form to report wins, pain points, or custom validator requests.</span>
+                            </li>
+                        </ol>
+                        <div class="mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <a href="/beta-offer.php" class="inline-flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
+                                Lock in lifetime access
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </a>
+                            <a href="/feedback.php" class="inline-flex items-center justify-center gap-2 text-slate-200 hover:text-white font-semibold">
+                                Give feedback now
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9M12 4h9M3 4h.01M3 20h.01M3 12h18" /></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <?php endif; ?>
 
         <!-- File Upload Section -->
@@ -178,7 +212,7 @@ if ($user) {
                     <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-2">Choose a Plan to Get Started</h3>
                         <p class="text-gray-700 mb-4">
-                            Starting from just £4.99 for one-time use, or £29.99/month for unlimited access.
+                            Choose Lifetime Beta (£99.99 one-time) or subscribe monthly (£29.99) or annually (£249.99) for ongoing access.
                         </p>
                         <a href="/pricing.php" class="inline-block bg-slate-700 text-white px-6 py-2 rounded-lg hover:bg-slate-800 transition-colors">
                             View Plans
@@ -496,6 +530,63 @@ if ($user) {
                 </a>
             </div>
         </div>
+
+        <!-- Bespoke & Enterprise Services -->
+        <section id="bespoke-services" class="mt-20">
+            <div class="max-w-6xl mx-auto bg-slate-900 text-white rounded-2xl shadow-2xl p-10 md:p-14 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at top right, #38bdf8 0%, transparent 55%), radial-gradient(circle at bottom left, #6366f1 0%, transparent 60%);"></div>
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-slate-800/70 border border-slate-700">Bespoke Data Cleaning</span>
+                        <h2 class="mt-4 text-3xl md:text-4xl font-bold leading-tight">Need specialist rules for internal data?</h2>
+                        <p class="mt-4 text-slate-200 text-base md:text-lg leading-relaxed">
+                            We partner with compliance, ops, and data teams to build in-browser validation for bespoke fields - everything from <span class="font-semibold">region_description</span> to <span class="font-semibold">staff_employee_number</span> and beyond. Share your edge cases and we'll deliver tailor-made rules that run entirely in your users' browsers, keeping sensitive records on-premise and fully GDPR aligned.
+                        </p>
+                        <ul class="mt-6 space-y-3 text-slate-200 text-sm md:text-base">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                <span>Custom validators for proprietary fields and internal reference codes</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                <span>Browser-based deployment ensures zero data leaves your environment</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                <span>Direct collaboration with your domain experts to codify complex rules</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-8 backdrop-blur">
+                        <h3 class="text-xl font-semibold">How the bespoke process works</h3>
+                        <ol class="mt-4 space-y-4 text-slate-100 text-sm md:text-base">
+                            <li>
+                                <span class="block font-semibold text-sky-300">1. Discovery workshop</span>
+                                <span class="block mt-1">Share the fields, sample data, and desired outcomes. We map the validation flow together.</span>
+                            </li>
+                            <li>
+                                <span class="block font-semibold text-sky-300">2. Prototype & testing</span>
+                                <span class="block mt-1">We build tailored rules inside our client-side engine and iterate with your team.</span>
+                            </li>
+                            <li>
+                                <span class="block font-semibold text-sky-300">3. Deployment & handover</span>
+                                <span class="block mt-1">Validated rules are shipped into your Simple Data Cleaner workspace with full documentation.</span>
+                            </li>
+                        </ol>
+                        <div class="mt-6 inline-flex flex-col sm:flex-row sm:items-center gap-4">
+                            <a href="/bespoke.php" class="inline-flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10a9 9 0 11-18 0 9 9 0 0118 0zm-9 3l-3-3m0 0l3-3m-3 3h8" /></svg>
+                                Book a discovery call
+                            </a>
+                            <a href="/how-it-works.php" class="inline-flex items-center justify-center gap-2 text-slate-200 hover:text-white font-semibold">
+                                Learn more about our approach
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <?php include __DIR__ . '/includes/footer.php'; ?>

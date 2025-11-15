@@ -1,0 +1,285 @@
+Basic Spacing Variations
+
+SW1A 1AA (standard)
+SW1A1AA (no space)
+SW1 A1AA (space in wrong place)
+SW 1A 1AA (extra space)
+SW1A  1AA (double space)
+SW1A   1AA (triple space)
+S W1A 1AA (space in area code)
+SW 1A1AA (space after area)
+SW1 A 1AA (multiple wrong spaces)
+Lowercase Variations
+
+sw1a 1aa
+sw1a1aa
+Sw1a 1aa
+SW1a 1AA
+sw1A 1aa
+Sw1A 1Aa
+sW1a 1Aa
+With Dashes/Hyphens
+
+SW1A-1AA
+SW1A -1AA
+SW1A- 1AA
+SW1A - 1AA
+SW-1A-1AA
+SW1-A1-AA
+SW1A-1-AA
+With Dots/Periods
+
+SW1A.1AA
+SW1A .1AA
+SW1A. 1AA
+SW1A . 1AA
+SW.1A.1AA
+With Slashes
+
+SW1A/1AA
+SW1A /1AA
+SW1A/ 1AA
+SW1A / 1AA
+With Underscores
+
+SW1A_1AA
+SW1A _1AA
+SW1A_ 1AA
+SW1A _ 1AA
+With Commas
+
+SW1A,1AA
+SW1A, 1AA
+SW1A , 1AA
+With Colons
+
+SW1A:1AA
+SW1A: 1AA
+SW1A : 1AA
+With Semicolons
+
+SW1A;1AA
+SW1A; 1AA
+With Pipes
+
+SW1A|1AA
+SW1A| 1AA
+SW1A | 1AA
+With Parentheses/Brackets
+
+(SW1A) 1AA
+SW1A (1AA)
+(SW1A 1AA)
+[SW1A] 1AA
+SW1A [1AA]
+[SW1A 1AA]
+{SW1A} 1AA
+Leading/Trailing Spaces
+
+" SW1A 1AA"
+"SW1A 1AA "
+" SW1A 1AA "
+"  SW1A 1AA"
+"SW1A 1AA  "
+" SW1A1AA "
+With Text/Labels
+
+Postcode: SW1A 1AA
+Post Code: SW1A 1AA
+PC: SW1A 1AA
+Postal Code: SW1A 1AA
+SW1A 1AA (postcode)
+Postcode - SW1A 1AA
+P/C: SW1A 1AA
+P.C: SW1A 1AA
+#SW1A 1AA
+ZIP: SW1A 1AA
+Code: SW1A 1AA
+With "Postcode" or "PC" Prefix
+
+PC SW1A 1AA
+PC: SW1A1AA
+PC-SW1A 1AA
+P/C SW1A 1AA
+P.C. SW1A 1AA
+POSTCODE: SW1A1AA
+POST CODE SW1A 1AA
+Tab Characters
+
+SW1A	1AA (tab)
+SW1A		1AA (double tab)
+SW1A 	 1AA (mixed)
+With Quotation Marks
+
+"SW1A 1AA"
+'SW1A 1AA'
+"SW1A1AA"
+'SW1A1AA'
+With Plus Signs
+
+SW1A+1AA
+SW1A +1AA
+With Ampersands
+
+SW1A&1AA
+With Asterisks/Hash
+
+*SW1A 1AA
+SW1A 1AA*
+#SW1A1AA
+SW1A 1AA#
+Copy-Paste Artifacts
+
+﻿SW1A 1AA (with BOM character)
+SW1A 1AA﻿
+SW1A 1AA  (with non-breaking space)
+Excel/Spreadsheet Formatting
+
+'SW1A 1AA (leading apostrophe)
+'SW1A1AA
+With UK/GB Prefix
+
+UK SW1A 1AA
+GB SW1A 1AA
+UK: SW1A1AA
+GB-SW1A 1AA
+(UK) SW1A 1AA
+United Kingdom SW1A 1AA
+With City/Area Names
+
+London SW1A 1AA
+Manchester M1 1AA
+Birmingham B1 1AA
+SW1A 1AA London
+SW1A 1AA, London
+With Country/Region
+
+SW1A 1AA, UK
+SW1A 1AA, England
+SW1A 1AA, United Kingdom
+England, SW1A 1AA
+HTML/Special Encoding
+
+SW1A 1AA
+SW1A–1AA
+With Context/Names
+
+SW1A 1AA (Home)
+SW1A 1AA - Office
+Personal: SW1A 1AA
+John Smith SW1A 1AA
+Delivery: SW1A 1AA
+With Address Context
+
+Address: SW1A 1AA
+Postcode: SW1A 1AA
+Del. Postcode: SW1A 1AA
+Mixed Formatting
+
+SW1A- 1AA
+SW1A -1AA
+SW1A. 1AA
+SW1A .1AA
+SW1A/1AA
+sw1A 1aa
+Sw1a 1Aa
+SW1a-1AA
+Different Postcode Formats (all valid UK patterns)Outward Code Variations (first part)
+
+M1 1AA (A# #AA)
+M60 1AA (A## #AA)
+CR2 6XH (AA# #AA)
+DN55 1PT (AA## #AA)
+W1A 1AA (A#A #AA)
+EC1A 1BB (AA#A #AA)
+With Different Spacing Issues
+
+M11AA (M1 format, no space)
+M601AA (M60 format, no space)
+CR26XH (CR2 format, no space)
+DN551PT (DN55 format, no space)
+W1A1AA (W1A format, no space)
+EC1A1BB (EC1A format, no space)
+Same Variations as Above Applied
+
+m1 1aa
+M1-1AA
+M1.1AA
+M1/1AA
+M1_1AA
+PC: M1 1AA
+Postcode: M60 1AA
+cr2 6xh
+CR2-6XH
+dn55 1pt
+DN55-1PT
+w1a 1aa
+W1A-1AA
+ec1a 1bb
+EC1A-1BB
+With Form Field Names
+
+postcode: SW1A 1AA
+post_code SW1A1AA
+postal_code: SW1A 1AA
+zip_code: SW1A 1AA
+Currency/Special Symbols
+
+£SW1A 1AA
+@SW1A 1AA
+~SW1A 1AA
+With Validation Markers
+
+✓ SW1A 1AA
+Valid: SW1A 1AA
+SW1A 1AA ✓
+SW1A 1AA (verified)
+With Checkboxes/Bullets
+
+☐ SW1A 1AA
+• SW1A 1AA
+
+
+SW1A 1AA
+
+
+Hyphen Variations
+
+SW1A–1AA (en dash)
+SW1A—1AA (em dash)
+SW1A−1AA (minus sign)
+With Full Address
+
+10 Downing Street, SW1A 1AA
+SW1A 1AA, 10 Downing Street
+London, SW1A 1AA
+SW1A 1AA, London, UK
+Split Format
+
+SW1A / 1AA
+SW1A - 1AA
+SW1A . 1AA
+With "Area" or "District"
+
+Area: SW1A 1AA
+District: SW1A 1AA
+Zone: SW1A 1AA
+With Multiple Spaces in Wrong Places
+
+S W1A 1AA
+SW 1A 1AA
+SW1 A 1AA
+SW1A 1 AA
+SW1A 1A A
+Completely No Space Variations (all formats)
+
+SW1A1AA
+M11AA
+M601AA
+CR26XH
+DN551PT
+W1A1AA
+EC1A1BB
+B11AA
+G12QQ
+EH11YZ

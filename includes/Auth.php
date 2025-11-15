@@ -157,19 +157,60 @@ class Auth {
     }
 
     public function requestPasswordReset($email) {
-        $user = new User();
-        $userData = $user->findBy('email', $email);
+        try {
+            $user = new User();
+            $userData = $user->findBy('email', $email);
 
-        if (!$userData) {
-            throw new Exception('User not found');
+            if (!$userData) {
+                // Log that user was not found (for debugging) but don't reveal to user
+                error_log("Password reset requested for non-existent email: {$email}");
+                throw new Exception('User not found');
+            }
+
+            // Log that we found the user and are generating token
+            error_log("Password reset requested for existing user: {$email} (ID: {$userData['id']})");
+
+            // Set the user ID so generatePasswordResetToken() can use it
+            if (!isset($userData['id']) || empty($userData['id'])) {
+                error_log("ERROR: User data missing ID for email: {$email}");
+                throw new Exception('Invalid user data');
+            }
+
+            $user->id = $userData['id'];
+            error_log("Set user ID to: {$user->id} for email: {$email}");
+
+            // Generate password reset token
+            try {
+                $token = $user->generatePasswordResetToken();
+                error_log("Password reset token generated for: {$email} (User ID: {$user->id})");
+            } catch (Exception $e) {
+                error_log("ERROR: Failed to generate password reset token for: {$email} - " . $e->getMessage());
+                error_log("ERROR: Stack trace: " . $e->getTraceAsString());
+                throw new Exception('Failed to generate reset token: ' . $e->getMessage());
+            }
+
+            // Send password reset email and check if it was successful
+            try {
+                $emailSent = $this->sendPasswordResetEmail($email, $token);
+
+                if (!$emailSent) {
+                    error_log("Failed to send password reset email to: {$email}. Token generated: {$token}");
+                    // Don't throw exception - still return true to prevent email enumeration
+                    // But log the error for debugging
+                } else {
+                    error_log("Password reset email sent successfully to: {$email}");
+                }
+            } catch (Exception $e) {
+                error_log("ERROR: Failed to send password reset email to: {$email} - " . $e->getMessage());
+                // Don't throw - still return true to prevent email enumeration
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("ERROR in requestPasswordReset for {$email}: " . $e->getMessage());
+            error_log("ERROR: Stack trace: " . $e->getTraceAsString());
+            throw $e; // Re-throw to be caught by caller
         }
-
-        $token = $user->generatePasswordResetToken();
-
-        // TODO: Send password reset email
-        $this->sendPasswordResetEmail($email, $token);
-
-        return true;
     }
 
     public function resetPassword($token, $newPassword) {

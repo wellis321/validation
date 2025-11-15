@@ -6,8 +6,14 @@ require_once __DIR__ . '/includes/init.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://simple-data-cleaner.com/terms.php">
     <title>Terms of Service - Simple Data Cleaner</title>
     <meta name="description" content="Read our terms of service for Simple Data Cleaner - understand your rights and responsibilities when using our data cleaning service.">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
@@ -57,6 +63,7 @@ require_once __DIR__ . '/includes/init.php';
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">3. Subscription Terms</h2>
                 <div class="space-y-3 text-gray-700">
                     <p><strong>Subscription Plans:</strong> We offer various subscription plans with different features and pricing. All subscriptions are billed according to the terms outlined on our pricing page.</p>
+                    <p><strong>Lifetime Beta Licence:</strong> The Lifetime Beta plan is a one-time payment that grants you perpetual access to the Simple Data Cleaner validator set available at the time of purchase (currently UK phone numbers, National Insurance numbers, postcodes, and bank sort codes) together with maintenance fixes and usability improvements for that specific feature set. The licence does not automatically include future validator families, enterprise integrations, or major feature versions released after the beta period.</p>
                     <p><strong>Payment:</strong></p>
                     <ul class="list-disc list-inside ml-4 space-y-1">
                         <li>Subscriptions are billed in advance on a recurring basis (monthly or yearly)</li>
@@ -64,7 +71,8 @@ require_once __DIR__ . '/includes/init.php';
                         <li>We reserve the right to change our subscription plans and pricing with 30 days' notice</li>
                         <li>Your subscription will automatically renew unless cancelled before the end of the current billing period</li>
                     </ul>
-                    <p><strong>Cancellation:</strong> You may cancel your subscription at any time. Cancellation takes effect at the end of your current billing period. You will continue to have access to the service until that time.</p>
+                    <p><strong>Cancellation:</strong> You may cancel your subscription at any time. Cancellation takes effect at the end of your current billing period. You will continue to have access to the service until that time. Lifetime Beta licences are non-recurring and remain active for the covered validator set without the ability to cancel for a refund once the licence is delivered.</p>
+                    <p><strong>Upgrades:</strong> When we release new validator families or major versions beyond the Lifetime Beta feature set, we may offer optional upgrade pricing. Accepting an upgrade will not affect your underlying Lifetime Beta entitlement.</p>
                     <p><strong>Refunds:</strong> Due to the client-side nature of our service, we do not offer refunds. However, if you experience technical issues that prevent you from using the service, please contact us for assistance.</p>
                 </div>
             </section>
@@ -141,9 +149,18 @@ require_once __DIR__ . '/includes/init.php';
                 </div>
             </section>
 
+            <!-- Versioned Feature Sets -->
+            <section class="mb-8 border-t border-gray-200 pt-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">10. Versioned Feature Sets</h2>
+                <div class="space-y-3 text-gray-700">
+                    <p>The Simple Data Cleaner application may introduce additional validator families, automation features, or enterprise functionality over time. Each release may be associated with a distinct feature-set version. Your access level is determined by the subscription or licence attached to your account.</p>
+                    <p>The Lifetime Beta licence corresponds to the feature-set version available on the purchase date (Simple Data Cleaner v1 – UK validator suite). You will retain full access to this version even if subsequent versions are released. Access to later versions may require a new subscription or upgrade purchase.</p>
+                </div>
+            </section>
+
             <!-- Governing Law -->
             <section class="mb-8 border-t border-gray-200 pt-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">10. Governing Law</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">11. Governing Law</h2>
                 <p class="text-gray-700">
                     These Terms shall be interpreted and governed by the laws of the United Kingdom, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.
                 </p>
@@ -151,7 +168,7 @@ require_once __DIR__ . '/includes/init.php';
 
             <!-- Contact -->
             <section class="mb-8 border-t border-gray-200 pt-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">11. Contact Information</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">12. Contact Information</h2>
                 <p class="text-gray-700 mb-3">
                     If you have any questions about these Terms, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a> or visit our website at <a href="/" class="text-blue-600 hover:underline">simple-data-cleaner.com</a>.
                 </p>

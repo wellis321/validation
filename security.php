@@ -6,8 +6,14 @@ require_once __DIR__ . '/includes/init.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://simple-data-cleaner.com/security.php">
     <title>Security & Privacy - Simple Data Cleaner | 100% Private Processing</title>
     <meta name="description" content="Your data is processed entirely in your browser - it never leaves your device. No servers, no databases, no third parties. Learn about our commitment to security and privacy.">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">

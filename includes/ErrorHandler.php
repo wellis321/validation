@@ -65,17 +65,26 @@ class ErrorHandler {
             'trace' => $exception->getTrace()
         ];
 
+        // Always log errors for debugging
+        $this->logError($error);
+        error_log("Uncaught exception: " . $exception->getMessage());
+        error_log("Exception type: " . get_class($exception));
+        error_log("File: " . $exception->getFile() . " Line: " . $exception->getLine());
+        error_log("Stack trace: " . $exception->getTraceAsString());
+
         if ($this->config['app']['debug']) {
-            $this->logError($error);
-        }
-
-        if ($this->config['app']['env'] === 'production') {
-            $this->errors[] = 'An error occurred. Please try again later.';
-        } else {
             $this->errors[] = "{$error['type']}: {$error['message']} in {$error['file']} on line {$error['line']}";
+        } else {
+            // In production, only show generic error if we're not in the middle of output
+            if (!headers_sent()) {
+                $this->errors[] = 'An error occurred. Please try again later.';
+            }
         }
 
-        $this->displayErrors();
+        // Only display errors if headers haven't been sent
+        if (!headers_sent()) {
+            $this->displayErrors();
+        }
     }
 
     public function handleFatalError() {

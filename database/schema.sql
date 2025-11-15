@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
     description TEXT,
     price DECIMAL(10,2) NOT NULL,
     duration_months INT NOT NULL,
+    max_requests_per_day INT NOT NULL DEFAULT 0,
+    max_file_size_mb INT NOT NULL DEFAULT 0,
     features JSON,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -37,6 +39,9 @@ CREATE TABLE IF NOT EXISTS user_subscriptions (
     end_date TIMESTAMP NOT NULL,
     status ENUM('active', 'cancelled', 'expired') NOT NULL DEFAULT 'active',
     payment_status ENUM('pending', 'completed', 'failed') NOT NULL DEFAULT 'pending',
+    stripe_price_id VARCHAR(255) DEFAULT NULL,
+    feature_set_version VARCHAR(100) DEFAULT NULL,
+    license_scope VARCHAR(50) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
@@ -77,10 +82,11 @@ CREATE TABLE IF NOT EXISTS rate_limits (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Insert default subscription plans
-INSERT INTO subscription_plans (name, description, price, duration_months, features) VALUES
-('Pay Per Use', '24-hour access - perfect for quick tasks. Clean and re-download as many times as needed!', 4.99, 0.033, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": false}'),
-('Monthly', 'Unlimited data cleaning, billed monthly', 29.99, 1, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true}'),
-('Annual', 'Best value - save £109.89 per year!', 249.99, 12, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true}');
+INSERT INTO subscription_plans (name, description, price, duration_months, max_requests_per_day, max_file_size_mb, features) VALUES
+('Pay Per Use', '24-hour access - perfect for quick tasks. Clean and re-download as many times as needed!', 4.99, 0.033, 0, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": false}'),
+('Monthly', 'Unlimited data cleaning, billed monthly', 29.99, 1, 0, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true}'),
+('Annual', 'Best value - save £109.89 per year!', 249.99, 12, 0, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true}'),
+('Lifetime Beta', 'One-time £99.99 payment for lifetime access to today\'s validators during beta.', 99.99, 0, 0, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": false, "lifetime_access": true}');
 
 -- Create indexes for better performance (skip if already exist)
 CREATE INDEX IF NOT EXISTS idx_user_email ON users(email);

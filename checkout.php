@@ -27,7 +27,8 @@ if (!$plan) {
 $priceMapping = [
     'Pay Per Use' => STRIPE_PRICE_PAY_PER_USE,
     'Monthly' => STRIPE_PRICE_MONTHLY,
-    'Annual' => STRIPE_PRICE_ANNUAL
+    'Annual' => STRIPE_PRICE_ANNUAL,
+    'Lifetime Beta' => STRIPE_PRICE_LIFETIME
 ];
 
 $priceId = $priceMapping[$plan['name']] ?? null;

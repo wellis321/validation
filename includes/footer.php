@@ -34,6 +34,8 @@
                         <li><a href="/how-it-works.php" class="hover:text-white transition-colors">How It Works</a></li>
                         <li><a href="/validation-rules.php" class="hover:text-white transition-colors">Validation Rules</a></li>
                         <li><a href="/pricing.php" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="/feedback.php" class="hover:text-white transition-colors">Beta Feedback</a></li>
+                        <li><a href="/bespoke.php" class="hover:text-white transition-colors">Bespoke Services</a></li>
                     </ul>
                 </div>
                 <div>

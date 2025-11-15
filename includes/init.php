@@ -6,6 +6,7 @@ require_once __DIR__ . '/env_loader.php';
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/Security.php';
 require_once __DIR__ . '/ErrorHandler.php';
+require_once __DIR__ . '/Email.php';
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/../models/Model.php';
 require_once __DIR__ . '/../models/User.php';

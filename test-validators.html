@@ -244,17 +244,63 @@
             ],
 
             postcodes: [
-                // Valid formats
-                { input: 'M1 1AA', expected: true, description: 'Standard postcode' },
-                { input: 'M11AA', expected: true, description: 'No space' },
-                { input: 'M1-1AA', expected: true, description: 'Dash instead of space' },
-                { input: 'SW1A 1AA', expected: true, description: 'London postcode' },
+                // Standard spacing
+                { input: 'SW1A 1AA', expected: true, description: 'London with space' },
                 { input: 'SW1A1AA', expected: true, description: 'London no space' },
-                { input: 'W1A 1AA', expected: true, description: 'Central London' },
-                { input: 'B33 8TH', expected: true, description: 'Birmingham area' },
-                { input: 'EC1A 1BB', expected: true, description: 'Central London EC area' },
-                { input: 'E1W 2WW', expected: true, description: 'East London' },
-                { input: 'M1   1AA', expected: true, description: 'Multiple spaces' },
+                { input: 'M1 1AA', expected: true, description: 'Manchester with space' },
+                { input: 'M11AA', expected: true, description: 'Manchester no space' },
+                { input: 'M60 1AA', expected: true, description: 'Manchester format' },
+                { input: 'M601AA', expected: true, description: 'Manchester no space' },
+                { input: 'W1A 1AA', expected: true, description: 'Westminster' },
+                { input: 'EC1A 1BB', expected: true, description: 'Central London' },
+                { input: 'B33 8TH', expected: true, description: 'Birmingham' },
+
+                // Different separators
+                { input: 'SW1A-1AA', expected: true, description: 'Hyphen separator' },
+                { input: 'SW1A.1AA', expected: true, description: 'Dot separator' },
+                { input: 'SW1A/1AA', expected: true, description: 'Slash separator' },
+                { input: 'SW1A_1AA', expected: true, description: 'Underscore separator' },
+                { input: 'SW1A:1AA', expected: true, description: 'Colon separator' },
+                { input: 'SW1A;1AA', expected: true, description: 'Semicolon separator' },
+                { input: 'SW1A,1AA', expected: true, description: 'Comma separator' },
+                { input: 'SW1A|1AA', expected: true, description: 'Pipe separator' },
+
+                // Lowercase variations
+                { input: 'sw1a 1aa', expected: true, description: 'All lowercase' },
+                { input: 'sw1a1aa', expected: true, description: 'Lowercase no space' },
+                { input: 'Sw1a 1aa', expected: true, description: 'Mixed case' },
+                { input: 'SW1a 1AA', expected: true, description: 'Mixed case 2' },
+                { input: 'm1 1aa', expected: true, description: 'Lowercase M format' },
+
+                // Labels and prefixes
+                { input: 'Postcode: SW1A 1AA', expected: true, description: 'Postcode label' },
+                { input: 'PC: SW1A1AA', expected: true, description: 'PC prefix' },
+                { input: 'Address: SW1A 1AA', expected: true, description: 'Address label' },
+                { input: 'SW1A 1AA (postcode)', expected: true, description: 'Postcode suffix' },
+                { input: 'UK SW1A 1AA', expected: true, description: 'UK prefix' },
+                { input: 'London SW1A 1AA', expected: true, description: 'London prefix' },
+                { input: 'SW1A 1AA, UK', expected: true, description: 'UK suffix' },
+                { input: 'SW1A 1AA, London', expected: true, description: 'London suffix' },
+
+                // Wrapping characters
+                { input: '"SW1A 1AA"', expected: true, description: 'Double quotes' },
+                { input: "'SW1A1AA'", expected: true, description: 'Single quotes' },
+                { input: '*SW1A 1AA', expected: true, description: 'Leading asterisk' },
+                { input: '#SW1A1AA', expected: true, description: 'Leading hash' },
+                { input: ' SW1A 1AA', expected: true, description: 'Leading space' },
+                { input: 'SW1A 1AA ', expected: true, description: 'Trailing space' },
+                { input: ' SW1A 1AA ', expected: true, description: 'Leading and trailing spaces' },
+                { input: "'SW1A 1AA", expected: true, description: 'Leading apostrophe (Excel)' },
+
+                // With address context
+                { input: '10 Downing Street, SW1A 1AA', expected: true, description: 'With street address' },
+                { input: 'SW1A 1AA, 10 Downing Street', expected: true, description: 'Address after postcode' },
+
+                // All postcode format variations (no space)
+                { input: 'CR26XH', expected: true, description: 'AA# format no space' },
+                { input: 'DN551PT', expected: true, description: 'AA## format no space' },
+                { input: 'W1A1AA', expected: true, description: 'A#A format no space' },
+                { input: 'EC1A1BB', expected: true, description: 'AA#A format no space' },
 
                 // Invalid formats
                 { input: '123456', expected: false, description: 'All numbers' },

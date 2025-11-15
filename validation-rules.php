@@ -11,11 +11,15 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://simple-data-cleaner.com/validation-rules.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <style>
         .tab-content {
             display: none;
@@ -552,9 +556,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 <!-- Chrome -->
                 <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
                     <div class="flex items-center mb-3">
-                        <svg class="w-8 h-8 mr-3 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0C8.21 0 4.211 3.32 4.211 7.49c0 3.54 2.156 6.55 5.05 7.11L9 24h6L14.74 14.6c2.89-.56 5.05-3.57 5.05-7.11C19.789 3.32 15.79 0 12 0zm0 13.8c-2.76 0-5-2.23-5-5s2.24-5 5-5 5 2.23 5 5c0 2.77-2.24 5-5 5z"/>
-                        </svg>
+                        <img src="/assets/images/browser-images/chrome.png" alt="Google Chrome logo" class="w-10 h-10 mr-3 rounded-lg shadow-sm">
                         <h3 class="text-xl font-semibold text-green-900">Chrome</h3>
                     </div>
                     <p class="text-green-800 mb-3">Provides the most accurate file size detection.</p>
@@ -573,9 +575,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 <!-- Edge -->
                 <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-6 border border-blue-200">
                     <div class="flex items-center mb-3">
-                        <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M23.829 17.763c-.3-.19-1.638-.705-2.908-1.257-1.275-.55-1.494-.64-2.137-.64-.64 0-1.013.093-1.508.546-.315.292-.64.705-.84.913-.2.21-.47.293-.76.293-.183 0-.36-.033-.522-.093-.49-.19-1.214-.836-1.88-1.525-3.277-3.55-5.59-8.1-5.8-8.756-.21-.655-.25-.97-.047-1.256.202-.292.532-.365.885-.23.353.13 5.026 1.925 6.32 2.396.708.257 1.022.4 1.022.647 0 .25-.175.4-.69.77-.515.365-5.95 3.32-6.51 3.66-.568.35-.466.57-.048 1.05.403.49.89 1.115 1.387 1.763.496.65.973 1.256 1.053 1.35.08.093.14.23.14.36 0 .14-.048.28-.14.36-.195.195-2.35 2.743-2.8 3.255-.45.512-.33.82-.063 1.294.27.47.93 1.207 1.935 2.363 1.003 1.156 1.578 1.794 1.965 2.3.39.51.62.463 1.207.293.59-.175 5.832-2.128 6.835-2.518 1-.39 1.458-.714 1.458-1.246 0-.28-.07-.48-.17-.71z"/>
-                        </svg>
+                        <img src="/assets/images/browser-images/edge.png" alt="Microsoft Edge logo" class="w-10 h-10 mr-3 rounded-lg shadow-sm">
                         <h3 class="text-xl font-semibold text-blue-900">Microsoft Edge</h3>
                     </div>
                     <p class="text-blue-800 mb-3">Also provides accurate file size detection like Chrome.</p>
@@ -595,9 +595,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 <!-- Firefox -->
                 <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6 border border-orange-200">
                     <div class="flex items-center mb-3">
-                        <svg class="w-8 h-8 mr-3 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0L8.5 9.28L0 7.14l6.75 5.48L3.75 24l8.25-4.85L20.25 24l-3-11.38L24 7.14l-8.5 2.14L12 0z"/>
-                        </svg>
+                        <img src="/assets/images/browser-images/firefox.png" alt="Mozilla Firefox logo" class="w-10 h-10 mr-3 rounded-lg shadow-sm">
                         <h3 class="text-xl font-semibold text-orange-900">Firefox</h3>
                     </div>
                     <p class="text-orange-800 mb-3">Conservative limit applied to ensure stable performance.</p>
@@ -612,9 +610,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 <!-- Safari -->
                 <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
                     <div class="flex items-center mb-3">
-                        <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22c-5.514 0-10-4.486-10-10S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm1-15h-2v6h6v-2h-4V7z"/>
-                        </svg>
+                        <img src="/assets/images/browser-images/safari.png" alt="Safari browser logo" class="w-10 h-10 mr-3 rounded-lg shadow-sm">
                         <h3 class="text-xl font-semibold text-blue-900">Safari</h3>
                     </div>
                     <p class="text-blue-800 mb-3">Similar to Firefox with conservative limits.</p>

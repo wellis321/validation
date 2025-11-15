@@ -1,0 +1,267 @@
+Basic Spacing Variations
+
+12 34 56
+123 456
+12 3456
+1234 56
+1 2 3 4 5 6
+12  34  56 (double spaces)
+12   34   56 (triple spaces)
+
+With Dashes/Hyphens (Standard)
+
+12-34-56
+12-3456
+1234-56
+123-456
+1-2-3-4-5-6
+
+With Dots/Periods
+
+12.34.56
+12.3456
+1234.56
+123.456
+
+With Slashes
+
+12/34/56
+12/3456
+1234/56
+123/456
+
+With Underscores
+
+12_34_56
+12_3456
+1234_56
+123_456
+
+With Colons
+
+12:34:56
+12:3456
+1234:56
+123:456
+
+With Semicolons
+
+12;34;56
+12;3456
+1234;56
+
+With Pipes
+
+12|34|56
+12|3456
+1234|56
+
+With Commas
+
+12,34,56
+12,3456
+1234,56
+123,456
+
+With Parentheses/Brackets
+
+(12)34 56
+12(34)56
+12 34(56)
+(12) 34 56
+(12-34-56)
+[12]34 56
+{12}34 56
+[12-34-56]
+{12-34-56}
+
+Mixed Formatting
+
+12-34 56
+12 34-56
+12.34-56
+12-34.56
+12/34-56
+12-34/56
+12 34.56
+12.34 56
+12_34-56
+12-34_56
+
+Leading/Trailing Spaces
+
+" 123456"
+"123456 "
+" 123456 "
+" 12-34-56 "
+"  12-34-56"
+"12-34-56  "
+
+With Text/Labels
+
+Sort Code: 12-34-56
+SC: 123456
+Sort: 12-34-56
+S/C: 12-34-56
+Bank Sort Code: 12-34-56
+12-34-56 (sort code)
+Sort Code - 12-34-56
+SC - 123456
+S.C: 12-34-56
+#12-34-56
+No: 12-34-56
+Code: 12-34-56
+
+With "SC" or Similar Prefix
+
+SC 12-34-56
+SC: 123456
+SC-12-34-56
+S/C 12-34-56
+S.C. 12-34-56
+SORTCODE: 123456
+SORT CODE 12-34-56
+
+Tab Characters
+
+12	34	56 (tabs)
+12-34	56 (mixed)
+12	34-56
+
+With Quotation Marks
+
+"12-34-56"
+'123456'
+"12 34 56"
+'12-34-56'
+
+With Plus Signs
+
+12+34+56
+12+34-56
+
+With Ampersands
+
+12&34&56
+
+With Asterisks/Hash
+
+*12-34-56
+12-34-56*
+#123456
+12-34-56#
+
+Copy-Paste Artifacts
+
+﻿12-34-56 (with BOM character)
+12-34-56﻿
+12-34-56  (with non-breaking space)
+
+Excel/Spreadsheet Formatting
+
+'12-34-56 (leading apostrophe)
+'123456
+
+With UK/GB Prefix
+
+UK 12-34-56
+GB 12-34-56
+UK: 123456
+GB-12-34-56
+(UK) 12-34-56
+
+With Bank Name
+
+Barclays 12-34-56
+HSBC: 12-34-56
+Lloyds - 12-34-56
+NatWest 123456
+
+With "Bank" Label
+
+Bank: 12-34-56
+Bank Code: 123456
+Bank Sort: 12-34-56
+
+HTML/Special Encoding
+
+12 34 56
+12–34–56
+
+Leading Zeros (edge case)
+
+012-34-56
+012345
+01-23-45
+
+With Context/Names
+
+12-34-56 (Main Account)
+12-34-56 - Business
+Personal: 12-34-56
+John Smith 12-34-56
+
+Double Punctuation
+
+12--34--56
+12..34..56
+12//34//56
+
+With "Code" Suffix
+
+12-34-56 (code)
+123456 code
+Code 12-34-56
+
+With Checkboxes/Bullets (from forms)
+
+☐ 12-34-56
+• 12-34-56
+
+
+12-34-56
+
+
+
+With Account Number Context
+
+Sort: 12-34-56 Account: 12345678
+12-34-56 / 12345678
+SC: 12-34-56 Acc: 12345678
+
+Hyphen Variations
+
+12–34–56 (en dash)
+12—34—56 (em dash)
+12−34−56 (minus sign)
+
+With Validation Markers
+
+✓ 12-34-56
+Valid: 12-34-56
+12-34-56 ✓
+12-34-56 (verified)
+
+Split Format (user might separate pairs)
+
+12 - 34 - 56
+12 / 34 / 56
+12 . 34 . 56
+
+With Form Field Names Still Attached
+
+sortcode: 12-34-56
+sort_code 123456
+bank_sort_code: 12-34-56
+
+Currency/Special Symbols
+
+£12-34-56
+$123456
+@12-34-56
+
+With Additional Text
+
+Branch: 12-34-56
+Location: 12-34-56
+Office: 123456

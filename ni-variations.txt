@@ -1,0 +1,179 @@
+Basic Spacing Variations
+
+AB 12 34 56 C
+AB12 34 56 C
+AB 123456 C
+AB 12 3456 C
+AB 1234 56 C
+AB123 456 C
+A B 12 34 56 C
+AB 1 2 3 4 5 6 C
+
+With Dashes/Hyphens
+
+AB-12-34-56-C
+AB12-34-56-C
+AB-123456-C
+AB-12-3456-C
+AB-1234-56-C
+AB123-456-C
+A-B-12-34-56-C
+
+With Dots/Periods
+
+AB.12.34.56.C
+AB12.34.56.C
+AB.123456.C
+AB.12.3456.C
+A.B.12.34.56.C
+
+With Slashes
+
+AB/12/34/56/C
+AB12/34/56/C
+AB/123456/C
+AB/12/3456/C
+
+With Underscores
+
+AB_12_34_56_C
+AB12_34_56_C
+AB_123456_C
+A_B_12_34_56_C
+
+With Parentheses/Brackets
+
+(AB)12 34 56 C
+AB(12)34 56 C
+AB 12 34 56(C)
+(AB) 123456 C
+[AB]12 34 56 C
+{AB}12 34 56 C
+AB[123456]C
+(AB123456C)
+
+Mixed Formatting
+
+AB 12-34-56 C
+AB-12 34 56-C
+AB.12-34.56-C
+AB 12.34.56 C
+AB-12 34 56 C
+AB12-34 56-C
+AB 123456-C
+AB-123456 C
+
+Lowercase Variations
+
+ab123456c
+ab 12 34 56 c
+Ab123456C
+aB123456C
+AB123456c (only suffix lowercase)
+ab123456C (only prefix lowercase)
+Ab 12 34 56 C
+aB 12 34 56 C
+
+Leading/Trailing Spaces
+
+" AB123456C"
+"AB123456C "
+" AB123456C "
+" AB 12 34 56 C "
+"  AB123456C"
+"AB 12 34 56 C  "
+
+With Text/Labels (cleanable if pattern is clear)
+
+NI: AB123456C
+NI Number: AB123456C
+NINO: AB123456C
+National Insurance: AB123456C
+AB123456C (NI)
+NI - AB123456C
+NINo: AB123456C
+N.I: AB123456C
+N.I.N: AB123456C
+No: AB123456C
+Number: AB123456C
+
+With "NI" or "NINO" Prefix
+
+NI AB123456C
+NINO AB123456C
+NI-AB123456C
+NINO-AB123456C
+NI: AB 12 34 56 C
+N.I. AB123456C
+N.I.N.O AB123456C
+
+Tab Characters/Multiple Spaces
+
+AB123456		C (tabs)
+AB  12  34  56  C (double spaces)
+AB   123456   C (triple spaces)
+
+With Commas
+
+AB,12,34,56,C
+AB12,34,56,C
+AB,123456,C
+
+With Quotation Marks
+
+"AB123456C"
+'AB123456C'
+"AB 12 34 56 C"
+'AB 12 34 56 C'
+
+Colon Separators
+
+AB:12:34:56:C
+AB12:34:56:C
+AB:123456:C
+
+Semicolon Separators
+
+AB;12;34;56;C
+AB12;34;56;C
+AB;123456;C
+
+Pipe Separators
+
+AB|12|34|56|C
+AB12|34|56|C
+AB|123456|C
+
+Plus Signs
+
+AB+12+34+56+C
+AB12+34+56+C
+
+With Ampersands
+
+AB&12&34&56&C
+
+With Asterisks/Hash
+
+*AB123456C
+AB123456C*
+#AB123456C
+AB123456C#
+
+Copy-Paste Artifacts
+
+﻿AB123456C (with BOM character)
+AB123456C﻿
+AB123456C  (with non-breaking space)
+
+Excel/Spreadsheet Formatting
+
+'AB123456C (leading apostrophe)
+
+With UK/GB Prefix (cleanable)
+
+UK AB123456C
+GB AB123456C
+UK: AB123456C
+GB-AB123456C
+(UK) AB123456C

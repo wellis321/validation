@@ -4,7 +4,11 @@ AddType application/x-httpd-php .php
 # Enable rewrite engine
 RewriteEngine On
 
-# Ensure HTTPS
+# Redirect www to non-www with HTTPS (canonical) - must come before HTTPS check
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [L,R=301]
+
+# Ensure HTTPS (for non-www requests)
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
@@ -36,3 +40,4 @@ php_value error_reporting E_ALL
 Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "DENY"
 Header set X-XSS-Protection "1; mode=block"
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS

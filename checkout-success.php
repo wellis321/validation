@@ -14,7 +14,12 @@ if (!$sessionId) {
 }
 
 // Retrieve the checkout session from Stripe to verify payment
-$ch = curl_init('https://api.stripe.com/v1/checkout/sessions/' . $sessionId);
+$sessionUrl = sprintf(
+    'https://api.stripe.com/v1/checkout/sessions/%s?expand[]=line_items.data.price&expand[]=line_items.data.price.product',
+    urlencode($sessionId)
+);
+
+$ch = curl_init($sessionUrl);
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_USERPWD => STRIPE_SECRET_KEY . ':'
@@ -32,6 +37,13 @@ if ($httpCode !== 200) {
 }
 
 $session = json_decode($response, true);
+// Capture the purchased price metadata so we can persist feature gating
+$lineItems = $session['line_items']['data'] ?? [];
+$primaryLineItem = $lineItems[0] ?? null;
+$stripePriceId = $primaryLineItem['price']['id'] ?? null;
+$priceMetadata = $primaryLineItem['price']['metadata'] ?? [];
+$featureSetVersion = $priceMetadata['feature_set_version'] ?? null;
+$licenseScope = $priceMetadata['license_scope'] ?? null;
 
 // Verify the user ID matches
 if ($session['client_reference_id'] != $user['id']) {
@@ -71,9 +83,23 @@ if ($paymentStatus === 'paid') {
     // Calculate subscription dates
     $startDate = date('Y-m-d H:i:s');
     $durationMonths = floatval($plan['duration_months'] ?? 1);
+    $features = json_decode($plan['features'] ?? '{}', true) ?: [];
+    $hasLifetimeAccess = !empty($features['lifetime_access']);
 
-    if ($durationMonths === 0) {
-        // One-time payment - expires immediately after use
+    // Fall back to plan-defined defaults when metadata is missing
+    if (!$featureSetVersion) {
+        $featureSetVersion = $features['feature_set_version'] ?? ($hasLifetimeAccess ? '2025-uk-validators' : 'current');
+    }
+
+    if (!$licenseScope) {
+        $licenseScope = $hasLifetimeAccess ? 'lifetime' : 'subscription';
+    }
+
+    if ($hasLifetimeAccess) {
+        // Lifetime access - set end date far in the future to retain active status
+        $endDate = date('Y-m-d H:i:s', strtotime('+50 years', strtotime($startDate)));
+    } elseif ($durationMonths === 0) {
+        // One-time payment with immediate expiry (handled as 24-hour pass elsewhere)
         $endDate = $startDate;
     } elseif ($durationMonths < 1) {
         // For durations less than 1 month (24 hours = 1 day)
@@ -97,9 +123,12 @@ if ($paymentStatus === 'paid') {
                     start_date = ?,
                     end_date = ?,
                     payment_status = 'completed',
+                    stripe_price_id = ?,
+                    feature_set_version = ?,
+                    license_scope = ?,
                     updated_at = NOW()
                 WHERE id = ?",
-                [$startDate, $endDate, $existingSub['id']]
+                [$startDate, $endDate, $stripePriceId, $featureSetVersion, $licenseScope, $existingSub['id']]
             );
         } else {
             // Create new subscription
@@ -109,7 +138,10 @@ if ($paymentStatus === 'paid') {
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'status' => 'active',
-                'payment_status' => 'completed'
+                'payment_status' => 'completed',
+                'stripe_price_id' => $stripePriceId,
+                'feature_set_version' => $featureSetVersion,
+                'license_scope' => $licenseScope
             ]);
         }
 

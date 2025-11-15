@@ -12,6 +12,10 @@ $userModel = new User();
 $userModel->id = $user['id'];
 $subscription = $userModel->getCurrentSubscription();
 $remainingRequests = $userModel->getRemainingRequests();
+$subscriptionFeatures = $subscription ? (json_decode($subscription['features'] ?? '{}', true) ?: []) : [];
+$lifetimeAccess = !empty($subscriptionFeatures['lifetime_access']);
+$featureSetVersion = $subscription['feature_set_version'] ?? null;
+$licenseScope = $subscription['license_scope'] ?? null;
 
 // Handle form submission
 $passwordError = null;
@@ -83,6 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Settings - UK Data Cleaner</title>
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gray-50">
@@ -191,10 +200,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <div>
                                     <p class="text-sm text-gray-600">Status</p>
-                                    <p class="font-semibold text-green-600">Active</p>
+                                    <p class="font-semibold <?php echo $lifetimeAccess ? 'text-amber-600' : 'text-green-600'; ?>"><?php echo $lifetimeAccess ? 'Active (Lifetime Beta)' : 'Active'; ?></p>
                                 </div>
+                            <?php if (!empty($featureSetVersion)): ?>
+                                <div>
+                                    <p class="text-sm text-gray-600">Feature Set</p>
+                                    <p class="font-semibold">
+                                        Simple Data Cleaner v<?php echo htmlspecialchars($featureSetVersion); ?>
+                                        <?php if ($lifetimeAccess): ?>
+                                            <span class="text-xs font-medium uppercase tracking-wide text-amber-600 ml-1 align-middle">Lifetime</span>
+                                        <?php elseif ($licenseScope === 'subscription'): ?>
+                                            <span class="text-xs font-medium uppercase tracking-wide text-blue-600 ml-1 align-middle">Subscription</span>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
                             </div>
-                            <?php if (isset($subscription['end_date']) && !empty($subscription['end_date'])): ?>
+                            <?php if ($lifetimeAccess): ?>
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <p class="text-sm text-gray-600 mb-1">
+                                        Lifetime licence for Simple Data Cleaner
+                                        <?php if (!empty($featureSetVersion)): ?>
+                                            <span class="font-semibold">v<?php echo htmlspecialchars($featureSetVersion); ?></span>
+                                        <?php endif; ?>
+                                        activated on <span class="font-semibold"><?php echo date('F j, Y', strtotime($subscription['start_date'] ?? $subscription['created_at'] ?? 'now')); ?></span>
+                                    </p>
+                                    <p class="text-xs text-gray-500 mb-4">
+                                        Access to phone numbers, NI numbers, postcodes, and sort codes is locked in forever for your account. Future validator families that land after the v<?php echo htmlspecialchars($featureSetVersion ?? '2025-uk-validators'); ?> set may require an upgraded plan once out of beta.
+                                    </p>
+                                    <a href="/feedback.php" class="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 text-sm font-medium">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9M12 4h9M3 4h.01M3 20h.01M3 12h18" /></svg>
+                                        Share beta feedback
+                                    </a>
+                                    <span class="text-gray-300 mx-2">|</span>
+                                    <a href="/pricing.php" class="text-blue-600 hover:text-blue-800 text-sm">View other plans</a>
+                                </div>
+                            <?php elseif (isset($subscription['end_date']) && !empty($subscription['end_date'])): ?>
                                 <?php
                                 $endDate = new DateTime($subscription['end_date']);
                                 $now = new DateTime();

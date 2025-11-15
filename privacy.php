@@ -6,8 +6,14 @@ require_once __DIR__ . '/includes/init.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://simple-data-cleaner.com/privacy.php">
     <title>Privacy Policy - Simple Data Cleaner</title>
     <meta name="description" content="Your privacy is our priority. Learn how Simple Data Cleaner processes all data in your browser - your files never leave your device.">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
@@ -17,9 +23,12 @@ require_once __DIR__ . '/includes/init.php';
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="bg-white rounded-lg shadow-lg p-8">
             <h1 class="text-4xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
-            <p class="text-xl text-gray-600 mb-8">Last updated: <?php echo date('F j, Y'); ?></p>
+
+
 
             <!-- Key Point -->
+
+                <section class="mb-8 border-t border-gray-200 pt-2"></section>
             <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
                 <div class="flex items-start">
                     <svg class="w-6 h-6 text-green-600 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,6 +44,9 @@ require_once __DIR__ . '/includes/init.php';
                     </div>
                 </div>
             </div>
+            </section>
+
+
 
             <!-- What We Do -->
             <section class="mb-8">
@@ -148,8 +160,17 @@ require_once __DIR__ . '/includes/init.php';
                     <li>Hashed password (using bcrypt)</li>
                     <li>Name (optional)</li>
                     <li>Subscription status and billing information</li>
+                    <li>Feature-set version entitlements (e.g. Lifetime Beta access to the 2025 validator suite)</li>
                 </ul>
-                <p class="text-gray-700">This information is used solely for account management and service delivery. We do not share it with third parties except payment processors (Stripe).</p>
+                <p class="text-gray-700">This information is used solely for account management, determining which validator features you can access, and service delivery. We do not share it with third parties except payment processors (Stripe).</p>
+            </section>
+
+            <!-- Lifetime Beta Communications -->
+            <section class="mb-8 border-t border-gray-200 pt-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Lifetime Beta Communications</h2>
+                <p class="text-gray-700 mb-3">
+                    If you purchase the Lifetime Beta licence, we will record that entitlement and may contact you about maintenance updates to the covered validator set, opportunities to provide feedback, or optional upgrade paths when future validator families launch. These messages are limited to product notices relevant to your licence and you can opt out at any time.
+                </p>
             </section>
 
             <!-- Contact -->

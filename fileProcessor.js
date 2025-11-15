@@ -84,14 +84,42 @@ class FileProcessor {
         reader.onload = (e) => {
             try {
                 const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
+                // Use cellDates: false to prevent automatic date conversion
+                const workbook = XLSX.read(data, { type: 'array', cellDates: false });
 
                 // Get the first sheet
                 const firstSheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[firstSheetName];
 
-                // Convert to JSON (array of objects)
-                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+                // Get the range of the worksheet
+                const range = XLSX.utils.decode_range(worksheet['!ref'] || 'A1');
+
+                // Convert to row-based format manually to preserve formatted text for date-like values
+                const jsonData = [];
+                for (let R = range.s.r; R <= range.e.r; R++) {
+                    const row = [];
+                    for (let C = range.s.c; C <= range.e.c; C++) {
+                        const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+                        const cell = worksheet[cellAddress];
+
+                        if (!cell) {
+                            row.push('');
+                        } else {
+                            // For cells that might be dates or date-like values, prefer formatted text (w)
+                            // This preserves values like "01-02" that Excel might have converted to dates
+                            if (cell.w !== undefined) {
+                                // Use formatted display text if available (preserves original format)
+                                row.push(cell.w);
+                            } else if (cell.v !== undefined) {
+                                // Fall back to raw value, converted to string
+                                row.push(String(cell.v));
+                            } else {
+                                row.push('');
+                            }
+                        }
+                    }
+                    jsonData.push(row);
+                }
 
                 // Convert to our row-based format
                 resolve({ type: 'excel', data: jsonData });
@@ -404,6 +432,23 @@ class FileProcessor {
             cleanedHeaders.push('Issues');
         }
 
+        // Identify columns that should be formatted as text (to prevent date conversion)
+        const textColumns = [];
+        cleanedHeaders.forEach((header, index) => {
+            const headerLower = header.toLowerCase();
+            // Sort codes, account numbers, phone numbers, NI numbers should be text
+            if (headerLower.includes('sort') ||
+                headerLower.includes('account') ||
+                headerLower.includes('phone') ||
+                headerLower.includes('mobile') ||
+                headerLower.includes('tel') ||
+                headerLower.includes('ni') ||
+                headerLower.includes('insurance') ||
+                headerLower.includes('postcode')) {
+                textColumns.push(index);
+            }
+        });
+
         // Build worksheet data
         const worksheetData = [cleanedHeaders];
 
@@ -422,7 +467,46 @@ class FileProcessor {
                         if (result.fixed && result.isValid) {
                             cleanedRow[columnIndex] = result.fixed;
                         } else if (!result.isValid) {
+                            // For invalid fields, use the original value from validation result
+                            // This preserves the value as it was seen by the validator, which may have
+                            // been preserved better than the Excel-converted value in originalRow
+                            cleanedRow[columnIndex] = result.value;
                             issuesList.push(result.column);
+                        }
+                    }
+                });
+
+                // Ensure text columns are properly formatted as strings
+                textColumns.forEach(colIdx => {
+                    if (colIdx < cleanedRow.length) {
+                        const value = cleanedRow[colIdx];
+                        if (value !== null && value !== undefined) {
+                            // Convert to string and ensure it's not interpreted as a date
+                            let stringValue = String(value);
+
+                            // If this is a sort code column, ensure it's properly formatted
+                            if (cleanedHeaders[colIdx] && this.isSortCodeColumn(cleanedHeaders[colIdx])) {
+                                // Remove any date-like formatting if it exists
+                                // If value looks like a date (MM/DD/YYYY or DD/MM/YYYY), try to extract sort code pattern
+                                if (stringValue.match(/^\d{2}[\/\-]\d{2}[\/\-]\d{2,4}$/)) {
+                                    const parts = stringValue.split(/[\/\-]/);
+                                    if (parts.length >= 2) {
+                                        // Reconstruct as sort code format (XX-XX-XX)
+                                        const digits = parts.slice(0, 2).join('').replace(/\D/g, '');
+                                        if (digits.length >= 4) {
+                                            // Format as XX-XX (partial sort code) or try to extract 6 digits
+                                            if (digits.length === 4) {
+                                                stringValue = `${digits.slice(0, 2)}-${digits.slice(2)}`;
+                                            } else if (digits.length >= 6) {
+                                                stringValue = `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4, 6)}`;
+                                            }
+                                        }
+                                    }
+                                }
+                                // For sort codes, ensure they're stored as text to prevent date conversion
+                                // The cell format will be set to text below, but this ensures the value itself is treated as text
+                            }
+                            cleanedRow[colIdx] = stringValue;
                         }
                     }
                 });
@@ -435,17 +519,65 @@ class FileProcessor {
                 }
             } else {
                 if (!onlyRowsWithIssues) {
+                    // Ensure text columns are properly formatted as strings for unprocessed rows too
+                    const processedRow = [...originalRow];
+                    textColumns.forEach(colIdx => {
+                        if (colIdx < processedRow.length) {
+                            const value = processedRow[colIdx];
+                            if (value !== null && value !== undefined) {
+                                processedRow[colIdx] = String(value);
+                            }
+                        }
+                    });
                     if (includeIssuesColumn) {
-                        originalRow.push('');
+                        processedRow.push('');
                     }
-                    worksheetData.push(originalRow);
+                    worksheetData.push(processedRow);
                 }
             }
         }
 
         // Create workbook and worksheet
         const wb = XLSX.utils.book_new();
+
+        // Create worksheet from data, but we'll manually set cells for text columns to ensure proper formatting
         const ws = XLSX.utils.aoa_to_sheet(worksheetData);
+
+        // Set text format for sensitive columns to prevent Excel date conversion
+        // This must be done AFTER creating the sheet to ensure proper formatting
+        const range = XLSX.utils.decode_range(ws['!ref'] || 'A1');
+        for (let colIdx of textColumns) {
+            const colLetter = XLSX.utils.encode_col(colIdx);
+            // Format all cells in this column as text (including header row)
+            for (let rowIdx = 0; rowIdx <= range.e.r; rowIdx++) {
+                const cellAddress = colLetter + (rowIdx + 1);
+                if (ws[cellAddress]) {
+                    // Force text format by setting cell type and format
+                    ws[cellAddress].t = 's'; // String type
+                    ws[cellAddress].z = '@'; // Text format code (Excel text format)
+
+                    // Get the original value from worksheetData to preserve it
+                    if (rowIdx === 0) {
+                        // Header row
+                        ws[cellAddress].v = String(cleanedHeaders[colIdx]);
+                    } else {
+                        // Data row
+                        const dataRowIdx = rowIdx - 1;
+                        if (dataRowIdx < worksheetData.length - 1) {
+                            const rowValue = worksheetData[dataRowIdx + 1][colIdx];
+                            if (rowValue !== null && rowValue !== undefined) {
+                                // Set the value as a string explicitly
+                                ws[cellAddress].v = String(rowValue);
+                            }
+                        }
+                    }
+
+                    // Ensure it's definitely a string type
+                    ws[cellAddress].t = 's';
+                    ws[cellAddress].z = '@';
+                }
+            }
+        }
 
         // Set column widths
         const colWidths = cleanedHeaders.map((header, index) => {
@@ -581,6 +713,11 @@ class FileProcessor {
                     return `"${cell.replace(/"/g, '""')}"`;
                 }
 
+                // Always quote sort code columns to prevent Excel date conversion
+                if (columnName && this.isSortCodeColumn(columnName)) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                }
+
                 // Always quote Issues column (often contains commas)
                 if (columnName === 'Issues') {
                     return `"${cell.replace(/"/g, '""')}"`;
@@ -607,11 +744,11 @@ class FileProcessor {
                 row.validationResults.map(result => [
                     row.rowNumber,
                     `"${result.column}"`,
-                    // Always quote phone number and account number values to prevent formatting issues
-                    (this.isPhoneColumn(result.column) || this.isAccountColumn(result.column)) ? `"${result.value}"` : result.value,
+                    // Always quote phone number, account number, and sort code values to prevent formatting issues
+                    (this.isPhoneColumn(result.column) || this.isAccountColumn(result.column) || this.isSortCodeColumn(result.column)) ? `"${result.value}"` : result.value,
                     result.isValid ? 'Yes' : 'No',
                     result.detectedType,
-                    result.fixed ? ((this.isPhoneColumn(result.column) || this.isAccountColumn(result.column)) ? `"${result.fixed}"` : result.fixed) : '',
+                    result.fixed ? ((this.isPhoneColumn(result.column) || this.isAccountColumn(result.column) || this.isSortCodeColumn(result.column)) ? `"${result.fixed}"` : result.fixed) : '',
                     result.error ? `"${result.error}"` : '',
                     this.getComplianceStandard(result.column, result.detectedType)
                 ].join(','))
@@ -722,6 +859,16 @@ class FileProcessor {
             'acc', 'bank_acc', 'acc_number'
         ];
         return accountColumnNames.some(name =>
+            columnName.toLowerCase().includes(name.toLowerCase())
+        );
+    }
+
+    isSortCodeColumn(columnName) {
+        const sortCodeColumnNames = [
+            'sort_code', 'sortcode', 'sort', 'bank_sort',
+            'bank_sort_code', 'sc', 'bank_code'
+        ];
+        return sortCodeColumnNames.some(name =>
             columnName.toLowerCase().includes(name.toLowerCase())
         );
     }
