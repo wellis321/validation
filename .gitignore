@@ -21,6 +21,9 @@ Thumbs.db
 # Config files with sensitive data
 config/stripe_config.php
 
+important/
+
+
 # Logs
 logs/*.log
 *.log
