@@ -5,8 +5,25 @@ class Auth {
     private static $instance = null;
 
     private function __construct() {
-        $this->db = Database::getInstance();
-        $this->initSession();
+        try {
+            $this->db = Database::getInstance();
+            // Only initialize session if database is available
+            if ($this->db->isConnected()) {
+                $this->initSession();
+            }
+        } catch (Exception $e) {
+            // Database connection failed - app can still work for data cleaning
+            // Session will be initialized without database
+            $this->initSessionWithoutDB();
+        }
+    }
+
+    private function initSessionWithoutDB() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        // Clear any existing session data since DB is not available
+        $_SESSION = [];
     }
 
     public static function getInstance() {

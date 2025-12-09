@@ -96,8 +96,9 @@ if ($paymentStatus === 'paid') {
     }
 
     if ($hasLifetimeAccess) {
-        // Lifetime access - set end date far in the future to retain active status
-        $endDate = date('Y-m-d H:i:s', strtotime('+50 years', strtotime($startDate)));
+        // Lifetime access - set end date to max valid TIMESTAMP (MySQL TIMESTAMP max is 2038-01-19)
+        // Using 2037-12-31 to stay safely within limits
+        $endDate = '2037-12-31 23:59:59';
     } elseif ($durationMonths === 0) {
         // One-time payment with immediate expiry (handled as 24-hour pass elsewhere)
         $endDate = $startDate;

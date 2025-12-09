@@ -388,6 +388,9 @@ class FileProcessor {
             });
         });
 
+        // Calculate data profiling statistics
+        const profiling = this.calculateProfiling(rows, headerRow);
+
         return {
             fileName,
             totalRows: rows.length,
@@ -399,8 +402,80 @@ class FileProcessor {
                 totalInvalid,
                 totalFixed,
                 errors
-            }
+            },
+            profiling: profiling
         };
+    }
+
+    calculateProfiling(rows, headers) {
+        if (rows.length < 2) {
+            return {
+                totalMissing: 0,
+                missingByColumn: {},
+                duplicateRows: 0,
+                duplicateRowPairs: []
+            };
+        }
+
+        const headerRow = rows[0];
+        const dataRows = rows.slice(1);
+
+        // Calculate missing values per column
+        const missingByColumn = {};
+        let totalMissing = 0;
+
+        headers.forEach((header, colIndex) => {
+            let missingCount = 0;
+            dataRows.forEach(row => {
+                const value = row[colIndex];
+                if (this.isEmptyValue(value)) {
+                    missingCount++;
+                    totalMissing++;
+                }
+            });
+            if (missingCount > 0) {
+                missingByColumn[header] = missingCount;
+            }
+        });
+
+        // Find duplicate rows
+        const rowMap = new Map();
+        const duplicateRowPairs = [];
+        let duplicateRows = 0;
+
+        dataRows.forEach((row, index) => {
+            const rowKey = JSON.stringify(row);
+            if (rowMap.has(rowKey)) {
+                duplicateRows++;
+                duplicateRowPairs.push({
+                    row1: rowMap.get(rowKey) + 2, // +2 because header is row 1, and we want 1-based
+                    row2: index + 2,
+                    data: row
+                });
+            } else {
+                rowMap.set(rowKey, index);
+            }
+        });
+
+        // duplicateRows now represents the count of duplicate rows (not including the first occurrence)
+
+        return {
+            totalMissing,
+            missingByColumn,
+            duplicateRows,
+            duplicateRowPairs
+        };
+    }
+
+    isEmptyValue(value) {
+        if (value === null || value === undefined) return true;
+        const str = String(value).trim();
+        return str === '' ||
+               str.toLowerCase() === 'nan' ||
+               str.toLowerCase() === 'null' ||
+               str.toLowerCase() === 'undefined' ||
+               str === 'N/A' ||
+               str === 'n/a';
     }
 
     async exportResults(results, format, includeIssuesColumn = false, onlyRowsWithIssues = false) {
@@ -426,8 +501,12 @@ class FileProcessor {
             return new Blob([csvContent], { type: 'text/csv; charset=utf-8' });
         }
 
+        // Use cleanedData if provided (for duplicate removal), otherwise use original data
+        const dataToExport = results.cleanedData || results.originalData.slice(1); // Skip header if using originalData
+        const headers = results.headers || results.originalHeaders;
+
         // Create headers with optional "Issues" column
-        const cleanedHeaders = [...results.originalHeaders];
+        const cleanedHeaders = [...headers];
         if (includeIssuesColumn) {
             cleanedHeaders.push('Issues');
         }
@@ -452,88 +531,63 @@ class FileProcessor {
         // Build worksheet data
         const worksheetData = [cleanedHeaders];
 
-        // Process each original data row
-        for (let i = 1; i < results.originalData.length; i++) {
-            const originalRow = results.originalData[i];
-            const processedRow = results.processedRows.find(p => p.rowNumber === i + 1);
+        // Process each data row
+        for (let i = 0; i < dataToExport.length; i++) {
+            const originalRow = dataToExport[i];
+            const cleanedRow = [...originalRow];
             const issuesList = [];
 
-            if (processedRow) {
-                const cleanedRow = [...originalRow];
+            // If cleanedData is NOT provided, we need to process validation results
+            if (!results.cleanedData) {
+                const processedRow = results.processedRows.find(p => p.rowNumber === (i + 2));
 
-                processedRow.validationResults.forEach(result => {
-                    const columnIndex = results.originalHeaders.indexOf(result.column);
-                    if (columnIndex !== -1) {
-                        if (result.fixed && result.isValid) {
-                            cleanedRow[columnIndex] = result.fixed;
-                        } else if (!result.isValid) {
-                            // For invalid fields, use the original value from validation result
-                            // This preserves the value as it was seen by the validator, which may have
-                            // been preserved better than the Excel-converted value in originalRow
-                            cleanedRow[columnIndex] = result.value;
-                            issuesList.push(result.column);
-                        }
-                    }
-                });
-
-                // Ensure text columns are properly formatted as strings
-                textColumns.forEach(colIdx => {
-                    if (colIdx < cleanedRow.length) {
-                        const value = cleanedRow[colIdx];
-                        if (value !== null && value !== undefined) {
-                            // Convert to string and ensure it's not interpreted as a date
-                            let stringValue = String(value);
-
-                            // If this is a sort code column, ensure it's properly formatted
-                            if (cleanedHeaders[colIdx] && this.isSortCodeColumn(cleanedHeaders[colIdx])) {
-                                // Remove any date-like formatting if it exists
-                                // If value looks like a date (MM/DD/YYYY or DD/MM/YYYY), try to extract sort code pattern
-                                if (stringValue.match(/^\d{2}[\/\-]\d{2}[\/\-]\d{2,4}$/)) {
-                                    const parts = stringValue.split(/[\/\-]/);
-                                    if (parts.length >= 2) {
-                                        // Reconstruct as sort code format (XX-XX-XX)
-                                        const digits = parts.slice(0, 2).join('').replace(/\D/g, '');
-                                        if (digits.length >= 4) {
-                                            // Format as XX-XX (partial sort code) or try to extract 6 digits
-                                            if (digits.length === 4) {
-                                                stringValue = `${digits.slice(0, 2)}-${digits.slice(2)}`;
-                                            } else if (digits.length >= 6) {
-                                                stringValue = `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4, 6)}`;
-                                            }
-                                        }
-                                    }
-                                }
-                                // For sort codes, ensure they're stored as text to prevent date conversion
-                                // The cell format will be set to text below, but this ensures the value itself is treated as text
-                            }
-                            cleanedRow[colIdx] = stringValue;
-                        }
-                    }
-                });
-
-                if (!onlyRowsWithIssues || issuesList.length > 0) {
-                    if (includeIssuesColumn) {
-                        cleanedRow.push(issuesList.join(', '));
-                    }
-                    worksheetData.push(cleanedRow);
-                }
-            } else {
-                if (!onlyRowsWithIssues) {
-                    // Ensure text columns are properly formatted as strings for unprocessed rows too
-                    const processedRow = [...originalRow];
-                    textColumns.forEach(colIdx => {
-                        if (colIdx < processedRow.length) {
-                            const value = processedRow[colIdx];
-                            if (value !== null && value !== undefined) {
-                                processedRow[colIdx] = String(value);
+                if (processedRow) {
+                    processedRow.validationResults.forEach(result => {
+                        const columnIndex = headers.indexOf(result.column);
+                        if (columnIndex !== -1) {
+                            if (result.fixed && result.isValid) {
+                                cleanedRow[columnIndex] = result.fixed;
+                            } else if (!result.isValid) {
+                                cleanedRow[columnIndex] = result.value;
+                                issuesList.push(result.column);
                             }
                         }
                     });
-                    if (includeIssuesColumn) {
-                        processedRow.push('');
-                    }
-                    worksheetData.push(processedRow);
                 }
+            }
+
+            // Ensure text columns are properly formatted as strings
+            textColumns.forEach(colIdx => {
+                if (colIdx < cleanedRow.length) {
+                    const value = cleanedRow[colIdx];
+                    if (value !== null && value !== undefined) {
+                        let stringValue = String(value);
+
+                        if (cleanedHeaders[colIdx] && this.isSortCodeColumn(cleanedHeaders[colIdx])) {
+                            if (stringValue.match(/^\d{2}[\/\-]\d{2}[\/\-]\d{2,4}$/)) {
+                                const parts = stringValue.split(/[\/\-]/);
+                                if (parts.length >= 2) {
+                                    const digits = parts.slice(0, 2).join('').replace(/\D/g, '');
+                                    if (digits.length >= 4) {
+                                        if (digits.length === 4) {
+                                            stringValue = `${digits.slice(0, 2)}-${digits.slice(2)}`;
+                                        } else if (digits.length >= 6) {
+                                            stringValue = `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4, 6)}`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        cleanedRow[colIdx] = stringValue;
+                    }
+                }
+            });
+
+            if (!onlyRowsWithIssues || issuesList.length > 0) {
+                if (includeIssuesColumn) {
+                    cleanedRow.push(issuesList.join(', '));
+                }
+                worksheetData.push(cleanedRow);
             }
         }
 
@@ -639,8 +693,12 @@ class FileProcessor {
     exportCleanedCSV(results, includeIssuesColumn = false, onlyRowsWithIssues = false) {
         console.log('exportCleanedCSV - Starting export with results:', results);
 
+        // Use cleanedData if provided (for duplicate removal), otherwise use original data
+        const dataToExport = results.cleanedData || results.originalData.slice(1); // Skip header if using originalData
+        const headers = results.headers || results.originalHeaders;
+
         // Create headers with optional "Issues" column
-        const cleanedHeaders = [...results.originalHeaders];
+        const cleanedHeaders = [...headers];
         if (includeIssuesColumn) {
             cleanedHeaders.push('Issues');
         }
@@ -648,20 +706,20 @@ class FileProcessor {
         // Create cleaned version of original file with validated data
         const cleanedRows = [cleanedHeaders]; // Start with headers
 
-        // Process each original data row
-        for (let i = 1; i < results.originalData.length; i++) {
-            const originalRow = results.originalData[i];
-            const processedRow = results.processedRows.find(p => p.rowNumber === i + 1);
+        // Process each data row
+        for (let i = 0; i < dataToExport.length; i++) {
+            const originalRow = dataToExport[i];
+            const processedRow = results.cleanedData ? null : results.processedRows.find(p => p.rowNumber === i + 2);
+
+            // Create a copy of the original row with normalized empty values
+            const cleanedRow = originalRow.map(val => this.normalizeCellValue(val));
+            const issuesList = [];
 
             if (processedRow) {
-                // Create a copy of the original row
-                const cleanedRow = [...originalRow];
-                const issuesList = [];
-
                 // Apply all validation results to the row and collect issues
                 processedRow.validationResults.forEach(result => {
                     // Find the column index for this validation result
-                    const columnIndex = results.originalHeaders.indexOf(result.column);
+                    const columnIndex = headers.indexOf(result.column);
                     if (columnIndex !== -1) {
                         // Only replace if valid and has fixed value
                         if (result.fixed && result.isValid) {
@@ -674,66 +732,109 @@ class FileProcessor {
                         }
                     }
                 });
+            }
 
-                // Only include this row if we're not filtering or if it has issues
-                if (!onlyRowsWithIssues || issuesList.length > 0) {
-                    // Add "Issues" column if requested
-                    if (includeIssuesColumn) {
-                        cleanedRow.push(issuesList.join(', '));
-                    }
-
-                    cleanedRows.push(cleanedRow);
+            // Only include this row if we're not filtering or if it has issues
+            if (!onlyRowsWithIssues || issuesList.length > 0) {
+                // Add "Issues" column if requested
+                if (includeIssuesColumn) {
+                    cleanedRow.push(issuesList.join(', '));
                 }
-            } else {
-                // If no processing result, keep original row
-                if (!onlyRowsWithIssues) {
-                    // Add empty issues if requested
-                    if (includeIssuesColumn) {
-                        originalRow.push('');
-                    }
-                    cleanedRows.push(originalRow);
-                }
+                cleanedRows.push(cleanedRow);
             }
         }
 
         console.log('exportCleanedCSV - Final cleaned rows:', cleanedRows);
 
-        // Convert to CSV format
-        const csvContent = cleanedRows.map(row =>
+        // Convert to CSV format with improved formatting
+        const csvContent = cleanedRows.map((row, rowIndex) =>
             row.map((cell, index) => {
                 const columnName = cleanedHeaders[index];
-
-                // Always quote phone number columns to prevent formatting issues
-                if (columnName && this.isPhoneColumn(columnName)) {
-                    return `"${cell.replace(/"/g, '""')}"`;
-                }
-
-                // Always quote account number columns to prevent formatting issues
-                if (columnName && this.isAccountColumn(columnName)) {
-                    return `"${cell.replace(/"/g, '""')}"`;
-                }
-
-                // Always quote sort code columns to prevent Excel date conversion
-                if (columnName && this.isSortCodeColumn(columnName)) {
-                    return `"${cell.replace(/"/g, '""')}"`;
-                }
-
-                // Always quote Issues column (often contains commas)
-                if (columnName === 'Issues') {
-                    return `"${cell.replace(/"/g, '""')}"`;
-                }
-
-                // Handle cells that contain commas or quotes
-                if (cell.includes(',') || cell.includes('"') || cell.includes('\n')) {
-                    return `"${cell.replace(/"/g, '""')}"`;
-                }
-                return cell;
+                return this.formatCSVCell(cell, columnName, rowIndex === 0);
             }).join(',')
         ).join('\n');
 
         console.log('exportCleanedCSV - Final CSV content:', csvContent);
 
-        return new Blob([csvContent], { type: 'text/csv' });
+        return new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    }
+
+    normalizeCellValue(value) {
+        // Normalize empty/null/undefined values to empty string
+        if (value === null || value === undefined || value === 'null' || value === 'undefined') {
+            return '';
+        }
+
+        // Convert to string and trim
+        const str = String(value).trim();
+
+        // Handle common empty string representations
+        if (str === '' || str === 'nan' || str === 'NaN' || str === 'NULL' || str === 'N/A') {
+            return '';
+        }
+
+        return str;
+    }
+
+    formatCSVCell(cell, columnName, isHeader) {
+        // Convert cell to string if not already
+        const cellStr = cell === null || cell === undefined ? '' : String(cell);
+
+        // Handle headers
+        if (isHeader) {
+            // Headers should be clean and properly formatted
+            return this.shouldQuoteCell(cellStr, columnName) ? `"${cellStr.replace(/"/g, '""')}"` : cellStr;
+        }
+
+        // Check if we should quote this cell based on column type
+        const shouldQuote = this.shouldQuoteCell(cellStr, columnName);
+
+        if (shouldQuote) {
+            // Escape quotes and wrap in quotes
+            return `"${cellStr.replace(/"/g, '""')}"`;
+        }
+
+        // For unquoted cells, check if we need quotes anyway (commas, newlines, quotes)
+        if (cellStr.includes(',') || cellStr.includes('"') || cellStr.includes('\n') || cellStr.includes('\r')) {
+            return `"${cellStr.replace(/"/g, '""')}"`;
+        }
+
+        return cellStr;
+    }
+
+    shouldQuoteCell(cellValue, columnName) {
+        if (!columnName) return false;
+
+        const columnLower = columnName.toLowerCase();
+
+        // Always quote sensitive/numeric columns that Excel might format incorrectly
+        const sensitiveColumns = [
+            'phone', 'mobile', 'tel', 'telephone',
+            'ni', 'national_insurance', 'insurance',
+            'account', 'account_number', 'bank_account',
+            'sort', 'sort_code', 'sortcode',
+            'postcode', 'post_code',
+            'issues'
+        ];
+
+        // Check if this is a sensitive column
+        for (const sensitive of sensitiveColumns) {
+            if (columnLower.includes(sensitive)) {
+                return true;
+            }
+        }
+
+        // Always quote if cell starts with special characters that Excel interprets
+        if (/^[=@+\-]/.test(cellValue)) {
+            return true;
+        }
+
+        // Always quote if it looks like a number but might be an ID (starts with 0)
+        if (/^0\d+/.test(cellValue)) {
+            return true;
+        }
+
+        return false;
     }
 
     exportToCSV(results) {

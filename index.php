@@ -1,14 +1,23 @@
 <?php
 require_once __DIR__ . '/includes/init.php';
 
-// Get user's subscription if logged in
+// Get user's subscription if logged in and database is available
 $subscription = null;
 $remainingRequests = 0;
 if ($user) {
-    $userModel = new User();
-    $userModel->id = $user['id']; // Set the user ID
-    $subscription = $userModel->getCurrentSubscription();
-    $remainingRequests = $userModel->getRemainingRequests();
+    try {
+        $db = Database::getInstance();
+        if ($db->isConnected()) {
+            $userModel = new User();
+            $userModel->id = $user['id']; // Set the user ID
+            $subscription = $userModel->getCurrentSubscription();
+            $remainingRequests = $userModel->getRemainingRequests();
+        }
+    } catch (Exception $e) {
+        // Database not available - app can still work for data cleaning
+        $subscription = null;
+        $remainingRequests = 0;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -322,6 +331,49 @@ if ($user) {
                     <!-- Results Section (hidden by default) -->
                     <div id="resultsSection" class="hidden mt-8">
                         <h3 class="text-2xl font-bold mb-4">Results</h3>
+                        <!-- Data Profiling Section -->
+                        <div id="dataProfilingSection" class="mb-8 hidden">
+                            <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                1. Data Profiling
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                    <p class="text-sm text-blue-700 font-medium">Missing Values</p>
+                                    <p class="text-2xl font-bold text-blue-900" id="totalMissing">0</p>
+                                </div>
+                                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                                    <p class="text-sm text-purple-700 font-medium">Duplicate Rows</p>
+                                    <p class="text-2xl font-bold text-purple-900" id="totalDuplicates">0</p>
+                                </div>
+                                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                                    <p class="text-sm text-green-700 font-medium">Unique Rows</p>
+                                    <p class="text-2xl font-bold text-green-900" id="uniqueRows">0</p>
+                                </div>
+                            </div>
+
+                            <!-- Missing Values by Column -->
+                            <div id="missingValuesTable" class="hidden mb-6">
+                                <h5 class="text-lg font-semibold mb-3 text-gray-800">Missing Values by Column</h5>
+                                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                    <table class="min-w-full">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Column</th>
+                                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Missing Count</th>
+                                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Percentage</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="missingValuesTableBody" class="divide-y divide-gray-200">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary Cards -->
                         <div id="summaryCards" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
                             <div class="bg-white p-4 rounded-lg shadow">
                                 <p class="text-sm text-gray-600">Total Rows</p>
@@ -344,6 +396,15 @@ if ($user) {
                         <!-- Tabs -->
                         <div class="border-b mb-4">
                             <button type="button" class="tab-btn border-b-2 border-slate-700 text-slate-700 px-4 py-2 font-semibold" data-tab="summary">Summary</button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="preview">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    Full Preview
+                                </span>
+                            </button>
                             <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="cleaned">Cleaned <span id="cleanedCount">0</span></button>
                             <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="issues">Issues <span id="issuesCount">0</span></button>
                         </div>
@@ -362,6 +423,70 @@ if ($user) {
                                     </thead>
                                     <tbody id="summaryTableBody"></tbody>
                                 </table>
+                            </div>
+                        </div>
+
+                        <div id="previewTab" class="tab-content hidden">
+                            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm text-blue-700">
+                                            <strong>This is exactly what your downloaded file will contain.</strong> All columns are preserved in their original order, with cleaned values applied only to the fields you selected.
+                                            <span class="inline-flex items-center gap-1 mt-1">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                                </svg>
+                                                Columns marked with 🔒 were protected and left unchanged.
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Color Legend -->
+                            <div class="mb-4 bg-white rounded-lg border border-gray-200 p-4">
+                                <h4 class="text-sm font-semibold text-gray-900 mb-3">Row Color Guide:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-6 bg-blue-50 border-l-4 border-blue-400 rounded"></div>
+                                        <div>
+                                            <span class="font-medium text-blue-800">Blue</span> - Original row that has duplicates elsewhere
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-6 bg-amber-50 border-l-4 border-amber-400 rounded"></div>
+                                        <div>
+                                            <span class="font-medium text-amber-800">Yellow</span> - Duplicate row (will be removed if option checked)
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-6 bg-green-50 border border-gray-200 rounded flex items-center justify-center text-green-600">✓</div>
+                                        <div>
+                                            <span class="font-medium text-green-800">Green cells</span> - Values that were cleaned/fixed
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full border-collapse" id="previewTable">
+                                    <thead>
+                                        <tr class="bg-gray-100" id="previewTableHeader">
+                                            <!-- Headers will be inserted here -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="previewTableBody">
+                                        <!-- Full dataset preview will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-4 text-sm text-gray-600 text-center">
+                                Showing <span id="previewRowCount">0</span> rows × <span id="previewColCount">0</span> columns
                             </div>
                         </div>
 
@@ -442,6 +567,29 @@ if ($user) {
                             </div>
 
                             <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                <h5 class="text-sm font-semibold text-gray-900 mb-3">Data Cleaning Options:</h5>
+                                <div class="space-y-4">
+                                    <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                        <input type="checkbox" id="removeDuplicates" class="mt-1 mr-3 h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded">
+                                        <div class="flex-1">
+                                            <span class="text-sm font-medium text-gray-900 block">Remove Duplicate Rows (Keep First Occurrence)</span>
+                                            <span class="text-xs text-gray-600 block mt-1">
+                                                <span id="duplicateCountMessage">Checking for duplicates...</span>
+                                                <span class="block mt-1 text-blue-700">💡 In the Full Preview tab: <strong>Blue</strong> = original rows with duplicates, <strong>Yellow</strong> = duplicate rows to be removed.</span>
+                                            </span>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                        <input type="checkbox" id="trimWhitespace" class="mt-1 mr-3 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" checked>
+                                        <div class="flex-1">
+                                            <span class="text-sm font-medium text-gray-900 block">Clean Whitespace in All Cells</span>
+                                            <span class="text-xs text-gray-600 block mt-1">Remove leading/trailing spaces and extra spaces between words. Already applied to cleaned fields, this ensures all other columns are clean too.</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-gray-200">
                                 <h5 class="text-sm font-semibold text-gray-900 mb-3">Export Customization:</h5>
                                 <div class="space-y-4">
                                     <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
@@ -458,6 +606,60 @@ if ($user) {
                                             <span class="text-xs text-gray-600 block mt-1">When checked, you'll download <strong>only</strong> the rows that have validation issues (instead of the full file). Perfect for creating a focused review file to fix manually before merging back into your main dataset.</span>
                                         </div>
                                     </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Download Confirmation Summary -->
+                        <div id="downloadSummary" class="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-6 shadow-md">
+                            <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Ready to Download
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                    <div class="text-2xl font-bold text-blue-600" id="summaryTotalRows">0</div>
+                                    <div class="text-sm text-gray-600">Total rows</div>
+                                </div>
+                                <div class="bg-white rounded-lg p-4 border border-green-200">
+                                    <div class="text-2xl font-bold text-green-600" id="summaryCleanedFields">0</div>
+                                    <div class="text-sm text-gray-600">Fields cleaned</div>
+                                </div>
+                                <div class="bg-white rounded-lg p-4 border border-amber-200">
+                                    <div class="text-2xl font-bold text-amber-600" id="summaryIssueRows">0</div>
+                                    <div class="text-sm text-gray-600">Rows with issues</div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-blue-200 space-y-2 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span class="font-medium text-gray-900">Row order:</span>
+                                    <span class="text-gray-700">Preserved as uploaded</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span class="font-medium text-gray-900">Column structure:</span>
+                                    <span class="text-gray-700">All <span id="summaryTotalCols">0</span> columns preserved</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span class="font-medium text-gray-900">Protected columns:</span>
+                                    <span class="text-gray-700" id="summaryProtectedCols">None detected</span>
+                                </div>
+                                <div class="flex items-center gap-2" id="summaryDuplicatesRow">
+                                    <svg class="w-5 h-5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="font-medium text-gray-900">Duplicate rows:</span>
+                                    <span class="text-gray-700" id="summaryDuplicates">Checking...</span>
                                 </div>
                             </div>
                         </div>

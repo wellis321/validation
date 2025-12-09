@@ -327,6 +327,9 @@ class UKDataCleanerApp {
         const fieldCheckboxes = document.getElementById('fieldCheckboxes');
         if (!fieldCheckboxes) return;
 
+        // Detect protected columns early
+        const protectedColumns = this.detectProtectedColumns(this.fileHeaders);
+
         // Filter fields that we can actually clean
         const cleanableFields = this.fileHeaders.filter(field =>
             /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)
@@ -345,6 +348,27 @@ class UKDataCleanerApp {
                 </div>
             `;
             return;
+        }
+
+        // Show protected columns info if any exist
+        let protectedInfo = '';
+        if (protectedColumns.length > 0) {
+            protectedInfo = `
+                <div class="mb-4 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <div>
+                            <p class="text-sm font-semibold text-blue-800 mb-1">Protected Columns Detected</p>
+                            <p class="text-xs text-blue-700">
+                                The following columns appear to be identifiers and will never be modified:
+                                <strong>${protectedColumns.join(', ')}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         // Get field type and icon for each field
@@ -392,7 +416,7 @@ class UKDataCleanerApp {
             };
         };
 
-        fieldCheckboxes.innerHTML = cleanableFields.map(field => {
+        fieldCheckboxes.innerHTML = protectedInfo + cleanableFields.map(field => {
             const fieldInfo = getFieldInfo(field);
             return `
                 <label class="field-card block cursor-pointer group">
@@ -539,6 +563,15 @@ class UKDataCleanerApp {
 
         resultsSection.classList.remove('hidden');
 
+        // Detect protected columns
+        this.protectedColumns = this.detectProtectedColumns(this.fileHeaders);
+
+        // Identify duplicate rows
+        this.duplicateRowIndices = this.identifyDuplicateRows();
+
+        // Update data profiling section
+        this.updateDataProfiling();
+
         // Update summary cards
         this.updateSummaryCards();
 
@@ -549,15 +582,88 @@ class UKDataCleanerApp {
         this.renderSummaryTable();
         this.renderCleanedTable();
         this.renderIssuesTable();
+        this.renderPreviewTable();
+
+        // Update download summary
+        this.updateDownloadSummary();
+
+        // Update duplicate count message
+        this.updateDuplicateCountMessage();
 
         // Set initial tab visibility
         document.getElementById('summaryTab')?.classList.remove('hidden');
         document.getElementById('summaryTab')?.classList.add('active');
         document.getElementById('cleanedTab')?.classList.add('hidden');
         document.getElementById('issuesTab')?.classList.add('hidden');
+        document.getElementById('previewTab')?.classList.add('hidden');
 
         // Scroll to results
         resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    updateDataProfiling() {
+        const profilingSection = document.getElementById('dataProfilingSection');
+        if (!profilingSection) return;
+
+        // Check if profiling data exists
+        if (!this.results || !this.results.profiling) {
+            profilingSection.classList.add('hidden');
+            return;
+        }
+
+        const profiling = this.results.profiling;
+
+        // Show the profiling section
+        profilingSection.classList.remove('hidden');
+
+        // Update summary stats
+        const totalMissingEl = document.getElementById('totalMissing');
+        const totalDuplicatesEl = document.getElementById('totalDuplicates');
+        const uniqueRowsEl = document.getElementById('uniqueRows');
+
+        if (totalMissingEl) totalMissingEl.textContent = profiling.totalMissing || 0;
+        if (totalDuplicatesEl) totalDuplicatesEl.textContent = profiling.duplicateRows || 0;
+
+        const uniqueRows = Math.max(0, this.results.totalRows - 1 - (profiling.duplicateRows || 0)); // -1 for header
+        if (uniqueRowsEl) uniqueRowsEl.textContent = uniqueRows;
+
+        // Update missing values table
+        this.renderMissingValuesTable(profiling.missingByColumn);
+    }
+
+    renderMissingValuesTable(missingByColumn) {
+        const tableContainer = document.getElementById('missingValuesTable');
+        const tbody = document.getElementById('missingValuesTableBody');
+
+        if (!tableContainer || !tbody) return;
+
+        const entries = Object.entries(missingByColumn || {});
+
+        if (entries.length === 0) {
+            tableContainer.classList.add('hidden');
+            return;
+        }
+
+        tableContainer.classList.remove('hidden');
+
+        const totalRows = this.results.totalRows - 1; // Exclude header
+
+        tbody.innerHTML = entries.map(([column, count]) => {
+            const percentage = totalRows > 0 ? ((count / totalRows) * 100).toFixed(1) : 0;
+            return `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 text-sm font-medium text-gray-900">${this.escapeHtml(column)}</td>
+                    <td class="px-4 py-2 text-sm text-gray-700">${count}</td>
+                    <td class="px-4 py-2 text-sm text-gray-700">${percentage}%</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 
     updateSummaryCards() {
@@ -661,6 +767,263 @@ class UKDataCleanerApp {
         }
     }
 
+    detectProtectedColumns(headers) {
+        const protectedPatterns = [
+            /^id$/i, /^.*_id$/i, /^pk$/i, /^key$/i,
+            /^.*key$/i, /^order.*number$/i, /^customer.*id$/i,
+            /^reference$/i, /^ref$/i, /^.*ref$/i,
+            /^account.*id$/i, /^user.*id$/i, /^transaction.*id$/i,
+            /^invoice.*number$/i, /^purchase.*order$/i
+        ];
+
+        return headers.filter(header =>
+            protectedPatterns.some(pattern => pattern.test(header))
+        );
+    }
+
+    renderPreviewTable() {
+        const headerRow = document.getElementById('previewTableHeader');
+        const tbody = document.getElementById('previewTableBody');
+        const rowCount = document.getElementById('previewRowCount');
+        const colCount = document.getElementById('previewColCount');
+
+        if (!headerRow || !tbody || !this.results) return;
+
+        const headers = this.fileHeaders;
+        const cleanedData = this.buildFullCleanedDataset();
+
+        // Build header row
+        headerRow.innerHTML = `
+            <th class="px-4 py-2 text-left border-b-2 border-gray-300 bg-gray-100 sticky top-0 text-xs font-semibold text-gray-700">#</th>
+            ${headers.map(header => {
+                const isProtected = this.protectedColumns && this.protectedColumns.includes(header);
+                return `<th class="px-4 py-2 text-left border-b-2 border-gray-300 bg-gray-100 sticky top-0 text-xs font-semibold text-gray-700">
+                    ${isProtected ? '🔒 ' : ''}${this.escapeHtml(header)}
+                </th>`;
+            }).join('')}
+        `;
+
+        // Build table rows
+        tbody.innerHTML = cleanedData.map((row, index) => {
+            const isDuplicate = this.isDuplicateRow(index);
+            const isOriginal = this.isOriginalOfDuplicate(index);
+
+            // Determine row styling
+            let rowBgClass, hoverClass, badge = '';
+
+            if (isDuplicate) {
+                // Duplicate row - yellow/amber
+                rowBgClass = 'bg-amber-50 border-l-4 border-amber-400';
+                hoverClass = 'hover:bg-amber-100';
+                badge = '<span class="ml-1 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-200 text-amber-800">DUPLICATE</span>';
+            } else if (isOriginal) {
+                // Original row (has duplicates) - blue
+                rowBgClass = 'bg-blue-50 border-l-4 border-blue-400';
+                hoverClass = 'hover:bg-blue-100';
+                badge = '<span class="ml-1 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-200 text-blue-800">HAS DUPLICATES</span>';
+            } else {
+                // Normal row - alternating white/gray
+                rowBgClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                hoverClass = 'hover:bg-gray-50';
+            }
+
+            return `
+                <tr class="${hoverClass} ${rowBgClass}">
+                    <td class="px-4 py-2 border-b border-gray-200 text-xs text-gray-500 font-mono">
+                        ${index + 1}
+                        ${badge}
+                    </td>
+                    ${row.map((cell, colIndex) => {
+                        const wasModified = this.wasCellModified(index, headers[colIndex]);
+                        // Cell background: duplicates get amber, originals get blue, modified get green
+                        let bgClass = '';
+                        if (isDuplicate) {
+                            bgClass = 'bg-amber-50';
+                        } else if (isOriginal) {
+                            bgClass = 'bg-blue-50';
+                        } else if (wasModified) {
+                            bgClass = 'bg-green-50';
+                        }
+                        return `<td class="px-4 py-2 border-b border-gray-200 text-xs ${bgClass}">${this.escapeHtml(cell || '')}</td>`;
+                    }).join('')}
+                </tr>
+            `;
+        }).join('');
+
+        // Update counts
+        if (rowCount) rowCount.textContent = cleanedData.length;
+        if (colCount) colCount.textContent = headers.length;
+    }
+
+    buildFullCleanedDataset() {
+        if (!this.results || !this.fileData) return [];
+
+        const cleanedData = [];
+        const headers = this.fileHeaders;
+
+        // For each original row (skip header row which is index 0)
+        for (let i = 1; i < this.fileData.length; i++) {
+            const originalRow = this.fileData[i];
+            const cleanedRow = [...originalRow]; // Start with original
+
+            // Find validation results for this row (row numbers are 1-indexed, starting from 2 for data)
+            const rowResults = this.results.processedRows.find(r => r.rowNumber === i + 1);
+
+            if (rowResults) {
+                // Apply cleaned values to selected columns only
+                rowResults.validationResults.forEach(result => {
+                    const colIndex = headers.indexOf(result.column);
+                    if (colIndex !== -1 && result.isValid && result.fixed) {
+                        cleanedRow[colIndex] = result.fixed;
+                    }
+                    // If invalid, keep original value
+                });
+            }
+
+            cleanedData.push(cleanedRow);
+        }
+
+        return cleanedData;
+    }
+
+    wasCellModified(rowIndex, columnName) {
+        if (!this.results) return false;
+
+        // Row numbers in results are 1-indexed starting from 2 (header is row 1)
+        const rowNumber = rowIndex + 2;
+        const rowResults = this.results.processedRows.find(r => r.rowNumber === rowNumber);
+
+        if (!rowResults) return false;
+
+        const result = rowResults.validationResults.find(r => r.column === columnName);
+        return result && result.isValid && result.fixed && result.fixed !== result.value;
+    }
+
+    updateDownloadSummary() {
+        const summarySection = document.getElementById('downloadSummary');
+        if (!summarySection || !this.results) return;
+
+        summarySection.classList.remove('hidden');
+
+        // Calculate statistics
+        const totalRows = this.results.totalRows - 1; // Exclude header
+        const cleanedFields = this.results.summary.totalFixed;
+        const issueRows = this.countRowsWithIssues();
+
+        // Update summary numbers
+        document.getElementById('summaryTotalRows').textContent = totalRows;
+        document.getElementById('summaryCleanedFields').textContent = cleanedFields;
+        document.getElementById('summaryIssueRows').textContent = issueRows;
+        document.getElementById('summaryTotalCols').textContent = this.fileHeaders.length;
+
+        // Update protected columns info
+        const protectedColsEl = document.getElementById('summaryProtectedCols');
+        if (protectedColsEl) {
+            if (this.protectedColumns && this.protectedColumns.length > 0) {
+                protectedColsEl.textContent = this.protectedColumns.join(', ');
+            } else {
+                protectedColsEl.textContent = 'None detected';
+            }
+        }
+
+        // Update duplicate rows info
+        const duplicatesEl = document.getElementById('summaryDuplicates');
+        if (duplicatesEl) {
+            const duplicateCount = this.duplicateRowIndices && this.duplicateRowIndices.duplicates ?
+                                   this.duplicateRowIndices.duplicates.size : 0;
+            if (duplicateCount === 0) {
+                duplicatesEl.textContent = 'None found';
+                duplicatesEl.classList.add('text-green-700');
+                duplicatesEl.classList.remove('text-amber-700');
+            } else {
+                duplicatesEl.textContent = `${duplicateCount} duplicate${duplicateCount > 1 ? 's' : ''} found (removable via checkbox)`;
+                duplicatesEl.classList.add('text-amber-700');
+                duplicatesEl.classList.remove('text-green-700');
+            }
+        }
+    }
+
+    countRowsWithIssues() {
+        if (!this.results) return 0;
+
+        const rowsWithIssues = new Set();
+        this.results.processedRows.forEach(row => {
+            const hasIssue = row.validationResults.some(result => !result.isValid);
+            if (hasIssue) {
+                rowsWithIssues.add(row.rowNumber);
+            }
+        });
+
+        return rowsWithIssues.size;
+    }
+
+    identifyDuplicateRows() {
+        if (!this.fileData || this.fileData.length <= 1) return { duplicates: new Set(), originals: new Set() };
+
+        const seen = new Map();
+        const duplicates = new Set();
+        const originals = new Set();
+
+        // Skip header row (index 0), check data rows starting from index 1
+        for (let i = 1; i < this.fileData.length; i++) {
+            const row = this.fileData[i];
+            const key = JSON.stringify(row);
+
+            if (seen.has(key)) {
+                // This is a duplicate - mark this index as a duplicate
+                duplicates.add(i - 1); // Convert to 0-based index for data rows
+                // Also mark the original if not already marked
+                const originalIndex = seen.get(key) - 1; // Convert to 0-based
+                originals.add(originalIndex);
+            } else {
+                seen.set(key, i);
+            }
+        }
+
+        return { duplicates, originals };
+    }
+
+    isDuplicateRow(rowIndex) {
+        return this.duplicateRowIndices && this.duplicateRowIndices.duplicates &&
+               this.duplicateRowIndices.duplicates.has(rowIndex);
+    }
+
+    isOriginalOfDuplicate(rowIndex) {
+        return this.duplicateRowIndices && this.duplicateRowIndices.originals &&
+               this.duplicateRowIndices.originals.has(rowIndex);
+    }
+
+    removeDuplicates(dataset) {
+        const seen = new Set();
+        return dataset.filter(row => {
+            const key = JSON.stringify(row);
+            if (seen.has(key)) {
+                return false; // Duplicate, remove it
+            }
+            seen.add(key);
+            return true; // Keep it
+        });
+    }
+
+    updateDuplicateCountMessage() {
+        const messageEl = document.getElementById('duplicateCountMessage');
+        if (!messageEl) return;
+
+        const duplicateCount = this.duplicateRowIndices && this.duplicateRowIndices.duplicates ?
+                               this.duplicateRowIndices.duplicates.size : 0;
+
+        if (duplicateCount === 0) {
+            messageEl.textContent = '✓ No duplicate rows found in your data.';
+            messageEl.classList.add('text-green-700');
+            messageEl.classList.remove('text-gray-600');
+        } else {
+            const totalAffected = duplicateCount + (this.duplicateRowIndices.originals ? this.duplicateRowIndices.originals.size : 0);
+            messageEl.textContent = `Found ${duplicateCount} duplicate row${duplicateCount > 1 ? 's' : ''} (${totalAffected} rows affected total).`;
+            messageEl.classList.add('text-amber-700');
+            messageEl.classList.remove('text-gray-600');
+        }
+    }
+
     switchTab(tabName) {
         // Update active tab button
         const tabBtns = document.querySelectorAll('.tab-btn');
@@ -696,8 +1059,40 @@ class UKDataCleanerApp {
             // Check export options
             const includeIssuesColumn = document.getElementById('includeIssuesColumn')?.checked || false;
             const onlyRowsWithIssues = document.getElementById('onlyRowsWithIssues')?.checked || false;
+            const removeDuplicates = document.getElementById('removeDuplicates')?.checked || false;
+            const trimWhitespace = document.getElementById('trimWhitespace')?.checked || false;
 
-            const blob = await this.fileProcessor.exportResults(this.results, format, includeIssuesColumn, onlyRowsWithIssues);
+            // Build cleaned dataset
+            let cleanedData = this.buildFullCleanedDataset();
+
+            // Apply duplicate removal if requested
+            if (removeDuplicates && cleanedData.length > 0) {
+                const originalCount = cleanedData.length;
+                cleanedData = this.removeDuplicates(cleanedData);
+                const removedCount = originalCount - cleanedData.length;
+                console.log(`Removed ${removedCount} duplicate rows`);
+            }
+
+            // Apply whitespace trimming if requested
+            if (trimWhitespace) {
+                cleanedData = cleanedData.map(row =>
+                    row.map(cell => {
+                        if (typeof cell === 'string') {
+                            return cell.trim().replace(/\s+/g, ' ');
+                        }
+                        return cell;
+                    })
+                );
+            }
+
+            // Create a modified results object with the cleaned data
+            const modifiedResults = {
+                ...this.results,
+                cleanedData: cleanedData,
+                headers: this.fileHeaders
+            };
+
+            const blob = await this.fileProcessor.exportResults(modifiedResults, format, includeIssuesColumn, onlyRowsWithIssues);
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -815,6 +1210,10 @@ class UKDataCleanerApp {
         document.getElementById('summaryTab')?.classList.add('active');
         document.getElementById('cleanedTab')?.classList.add('hidden');
         document.getElementById('issuesTab')?.classList.add('hidden');
+        document.getElementById('previewTab')?.classList.add('hidden');
+
+        // Hide download summary
+        document.getElementById('downloadSummary')?.classList.add('hidden');
 
         this.hideFieldSelection();
         this.hideError();

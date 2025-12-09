@@ -68,9 +68,14 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                         <p class="text-gray-600 mb-4">
                             Choose which columns you want to clean. Our system can automatically detect phone numbers, NI numbers, postcodes, and sort codes, or you can manually select the columns.
                         </p>
-                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-3">
                             <p class="text-sm text-indigo-900">
                                 <strong>✨ Auto-Select:</strong> Click "Auto-Select" to have our system automatically detect and select all cleanable columns based on column names and content.
+                            </p>
+                        </div>
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <p class="text-sm text-green-900">
+                                <strong>🔒 Protected Columns:</strong> ID and key columns (like customer_id, order_number) are automatically protected and will never be modified - preserving your data relationships.
                             </p>
                         </div>
                     </div>
@@ -90,9 +95,14 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                         <p class="text-gray-600 mb-4">
                             Click "Clean My Data" and watch as your data is validated and cleaned instantly - all in your browser. We never see, store, or transmit your data. It's 100% private.
                         </p>
-                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-3">
                             <p class="text-sm text-purple-900">
                                 <strong>🔒 Privacy First:</strong> Your file is processed entirely in your browser using JavaScript. No uploads to our servers, no database storage, no third-party access.
+                            </p>
+                        </div>
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                            <p class="text-sm text-indigo-900">
+                                <strong>📊 Data Insights:</strong> Get instant insights including missing values count, duplicate row detection, and data quality profiling before you download.
                             </p>
                         </div>
                     </div>
@@ -110,8 +120,25 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                     <div class="flex-1">
                         <h2 class="text-2xl font-bold text-gray-900 mb-3">Download Your Cleaned Data</h2>
                         <p class="text-gray-600 mb-4">
-                            Review the results, see what was cleaned, and customize your download options before exporting your file.
+                            Review the complete cleaned dataset with our Full Preview feature, customize your download options, and export with confidence knowing exactly what you're getting.
                         </p>
+
+                        <!-- Full Preview Feature -->\n                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm font-semibold text-indigo-900 mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                Full Preview - See Everything Before Download:
+                            </p>
+                            <ul class="text-sm text-indigo-800 space-y-1 ml-7">
+                                <li>• View your complete cleaned dataset with all rows and columns</li>
+                                <li>• <strong class="text-blue-600">Blue rows</strong> = Original rows that have duplicates elsewhere</li>
+                                <li>• <strong class="text-amber-600">Yellow rows</strong> = Duplicate rows (removable via checkbox)</li>
+                                <li>• <strong class="text-green-600">Green cells</strong> = Values that were cleaned or fixed</li>
+                                <li>• 🔒 Protected columns (IDs, keys) are marked and never modified</li>
+                            </ul>
+                        </div>
 
                         <!-- Format Selection -->
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
@@ -140,6 +167,14 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                                     Export Customization Options:
                             </p>
                             <div class="space-y-3 ml-7">
+                                <div>
+                                    <p class="text-sm text-gray-800 font-medium">🔄 Remove Duplicate Rows</p>
+                                    <p class="text-xs text-gray-600">Automatically removes exact duplicate rows, keeping only the first occurrence. Duplicates are highlighted in the preview so you can review before removing.</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-800 font-medium">🧹 Clean Whitespace</p>
+                                    <p class="text-xs text-gray-600">Trims leading/trailing spaces and normalizes multiple spaces to single spaces across all cells for consistent formatting.</p>
+                                </div>
                                 <div>
                                     <p class="text-sm text-gray-800 font-medium">✓ Include "Issues" Column</p>
                                     <p class="text-xs text-gray-600">Adds an "Issues" column that lists any fields that still need attention. This helps you quickly identify which rows may require manual review after downloading.</p>
@@ -211,6 +246,17 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Learn More Section -->
+        <div class="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-3">Want More Details?</h2>
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Check out our comprehensive documentation for detailed guides, visual examples, troubleshooting tips, and advanced features.
+            </p>
+            <a href="/documentation.php" class="inline-block bg-indigo-600 text-white px-6 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg font-medium mr-4">
+                View Full Documentation
+            </a>
         </div>
 
         <!-- CTA -->

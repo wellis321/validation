@@ -30,6 +30,7 @@ function getDatabaseConfig() {
 
     return [
         'host' => getenv('DB_HOST') ?: 'localhost',
+        'port' => getenv('DB_PORT') ?: 3306,
         'database' => getenv('DB_NAME') ?: 'u248320297_ukdata',
         'username' => getenv('DB_USER') ?: 'u248320297_ukdata_user',
         'password' => getenv('DB_PASS') ?: 'YOUR_DATABASE_PASSWORD',

@@ -7,15 +7,30 @@ require_once __DIR__ . '/includes/Auth.php';
 $auth = Auth::getInstance();
 $user = $auth->getCurrentUser();
 
-// Get all active subscription plans
+// Get all active subscription plans, excluding Pay Per Use
 $db = Database::getInstance();
-$stmt = $db->query("SELECT * FROM subscription_plans WHERE is_active = 1 ORDER BY FIELD(name, 'Monthly', 'Lifetime Beta', 'Annual'), price ASC");
-$plans = $stmt->fetchAll();
+$stmt = $db->query("SELECT * FROM subscription_plans WHERE is_active = 1 AND name != 'Pay Per Use' ORDER BY FIELD(name, 'Monthly', 'Lifetime Beta', 'Annual'), price ASC");
+$allPlans = $stmt->fetchAll();
 
-// Filter out Pay Per Use plan
-$plans = array_filter($plans, function($plan) {
-    return $plan['name'] !== 'Pay Per Use';
+// Remove duplicates by plan name (keep the one with highest ID - most recent)
+// Use ordered array to maintain the desired display order
+$orderMap = ['Monthly' => 1, 'Lifetime Beta' => 2, 'Annual' => 3];
+$plansByName = [];
+foreach ($allPlans as $plan) {
+    $name = $plan['name'];
+    if (!isset($plansByName[$name]) || $plan['id'] > $plansByName[$name]['id']) {
+        $plansByName[$name] = $plan;
+    }
+}
+
+// Sort by desired order and convert to indexed array
+uksort($plansByName, function($a, $b) use ($orderMap) {
+    $orderA = $orderMap[$a] ?? 999;
+    $orderB = $orderMap[$b] ?? 999;
+    return $orderA <=> $orderB;
 });
+
+$plans = array_values($plansByName);
 
 // Get user's current subscription if logged in
 $currentPlan = null;

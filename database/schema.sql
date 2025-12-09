@@ -88,7 +88,11 @@ INSERT INTO subscription_plans (name, description, price, duration_months, max_r
 ('Annual', 'Best value - save £109.89 per year!', 249.99, 12, 0, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": true, "api_access": true}'),
 ('Lifetime Beta', 'One-time £99.99 payment for lifetime access to today\'s validators during beta.', 99.99, 0, 0, 0, '{"unlimited_files": true, "client_side_processing": true, "all_data_types": true, "priority_support": false, "lifetime_access": true}');
 
--- Create indexes for better performance (skip if already exist)
-CREATE INDEX IF NOT EXISTS idx_user_email ON users(email);
-CREATE INDEX IF NOT EXISTS idx_subscription_dates ON user_subscriptions(start_date, end_date);
-CREATE INDEX IF NOT EXISTS idx_api_usage_date ON api_usage(request_date);
+-- Create indexes for better performance
+-- Note: Email already has UNIQUE index, so idx_user_email may not be needed
+-- These indexes are optional - if you get errors that they already exist, you can skip them
+--
+-- Uncomment below if you want to add these indexes:
+-- CREATE INDEX idx_user_email ON users(email);
+-- CREATE INDEX idx_subscription_dates ON user_subscriptions(start_date, end_date);
+-- CREATE INDEX idx_api_usage_date ON api_usage(request_date);

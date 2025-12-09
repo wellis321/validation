@@ -1,0 +1,9 @@
+customer_id,Name,Phone,Email,Postcode,order_number
+CUST001,John Doe,07123456789,john@example.com,SW1A 1AA,ORD12345
+CUST002,Jane Smith,,jane@example.com,,ORD12346
+CUST003,Bob Johnson,07987654321,,M1 1AA,ORD12347
+CUST001,John Doe,07123456789,john@example.com,SW1A 1AA,ORD12345
+CUST004,Alice Brown,07111111111,alice@example.com,E1 6AN,ORD12348
+CUST003,Bob Johnson,07987654321,,M1 1AA,ORD12347
+CUST005,Charlie Wilson,+447701234567,charlie@example.com,W1A1AA,ORD12349
+CUST006,Diana Smith,7854123456,diana@example.com,EC1A1BB,ORD12350
