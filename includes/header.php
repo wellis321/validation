@@ -34,6 +34,10 @@
                        class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'how-it-works.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
                         How It Works
                     </a>
+                    <a href="/documentation.php"
+                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'documentation.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
+                        Documentation
+                    </a>
                     <a href="/pricing.php"
                        class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'pricing.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
                         Pricing
@@ -55,6 +59,7 @@
                 <div class="flex items-center gap-4 flex-wrap justify-end text-sm">
                 <div class="md:hidden flex items-center space-x-4 mr-2">
                     <a href="/how-it-works.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">How It Works</a>
+                    <a href="/documentation.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Docs</a>
                     <a href="/pricing.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Pricing</a>
                     <a href="/beta-offer.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'beta-offer.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Lifetime Beta</a>
                     <a href="/feedback.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Feedback</a>

@@ -32,6 +32,7 @@
                     <h3 class="text-lg font-semibold mb-4">Resources</h3>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="/how-it-works.php" class="hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="/documentation.php" class="hover:text-white transition-colors">Documentation</a></li>
                         <li><a href="/validation-rules.php" class="hover:text-white transition-colors">Validation Rules</a></li>
                         <li><a href="/pricing.php" class="hover:text-white transition-colors">Pricing</a></li>
                         <li><a href="/feedback.php" class="hover:text-white transition-colors">Beta Feedback</a></li>
