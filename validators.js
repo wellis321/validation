@@ -1069,10 +1069,37 @@ function autoValidate(value, phoneFormat = 'international') {
         new SortCodeValidator()         // Sort codes last since they're more generic
     ];
 
+    // First, try to find a validator that returns valid
     for (const validator of validators) {
         const result = validator.validate(value);
         if (result.isValid) {
             return { ...result, detectedType: validator.getType() };
+        }
+    }
+
+    // If none are valid, check if any validator recognized the format (even if invalid)
+    // This helps us return specific error messages instead of "Could not determine data type"
+    for (const validator of validators) {
+        const result = validator.validate(value);
+        const validatorType = validator.getType();
+        
+        // If the error message is specific (not a generic format error), return it
+        // This means the validator recognized the format but found it invalid
+        if (result.error && 
+            !result.error.includes('Could not determine') &&
+            !result.error.includes('Invalid format') &&
+            result.error.length > 20) { // Specific errors are usually longer
+            return { ...result, detectedType: validatorType };
+        }
+        
+        // For NI numbers, check if it matches the pattern (2 letters, 6 digits, 1 letter)
+        // even if invalid - this means it's definitely an NI number format
+        if (validatorType === 'ni_number') {
+            const cleaned = value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+            if (/^[A-Z]{2}\d{6}[A-Z]$/.test(cleaned)) {
+                // It matches NI format, return the NI validator's error
+                return { ...result, detectedType: validatorType };
+            }
         }
     }
 

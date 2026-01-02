@@ -348,8 +348,39 @@ class FileProcessor {
                     continue;
                 }
 
-                // Try to auto-detect the data type and validate
-                const validation = autoValidate(cellValue, this.phoneFormat);
+                // Try to use column name to determine validator type first
+                let validation;
+                const columnLower = columnName.toLowerCase();
+                
+                if (columnLower.includes('ni') || columnLower.includes('insurance') || columnLower.includes('national insurance')) {
+                    // Use NI validator directly for National Insurance columns
+                    const niValidator = new NINumberValidator();
+                    validation = niValidator.validate(cellValue);
+                    validation.detectedType = 'ni_number';
+                } else if (columnLower.includes('phone') || columnLower.includes('mobile') || columnLower.includes('tel')) {
+                    // Use phone validator directly for phone columns
+                    const phoneValidator = new PhoneNumberValidator(this.phoneFormat);
+                    validation = phoneValidator.validate(cellValue);
+                    validation.detectedType = 'phone_number';
+                } else if (columnLower.includes('postcode') || columnLower.includes('post code')) {
+                    // Use postcode validator directly for postcode columns
+                    const postcodeValidator = new PostcodeValidator();
+                    validation = postcodeValidator.validate(cellValue);
+                    validation.detectedType = 'postcode';
+                } else if (columnLower.includes('sort') && columnLower.includes('code')) {
+                    // Use sort code validator directly for sort code columns
+                    const sortCodeValidator = new SortCodeValidator();
+                    validation = sortCodeValidator.validate(cellValue);
+                    validation.detectedType = 'sort_code';
+                } else if (columnLower.includes('account') && (columnLower.includes('bank') || columnLower.includes('number'))) {
+                    // Use bank account validator directly for bank account columns
+                    const bankAccountValidator = new BankAccountValidator();
+                    validation = bankAccountValidator.validate(cellValue);
+                    validation.detectedType = 'bank_account';
+                } else {
+                    // Fall back to auto-detect for other columns
+                    validation = autoValidate(cellValue, this.phoneFormat);
+                }
 
                 validationResults.push({
                     column: columnName,
