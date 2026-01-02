@@ -12,6 +12,50 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
     <link rel="canonical" href="https://simple-data-cleaner.com/beta-offer.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simple-data-cleaner.com/beta-offer.php">
+    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:site_name" content="Simple Data Cleaner">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    
+    <!-- Offer Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Offer",
+      "name": "Lifetime Beta Access to Simple Data Cleaner",
+      "description": "Lock in lifetime access to the Simple Data Cleaner beta validators for a one-time payment of £99.99",
+      "price": "99.99",
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock",
+      "url": "https://simple-data-cleaner.com/beta-offer.php",
+      "seller": {
+        "@type": "Organization",
+        "name": "Simple Data Cleaner"
+      },
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "99.99",
+        "priceCurrency": "GBP",
+        "billingDuration": "P99Y"
+      },
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Lifetime Beta Access",
+        "description": "Lifetime access to UK data validation validators including phone numbers, NI numbers, postcodes, and bank sort codes"
+      }
+    }
+    </script>
+    
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

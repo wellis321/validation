@@ -46,7 +46,64 @@ if ($user) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/pricing.php">
-    <title>Pricing - UK Data Cleaner</title>
+    <title>Pricing - Simple Data Cleaner | UK Data Validation</title>
+    <meta name="description" content="Simple, transparent pricing for UK data validation. All processing happens in your browser - your data never leaves your device. Choose from Monthly, Annual, or Lifetime Beta plans.">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Pricing - Simple Data Cleaner | UK Data Validation">
+    <meta property="og:description" content="Simple, transparent pricing for UK data validation. All processing happens in your browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simple-data-cleaner.com/pricing.php">
+    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:site_name" content="Simple Data Cleaner">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pricing - Simple Data Cleaner">
+    <meta name="twitter:description" content="Simple, transparent pricing for UK data validation. All processing happens in your browser.">
+    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    
+    <!-- Product/Offer Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Simple Data Cleaner",
+      "description": "UK data validation and cleaning service - phone numbers, NI numbers, postcodes, and bank sort codes",
+      "brand": {
+        "@type": "Organization",
+        "name": "Simple Data Cleaner"
+      },
+      "offers": [
+        <?php
+        $offerSchemas = [];
+        foreach ($plans as $index => $plan) {
+            $features = json_decode($plan['features'], true) ?: [];
+            $isLifetime = $plan['name'] === 'Lifetime Beta' || (!empty($features['lifetime_access']));
+            $duration = $isLifetime ? 'P99Y' : ($plan['duration_months'] === 12 ? 'P1Y' : 'P1M');
+            
+            $offerSchemas[] = json_encode([
+                "@type" => "Offer",
+                "name" => $plan['name'],
+                "description" => $plan['description'],
+                "price" => number_format($plan['price'], 2),
+                "priceCurrency" => "GBP",
+                "availability" => "https://schema.org/InStock",
+                "url" => "https://simple-data-cleaner.com/pricing.php",
+                "priceSpecification" => [
+                    "@type" => "UnitPriceSpecification",
+                    "price" => number_format($plan['price'], 2),
+                    "priceCurrency" => "GBP",
+                    "billingDuration" => $duration
+                ]
+            ], JSON_UNESCAPED_SLASHES);
+        }
+        echo implode(",\n        ", $offerSchemas);
+        ?>
+      ]
+    }
+    </script>
+    
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

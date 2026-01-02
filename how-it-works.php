@@ -13,6 +13,61 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
     <link rel="canonical" href="https://simple-data-cleaner.com/how-it-works.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simple-data-cleaner.com/how-it-works.php">
+    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:site_name" content="Simple Data Cleaner">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    
+    <!-- HowTo Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Clean UK Data with Simple Data Cleaner",
+      "description": "Step-by-step guide to cleaning and validating UK data formats in your browser",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Upload Your File",
+          "text": "Upload your CSV, Excel (.xlsx, .xls), or JSON file containing UK phone numbers, National Insurance numbers, postcodes, or bank sort codes.",
+          "url": "https://simple-data-cleaner.com/how-it-works.php#step1"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Select Columns to Clean",
+          "text": "Choose which columns you want to clean. Our system can automatically detect phone numbers, NI numbers, postcodes, and sort codes, or you can manually select the columns.",
+          "url": "https://simple-data-cleaner.com/how-it-works.php#step2"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Review and Process",
+          "text": "Review your selections and click 'Clean My Data' to process. All validation happens in your browser - your data never leaves your device.",
+          "url": "https://simple-data-cleaner.com/how-it-works.php#step3"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Download Cleaned Data",
+          "text": "Download your validated and cleaned data in CSV, Excel, or JSON format. Optionally include an Issues column or filter to only rows with problems.",
+          "url": "https://simple-data-cleaner.com/how-it-works.php#step4"
+        }
+      ]
+    }
+    </script>
+    
     <link rel="stylesheet" href="/assets/css/output.css">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">

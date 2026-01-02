@@ -13,6 +13,49 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
     <link rel="canonical" href="https://simple-data-cleaner.com/documentation.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://simple-data-cleaner.com/documentation.php">
+    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:site_name" content="Simple Data Cleaner">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner",
+      "description": "<?php echo htmlspecialchars($pageDescription); ?>",
+      "author": {
+        "@type": "Organization",
+        "name": "Simple Data Cleaner"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Simple Data Cleaner",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png"
+        }
+      },
+      "datePublished": "2025-01-01",
+      "dateModified": "2025-01-02",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://simple-data-cleaner.com/documentation.php"
+      }
+    }
+    </script>
+    
     <link rel="stylesheet" href="/assets/css/output.css">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
