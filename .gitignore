@@ -49,6 +49,9 @@ ahrefs/
 
 # Test assets
 assets/csv/test.*
+# Test results (keep test files, ignore results)
+tests/*.log
+tests/results/
 
 # Vite
 vite.config.js.timestamp-*

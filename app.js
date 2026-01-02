@@ -30,6 +30,10 @@ class UKDataCleanerApp {
         fileInput?.addEventListener('change', (e) => this.handleFileSelect(e));
         processBtn?.addEventListener('click', () => this.processFile());
 
+        // Issues report button
+        const issuesReportBtn = document.getElementById('issuesReportBtn');
+        issuesReportBtn?.addEventListener('click', () => this.viewIssuesReport());
+
         // Drag and drop
         fileDropZone?.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -784,6 +788,16 @@ class UKDataCleanerApp {
                 </td>
             </tr>
         `).join('');
+
+        // Show/hide detailed issues report button
+        const issuesReportBtn = document.getElementById('issuesReportBtn');
+        if (issuesReportBtn) {
+            if (issuesData.length > 0) {
+                issuesReportBtn.classList.remove('hidden');
+            } else {
+                issuesReportBtn.classList.add('hidden');
+            }
+        }
     }
 
     getComplianceStandard(columnName, detectedType) {
@@ -796,6 +810,327 @@ class UKDataCleanerApp {
         } else {
             return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Industry Standard</span>';
         }
+    }
+
+    generateDetailedIssuesReport() {
+        const issuesData = this.results.processedRows
+            .flatMap(row =>
+                row.validationResults
+                    .filter(result => !result.isValid)
+                    .map(result => ({ row, result }))
+            );
+
+        if (issuesData.length === 0) {
+            return null;
+        }
+
+        // Group issues by type for better organization
+        const issuesByType = {};
+        issuesData.forEach(({ row, result }) => {
+            const type = result.detectedType || 'unknown';
+            if (!issuesByType[type]) {
+                issuesByType[type] = [];
+            }
+            issuesByType[type].push({ row, result });
+        });
+
+        // Generate detailed explanations for each issue
+        const generateIssueExplanation = (result) => {
+            const column = result.column.toLowerCase();
+            const error = result.error || '';
+            const value = result.value;
+
+            // NI Number explanations
+            if (column.includes('ni') || column.includes('insurance') || result.detectedType === 'ni_number') {
+                if (error.includes('Invalid first letter') || error.includes('Invalid second letter')) {
+                    const prefix = value.replace(/[^A-Z]/gi, '').substring(0, 2).toUpperCase();
+                    const firstLetter = prefix[0];
+                    const secondLetter = prefix[1];
+                    
+                    let explanation = `<strong>Why this is invalid:</strong><br>`;
+                    explanation += `The NI number prefix "${prefix}" contains invalid letters according to UK HMRC standards.<br><br>`;
+                    
+                    if (error.includes('first letter')) {
+                        explanation += `<strong>Problem:</strong> The first letter "${firstLetter}" is not used in NI number prefixes.<br>`;
+                        explanation += `<strong>Invalid first letters:</strong> D, F, I, Q, U, V<br>`;
+                    } else if (error.includes('second letter')) {
+                        explanation += `<strong>Problem:</strong> The second letter "${secondLetter}" is not used in NI number prefixes.<br>`;
+                        explanation += `<strong>Invalid second letters:</strong> D, F, I, O, Q, U, V<br>`;
+                    }
+                    
+                    explanation += `<br><strong>What to do:</strong> Verify this NI number with the individual. If it's correct, it may need to be reported to HMRC.`;
+                    return explanation;
+                } else if (error.includes('banned by HMRC')) {
+                    return `<strong>Why this is invalid:</strong><br>The prefix "${value.replace(/[^A-Z]/gi, '').substring(0, 2)}" is banned by HMRC standards.<br><br><strong>Banned prefixes:</strong> BG, GB, KN, NK, NT, TN, ZZ<br><br><strong>What to do:</strong> Verify this NI number with the individual.`;
+                } else if (error.includes('administrative prefix')) {
+                    return `<strong>Why this is invalid:</strong><br>This prefix is reserved for administrative use, not valid NI numbers.<br><br><strong>Administrative prefixes:</strong> OO, FY, NC, PZ<br><br><strong>What to do:</strong> Verify this NI number with the individual.`;
+                }
+            }
+
+            // Phone number explanations
+            if (column.includes('phone') || column.includes('mobile') || result.detectedType === 'phone_number') {
+                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the phone number format. UK phone numbers should be in formats like:<br>• +44 7700 900123 (international)<br>• 07700 900123 (UK format)<br>• 020 7946 0958 (landline)`;
+            }
+
+            // Postcode explanations
+            if (column.includes('postcode') || result.detectedType === 'postcode') {
+                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the postcode format. UK postcodes should be in formats like:<br>• SW1A 1AA<br>• M1 1AA<br>• CR2 6XH`;
+            }
+
+            // Sort code explanations
+            if (column.includes('sort') || result.detectedType === 'sort_code') {
+                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the sort code. UK sort codes must be exactly 6 digits, formatted as XX-XX-XX (e.g., 12-34-56)`;
+            }
+
+            // Bank account explanations
+            if (column.includes('account') || result.detectedType === 'bank_account') {
+                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the account number. UK bank account numbers are typically 7-12 digits.`;
+            }
+
+            // Generic explanation
+            return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Review the value and verify it matches the expected format for this field.`;
+        };
+
+        // Build HTML report
+        const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Validation Issues Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        .summary {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .summary h2 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+        .issue-type {
+            margin-bottom: 40px;
+        }
+        .issue-type h3 {
+            color: #1f2937;
+            background: #e5e7eb;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+        }
+        th {
+            background: #f9fafb;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        tr:hover {
+            background: #f9fafb;
+        }
+        .row-number {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        .column-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .value {
+            font-family: 'Courier New', monospace;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        .error {
+            color: #dc2626;
+            font-weight: 500;
+        }
+        .explanation {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .explanation strong {
+            color: #1e40af;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-hmrc {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-uk {
+            background: #d1fae5;
+            color: #065f46;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Detailed Validation Issues Report</h1>
+        <p class="subtitle">Generated on ${new Date().toLocaleString()}</p>
+
+        <div class="summary">
+            <h2>Summary</h2>
+            <p><strong>Total Issues Found:</strong> ${issuesData.length}</p>
+            <p><strong>File:</strong> ${this.results.fileName || 'Unknown'}</p>
+            <p><strong>Total Rows Processed:</strong> ${this.results.totalRows}</p>
+        </div>
+
+        ${Object.entries(issuesByType).map(([type, issues]) => `
+            <div class="issue-type">
+                <h3>${this.getTypeDisplayName(type)} (${issues.length} ${issues.length === 1 ? 'issue' : 'issues'})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Row</th>
+                            <th>Column</th>
+                            <th>Invalid Value</th>
+                            <th>Error Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${issues.map(({ row, result }) => `
+                            <tr>
+                                <td class="row-number">${row.rowNumber}</td>
+                                <td class="column-name">${result.column}</td>
+                                <td><code class="value">${this.escapeHtml(result.value)}</code></td>
+                                <td class="error">${this.escapeHtml(result.error)}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="explanation">
+                                        ${generateIssueExplanation(result)}
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `).join('')}
+
+        <div class="footer">
+            <p>This report was generated by Simple Data Cleaner</p>
+            <p>For more information, visit <a href="https://simple-data-cleaner.com">simple-data-cleaner.com</a></p>
+        </div>
+    </div>
+</body>
+</html>`;
+
+        return html;
+    }
+
+    getTypeDisplayName(type) {
+        const names = {
+            'ni_number': 'National Insurance Numbers',
+            'phone_number': 'Phone Numbers',
+            'postcode': 'Postcodes',
+            'sort_code': 'Sort Codes',
+            'bank_account': 'Bank Account Numbers',
+            'unknown': 'Other Issues'
+        };
+        return names[type] || type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ');
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    downloadIssuesReport() {
+        const html = this.generateDetailedIssuesReport();
+        if (!html) {
+            this.showError('No issues found to generate report');
+            return;
+        }
+
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const originalName = this.selectedFile?.name.replace(/\.[^/.]+$/, '') || 'validation_results';
+        a.download = `${originalName}_detailed_issues_report.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    viewIssuesReport() {
+        const html = this.generateDetailedIssuesReport();
+        if (!html) {
+            this.showError('No issues found to generate report');
+            return;
+        }
+
+        // Open in new window
+        const newWindow = window.open('', '_blank');
+        newWindow.document.write(html);
+        newWindow.document.close();
     }
 
     detectProtectedColumns(headers) {

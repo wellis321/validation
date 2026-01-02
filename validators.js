@@ -394,15 +394,28 @@ class NINumberValidator {
             const invalidFirstLetters = ['D', 'F', 'I', 'Q', 'U', 'V'];
             const invalidSecondLetters = ['D', 'F', 'I', 'O', 'Q', 'U', 'V'];
 
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:392',message:'NI validation check',data:{originalValue:value,cleaned:cleaned,prefix:prefix},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+            // #endregion
+
             if (invalidPrefixes.includes(prefix)) {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:399',message:'NI rejected - invalid prefix',data:{prefix:prefix,reason:'banned by HMRC'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+                // #endregion
                 return new ValidationResult(false, value, `Invalid prefix '${prefix}' - banned by HMRC standards`);
             }
 
             if (invalidFirstLetters.includes(prefix[0])) {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:405',message:'NI rejected - invalid first letter',data:{prefix:prefix,firstLetter:prefix[0],reason:'not used in NI prefixes'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+                // #endregion
                 return new ValidationResult(false, value, `Invalid first letter '${prefix[0]}' - not used in NI number prefixes`);
             }
 
             if (invalidSecondLetters.includes(prefix[1])) {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:411',message:'NI rejected - invalid second letter',data:{prefix:prefix,secondLetter:prefix[1],reason:'not used in NI prefixes'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+                // #endregion
                 return new ValidationResult(false, value, `Invalid second letter '${prefix[1]}' - not used in NI number prefixes`);
             }
 
