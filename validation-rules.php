@@ -14,7 +14,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
     <link rel="canonical" href="https://simple-data-cleaner.com/validation-rules.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/output.css">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

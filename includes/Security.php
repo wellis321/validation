@@ -125,7 +125,7 @@ class Security {
         header('Referrer-Policy: strict-origin-when-cross-origin');
 
         if ($this->config['app']['env'] === 'production') {
-            header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' cdn.tailwindcss.com; img-src 'self' data:; font-src 'self'; connect-src 'self'");
+            header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'");
         }
     }
 

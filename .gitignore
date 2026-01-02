@@ -1,4 +1,5 @@
-node_modules
+node_modules/
+package-lock.json
 
 # Output
 .output
@@ -38,6 +39,16 @@ logs/*.log
 MAILTRAP_SETUP.md
 .nojekyll
 .npmrc
+
+# Test files and outputs
+test-validators.html
+test_sample.csv
+cleaned-*.csv
+test-files/cleaned/
+ahrefs/
+
+# Test assets
+assets/csv/test.*
 
 # Vite
 vite.config.js.timestamp-*

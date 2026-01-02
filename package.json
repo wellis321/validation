@@ -1,0 +1,13 @@
+{
+  "name": "simple-data-cleaner",
+  "version": "1.0.0",
+  "description": "UK Data Validation Tool",
+  "scripts": {
+    "build-css": "tailwindcss -i ./src/input.css -o ./assets/css/output.css --minify",
+    "watch-css": "tailwindcss -i ./src/input.css -o ./assets/css/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
+

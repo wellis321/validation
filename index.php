@@ -47,7 +47,7 @@ if ($user) {
     <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
     <meta name="twitter:image:alt" content="Simple Data Cleaner Logo">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/output.css">
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">

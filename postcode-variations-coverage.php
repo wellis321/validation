@@ -15,7 +15,7 @@ $pageTitle = 'UK Postcode Format Support';
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/output.css">
 </head>
 <body class="min-h-screen bg-gray-50">
     <?php include __DIR__ . '/includes/header.php'; ?>
