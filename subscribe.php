@@ -32,6 +32,9 @@ if (!$plan) {
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        // Validate CSRF token
+        validate_csrf();
+        
         // TODO: Integrate with payment gateway
         // For now, we'll just create a subscription record
 
@@ -116,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <?php if ($plan['price'] > 0): ?>
                         <form method="POST" class="space-y-6">
+                            <?php echo csrf_field(); ?>
                             <div>
                                 <label for="card_number" class="block text-gray-700 text-sm font-medium mb-2">Card Number</label>
                                 <input type="text" id="card_number" name="card_number" required
@@ -146,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </form>
                     <?php else: ?>
                         <form method="POST">
+                            <?php echo csrf_field(); ?>
                             <button type="submit"
                                 class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 Activate Free Plan

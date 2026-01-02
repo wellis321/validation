@@ -37,8 +37,13 @@ php_value error_reporting E_ALL
     Deny from all
 </FilesMatch>
 
-# Protect config directory
-<FilesMatch "^config/">
+# Protect config directory and sensitive files
+<DirectoryMatch "^.*/config/">
+    Order allow,deny
+    Deny from all
+</DirectoryMatch>
+
+<FilesMatch "^(config|\.env)">
     Order allow,deny
     Deny from all
 </FilesMatch>

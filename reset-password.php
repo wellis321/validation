@@ -17,6 +17,9 @@ if (empty($token)) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        // Validate CSRF token
+        validate_csrf();
+        
         $password = $_POST['password'] ?? '';
         $confirmPassword = $_POST['confirm_password'] ?? '';
 
@@ -82,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php else: ?>
                 <div class="bg-white rounded-lg shadow-lg p-8">
                     <form method="POST">
+                        <?php echo csrf_field(); ?>
                         <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
 
                         <div class="mb-6">
