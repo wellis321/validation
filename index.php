@@ -29,9 +29,23 @@ if ($user) {
     <title>Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant</title>
     <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, and bank sort codes in your browser. 100% private - your data never leaves your device. Perfect for businesses handling sensitive PII. GDPR compliant data cleaning.">
     <meta name="keywords" content="UK data validation, phone number cleaning, NI number validation, GDPR compliant data cleaning, browser-based data processing, UK postcode validation">
-    <meta property="og:title" content="Simple Data Cleaner - 100% Private UK Data Validation">
-    <meta property="og:description" content="Clean UK data in your browser. Your data never leaves your device. Perfect for sensitive PII.">
+    <meta property="og:title" content="Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant">
+    <meta property="og:description" content="Clean and validate UK phone numbers, NI numbers, postcodes, and bank sort codes in your browser. 100% private - your data never leaves your device.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simple-data-cleaner.com/">
+    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
+    <meta property="og:image:alt" content="Simple Data Cleaner - UK Data Validation Tool">
+    <meta property="og:site_name" content="Simple Data Cleaner">
+    <meta property="og:locale" content="en_GB">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Simple Data Cleaner - 100% Private UK Data Validation">
+    <meta name="twitter:description" content="Clean UK data in your browser. Your data never leaves your device. Perfect for sensitive PII.">
+    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image:alt" content="Simple Data Cleaner Logo">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
@@ -40,6 +54,92 @@ if ($user) {
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
+    
+    <!-- JSON-LD Structured Data for Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Simple Data Cleaner",
+      "description": "Clean and validate UK phone numbers, NI numbers, postcodes, and bank sort codes in your browser. 100% private - your data never leaves your device.",
+      "url": "https://simple-data-cleaner.com",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      },
+      "featureList": [
+        "UK Phone Number Validation",
+        "National Insurance Number Validation",
+        "UK Postcode Validation",
+        "Bank Sort Code Validation",
+        "Browser-based Processing",
+        "GDPR Compliant",
+        "100% Private Data Processing"
+      ],
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "softwareVersion": "1.0"
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Simple Data Cleaner",
+      "url": "https://simple-data-cleaner.com",
+      "logo": "https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "availableLanguage": "English"
+      }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my data private when using Simple Data Cleaner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100% private. All data processing happens in your browser - your files never leave your device. No servers, no databases, no third parties can access your data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What UK data formats can I validate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simple Data Cleaner validates UK phone numbers (mobile and landline), National Insurance numbers, UK postcodes, and bank sort codes. All validation follows official UK standards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Simple Data Cleaner GDPR compliant?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, because all processing happens in your browser, we are not a data processor under GDPR. Your data never leaves your device, making it fully GDPR compliant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What file formats are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We support CSV, Excel (XLSX/XLS), and JSON file formats for upload. You can export cleaned data in CSV, Excel, or JSON formats."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
