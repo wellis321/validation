@@ -990,23 +990,101 @@ class UKDataCleanerApp {
             }
 
             // Phone number explanations
-            if (column.includes('phone') || column.includes('mobile') || result.detectedType === 'phone_number') {
-                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the phone number format. UK phone numbers should be in formats like:<br>• +44 7700 900123 (international)<br>• 07700 900123 (UK format)<br>• 020 7946 0958 (landline)`;
+            if (column.includes('phone') || column.includes('mobile') || column.includes('tel') || result.detectedType === 'phone_number') {
+                let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Phone Number:</td><td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td></tr>`;
+                
+                if (error.includes('multiple plus signs')) {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Multiple plus signs found</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">Phone numbers should only have one plus sign at the start (for international format). Multiple plus signs indicate a formatting error.</td></tr>`;
+                } else if (error.includes('look-alike characters')) {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Contains look-alike characters</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">The value contains characters that look like numbers but aren't (O, I, l). These need to be manually corrected.</td></tr>`;
+                } else if (error.includes('unusual digit groupings')) {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Unusual digit groupings</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">The phone number has too many digit groups or the total length doesn't match UK phone number standards (10-11 digits).</td></tr>`;
+                } else if (error.includes('Invalid UK phone number format')) {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Invalid format</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">The phone number doesn't match UK phone number patterns. UK numbers should be:<br>• Mobile: 7xxxxxxxxx (10 digits starting with 7)<br>• Landline: 0xxxxxxxxx (11 digits starting with 0)<br>• International: +44xxxxxxxxx (12 digits starting with +44)</td></tr>`;
+                } else {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>${this.escapeHtml(error)}</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">The phone number format is invalid or cannot be recognized.</td></tr>`;
+                }
+                
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td><td style="padding: 8px;">Verify the phone number format. UK phone numbers should be in formats like:<br>• <strong>International:</strong> +44 7700 900123<br>• <strong>UK Mobile:</strong> 07700 900123<br>• <strong>UK Landline:</strong> 020 7946 0958</td></tr>`;
+                explanation += `</table>`;
+                return explanation;
             }
 
             // Postcode explanations
-            if (column.includes('postcode') || result.detectedType === 'postcode') {
-                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the postcode format. UK postcodes should be in formats like:<br>• SW1A 1AA<br>• M1 1AA<br>• CR2 6XH`;
+            if (column.includes('postcode') || column.includes('post code') || result.detectedType === 'postcode') {
+                let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Postcode:</td><td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td></tr>`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Invalid UK postcode format</strong></td></tr>`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">UK postcodes must follow specific patterns:<br>• <strong>Format:</strong> [1-2 letters][1-2 digits][0-1 letter] [1 digit][2 letters]<br>• <strong>Examples:</strong> SW1A 1AA, M1 1AA, CR2 6XH, EC1A 1BB<br>• The postcode must have a space before the last 3 characters</td></tr>`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td><td style="padding: 8px;">Verify the postcode format. Check for:<br>• Missing or incorrect spacing<br>• Wrong number of letters or digits<br>• Invalid character combinations<br>• Typos in the postcode</td></tr>`;
+                explanation += `</table>`;
+                return explanation;
             }
 
             // Sort code explanations
-            if (column.includes('sort') || result.detectedType === 'sort_code') {
-                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the sort code. UK sort codes must be exactly 6 digits, formatted as XX-XX-XX (e.g., 12-34-56)`;
+            if ((column.includes('sort') && column.includes('code')) || result.detectedType === 'sort_code') {
+                let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Sort Code:</td><td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td></tr>`;
+                
+                // Extract digits to show what was found
+                const digits = value.replace(/\D/g, '');
+                
+                if (error.includes('cannot contain letters')) {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Contains letters</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">Sort codes are purely numeric and cannot contain any letters. The value "${this.escapeHtml(value)}" contains letters, which makes it invalid.</td></tr>`;
+                } else if (error.includes('must be exactly 6 digits')) {
+                    const digitCount = digits.length;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Wrong number of digits (found ${digitCount}, need 6)</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">UK sort codes must be exactly 6 digits. The value "${this.escapeHtml(value)}" contains ${digitCount} digit${digitCount !== 1 ? 's' : ''}.</td></tr>`;
+                    if (digitCount < 6) {
+                        explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Possible issue:</td><td style="padding: 8px;">The sort code may be missing digits or may have been truncated.</td></tr>`;
+                    } else if (digitCount > 6) {
+                        explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Possible issue:</td><td style="padding: 8px;">The sort code may have extra digits or may be combined with an account number.</td></tr>`;
+                    }
+                } else {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>${this.escapeHtml(error)}</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">The sort code format is invalid.</td></tr>`;
+                }
+                
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td><td style="padding: 8px;">Verify the sort code. UK sort codes must be:<br>• <strong>Exactly 6 digits</strong> (no letters)<br>• <strong>Format:</strong> XX-XX-XX (e.g., 12-34-56)<br>• <strong>Examples:</strong> 12-34-56, 23-45-67, 40-02-34</td></tr>`;
+                explanation += `</table>`;
+                return explanation;
             }
 
             // Bank account explanations
-            if (column.includes('account') || result.detectedType === 'bank_account') {
-                return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the account number. UK bank account numbers are typically 7-12 digits.`;
+            if ((column.includes('account') && (column.includes('bank') || column.includes('number'))) || result.detectedType === 'bank_account') {
+                let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Account Number:</td><td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td></tr>`;
+                
+                // Extract digits to show what was found
+                const digits = value.replace(/\D/g, '');
+                
+                if (error.includes('cannot contain letters')) {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Contains letters</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">Bank account numbers are purely numeric and cannot contain any letters. The value "${this.escapeHtml(value)}" contains letters, which makes it invalid.</td></tr>`;
+                } else if (error.includes('must be 7-12 digits')) {
+                    const digitCount = digits.length;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>Wrong number of digits (found ${digitCount}, need 7-12)</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">UK bank account numbers must be between 7 and 12 digits. The value "${this.escapeHtml(value)}" contains ${digitCount} digit${digitCount !== 1 ? 's' : ''}.</td></tr>`;
+                    if (digitCount < 7) {
+                        explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Possible issue:</td><td style="padding: 8px;">The account number may be missing digits or may have been truncated.</td></tr>`;
+                    } else if (digitCount > 12) {
+                        explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Possible issue:</td><td style="padding: 8px;">The account number may have extra digits or may be combined with other information.</td></tr>`;
+                    }
+                } else {
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>${this.escapeHtml(error)}</strong></td></tr>`;
+                    explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">The account number format is invalid.</td></tr>`;
+                }
+                
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td><td style="padding: 8px;">Verify the account number. UK bank account numbers must be:<br>• <strong>7-12 digits</strong> (most common is 8 digits)<br>• <strong>Purely numeric</strong> (no letters or special characters)<br>• <strong>Examples:</strong> 12345678, 1234567890</td></tr>`;
+                explanation += `</table>`;
+                return explanation;
             }
 
             // Generic explanation - try to parse error message for more details
