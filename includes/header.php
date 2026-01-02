@@ -19,16 +19,17 @@
     </div>
 </div>
 <!-- Navigation -->
-<nav class="bg-white shadow">
+<nav class="bg-white shadow relative z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex items-center">
                 <div class="flex-shrink-0 flex items-center">
                     <a href="/" class="flex items-center group">
                         <img src="/assets/images/Data Cleaning Icon 300.png" alt="Simple Data Cleaner" class="h-10 w-auto mr-2 transition-transform group-hover:scale-105">
                         <span class="text-xl font-bold text-slate-800 group-hover:text-slate-900 transition-colors">Simple Data Cleaner</span>
                     </a>
                 </div>
+                <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-6 ml-10">
                     <a href="/how-it-works.php"
                        class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'how-it-works.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
@@ -56,15 +57,9 @@
                     </a>
                 </div>
             </div>
-                <div class="flex items-center gap-4 flex-wrap justify-end text-sm">
-                <div class="md:hidden flex items-center space-x-4 mr-2">
-                    <a href="/how-it-works.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">How It Works</a>
-                    <a href="/documentation.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Docs</a>
-                    <a href="/pricing.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Pricing</a>
-                    <a href="/beta-offer.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'beta-offer.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Lifetime Beta</a>
-                    <a href="/feedback.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Feedback</a>
-                    <a href="/bespoke.php" class="text-sm font-medium transition-colors <?php echo $currentPath === 'bespoke.php' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'; ?>">Bespoke</a>
-                </div>
+            
+            <!-- Right side: User menu / Auth buttons -->
+            <div class="flex items-center gap-3 md:gap-4">
                 <?php if ($user): ?>
                     <?php
                     // Get subscription if not already available
@@ -82,19 +77,25 @@
                         $subscriptionLifetime = !empty($subscriptionFeatures['lifetime_access']);
                     }
                     ?>
-                    <?php if ($subscription): ?>
-                        <a href="/dashboard.php" class="font-medium transition-colors <?php echo $currentPath === 'dashboard.php' ? 'text-blue-600' : 'text-gray-700 hover:text-gray-900'; ?>">Dashboard</a>
-                    <?php else: ?>
-                        <a href="/pricing.php" class="font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'text-blue-600' : 'text-slate-700 hover:text-slate-900'; ?>">Choose a Plan</a>
-                    <?php endif; ?>
+                    <!-- Desktop: Show Dashboard/Plan link -->
+                    <div class="hidden md:block">
+                        <?php if ($subscription): ?>
+                            <a href="/dashboard.php" class="font-medium transition-colors <?php echo $currentPath === 'dashboard.php' ? 'text-blue-600' : 'text-gray-700 hover:text-gray-900'; ?>">Dashboard</a>
+                        <?php else: ?>
+                            <a href="/pricing.php" class="font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'text-blue-600' : 'text-slate-700 hover:text-slate-900'; ?>">Choose a Plan</a>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <!-- User dropdown menu -->
                     <div class="relative group">
-                        <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors">
-                            <span><?php echo htmlspecialchars($user['email']); ?></span>
+                        <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors text-sm md:text-base">
+                            <span class="hidden sm:inline"><?php echo htmlspecialchars($user['email']); ?></span>
+                            <span class="sm:hidden">Account</span>
                             <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div class="absolute right-0 w-56 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                        <div class="absolute right-0 w-56 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <?php if ($subscription): ?>
                                 <div class="px-4 pb-3 border-b border-gray-100 text-xs text-gray-600">
                                     <p class="font-semibold text-gray-800 mb-1 flex items-center gap-2">
@@ -128,12 +129,126 @@
                         </div>
                     </div>
                 <?php else: ?>
-                    <a href="/login.php" class="transition-colors <?php echo $currentPath === 'login.php' ? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-gray-900'; ?>">Login</a>
-                    <a href="/register.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-medium transform hover:-translate-y-0.5 <?php echo $currentPath === 'register.php' ? 'ring-2 ring-blue-300' : ''; ?>">
-                        Sign Up Free
+                    <!-- Not logged in -->
+                    <a href="/login.php" class="hidden sm:inline-block transition-colors <?php echo $currentPath === 'login.php' ? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-gray-900'; ?>">Login</a>
+                    <a href="/register.php" class="bg-blue-600 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-medium text-sm md:text-base">
+                        <span class="hidden sm:inline">Sign Up Free</span>
+                        <span class="sm:hidden">Sign Up</span>
                     </a>
                 <?php endif; ?>
+                
+                <!-- Mobile menu button -->
+                <button id="mobileMenuButton" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-expanded="false" aria-label="Toggle menu">
+                    <svg class="block h-6 w-6" id="mobileMenuIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg class="hidden h-6 w-6" id="mobileMenuCloseIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
+    
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 bg-white">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="/how-it-works.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                How It Works
+            </a>
+            <a href="/documentation.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                Documentation
+            </a>
+            <a href="/pricing.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                Pricing
+            </a>
+            <a href="/beta-offer.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'beta-offer.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                Lifetime Beta
+            </a>
+            <a href="/feedback.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                Feedback
+            </a>
+            <a href="/bespoke.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'bespoke.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                Bespoke
+            </a>
+            <?php if ($user): ?>
+                <hr class="my-2 border-gray-200">
+                <?php if ($subscription): ?>
+                    <a href="/dashboard.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'dashboard.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                        Dashboard
+                    </a>
+                <?php else: ?>
+                    <a href="/pricing.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                        Choose a Plan
+                    </a>
+                <?php endif; ?>
+                <a href="/account.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'account.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                    Account Settings
+                </a>
+                <a href="/logout.php" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-gray-50 transition-colors">
+                    Logout
+                </a>
+            <?php else: ?>
+                <hr class="my-2 border-gray-200">
+                <a href="/login.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'login.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                    Login
+                </a>
+                <a href="/register.php" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                    Sign Up Free
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
 </nav>
+
+<script>
+// Mobile menu toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+    const mobileMenuCloseIcon = document.getElementById('mobileMenuCloseIcon');
+    
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                // Show menu
+                mobileMenu.classList.remove('hidden');
+                mobileMenuIcon.classList.add('hidden');
+                mobileMenuCloseIcon.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            } else {
+                // Hide menu
+                mobileMenu.classList.add('hidden');
+                mobileMenuIcon.classList.remove('hidden');
+                mobileMenuCloseIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+        
+        // Close menu when clicking on a link (mobile)
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                mobileMenuIcon.classList.remove('hidden');
+                mobileMenuCloseIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            });
+        });
+        
+        // Close menu when clicking outside (optional)
+        document.addEventListener('click', function(event) {
+            const isClickInside = mobileMenu.contains(event.target) || mobileMenuButton.contains(event.target);
+            if (!isClickInside && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                mobileMenuIcon.classList.remove('hidden');
+                mobileMenuCloseIcon.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+});
+</script>

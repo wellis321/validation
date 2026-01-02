@@ -535,10 +535,13 @@ class FileProcessor {
         for (let i = 0; i < dataToExport.length; i++) {
             const originalRow = dataToExport[i];
             const cleanedRow = [...originalRow];
-            const issuesList = [];
+            let issuesList = [];
 
-            // If cleanedData is NOT provided, we need to process validation results
-            if (!results.cleanedData) {
+            // If cleanedData was provided, use pre-computed issues from buildFullCleanedDataset
+            if (results.cleanedData && results.issuesByRow && results.issuesByRow[i]) {
+                issuesList = results.issuesByRow[i];
+            } else if (!results.cleanedData) {
+                // If cleanedData is NOT provided, we need to process validation results
                 const processedRow = results.processedRows.find(p => p.rowNumber === (i + 2));
 
                 if (processedRow) {
@@ -713,9 +716,12 @@ class FileProcessor {
 
             // Create a copy of the original row with normalized empty values
             const cleanedRow = originalRow.map(val => this.normalizeCellValue(val));
-            const issuesList = [];
+            let issuesList = [];
 
-            if (processedRow) {
+            // If cleanedData was provided, use pre-computed issues from buildFullCleanedDataset
+            if (results.cleanedData && results.issuesByRow && results.issuesByRow[i]) {
+                issuesList = results.issuesByRow[i];
+            } else if (processedRow) {
                 // Apply all validation results to the row and collect issues
                 processedRow.validationResults.forEach(result => {
                     // Find the column index for this validation result
@@ -883,8 +889,12 @@ class FileProcessor {
     }
 
     exportCleanedJSON(results, includeIssuesColumn = false, onlyRowsWithIssues = false) {
+        // Use cleanedData if provided (for duplicate removal), otherwise use original data
+        const dataToExport = results.cleanedData || results.originalData.slice(1);
+        const headers = results.headers || results.originalHeaders;
+        
         // Create headers with optional "Issues" column
-        const cleanedHeaders = [...results.originalHeaders];
+        const cleanedHeaders = [...headers];
         if (includeIssuesColumn) {
             cleanedHeaders.push('Issues');
         }
@@ -892,31 +902,42 @@ class FileProcessor {
         // Build array of objects
         const jsonData = [];
 
-        // Process each original data row
-        for (let i = 1; i < results.originalData.length; i++) {
-            const originalRow = results.originalData[i];
-            const processedRow = results.processedRows.find(p => p.rowNumber === i + 1);
+        // Process each data row
+        for (let i = 0; i < dataToExport.length; i++) {
+            const originalRow = dataToExport[i];
             const rowObject = {};
-            const issuesList = [];
+            let issuesList = [];
 
-            if (processedRow) {
-                // Map each column
-                results.originalHeaders.forEach((header, index) => {
-                    const result = processedRow.validationResults.find(r => r.column === header);
-                    if (result && result.fixed && result.isValid) {
-                        rowObject[header] = result.fixed;
-                    } else {
-                        rowObject[header] = originalRow[index] || '';
-                    }
-                    if (result && !result.isValid) {
-                        issuesList.push(header);
-                    }
-                });
-            } else {
-                // No processing, use original row
-                results.originalHeaders.forEach((header, index) => {
+            // If cleanedData was provided, use pre-computed issues from buildFullCleanedDataset
+            if (results.cleanedData && results.issuesByRow && results.issuesByRow[i]) {
+                issuesList = results.issuesByRow[i];
+                // Map cleaned data to object
+                headers.forEach((header, index) => {
                     rowObject[header] = originalRow[index] || '';
                 });
+            } else {
+                // Process validation results
+                const processedRow = results.processedRows.find(p => p.rowNumber === i + 2);
+                
+                if (processedRow) {
+                    // Map each column
+                    headers.forEach((header, index) => {
+                        const result = processedRow.validationResults.find(r => r.column === header);
+                        if (result && result.fixed && result.isValid) {
+                            rowObject[header] = result.fixed;
+                        } else {
+                            rowObject[header] = originalRow[index] || '';
+                        }
+                        if (result && !result.isValid) {
+                            issuesList.push(header);
+                        }
+                    });
+                } else {
+                    // No processing, use original row
+                    headers.forEach((header, index) => {
+                        rowObject[header] = originalRow[index] || '';
+                    });
+                }
             }
 
             // Only include this row if we're not filtering or if it has issues

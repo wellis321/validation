@@ -859,13 +859,15 @@ class SortCodeValidator {
         // Step 3: Remove wrapping characters
         cleaned = this.removeWrapping(cleaned);
 
-        // Step 4: Remove all non-digit characters to get just the digits
-        const digits = cleaned.replace(/\D/g, '');
-
-        // Step 5: If the value contains letters (after cleaning), it's not a sort code
-        if (/[A-Za-z]/.test(value) && digits.length === 0) {
+        // Step 4: Check if the original value contains letters - sort codes are purely numeric
+        // This must be checked BEFORE extracting digits, because NI numbers like "CD234567D"
+        // would extract "234567" and incorrectly validate as a sort code
+        if (/[A-Za-z]/.test(cleaned)) {
             return new ValidationResult(false, value, 'Sort codes cannot contain letters');
         }
+
+        // Step 5: Remove all non-digit characters to get just the digits
+        const digits = cleaned.replace(/\D/g, '');
 
         // Step 6: If we have 5 digits or less, don't try to fix it
         if (digits.length < 6) {

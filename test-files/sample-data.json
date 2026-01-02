@@ -1,0 +1,85 @@
+[
+  {
+    "Name": "John Smith",
+    "Phone Number": "020 7946 0958",
+    "Mobile": "07700 900123",
+    "National Insurance": "AB123456C",
+    "Postcode": "SW1A 1AA",
+    "Sort Code": "12-34-56",
+    "Bank Account": "12345678"
+  },
+  {
+    "Name": "Jane Doe",
+    "Phone Number": "+44 20 7946 0958",
+    "Mobile": "07700900123",
+    "National Insurance": "CD234567D",
+    "Postcode": "M1 1AA",
+    "Sort Code": "23-45-67",
+    "Bank Account": "23456789"
+  },
+  {
+    "Name": "Bob Johnson",
+    "Phone Number": "02079460958",
+    "Mobile": "07700 900 123",
+    "National Insurance": "EF345678E",
+    "Postcode": "EC1A 1BB",
+    "Sort Code": "34-56-78",
+    "Bank Account": "34567890"
+  },
+  {
+    "Name": "Alice Brown",
+    "Phone Number": "+442079460958",
+    "Mobile": "07700900123",
+    "National Insurance": "GH456789F",
+    "Postcode": "W1A 1AA",
+    "Sort Code": "45-67-89",
+    "Bank Account": "45678901"
+  },
+  {
+    "Name": "Charlie Wilson",
+    "Phone Number": "020 7946 0958",
+    "Mobile": "07700-900-123",
+    "National Insurance": "IJ567890G",
+    "Postcode": "CR2 6XH",
+    "Sort Code": "56-78-90",
+    "Bank Account": "56789012"
+  },
+  {
+    "Name": "David Lee",
+    "Phone Number": "02079460958",
+    "Mobile": "07700.900.123",
+    "National Insurance": "KL678901H",
+    "Postcode": "M60 1AA",
+    "Sort Code": "67-89-01",
+    "Bank Account": "67890123"
+  },
+  {
+    "Name": "Emma Davis",
+    "Phone Number": "+44 20 7946 0958",
+    "Mobile": "07700900123",
+    "National Insurance": "MN789012I",
+    "Postcode": "SW1A 1AA",
+    "Sort Code": "78-90-12",
+    "Bank Account": "78901234"
+  },
+  {
+    "Name": "Invalid Phone",
+    "Phone Number": "12345",
+    "Mobile": "999999999",
+    "National Insurance": "AB999999Z",
+    "Postcode": "INVALID",
+    "Sort Code": "99-99-99",
+    "Bank Account": "123"
+  },
+  {
+    "Name": "Missing Data",
+    "Phone Number": "",
+    "Mobile": "",
+    "National Insurance": "AB123456C",
+    "Postcode": "SW1A 1AA",
+    "Sort Code": "12-34-56",
+    "Bank Account": ""
+  }
+]
+
+

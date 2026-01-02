@@ -7,8 +7,9 @@
  */
 
 // Stripe API Keys (get from Stripe Dashboard)
-define('STRIPE_SECRET_KEY', 'sb_secret_qR-jQnIWqCXH3I78xTqUWw_7meAkOWh');  // Your secret key
-define('STRIPE_PUBLISHABLE_KEY', 'pk_live_51SFF3xEMgRyvTqUXkOSrwNyQvtxdwM7qVzIGh3UGMaUKDXCeNZoLK0nlO4mjEt2D8SMY30OqlG7A4tuJl74cIPPg00KuJuq4HZ');  // Your publishable key
+// IMPORTANT: Replace these with your actual keys from https://dashboard.stripe.com/apikeys
+define('STRIPE_SECRET_KEY', 'sk_test_...');  // Your secret key (starts with sk_test_ or sk_live_)
+define('STRIPE_PUBLISHABLE_KEY', 'pk_test_...');  // Your publishable key (starts with pk_test_ or pk_live_)
 
 // Stripe Price IDs (get from Stripe Dashboard > Products)
 // Replace these with your actual Price IDs from Stripe
@@ -17,7 +18,8 @@ define('STRIPE_PRICE_MONTHLY', 'price_xxxxxxxxxxxxx');  // £29.99/month
 define('STRIPE_PRICE_ANNUAL', 'price_xxxxxxxxxxxxx');  // £249.00/year
 
 // Webhook secret (for handling subscription events)
-define('STRIPE_WEBHOOK_SECRET', 'whsec_...');
+// Get this from: https://dashboard.stripe.com/webhooks (click on your webhook endpoint)
+define('STRIPE_WEBHOOK_SECRET', 'whsec_...');  // Your webhook signing secret (starts with whsec_)
 
 // Settings
 define('STRIPE_CURRENCY', 'gbp');

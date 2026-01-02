@@ -12,8 +12,15 @@ RewriteRule ^(.*)$ https://%1/$1 [L,R=301]
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Redirect index.php and index.html to root (canonical URL)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(php|html)\ HTTP/
+RewriteRule ^index\.(php|html)$ https://simple-data-cleaner.com/ [R=301,L]
+
 # Set default index files
 DirectoryIndex index.php index.html
+
+# Custom error pages
+ErrorDocument 404 /404.php
 
 # PHP error reporting (disable display in production)
 php_flag display_errors off

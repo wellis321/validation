@@ -234,22 +234,53 @@ class UKDataCleanerApp {
         // Parse file headers to show field selection
         try {
             console.log('Reading file...');
-            const text = await this.readFileAsText(file);
-            console.log('File read, parsing...');
-            const lines = text.split('\n').filter(line => line.trim());
-            console.log('Found', lines.length, 'lines');
-            if (lines.length > 0) {
-                // Use proper CSV parsing for headers
-                this.fileHeaders = this.parseCSVLine(lines[0]);
-                console.log('Headers:', this.fileHeaders);
-                // Parse all data rows properly
-                this.fileData = lines.map(line => this.parseCSVLine(line));
-                console.log('Showing field selection...');
-                this.showFieldSelection();
+            
+            // Check if it's an Excel file - use FileProcessor's readFileContent for proper handling
+            const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+                file.type === 'application/vnd.ms-excel' ||
+                file.name.endsWith('.xlsx') ||
+                file.name.endsWith('.xls');
+            const isJson = file.type === 'application/json' || file.name.endsWith('.json');
+            
+            if (isExcel || isJson) {
+                // Use FileProcessor to properly read Excel/JSON files
+                const content = await this.fileProcessor.readFileContent(file);
+                
+                let rows;
+                if (content.type === 'excel') {
+                    rows = content.data;
+                } else if (content.type === 'json') {
+                    rows = this.fileProcessor.parseJSON(content.data);
+                } else {
+                    throw new Error('Unexpected content type from FileProcessor');
+                }
+                
+                if (rows.length > 0) {
+                    this.fileHeaders = rows[0];
+                    this.fileData = rows;
+                    console.log('Headers:', this.fileHeaders);
+                    console.log('Showing field selection...');
+                    this.showFieldSelection();
+                }
+            } else {
+                // Handle CSV/text files with existing method
+                const text = await this.readFileAsText(file);
+                console.log('File read, parsing...');
+                const lines = text.split('\n').filter(line => line.trim());
+                console.log('Found', lines.length, 'lines');
+                if (lines.length > 0) {
+                    // Use proper CSV parsing for headers
+                    this.fileHeaders = this.parseCSVLine(lines[0]);
+                    console.log('Headers:', this.fileHeaders);
+                    // Parse all data rows properly
+                    this.fileData = lines.map(line => this.parseCSVLine(line));
+                    console.log('Showing field selection...');
+                    this.showFieldSelection();
+                }
             }
         } catch (err) {
             console.error('Error reading file:', err);
-            this.showError('Could not read file headers');
+            this.showError('Could not read file headers: ' + err.message);
         }
     }
 
@@ -790,7 +821,8 @@ class UKDataCleanerApp {
         if (!headerRow || !tbody || !this.results) return;
 
         const headers = this.fileHeaders;
-        const cleanedData = this.buildFullCleanedDataset();
+        const datasetResult = this.buildFullCleanedDataset();
+        const cleanedData = datasetResult.cleanedData;
 
         // Build header row
         headerRow.innerHTML = `
@@ -856,34 +888,39 @@ class UKDataCleanerApp {
     }
 
     buildFullCleanedDataset() {
-        if (!this.results || !this.fileData) return [];
+        if (!this.results || !this.fileData) return { cleanedData: [], issuesByRow: [] };
 
         const cleanedData = [];
+        const issuesByRow = [];
         const headers = this.fileHeaders;
 
         // For each original row (skip header row which is index 0)
         for (let i = 1; i < this.fileData.length; i++) {
             const originalRow = this.fileData[i];
             const cleanedRow = [...originalRow]; // Start with original
+            const issuesList = [];
 
             // Find validation results for this row (row numbers are 1-indexed, starting from 2 for data)
             const rowResults = this.results.processedRows.find(r => r.rowNumber === i + 1);
 
             if (rowResults) {
-                // Apply cleaned values to selected columns only
+                // Apply cleaned values to selected columns only and collect issues
                 rowResults.validationResults.forEach(result => {
                     const colIndex = headers.indexOf(result.column);
                     if (colIndex !== -1 && result.isValid && result.fixed) {
                         cleanedRow[colIndex] = result.fixed;
+                    } else if (colIndex !== -1 && !result.isValid) {
+                        // Track invalid values for Issues column
+                        issuesList.push(result.column);
                     }
-                    // If invalid, keep original value
                 });
             }
 
             cleanedData.push(cleanedRow);
+            issuesByRow.push(issuesList);
         }
 
-        return cleanedData;
+        return { cleanedData, issuesByRow };
     }
 
     wasCellModified(rowIndex, columnName) {
@@ -1063,12 +1100,29 @@ class UKDataCleanerApp {
             const trimWhitespace = document.getElementById('trimWhitespace')?.checked || false;
 
             // Build cleaned dataset
-            let cleanedData = this.buildFullCleanedDataset();
+            const datasetResult = this.buildFullCleanedDataset();
+            let cleanedData = datasetResult.cleanedData;
+            const issuesByRow = datasetResult.issuesByRow;
 
             // Apply duplicate removal if requested
+            // IMPORTANT: Duplicates must be identified based on ORIGINAL data, not cleaned data
+            // because cleaned data may have different values (formatted phone numbers, etc.)
             if (removeDuplicates && cleanedData.length > 0) {
                 const originalCount = cleanedData.length;
-                cleanedData = this.removeDuplicates(cleanedData);
+                // Use duplicate indices identified from original data (before cleaning)
+                // cleanedData indices match fileData indices (both skip header row)
+                if (this.duplicateRowIndices && this.duplicateRowIndices.duplicates) {
+                    // Filter out rows that are marked as duplicates in the original data
+                    // cleanedData[0] corresponds to fileData[1] (first data row)
+                    cleanedData = cleanedData.filter((row, index) => {
+                        // index in cleanedData corresponds to (index + 1) in fileData (since fileData[0] is header)
+                        // But duplicateRowIndices uses 0-based index for data rows (fileData[1] = index 0)
+                        return !this.duplicateRowIndices.duplicates.has(index);
+                    });
+                } else {
+                    // Fallback: use removeDuplicates method (compares cleaned rows)
+                    cleanedData = this.removeDuplicates(cleanedData);
+                }
                 const removedCount = originalCount - cleanedData.length;
                 console.log(`Removed ${removedCount} duplicate rows`);
             }
@@ -1085,11 +1139,12 @@ class UKDataCleanerApp {
                 );
             }
 
-            // Create a modified results object with the cleaned data
+            // Create a modified results object with the cleaned data and issues
             const modifiedResults = {
                 ...this.results,
                 cleanedData: cleanedData,
-                headers: this.fileHeaders
+                headers: this.fileHeaders,
+                issuesByRow: issuesByRow // Include issues information for export
             };
 
             const blob = await this.fileProcessor.exportResults(modifiedResults, format, includeIssuesColumn, onlyRowsWithIssues);
