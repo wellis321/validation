@@ -840,30 +840,152 @@ class UKDataCleanerApp {
             const error = result.error || '';
             const value = result.value;
 
-            // NI Number explanations
-            if (column.includes('ni') || column.includes('insurance') || result.detectedType === 'ni_number') {
-                if (error.includes('Invalid first letter') || error.includes('Invalid second letter')) {
-                    const prefix = value.replace(/[^A-Z]/gi, '').substring(0, 2).toUpperCase();
-                    const firstLetter = prefix[0];
-                    const secondLetter = prefix[1];
+            // Extract prefix from NI numbers
+            const extractNIPrefix = (val) => {
+                const cleaned = val.replace(/[^A-Z]/gi, '').toUpperCase();
+                return cleaned.substring(0, 2);
+            };
+
+            // NI Number explanations - check error message FIRST (most reliable)
+            // This catches cases where detectedType is 'unknown' but error message has details
+            if (error.includes('Invalid first letter') || error.includes('Invalid second letter') || 
+                error.includes('banned by HMRC') || error.includes('administrative prefix') ||
+                error.includes('NI number') || error.includes('not used in NI number prefixes') ||
+                column.includes('ni') || column.includes('insurance') || 
+                result.detectedType === 'ni_number') {
+                
+                const prefix = extractNIPrefix(value);
+                
+                // Parse specific error messages
+                if (error.includes('Invalid first letter')) {
+                    // Extract the letter from error message: "Invalid first letter 'X'"
+                    const letterMatch = error.match(/first letter '([A-Z])'/);
+                    const letter = letterMatch ? letterMatch[1] : prefix[0];
                     
-                    let explanation = `<strong>Why this is invalid:</strong><br>`;
-                    explanation += `The NI number prefix "${prefix}" contains invalid letters according to UK HMRC standards.<br><br>`;
+                    return `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">NI Number:</td>
+                            <td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Prefix:</td>
+                            <td style="padding: 8px;"><strong>${prefix}</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td>
+                            <td style="padding: 8px; color: #dc2626;"><strong>First letter "${letter}" is not allowed</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td>
+                            <td style="padding: 8px;">The first letter "${letter}" is not used in NI number prefixes according to UK HMRC standards.<br><br>
+                            <strong>Invalid first letters:</strong> D, F, I, Q, U, V</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td>
+                            <td style="padding: 8px;">Verify this NI number with the individual. If it's correct, it may need to be reported to HMRC.</td>
+                        </tr>
+                    </table>`;
+                } else if (error.includes('Invalid second letter')) {
+                    // Extract the letter from error message: "Invalid second letter 'X'"
+                    const letterMatch = error.match(/second letter '([A-Z])'/);
+                    const letter = letterMatch ? letterMatch[1] : prefix[1];
                     
-                    if (error.includes('first letter')) {
-                        explanation += `<strong>Problem:</strong> The first letter "${firstLetter}" is not used in NI number prefixes.<br>`;
-                        explanation += `<strong>Invalid first letters:</strong> D, F, I, Q, U, V<br>`;
-                    } else if (error.includes('second letter')) {
-                        explanation += `<strong>Problem:</strong> The second letter "${secondLetter}" is not used in NI number prefixes.<br>`;
-                        explanation += `<strong>Invalid second letters:</strong> D, F, I, O, Q, U, V<br>`;
-                    }
-                    
-                    explanation += `<br><strong>What to do:</strong> Verify this NI number with the individual. If it's correct, it may need to be reported to HMRC.`;
-                    return explanation;
+                    return `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">NI Number:</td>
+                            <td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Prefix:</td>
+                            <td style="padding: 8px;"><strong>${prefix}</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td>
+                            <td style="padding: 8px; color: #dc2626;"><strong>Second letter "${letter}" is not allowed</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td>
+                            <td style="padding: 8px;">The second letter "${letter}" is not used in NI number prefixes according to UK HMRC standards.<br><br>
+                            <strong>Invalid second letters:</strong> D, F, I, O, Q, U, V</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td>
+                            <td style="padding: 8px;">Verify this NI number with the individual. If it's correct, it may need to be reported to HMRC.</td>
+                        </tr>
+                    </table>`;
                 } else if (error.includes('banned by HMRC')) {
-                    return `<strong>Why this is invalid:</strong><br>The prefix "${value.replace(/[^A-Z]/gi, '').substring(0, 2)}" is banned by HMRC standards.<br><br><strong>Banned prefixes:</strong> BG, GB, KN, NK, NT, TN, ZZ<br><br><strong>What to do:</strong> Verify this NI number with the individual.`;
+                    const prefixMatch = error.match(/prefix '([A-Z]{2})'/);
+                    const bannedPrefix = prefixMatch ? prefixMatch[1] : prefix;
+                    
+                    return `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">NI Number:</td>
+                            <td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Prefix:</td>
+                            <td style="padding: 8px;"><strong>${bannedPrefix}</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td>
+                            <td style="padding: 8px; color: #dc2626;"><strong>Prefix "${bannedPrefix}" is banned by HMRC</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td>
+                            <td style="padding: 8px;">The prefix "${bannedPrefix}" is banned by HMRC standards and cannot be used in valid NI numbers.<br><br>
+                            <strong>Banned prefixes:</strong> BG, GB, KN, NK, NT, TN, ZZ</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td>
+                            <td style="padding: 8px;">Verify this NI number with the individual.</td>
+                        </tr>
+                    </table>`;
                 } else if (error.includes('administrative prefix')) {
-                    return `<strong>Why this is invalid:</strong><br>This prefix is reserved for administrative use, not valid NI numbers.<br><br><strong>Administrative prefixes:</strong> OO, FY, NC, PZ<br><br><strong>What to do:</strong> Verify this NI number with the individual.`;
+                    const prefixMatch = error.match(/'([A-Z]{2})'/);
+                    const adminPrefix = prefixMatch ? prefixMatch[1] : prefix;
+                    
+                    return `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">NI Number:</td>
+                            <td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Prefix:</td>
+                            <td style="padding: 8px;"><strong>${adminPrefix}</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td>
+                            <td style="padding: 8px; color: #dc2626;"><strong>"${adminPrefix}" is an administrative prefix</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td>
+                            <td style="padding: 8px;">This prefix is reserved for administrative use, not valid NI numbers.<br><br>
+                            <strong>Administrative prefixes:</strong> OO, FY, NC, PZ</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td>
+                            <td style="padding: 8px;">Verify this NI number with the individual.</td>
+                        </tr>
+                    </table>`;
+                } else if (error.includes('Invalid NI number format')) {
+                    return `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Value:</td>
+                            <td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td>
+                            <td style="padding: 8px; color: #dc2626;"><strong>Invalid format</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td>
+                            <td style="padding: 8px;">NI numbers must be in the format: 2 letters + 6 digits + 1 letter (e.g., AB123456C)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td>
+                            <td style="padding: 8px;">Verify the format and check for typos or missing characters.</td>
+                        </tr>
+                    </table>`;
                 }
             }
 
@@ -887,8 +1009,13 @@ class UKDataCleanerApp {
                 return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Verify the account number. UK bank account numbers are typically 7-12 digits.`;
             }
 
-            // Generic explanation
-            return `<strong>Why this is invalid:</strong><br>${error}<br><br><strong>What to do:</strong> Review the value and verify it matches the expected format for this field.`;
+            // Generic explanation - try to parse error message for more details
+            let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
+            explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Value:</td><td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td></tr>`;
+            explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Error:</td><td style="padding: 8px; color: #dc2626;">${this.escapeHtml(error)}</td></tr>`;
+            explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td><td style="padding: 8px;">Review the value and verify it matches the expected format for this field.</td></tr>`;
+            explanation += `</table>`;
+            return explanation;
         };
 
         // Build HTML report
