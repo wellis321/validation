@@ -193,14 +193,14 @@ class UKDataCleanerApp {
         if (fileSizeMB > maxMB) {
             return {
                 safe: false,
-                message: `⚠️ Warning: This file (${fileSizeMB.toFixed(1)} MB) exceeds the recommended limit of ${maxMB.toFixed(0)} MB for your device. Processing may be slow or cause your browser to become unresponsive.`,
+                message: `<svg class="inline w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> Warning: This file (${fileSizeMB.toFixed(1)} MB) exceeds the recommended limit of ${maxMB.toFixed(0)} MB for your device. Processing may be slow or cause your browser to become unresponsive.`,
                 canStillProcess: fileSizeMB < maxMB * 2 // Allow up to 2x with warning
             };
         } else if (fileSizeMB > maxMB * 0.8) {
             return {
                 safe: true,
                 warning: true,
-                message: `ℹ️ This file (${fileSizeMB.toFixed(1)} MB) is close to the recommended limit. Processing may take a moment.`
+                message: `<svg class="inline w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> This file (${fileSizeMB.toFixed(1)} MB) is close to the recommended limit. Processing may take a moment.`
             };
         }
 
@@ -1096,6 +1096,16 @@ class UKDataCleanerApp {
             return explanation;
         };
 
+        // Generate sidebar navigation before building HTML
+        const sidebarNav = Object.entries(issuesByType).map(([type, issues]) => {
+            const typeId = 'issue-type-' + type.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+            const displayName = this.getTypeDisplayName(type);
+            return `<a href="#${typeId}" onclick="event.preventDefault(); document.getElementById('${typeId}').scrollIntoView({behavior: 'smooth', block: 'start'}); return false;">${displayName} (${issues.length})</a>`;
+        }).join('');
+
+        // Generate unique report ID for refresh detection
+        const reportId = Date.now().toString();
+
         // Build HTML report
         const html = `<!DOCTYPE html>
 <html lang="en">
@@ -1111,10 +1121,100 @@ class UKDataCleanerApp {
             color: #333;
             background: #f5f5f5;
             padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            width: 220px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .sidebar-header a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.2s;
+        }
+        .sidebar-header a:hover {
+            opacity: 0.8;
+        }
+        .sidebar-logo {
+            width: 60px;
+            height: auto;
+            margin: 0 auto 8px;
+            display: block;
+        }
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+        .sidebar h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 8px 12px;
+            color: #4b5563;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        .sidebar a:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+        .sidebar a.active {
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
         }
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            flex: 1;
+            max-width: 1000px;
             background: white;
             padding: 30px;
             border-radius: 8px;
@@ -1144,6 +1244,7 @@ class UKDataCleanerApp {
         }
         .issue-type {
             margin-bottom: 40px;
+            scroll-margin-top: 20px;
         }
         .issue-type h3 {
             color: #1f2937;
@@ -1206,6 +1307,63 @@ class UKDataCleanerApp {
         .explanation strong {
             color: #1e40af;
         }
+        .warning-banner {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+        .warning-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+        .warning-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .print-btn {
+            background: #ffffff;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+        }
+        .print-btn:hover {
+            background: #fef3c7;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .download-btn {
+            background: #f59e0b;
+            color: #ffffff;
+        }
+        .download-btn:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
         .footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -1232,9 +1390,47 @@ class UKDataCleanerApp {
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>📋 Detailed Validation Issues Report</h1>
+<body data-report-id="${reportId}">
+        ${sidebarNav ? `
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a href="/">
+                    <img src="/assets/images/Data Cleaning Icon 300.png" alt="Simple Data Cleaner" class="sidebar-logo">
+                    <h2 class="sidebar-title">Simple Data Cleaner</h2>
+                </a>
+            </div>
+            <h3>Navigation</h3>
+            <nav>
+                ${sidebarNav}
+            </nav>
+        </div>
+        ` : ''}
+        <div class="container">
+        <div class="warning-banner">
+            <div class="warning-content">
+                <svg class="warning-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div style="flex: 1;">
+                    <strong>Important:</strong> This report is temporary. If you refresh this page, it will be lost. Save it now:
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button onclick="window.print(); return false;" class="action-btn print-btn">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    Print Report
+                </button>
+                <button onclick="downloadReport(); return false;" class="action-btn download-btn">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download Report
+                </button>
+            </div>
+        </div>
+        <h1>Detailed Validation Issues Report</h1>
         <p class="subtitle">Generated on ${new Date().toLocaleString()}</p>
 
         <div class="summary">
@@ -1244,48 +1440,154 @@ class UKDataCleanerApp {
             <p><strong>Total Rows Processed:</strong> ${this.results.totalRows}</p>
         </div>
 
-        ${Object.entries(issuesByType).map(([type, issues]) => `
-            <div class="issue-type">
-                <h3>${this.getTypeDisplayName(type)} (${issues.length} ${issues.length === 1 ? 'issue' : 'issues'})</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Row</th>
-                            <th>Column</th>
-                            <th>Invalid Value</th>
-                            <th>Error Message</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${issues.map(({ row, result }) => `
-                            <tr>
-                                <td class="row-number">${row.rowNumber}</td>
-                                <td class="column-name">${result.column}</td>
-                                <td><code class="value">${this.escapeHtml(result.value)}</code></td>
-                                <td class="error">${this.escapeHtml(result.error)}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <div class="explanation">
-                                        ${generateIssueExplanation(result)}
-                                    </div>
-                                </td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `).join('')}
+        ${Object.entries(issuesByType).map(([type, issues]) => {
+            const typeId = 'issue-type-' + type.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+            const displayName = this.getTypeDisplayName(type);
+            const issueCount = issues.length;
+            const issueText = issueCount === 1 ? 'issue' : 'issues';
+            
+            const issuesHtml = issues.map(({ row, result }) => {
+                return '<tr>' +
+                    '<td class="row-number">' + row.rowNumber + '</td>' +
+                    '<td class="column-name">' + result.column + '</td>' +
+                    '<td><code class="value">' + this.escapeHtml(result.value) + '</code></td>' +
+                    '<td class="error">' + this.escapeHtml(result.error) + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td colspan="4">' +
+                    '<div class="explanation">' +
+                    generateIssueExplanation(result) +
+                    '</div>' +
+                    '</td>' +
+                    '</tr>';
+            }).join('');
+            
+            return '<div class="issue-type" id="' + typeId + '">' +
+                '<h3>' + displayName + ' (' + issueCount + ' ' + issueText + ')</h3>' +
+                '<table>' +
+                '<thead>' +
+                '<tr><th>Row</th><th>Column</th><th>Invalid Value</th><th>Error Message</th></tr>' +
+                '</thead>' +
+                '<tbody>' + issuesHtml + '</tbody>' +
+                '</table>' +
+                '</div>';
+        }).join('')}
 
         <div class="footer">
             <p>This report was generated by Simple Data Cleaner</p>
             <p>For more information, visit <a href="https://simple-data-cleaner.com">simple-data-cleaner.com</a></p>
         </div>
     </div>
+    <script>
+        // CRITICAL: Restoration check must run FIRST, before any other scripts
+        // This ensures the report is restored immediately if the page was refreshed
+        (function() {
+            try {
+                const storedReport = sessionStorage.getItem('detailedIssuesReport');
+                const storedReportId = sessionStorage.getItem('detailedIssuesReportId');
+                
+                if (!storedReport || !storedReportId) {
+                    return; // No stored report to restore
+                }
+                
+                function attemptRestore() {
+                    const body = document.body;
+                    
+                    // If body doesn't exist yet, the page is definitely blank - restore immediately
+                    if (!body) {
+                        document.open();
+                        document.write(storedReport);
+                        document.close();
+                        return;
+                    }
+                    
+                    // Check if current page has the report content
+                    const currentReportId = body.getAttribute('data-report-id');
+                    const hasReportContent = body.querySelector && (
+                        body.querySelector('.container') || 
+                        body.querySelector('.sidebar')
+                    );
+                    
+                    // If page is blank or doesn't match stored report, restore immediately
+                    if (!currentReportId || currentReportId !== storedReportId || !hasReportContent) {
+                        document.open();
+                        document.write(storedReport);
+                        document.close();
+                        return; // Stop execution - page will reload with restored content
+                    }
+                }
+                
+                // Try immediately
+                if (document.readyState === 'loading' && !document.body) {
+                    // Wait for body to exist
+                    const observer = new MutationObserver(function(mutations, obs) {
+                        if (document.body) {
+                            obs.disconnect();
+                            attemptRestore();
+                        }
+                    });
+                    observer.observe(document.documentElement, { childList: true, subtree: true });
+                    
+                    // Also try on DOMContentLoaded as backup
+                    document.addEventListener('DOMContentLoaded', function() {
+                        observer.disconnect();
+                        attemptRestore();
+                    });
+                } else {
+                    // Body exists or DOM is ready, check immediately
+                    attemptRestore();
+                }
+            } catch (e) {
+                console.warn('Restoration check failed:', e);
+            }
+        })();
+        
+        // Highlight active section in sidebar on scroll
+        (function() {
+            const sections = document.querySelectorAll('.issue-type');
+            const navLinks = document.querySelectorAll('.sidebar nav a');
+            
+            function updateActiveLink() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.pageYOffset >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Initial call
+        })();
+        
+        // Download report function
+        function downloadReport() {
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'detailed_issues_report_' + new Date().toISOString().split('T')[0] + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+    </script>
 </body>
 </html>`;
 
-        return html;
+        return { html, reportId };
     }
 
     getTypeDisplayName(type) {
@@ -1307,11 +1609,12 @@ class UKDataCleanerApp {
     }
 
     downloadIssuesReport() {
-        const html = this.generateDetailedIssuesReport();
-        if (!html) {
+        const result = this.generateDetailedIssuesReport();
+        if (!result || !result.html) {
             this.showError('No issues found to generate report');
             return;
         }
+        const { html } = result;
 
         const blob = new Blob([html], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
@@ -1326,10 +1629,21 @@ class UKDataCleanerApp {
     }
 
     viewIssuesReport() {
-        const html = this.generateDetailedIssuesReport();
-        if (!html) {
+        const result = this.generateDetailedIssuesReport();
+        if (!result || !result.html) {
             this.showError('No issues found to generate report');
             return;
+        }
+
+        const { html, reportId } = result;
+
+        // Store report in sessionStorage for restoration on refresh
+        try {
+            sessionStorage.setItem('detailedIssuesReport', html);
+            sessionStorage.setItem('detailedIssuesReportId', reportId);
+            sessionStorage.setItem('detailedIssuesReportTimestamp', new Date().toISOString());
+        } catch (e) {
+            console.warn('Could not store report in sessionStorage:', e);
         }
 
         // Open in new window
@@ -1370,7 +1684,7 @@ class UKDataCleanerApp {
             ${headers.map(header => {
                 const isProtected = this.protectedColumns && this.protectedColumns.includes(header);
                 return `<th class="px-4 py-2 text-left border-b-2 border-gray-300 bg-gray-100 sticky top-0 text-xs font-semibold text-gray-700">
-                    ${isProtected ? '🔒 ' : ''}${this.escapeHtml(header)}
+                    ${isProtected ? '<svg class="inline w-4 h-4 text-gray-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> ' : ''}${this.escapeHtml(header)}
                 </th>`;
             }).join('')}
         `;

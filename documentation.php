@@ -158,7 +158,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
 
                         <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mt-6">
                             <p class="text-sm text-blue-900">
-                                <strong>💡 Pro Tip:</strong> Always use the Full Preview feature before downloading to ensure the cleaning results match your expectations.
+                                <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> Pro Tip:</strong> Always use the Full Preview feature before downloading to ensure the cleaning results match your expectations.
                             </p>
                         </div>
                     </div>
@@ -178,7 +178,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 <h3 class="text-lg font-semibold text-gray-900">CSV</h3>
                             </div>
                             <p class="text-sm text-gray-600 mb-2">Comma Separated Values</p>
-                            <ul class="text-xs text-gray-500 space-y-1">
+                            <ul class="text-sm text-gray-500 space-y-1">
                                 <li>• Extension: .csv</li>
                                 <li>• Universal compatibility</li>
                                 <li>• Best for spreadsheets</li>
@@ -194,7 +194,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 <h3 class="text-lg font-semibold text-gray-900">Excel</h3>
                             </div>
                             <p class="text-sm text-gray-600 mb-2">Microsoft Excel Format</p>
-                            <ul class="text-xs text-gray-500 space-y-1">
+                            <ul class="text-sm text-gray-500 space-y-1">
                                 <li>• Extensions: .xlsx, .xls</li>
                                 <li>• Native Excel format</li>
                                 <li>• Preserves formatting</li>
@@ -210,7 +210,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 <h3 class="text-lg font-semibold text-gray-900">JSON</h3>
                             </div>
                             <p class="text-sm text-gray-600 mb-2">JavaScript Object Notation</p>
-                            <ul class="text-xs text-gray-500 space-y-1">
+                            <ul class="text-sm text-gray-500 space-y-1">
                                 <li>• Extension: .json</li>
                                 <li>• Perfect for developers</li>
                                 <li>• Structured data format</li>
@@ -276,7 +276,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             <h3 class="text-xl font-semibold text-gray-900 mb-3">Privacy Guarantee</h3>
                             <div class="bg-green-50 border-l-4 border-green-600 p-4">
                                 <p class="text-sm text-green-900">
-                                    <strong>🔒 100% Private:</strong> Your file is processed entirely in your browser using JavaScript. No data is transmitted to our servers, stored in any database, or accessed by third parties. We never see your data.
+                                    <strong><svg class="inline w-5 h-5 text-green-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> 100% Private:</strong> Your file is processed entirely in your browser using JavaScript. No data is transmitted to our servers, stored in any database, or accessed by third parties. We never see your data.
                                 </p>
                             </div>
                         </div>
@@ -292,9 +292,9 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             <h3 class="text-xl font-semibold text-gray-900 mb-3">Supported UK Data Types</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="border border-gray-200 rounded-lg p-4">
-                                    <h4 class="font-semibold text-gray-900 mb-2">📱 Phone Numbers</h4>
+                                    <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg> Phone Numbers</h4>
                                     <p class="text-sm text-gray-600 mb-2">UK mobile and landline numbers</p>
-                                    <div class="text-xs text-gray-500">
+                                    <div class="text-sm text-gray-500">
                                         <p class="font-medium mb-1">Accepts:</p>
                                         <ul class="list-disc list-inside ml-2">
                                             <li>07123456789</li>
@@ -306,9 +306,9 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 </div>
 
                                 <div class="border border-gray-200 rounded-lg p-4">
-                                    <h4 class="font-semibold text-gray-900 mb-2">🆔 National Insurance</h4>
+                                    <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" /></svg> National Insurance</h4>
                                     <p class="text-sm text-gray-600 mb-2">UK NI numbers</p>
-                                    <div class="text-xs text-gray-500">
+                                    <div class="text-sm text-gray-500">
                                         <p class="font-medium mb-1">Accepts:</p>
                                         <ul class="list-disc list-inside ml-2">
                                             <li>AB123456C</li>
@@ -319,9 +319,9 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 </div>
 
                                 <div class="border border-gray-200 rounded-lg p-4">
-                                    <h4 class="font-semibold text-gray-900 mb-2">📮 Postcodes</h4>
+                                    <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> Postcodes</h4>
                                     <p class="text-sm text-gray-600 mb-2">UK postal codes</p>
-                                    <div class="text-xs text-gray-500">
+                                    <div class="text-sm text-gray-500">
                                         <p class="font-medium mb-1">Accepts:</p>
                                         <ul class="list-disc list-inside ml-2">
                                             <li>SW1A 1AA</li>
@@ -333,9 +333,9 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 </div>
 
                                 <div class="border border-gray-200 rounded-lg p-4">
-                                    <h4 class="font-semibold text-gray-900 mb-2">🏦 Sort Codes</h4>
+                                    <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg> Sort Codes</h4>
                                     <p class="text-sm text-gray-600 mb-2">UK bank sort codes</p>
-                                    <div class="text-xs text-gray-500">
+                                    <div class="text-sm text-gray-500">
                                         <p class="font-medium mb-1">Accepts:</p>
                                         <ul class="list-disc list-inside ml-2">
                                             <li>12-34-56</li>
@@ -407,7 +407,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     <code>reference</code>
                                 </div>
                             </div>
-                            <p class="text-xs text-gray-500 mt-3">
+                            <p class="text-sm text-gray-500 mt-3">
                                 Examples: customer_id, order_number, transaction_key, account_id, reference_code
                             </p>
                         </div>
@@ -416,15 +416,15 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             <h3 class="text-xl font-semibold text-gray-900 mb-3">Visual Indicators</h3>
                             <ul class="space-y-2 text-gray-700">
                                 <li class="flex items-start gap-2">
-                                    <span class="text-xl">🔒</span>
+                                    <svg class="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                                     <span>Protected columns show a lock icon in the field selection area</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-xl">🔒</span>
+                                    <svg class="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                                     <span>Lock icon appears in the Full Preview table headers</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-xl">📋</span>
+                                    <svg class="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                     <span>Listed in the download summary under "Protected Columns"</span>
                                 </li>
                             </ul>
@@ -432,7 +432,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
 
                         <div class="bg-blue-50 border-l-4 border-blue-600 p-4">
                             <p class="text-sm text-blue-900">
-                                <strong>💡 Why Protected?</strong> ID and key columns often contain unique identifiers, order numbers, or reference codes that have specific meaning in your systems. Modifying these could break data relationships or cause integration issues.
+                                <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> Why Protected?</strong> ID and key columns often contain unique identifiers, order numbers, or reference codes that have specific meaning in your systems. Modifying these could break data relationships or cause integration issues.
                             </p>
                         </div>
                     </div>
@@ -547,7 +547,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
 
                         <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4">
                             <p class="text-sm text-indigo-900">
-                                <strong>👁️ Preview Benefits:</strong> The Full Preview eliminates surprises. You can verify the cleaning results, check for any issues, and ensure the output matches your expectations before committing to a download.
+                                <strong><svg class="inline w-5 h-5 text-indigo-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> Preview Benefits:</strong> The Full Preview eliminates surprises. You can verify the cleaning results, check for any issues, and ensure the output matches your expectations before committing to a download.
                             </p>
                         </div>
                     </div>
@@ -575,7 +575,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                         <div class="bg-blue-100 rounded px-2 py-1 inline-block text-xs text-blue-900">
                                             Badge: "HAS DUPLICATES"
                                         </div>
-                                        <p class="text-xs text-blue-700 mt-2">
+                                        <p class="text-sm text-blue-700 mt-2">
                                             <strong>Meaning:</strong> This is the first occurrence - it will be kept even if "Remove duplicates" is checked
                                         </p>
                                     </div>
@@ -592,7 +592,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                         <div class="bg-amber-200 rounded px-2 py-1 inline-block text-xs text-amber-900">
                                             Badge: "DUPLICATE"
                                         </div>
-                                        <p class="text-xs text-amber-700 mt-2">
+                                        <p class="text-sm text-amber-700 mt-2">
                                             <strong>Meaning:</strong> This row will be removed if you check "Remove duplicate rows"
                                         </p>
                                     </div>
@@ -606,7 +606,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     <div class="flex-1">
                                         <h4 class="font-semibold text-green-900 mb-1">Green Cells</h4>
                                         <p class="text-sm text-green-800 mb-2">Individual cells that were cleaned, validated, or fixed</p>
-                                        <p class="text-xs text-green-700 mt-2">
+                                        <p class="text-sm text-green-700 mt-2">
                                             <strong>Meaning:</strong> This specific value was modified by the validation process (e.g., phone number formatted to +44 format)
                                         </p>
                                     </div>
@@ -620,7 +620,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     <div class="flex-1">
                                         <h4 class="font-semibold text-gray-900 mb-1">White/Gray Rows</h4>
                                         <p class="text-sm text-gray-700 mb-2">Normal rows with no duplicates (alternating white and light gray for readability)</p>
-                                        <p class="text-xs text-gray-600 mt-2">
+                                        <p class="text-sm text-gray-600 mt-2">
                                             <strong>Meaning:</strong> Standard row with no special status
                                         </p>
                                     </div>
@@ -702,7 +702,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
 
                         <div class="bg-amber-50 border-l-4 border-amber-600 p-4">
                             <p class="text-sm text-amber-900">
-                                <strong>⚠️ Important:</strong> Duplicate removal is applied AFTER data cleaning. This means the system will detect duplicates based on the cleaned, normalized values - not the original raw data.
+                                <strong><svg class="inline w-5 h-5 text-amber-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> Important:</strong> Duplicate removal is applied AFTER data cleaning. This means the system will detect duplicates based on the cleaned, normalized values - not the original raw data.
                             </p>
                         </div>
                     </div>
@@ -719,7 +719,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div class="border border-green-200 bg-green-50 rounded-lg p-4">
                                     <h4 class="font-semibold text-green-900 mb-2">CSV</h4>
-                                    <ul class="text-xs text-green-800 space-y-1">
+                                    <ul class="text-sm text-green-800 space-y-1">
                                         <li>• Universal compatibility</li>
                                         <li>• Opens in any spreadsheet</li>
                                         <li>• Smallest file size</li>
@@ -727,7 +727,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 </div>
                                 <div class="border border-blue-200 bg-blue-50 rounded-lg p-4">
                                     <h4 class="font-semibold text-blue-900 mb-2">Excel (.xlsx)</h4>
-                                    <ul class="text-xs text-blue-800 space-y-1">
+                                    <ul class="text-sm text-blue-800 space-y-1">
                                         <li>• Native Excel format</li>
                                         <li>• Ready to use in Excel</li>
                                         <li>• Preserves data types</li>
@@ -735,7 +735,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 </div>
                                 <div class="border border-purple-200 bg-purple-50 rounded-lg p-4">
                                     <h4 class="font-semibold text-purple-900 mb-2">JSON</h4>
-                                    <ul class="text-xs text-purple-800 space-y-1">
+                                    <ul class="text-sm text-purple-800 space-y-1">
                                         <li>• Developer-friendly</li>
                                         <li>• Structured format</li>
                                         <li>• Easy to parse</li>
@@ -792,9 +792,86 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             </div>
                         </div>
 
+                        <!-- Detailed Issues Report Section -->
+                        <div class="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="flex-shrink-0">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2"><svg class="w-7 h-7 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> Detailed Issues Report</h3>
+                                    <p class="text-gray-700 mb-4">
+                                        Get comprehensive, actionable explanations for every validation issue. No more guessing what's wrong with your data - we tell you exactly what the problem is and how to fix it.
+                                    </p>
+                                    
+                                    <div class="bg-white rounded-lg p-4 mb-4 border border-blue-100">
+                                        <h4 class="font-semibold text-gray-900 mb-3">How It Works</h4>
+                                        <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
+                                            <li>After processing your file, go to the <strong>"Issues"</strong> tab</li>
+                                            <li>Click the <strong>"View Detailed Issues Report"</strong> button</li>
+                                            <li>A comprehensive HTML report opens with detailed explanations for each issue</li>
+                                            <li>Each issue shows: the invalid value, specific problem, explanation, and actionable guidance</li>
+                                        </ol>
+                                        
+                                        <div class="mt-4 pt-4 border-t border-gray-200">
+                                            <h5 class="font-semibold text-gray-900 mb-2 text-sm">Report Features:</h5>
+                                            <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
+                                                <li><strong>Session Storage:</strong> The report is automatically saved in your browser's session storage. If you accidentally refresh the page, it will be automatically restored.</li>
+                                                <li><strong>Print & Download:</strong> Use the print button to print the report, or download it as an HTML file for permanent storage and sharing.</li>
+                                                <li><strong>Navigation Sidebar:</strong> Quick links to jump to specific data type sections (NI Numbers, Phone Numbers, Postcodes, etc.)</li>
+                                                <li><strong>Detailed Explanations:</strong> Each issue includes specific problem identification, why it's invalid, and actionable steps to fix it</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                        <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                            <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                What You Get
+                                            </h4>
+                                            <ul class="text-sm text-gray-700 space-y-1">
+                                                <li>• Specific problem identification</li>
+                                                <li>• Clear explanations of why values are invalid</li>
+                                                <li>• Actionable guidance on how to fix issues</li>
+                                                <li>• Professional HTML report format</li>
+                                            </ul>
+                                        </div>
+                                        <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                            <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Example Explanations
+                                            </h4>
+                                            <ul class="text-sm text-gray-700 space-y-1">
+                                                <li>• NI Numbers: Which letter is invalid and why</li>
+                                                <li>• Phone Numbers: Format issues and corrections</li>
+                                                <li>• Postcodes: Missing spaces or wrong format</li>
+                                                <li>• Sort Codes: Wrong digit count or letters</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-blue-100 border-l-4 border-blue-600 p-4 rounded">
+                                        <p class="text-sm text-blue-900 mb-2">
+                                            <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> Pro Tip:</strong> The detailed issues report is perfect for sharing with your team or documenting data quality issues. Each explanation includes the specific problem, why it's invalid according to UK standards, and clear steps to fix it.
+                                        </p>
+                                        <p class="text-sm text-blue-900">
+                                            <strong>📌 Important:</strong> The report is stored in your browser's session storage, so if you refresh the page, it will automatically restore. You can also print the report directly from the browser or download it as an HTML file for permanent storage.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="bg-red-50 border-l-4 border-red-600 p-4">
                             <p class="text-sm text-red-900">
-                                <strong>⚠️ Important:</strong> Your cleaned data only exists in your browser session. Once you close the tab or refresh the page, it's gone. Make sure to download and save your file immediately after processing!
+                                <strong><svg class="inline w-5 h-5 text-red-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> Important:</strong> Your cleaned data only exists in your browser session. Once you close the tab or refresh the page, it's gone. Make sure to download and save your file immediately after processing!
                             </p>
                         </div>
                     </div>
@@ -807,7 +884,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                     <div class="space-y-6">
                         <!-- Phone Numbers -->
                         <div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-3">📱 Phone Number Validation</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2"><svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg> Phone Number Validation</h3>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
                                 <h4 class="font-semibold text-gray-900 mb-2">Accepts:</h4>
                                 <ul class="text-sm text-gray-700 space-y-1 mb-3">
@@ -834,7 +911,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
 
                         <!-- NI Numbers -->
                         <div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-3">🆔 National Insurance Number Validation</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2"><svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" /></svg> National Insurance Number Validation</h3>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
                                 <h4 class="font-semibold text-gray-900 mb-2">Format:</h4>
                                 <p class="text-sm text-gray-700 mb-3">Two letters, six digits, one letter (e.g., AB123456C)</p>
@@ -855,7 +932,7 @@ ab 12 34 56 c    → AB 12 34 56 C</div>
 
                         <!-- Postcodes -->
                         <div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-3">📮 Postcode Validation</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2"><svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> Postcode Validation</h3>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
                                 <h4 class="font-semibold text-gray-900 mb-2">Accepts:</h4>
                                 <ul class="text-sm text-gray-700 space-y-1 mb-3">
@@ -881,7 +958,7 @@ w1a 1aa          → W1A 1AA</div>
 
                         <!-- Sort Codes -->
                         <div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-3">🏦 Sort Code Validation</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2"><svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg> Sort Code Validation</h3>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
                                 <h4 class="font-semibold text-gray-900 mb-2">Format:</h4>
                                 <p class="text-sm text-gray-700 mb-3">Six digits formatted as XX-XX-XX</p>
@@ -921,7 +998,7 @@ w1a 1aa          → W1A 1AA</div>
                             <h4 class="font-semibold text-amber-900 mb-2">Values not being cleaned as expected</h4>
                             <ul class="text-sm text-amber-800 space-y-1 ml-4">
                                 <li>• Verify you selected the correct data type (Phone vs. Postcode, etc.)</li>
-                                <li>• Check if the column is protected (has 🔒 icon) - protected columns are never modified</li>
+                                <li>• Check if the column is protected (has <svg class="inline w-4 h-4 text-gray-600 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> lock icon) - protected columns are never modified</li>
                                 <li>• Ensure data is in the correct format (UK phone numbers, not international)</li>
                                 <li>• Review the validation rules for your data type</li>
                             </ul>
@@ -988,7 +1065,7 @@ w1a 1aa          → W1A 1AA</div>
                         <div>
                             <h4 class="font-semibold text-gray-900 mb-2">Q: Why can't I select certain columns for cleaning?</h4>
                             <p class="text-sm text-gray-700 pl-4">
-                                <strong>A:</strong> If a column shows a 🔒 lock icon, it's been automatically detected as a protected column (ID, key, or reference field). Protected columns are never modified to preserve data relationships and prevent breaking system integrations.
+                                <strong>A:</strong> If a column shows a <svg class="inline w-4 h-4 text-gray-600 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> lock icon, it's been automatically detected as a protected column (ID, key, or reference field). Protected columns are never modified to preserve data relationships and prevent breaking system integrations.
                             </p>
                         </div>
 

@@ -104,7 +104,7 @@ class PhoneNumberValidator {
             /^Call\s+/i,
             /^Contact:\s*/i,
             /^☎️\s*/,
-            /^📱\s*/,
+            /^📱\s*/, // Phone emoji pattern (kept for data cleaning, not display)
             /^\(mobile\)\s*$/i,
             /^\(UK\)\s*$/i,
             /^\(m\)\s*$/i,

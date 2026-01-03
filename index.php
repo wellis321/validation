@@ -78,7 +78,8 @@ if ($user) {
         "Bank Sort Code Validation",
         "Browser-based Processing",
         "GDPR Compliant",
-        "100% Private Data Processing"
+        "100% Private Data Processing",
+        "Detailed Issues Report with Explanations"
       ],
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
       "softwareVersion": "1.0"
@@ -541,7 +542,7 @@ if ($user) {
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                                 </svg>
-                                                Columns marked with 🔒 were protected and left unchanged.
+                                                Columns marked with <svg class="inline w-4 h-4 text-gray-600 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> were protected and left unchanged.
                                             </span>
                                         </p>
                                     </div>
@@ -682,9 +683,9 @@ if ($user) {
                                         <input type="checkbox" id="removeDuplicates" class="mt-1 mr-3 h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded">
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-gray-900 block">Remove Duplicate Rows (Keep First Occurrence)</span>
-                                            <span class="text-xs text-gray-600 block mt-1">
+                                            <span class="text-sm text-gray-600 block mt-1">
                                                 <span id="duplicateCountMessage">Checking for duplicates...</span>
-                                                <span class="block mt-1 text-blue-700">💡 In the Full Preview tab: <strong>Blue</strong> = original rows with duplicates, <strong>Yellow</strong> = duplicate rows to be removed.</span>
+                                                <span class="block mt-1 text-blue-700"><svg class="inline w-4 h-4 text-blue-700 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> In the Full Preview tab: <strong>Blue</strong> = original rows with duplicates, <strong>Yellow</strong> = duplicate rows to be removed.</span>
                                             </span>
                                         </div>
                                     </label>
@@ -692,7 +693,7 @@ if ($user) {
                                         <input type="checkbox" id="trimWhitespace" class="mt-1 mr-3 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" checked>
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-gray-900 block">Clean Whitespace in All Cells</span>
-                                            <span class="text-xs text-gray-600 block mt-1">Remove leading/trailing spaces and extra spaces between words. Already applied to cleaned fields, this ensures all other columns are clean too.</span>
+                                            <span class="text-sm text-gray-600 block mt-1">Remove leading/trailing spaces and extra spaces between words. Already applied to cleaned fields, this ensures all other columns are clean too.</span>
                                         </div>
                                     </label>
                                 </div>
@@ -705,14 +706,14 @@ if ($user) {
                                         <input type="checkbox" id="includeIssuesColumn" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-gray-900 block">Include "Issues" Column</span>
-                                            <span class="text-xs text-gray-600 block mt-1">Add a column listing any fields that still need attention. This helps you identify which rows may require manual review.</span>
+                                            <span class="text-sm text-gray-600 block mt-1">Add a column listing any fields that still need attention. This helps you identify which rows may require manual review.</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
                                         <input type="checkbox" id="onlyRowsWithIssues" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-gray-900 block">Export Only Rows With Issues (Optional)</span>
-                                            <span class="text-xs text-gray-600 block mt-1">When checked, you'll download <strong>only</strong> the rows that have validation issues (instead of the full file). Perfect for creating a focused review file to fix manually before merging back into your main dataset.</span>
+                                            <span class="text-sm text-gray-600 block mt-1">When checked, you'll download <strong>only</strong> the rows that have validation issues (instead of the full file). Perfect for creating a focused review file to fix manually before merging back into your main dataset.</span>
                                         </div>
                                     </label>
                                 </div>
@@ -839,6 +840,60 @@ if ($user) {
                     <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-amber-600 transition-colors">Sort Codes</h3>
                     <p class="text-gray-600">Format bank sort codes with proper hyphens</p>
                 </a>
+            </div>
+        </div>
+
+        <!-- Detailed Issues Report Feature -->
+        <div class="mt-16 max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-xl p-8 md:p-12 border border-blue-100">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-100 text-blue-900 mb-4">
+                        New Feature
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Detailed Issues Report</h2>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Get comprehensive explanations for every validation issue. Our detailed report tells you exactly what's wrong with each invalid value and how to fix it.
+                    </p>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span><strong>Specific problem identification</strong> - See exactly which letter, digit, or format is causing the issue</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span><strong>Clear explanations</strong> - Understand why each value is invalid according to UK standards</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span><strong>Actionable guidance</strong> - Get step-by-step instructions on how to fix each issue</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span><strong>Exportable HTML report</strong> - Download a professional report to share with your team</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Example: NI Number Issue</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <p class="font-semibold text-gray-900">NI Number: <code class="bg-red-100 px-2 py-1 rounded">CD234567D</code></p>
+                            <p class="text-gray-600 mt-1"><strong>Prefix:</strong> CD</p>
+                            <p class="text-red-600 mt-1"><strong>Problem:</strong> Second letter "D" is not allowed</strong></p>
+                            <p class="text-gray-700 mt-2"><strong>Explanation:</strong> The second letter "D" is not used in NI number prefixes according to UK HMRC standards.</p>
+                            <p class="text-gray-700 mt-2"><strong>What to do:</strong> Verify this NI number with the individual.</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4 italic">Every issue gets this level of detailed explanation</p>
+                </div>
             </div>
         </div>
 
