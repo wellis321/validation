@@ -1,4 +1,14 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /config/
+Disallow: /includes/
+Disallow: /logs/
+Disallow: /test-files/
+Disallow: /important/
+Disallow: /database/
+Disallow: /ahrefs/
+Disallow: /*.log$
+Disallow: /*.sql$
 
-# Update this file if you need to restrict crawlers or add a sitemap.
+# Sitemap
+Sitemap: https://simple-data-cleaner.com/sitemap.xml

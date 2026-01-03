@@ -963,5 +963,6 @@ if ($user) {
     <script src="app.js?v=<?php echo time(); ?>"></script>
 
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
+    <?php include __DIR__ . '/includes/analytics.php'; ?>
 </body>
 </html>

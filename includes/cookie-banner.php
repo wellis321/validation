@@ -4,8 +4,8 @@
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex-1">
                 <p class="text-sm">
-                    We use cookies to ensure you get the best experience on our website.
-                    By continuing to use this site, you consent to our use of cookies.
+                    We use cookies to improve your experience and analyze site usage. 
+                    Your data processing remains 100% private in your browser.
                     <a href="/privacy.php" class="underline hover:text-blue-300">Learn more about our privacy policy</a>
                 </p>
             </div>
@@ -52,11 +52,15 @@
     function acceptCookies() {
         setCookie(COOKIE_CONSENT_KEY, 'accepted', COOKIE_EXPIRY_DAYS);
         hideBanner();
+        // Dispatch event for analytics to listen to
+        window.dispatchEvent(new CustomEvent('cookieConsentChanged', { detail: 'accepted' }));
     }
 
     function declineCookies() {
         setCookie(COOKIE_CONSENT_KEY, 'declined', COOKIE_EXPIRY_DAYS);
         hideBanner();
+        // Dispatch event for analytics to listen to
+        window.dispatchEvent(new CustomEvent('cookieConsentChanged', { detail: 'declined' }));
     }
 
     // Check if user has already made a choice
