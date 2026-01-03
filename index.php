@@ -146,7 +146,7 @@ if ($user) {
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
+    <main id="main-content" class="container mx-auto px-4 py-8">
         <?php if (!$user): ?>
             <!-- Hero Section for Non-Authenticated Users -->
             <div class="text-center mb-16">
@@ -425,8 +425,101 @@ if ($user) {
                     </button>
 
                     <!-- Error Display (hidden by default) -->
-                    <div id="errorDisplay" class="hidden bg-red-50 border border-red-200 rounded-lg p-4">
-                        <p id="errorMessage" class="text-red-800"></p>
+                    <div id="errorDisplay" class="hidden bg-red-50 border-l-4 border-red-400 rounded-lg p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3 flex-1">
+                                <h3 class="text-sm font-medium text-red-800" id="errorTitle">Error</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <p id="errorMessage"></p>
+                                </div>
+                                <div id="errorSuggestion" class="hidden mt-3 text-sm">
+                                    <div class="bg-red-100 border border-red-200 rounded-md p-3">
+                                        <p class="font-medium text-red-800 mb-1">How to fix:</p>
+                                        <p id="errorSuggestionText" class="text-red-700"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading Overlay (hidden by default) -->
+                    <div id="loadingOverlay" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+                        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+                            <div class="text-center">
+                                <!-- Spinner -->
+                                <div class="inline-flex items-center justify-center w-16 h-16 mb-4">
+                                    <svg class="animate-spin h-16 w-16 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </div>
+
+                                <!-- Loading Text -->
+                                <h3 class="text-xl font-bold text-gray-900 mb-2" id="loadingTitle">Processing Your Data</h3>
+                                <p class="text-gray-600 mb-4" id="loadingMessage">Please wait while we validate your data...</p>
+
+                                <!-- Progress Bar -->
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                                    <div id="loadingProgressBar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                </div>
+
+                                <!-- Progress Text -->
+                                <p class="text-sm text-gray-500" id="loadingProgress">Preparing...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate Removal Confirmation Dialog (hidden by default) -->
+                    <div id="duplicateConfirmDialog" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 z-50 overflow-y-auto">
+                        <div class="flex min-h-full items-center justify-center p-4">
+                            <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-md md:max-w-lg">
+                                <div class="mb-6">
+                                    <div class="flex items-start mb-4">
+                                        <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-100 flex items-center justify-center mr-3">
+                                            <svg class="w-5 h-5 md:w-6 md:h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="text-base md:text-lg font-bold text-gray-900">Confirm Duplicate Removal</h3>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-sm text-gray-700 mb-4">
+                                        You're about to permanently remove <strong id="duplicateRemovalCount" class="text-amber-700">0</strong> duplicate row(s) from your export. This action cannot be undone.
+                                    </p>
+
+                                    <div class="bg-blue-50 border-l-4 border-blue-400 p-3">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <p class="text-xs md:text-sm text-blue-700">
+                                                    The first occurrence of each duplicate will be kept. All subsequent duplicates will be removed.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button id="cancelDuplicateRemoval" class="bg-gray-200 text-gray-700 px-4 py-2.5 md:px-6 md:py-3 rounded-lg hover:bg-gray-300 font-semibold transition-colors text-sm md:text-base">
+                                        Cancel
+                                    </button>
+                                    <button id="confirmDuplicateRemoval" class="bg-amber-600 text-white px-4 py-2.5 md:px-6 md:py-3 rounded-lg hover:bg-amber-700 font-semibold transition-colors text-sm md:text-base">
+                                        Remove Duplicates
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Results Section (hidden by default) -->

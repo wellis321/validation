@@ -17,7 +17,7 @@ class FileProcessor {
         this.phoneFormat = format;
     }
 
-    async processFile(file, selectedColumns = null) {
+    async processFile(file, selectedColumns = null, progressCallback = null) {
         // Check MIME type and file extension as fallback
         const isValidType = this.supportedTypes.includes(file.type) ||
             file.name.endsWith('.csv') ||
@@ -33,7 +33,7 @@ class FileProcessor {
         const content = await this.readFileContent(file);
         const rows = this.parseContent(content, file.type);
 
-        return this.processRows(rows, file.name, selectedColumns);
+        return this.processRows(rows, file.name, selectedColumns, progressCallback);
     }
 
     async readFileContent(file) {
@@ -313,7 +313,7 @@ class FileProcessor {
         });
     }
 
-    processRows(rows, fileName, selectedColumns = null) {
+    processRows(rows, fileName, selectedColumns = null, progressCallback = null) {
         if (rows.length === 0) {
             throw new Error('File is empty');
         }
@@ -321,6 +321,7 @@ class FileProcessor {
         const headerRow = rows[0];
         const dataRows = rows.slice(1);
         const errors = [];
+        const totalRows = dataRows.length;
 
         // Process all columns, not just phone numbers
         const processedRows = [];
@@ -351,7 +352,7 @@ class FileProcessor {
                 // Try to use column name to determine validator type first
                 let validation;
                 const columnLower = columnName.toLowerCase();
-                
+
                 if (columnLower.includes('ni') || columnLower.includes('insurance') || columnLower.includes('national insurance')) {
                     // Use NI validator directly for National Insurance columns
                     const niValidator = new NINumberValidator();
@@ -397,6 +398,11 @@ class FileProcessor {
                 originalData: row.join(', '),
                 validationResults
             });
+
+            // Update progress every 100 rows or on the last row
+            if (progressCallback && (index % 100 === 0 || index === totalRows - 1)) {
+                progressCallback(index + 1, totalRows);
+            }
         });
 
         // Calculate summary from processed rows

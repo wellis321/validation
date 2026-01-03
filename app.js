@@ -574,6 +574,50 @@ class UKDataCleanerApp {
         this.phoneValidator.setOutputFormat(selectedFormat);
     }
 
+    showLoadingState(message = 'Please wait while we validate your data...', progress = 0) {
+        const overlay = document.getElementById('loadingOverlay');
+        const messageEl = document.getElementById('loadingMessage');
+        const progressBar = document.getElementById('loadingProgressBar');
+        const progressText = document.getElementById('loadingProgress');
+
+        if (overlay) {
+            overlay.classList.remove('hidden');
+        }
+        if (messageEl) {
+            messageEl.textContent = message;
+        }
+        if (progressBar) {
+            progressBar.style.width = `${progress}%`;
+        }
+        if (progressText) {
+            if (progress > 0) {
+                progressText.textContent = `${Math.round(progress)}% complete`;
+            } else {
+                progressText.textContent = 'Preparing...';
+            }
+        }
+    }
+
+    hideLoadingState() {
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) {
+            overlay.classList.add('hidden');
+        }
+    }
+
+    updateLoadingProgress(current, total) {
+        const progress = (current / total) * 100;
+        const progressBar = document.getElementById('loadingProgressBar');
+        const progressText = document.getElementById('loadingProgress');
+
+        if (progressBar) {
+            progressBar.style.width = `${progress}%`;
+        }
+        if (progressText) {
+            progressText.textContent = `Processing row ${current.toLocaleString()} of ${total.toLocaleString()}`;
+        }
+    }
+
     async processFile() {
         if (!this.selectedFile || this.selectedFields.length === 0) return;
 
@@ -584,14 +628,23 @@ class UKDataCleanerApp {
         }
 
         this.hideError();
+        this.showLoadingState();
 
         try {
             // Ensure phone format is synchronized before processing
             this.updatePhoneFormat();
-            // Process the file with selected columns
-            this.results = await this.fileProcessor.processFile(this.selectedFile, this.selectedFields);
+
+            // Process the file with selected columns and progress callback
+            this.results = await this.fileProcessor.processFile(
+                this.selectedFile,
+                this.selectedFields,
+                (current, total) => this.updateLoadingProgress(current, total)
+            );
+
+            this.hideLoadingState();
             this.showResults();
         } catch (err) {
+            this.hideLoadingState();
             this.showError(err instanceof Error ? err.message : 'An error occurred while processing the file');
         } finally {
             if (processBtn) {
@@ -2032,6 +2085,45 @@ class UKDataCleanerApp {
         this.activeTab = tabName;
     }
 
+    showDuplicateConfirmation(duplicateCount) {
+        return new Promise((resolve) => {
+            const dialog = document.getElementById('duplicateConfirmDialog');
+            const countEl = document.getElementById('duplicateRemovalCount');
+            const confirmBtn = document.getElementById('confirmDuplicateRemoval');
+            const cancelBtn = document.getElementById('cancelDuplicateRemoval');
+
+            if (!dialog || !countEl || !confirmBtn || !cancelBtn) {
+                resolve(false);
+                return;
+            }
+
+            // Update the count
+            countEl.textContent = duplicateCount;
+
+            // Show the dialog
+            dialog.classList.remove('hidden');
+
+            // Handle confirm
+            const handleConfirm = () => {
+                dialog.classList.add('hidden');
+                confirmBtn.removeEventListener('click', handleConfirm);
+                cancelBtn.removeEventListener('click', handleCancel);
+                resolve(true);
+            };
+
+            // Handle cancel
+            const handleCancel = () => {
+                dialog.classList.add('hidden');
+                confirmBtn.removeEventListener('click', handleConfirm);
+                cancelBtn.removeEventListener('click', handleCancel);
+                resolve(false);
+            };
+
+            confirmBtn.addEventListener('click', handleConfirm);
+            cancelBtn.addEventListener('click', handleCancel);
+        });
+    }
+
     async exportResults(format) {
         if (!this.results) return;
 
@@ -2052,6 +2144,25 @@ class UKDataCleanerApp {
             // because cleaned data may have different values (formatted phone numbers, etc.)
             if (removeDuplicates && cleanedData.length > 0) {
                 const originalCount = cleanedData.length;
+                let duplicateCount = 0;
+
+                // Calculate how many duplicates will be removed
+                if (this.duplicateRowIndices && this.duplicateRowIndices.duplicates) {
+                    duplicateCount = this.duplicateRowIndices.duplicates.size;
+                }
+
+                // Show confirmation dialog if there are duplicates to remove
+                if (duplicateCount > 0) {
+                    const confirmed = await this.showDuplicateConfirmation(duplicateCount);
+                    if (!confirmed) {
+                        // User cancelled, uncheck the checkbox and return
+                        const checkbox = document.getElementById('removeDuplicates');
+                        if (checkbox) checkbox.checked = false;
+                        return;
+                    }
+                }
+
+                // Proceed with removal
                 // Use duplicate indices identified from original data (before cleaning)
                 // cleanedData indices match fileData indices (both skip header row)
                 if (this.duplicateRowIndices && this.duplicateRowIndices.duplicates) {
@@ -2166,19 +2277,92 @@ class UKDataCleanerApp {
         }
     }
 
+    getErrorSuggestion(errorMessage) {
+        const msg = errorMessage.toLowerCase();
+
+        // File reading errors
+        if (msg.includes('failed to read file') || msg.includes('could not read')) {
+            return 'Try saving your file in a different format (CSV or XLSX) or check if the file is corrupted. Make sure the file isn\'t open in another program.';
+        }
+
+        // File type errors
+        if (msg.includes('unsupported file type')) {
+            return 'Please upload a CSV, Excel (.xlsx or .xls), or JSON file. If you have a different format, try converting it to CSV first.';
+        }
+
+        // File size errors
+        if (msg.includes('exceeds') && msg.includes('limit')) {
+            return 'Try splitting your file into smaller chunks, or remove unnecessary columns before uploading. Large files may cause browser performance issues.';
+        }
+
+        // Empty file errors
+        if (msg.includes('empty') || msg.includes('no data')) {
+            return 'Make sure your file contains data rows with headers in the first row. Check that the file isn\'t blank or formatted incorrectly.';
+        }
+
+        // Processing errors
+        if (msg.includes('processing') || msg.includes('validation')) {
+            return 'Try refreshing the page and uploading your file again. If the problem persists, check that your data is properly formatted.';
+        }
+
+        // Export errors
+        if (msg.includes('export') || msg.includes('download')) {
+            return 'Check that your browser allows downloads from this site. Try a different export format or disable browser extensions that might block downloads.';
+        }
+
+        // localStorage errors
+        if (msg.includes('storage') || msg.includes('quota')) {
+            return 'Your browser storage is full. Try clearing your browser cache or use Private/Incognito mode. You can also try a different browser.';
+        }
+
+        // Default suggestion
+        return 'Try refreshing the page and attempting the action again. If the problem continues, try using a different browser or clearing your browser cache.';
+    }
+
     showError(message) {
         const errorDisplay = document.getElementById('errorDisplay');
         const errorMessage = document.getElementById('errorMessage');
+        const errorTitle = document.getElementById('errorTitle');
+        const errorSuggestion = document.getElementById('errorSuggestion');
+        const errorSuggestionText = document.getElementById('errorSuggestionText');
 
         if (errorDisplay) errorDisplay.classList.remove('hidden');
-        if (errorMessage) errorMessage.textContent = message;
+        if (errorMessage) errorMessage.innerHTML = message;
+
+        // Determine error title based on message content
+        if (errorTitle) {
+            const msg = message.toLowerCase();
+            if (msg.includes('warning') || msg.includes('close to')) {
+                errorTitle.textContent = 'Warning';
+            } else if (msg.includes('cannot') || msg.includes('failed')) {
+                errorTitle.textContent = 'Error';
+            } else {
+                errorTitle.textContent = 'Notice';
+            }
+        }
+
+        // Get and show recovery suggestion
+        const suggestion = this.getErrorSuggestion(message);
+        if (errorSuggestion && errorSuggestionText) {
+            errorSuggestionText.textContent = suggestion;
+            errorSuggestion.classList.remove('hidden');
+        }
 
         this.error = message;
+
+        // Scroll error into view
+        if (errorDisplay) {
+            errorDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
     }
 
     hideError() {
         const errorDisplay = document.getElementById('errorDisplay');
+        const errorSuggestion = document.getElementById('errorSuggestion');
+
         if (errorDisplay) errorDisplay.classList.add('hidden');
+        if (errorSuggestion) errorSuggestion.classList.add('hidden');
+
         this.error = null;
     }
 

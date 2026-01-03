@@ -1,4 +1,8 @@
 <?php $currentPath = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)); ?>
+<!-- Skip to main content link for keyboard navigation -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+    Skip to main content
+</a>
 <div class="bg-amber-50 border-b border-amber-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-amber-900 text-sm">
         <div class="flex items-center gap-2">
@@ -33,13 +37,17 @@
                 <div class="hidden md:flex items-center space-x-4 ml-6 xl:space-x-6 xl:ml-10">
                     <!-- Product Dropdown -->
                     <div class="relative group">
-                        <button class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php']) ? 'text-blue-600 border-blue-500' : ''; ?>">
+                        <button
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-controls="product-menu"
+                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php']) ? 'text-blue-600 border-blue-500' : ''; ?>">
                             Product
-                            <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div class="absolute left-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div id="product-menu" role="menu" class="absolute left-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <a href="/how-it-works.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
                                 How It Works
                             </a>
@@ -57,13 +65,17 @@
                     
                     <!-- Business Dropdown -->
                     <div class="relative group">
-                        <button class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo in_array($currentPath, ['beta-offer.php', 'bespoke.php']) ? 'text-blue-600 border-blue-500' : ''; ?>">
+                        <button
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-controls="business-menu"
+                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo in_array($currentPath, ['beta-offer.php', 'bespoke.php']) ? 'text-blue-600 border-blue-500' : ''; ?>">
                             Business
-                            <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div class="absolute left-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div id="business-menu" role="menu" class="absolute left-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <a href="/beta-offer.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'beta-offer.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
                                 Lifetime Beta
                             </a>
@@ -97,14 +109,19 @@
 
                     <!-- User dropdown menu -->
                     <div class="relative group">
-                        <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors text-sm md:text-base">
+                        <button
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-controls="user-menu"
+                            aria-label="User account menu"
+                            class="flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors text-sm md:text-base">
                             <span class="hidden sm:inline"><?php echo htmlspecialchars($user['email']); ?></span>
                             <span class="sm:hidden">Account</span>
-                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg aria-hidden="true" class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div class="absolute right-0 w-56 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div id="user-menu" role="menu" class="absolute right-0 w-56 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <?php if ($subscription): ?>
                                 <div class="px-4 pb-3 border-b border-gray-100 text-xs text-gray-600">
                                     <p class="font-semibold text-gray-800 mb-1 flex items-center gap-2">

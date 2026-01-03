@@ -63,6 +63,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/register.php">
     <title>Register - Simple Data Cleaner</title>
+    <meta name="description" content="Create your free Simple Data Cleaner account to clean UK phone numbers, NI numbers, postcodes and sort codes. 100% browser-based, GDPR compliant data validation.">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Register - Simple Data Cleaner">
+    <meta property="og:description" content="Create your free account to access UK data validation tools. 100% browser-based, GDPR compliant data cleaning.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simple-data-cleaner.com/register.php">
+    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Register - Simple Data Cleaner">
+    <meta name="twitter:description" content="Create your free account to access UK data validation tools.">
+    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
@@ -72,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
-    <div class="container mx-auto px-4 py-16">
+    <div id="main-content" class="container mx-auto px-4 py-16">
         <div class="max-w-md mx-auto">
             <div class="text-center mb-8">
                 <h1 class="text-4xl font-bold text-gray-900">Create Account</h1>
