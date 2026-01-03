@@ -818,7 +818,8 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                         <div class="mt-4 pt-4 border-t border-gray-200">
                                             <h5 class="font-semibold text-gray-900 mb-2 text-sm">Report Features:</h5>
                                             <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
-                                                <li><strong>Session Storage:</strong> The report is automatically saved in your browser's session storage. If you accidentally refresh the page, it will be automatically restored.</li>
+                                                <li><strong>Auto-Update:</strong> Keep the report tab open! It automatically updates when you process new files - no need to close and reopen.</li>
+                                                <li><strong>Persistent Storage:</strong> Reports survive page refreshes. Your browser's localStorage keeps the report available even after refreshing.</li>
                                                 <li><strong>Print & Download:</strong> Use the print button to print the report, or download it as an HTML file for permanent storage and sharing.</li>
                                                 <li><strong>Navigation Sidebar:</strong> Quick links to jump to specific data type sections (NI Numbers, Phone Numbers, Postcodes, etc.)</li>
                                                 <li><strong>Detailed Explanations:</strong> Each issue includes specific problem identification, why it's invalid, and actionable steps to fix it</li>

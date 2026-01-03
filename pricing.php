@@ -142,7 +142,7 @@ if ($user) {
                 ?>
                 <div class="<?php echo $cardClasses; ?>" <?php echo $isLifetime ? 'id="lifetime-beta-plan"' : ''; ?>>
                     <?php if ($isMonthly): ?>
-                        <div class="bg-blue-500 text-white text-center py-2 text-sm font-semibold">
+                        <div class="bg-blue-600 text-white text-center py-2 text-sm font-semibold">
                             MOST POPULAR
                         </div>
                     <?php endif; ?>

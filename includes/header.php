@@ -30,7 +30,7 @@
                     </a>
                 </div>
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-6 ml-10">
+                <div class="hidden md:flex items-center space-x-4 ml-6 xl:space-x-6 xl:ml-10">
                     <!-- Product Dropdown -->
                     <div class="relative group">
                         <button class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php']) ? 'text-blue-600 border-blue-500' : ''; ?>">
@@ -72,15 +72,9 @@
                             </a>
                         </div>
                     </div>
-                    
-                    <!-- Feedback (standalone - community engagement) -->
-                    <a href="/feedback.php"
-                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'feedback.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
-                        Feedback
-                    </a>
                 </div>
             </div>
-            
+
             <!-- Right side: User menu / Auth buttons -->
             <div class="flex items-center gap-3 md:gap-4">
                 <?php if ($user): ?>
@@ -100,15 +94,7 @@
                         $subscriptionLifetime = !empty($subscriptionFeatures['lifetime_access']);
                     }
                     ?>
-                    <!-- Desktop: Show Dashboard/Plan link -->
-                    <div class="hidden md:block">
-                        <?php if ($subscription): ?>
-                            <a href="/dashboard.php" class="font-medium transition-colors <?php echo $currentPath === 'dashboard.php' ? 'text-blue-600' : 'text-gray-700 hover:text-gray-900'; ?>">Dashboard</a>
-                        <?php else: ?>
-                            <a href="/pricing.php" class="font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'text-blue-600' : 'text-slate-700 hover:text-slate-900'; ?>">Choose a Plan</a>
-                        <?php endif; ?>
-                    </div>
-                    
+
                     <!-- User dropdown menu -->
                     <div class="relative group">
                         <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors text-sm md:text-base">
@@ -146,12 +132,20 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
+                            <?php if ($subscription): ?>
+                                <a href="/dashboard.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'dashboard.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Dashboard</a>
+                            <?php else: ?>
+                                <a href="/pricing.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Choose a Plan</a>
+                            <?php endif; ?>
                             <a href="/account.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'account.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Account Settings</a>
+                            <a href="/feedback.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'feedback.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Feedback</a>
                             <hr class="my-2">
                             <a href="/logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors">Logout</a>
                         </div>
                     </div>
                 <?php else: ?>
+                    <!-- Not logged in - show Feedback link -->
+                    <a href="/feedback.php" class="hidden md:inline-block font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'text-blue-600' : 'text-gray-700 hover:text-gray-900'; ?>">Feedback</a>
                     <!-- Not logged in -->
                     <a href="/login.php" class="hidden sm:inline-block transition-colors <?php echo $currentPath === 'login.php' ? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-gray-900'; ?>">Login</a>
                     <a href="/register.php" class="bg-blue-600 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-medium text-sm md:text-base">

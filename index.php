@@ -48,7 +48,7 @@ if ($user) {
     <meta name="twitter:image:alt" content="Simple Data Cleaner Logo">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
     <link rel="stylesheet" href="/assets/css/output.css">
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js" defer></script>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
@@ -163,7 +163,7 @@ if ($user) {
                         Join our beta to lock in lifetime access to phone numbers, bank sort codes, NI numbers, and postcode cleaning for just £99.99.
                     </p>
                     <div class="flex-shrink-0">
-                        <img src="/assets/images/transparent-logo.png" alt="Simple Data Cleaner Logo" class="h-24 w-auto">
+                        <img src="/assets/images/transparent-logo.png" alt="Simple Data Cleaner Logo" class="h-24 w-auto" loading="lazy">
                     </div>
                 </div>
                 <div class="max-w-3xl mx-auto bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-4 mb-8">
@@ -292,7 +292,7 @@ if ($user) {
                             </li>
                         </ol>
                         <div class="mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
-                            <a href="/beta-offer.php" class="inline-flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
+                            <a href="/beta-offer.php" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
                                 Lock in lifetime access
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                             </a>
@@ -940,7 +940,7 @@ if ($user) {
                             </li>
                         </ol>
                         <div class="mt-6 inline-flex flex-col sm:flex-row sm:items-center gap-4">
-                            <a href="/bespoke.php" class="inline-flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
+                            <a href="/bespoke.php" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10a9 9 0 11-18 0 9 9 0 0118 0zm-9 3l-3-3m0 0l3-3m-3 3h8" /></svg>
                                 Book a discovery call
                             </a>
@@ -958,9 +958,9 @@ if ($user) {
     <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <!-- Scripts -->
-    <script src="validators.js?v=<?php echo time(); ?>"></script>
-    <script src="fileProcessor.js?v=<?php echo time(); ?>"></script>
-    <script src="app.js?v=<?php echo time(); ?>"></script>
+    <script src="validators.js?v=<?php echo time(); ?>" defer></script>
+    <script src="fileProcessor.js?v=<?php echo time(); ?>" defer></script>
+    <script src="app.js?v=<?php echo time(); ?>" defer></script>
 
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
     <?php include __DIR__ . '/includes/analytics.php'; ?>

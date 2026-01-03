@@ -36,8 +36,8 @@ if (!empty($ga4MeasurementId)) {
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', '<?php echo htmlspecialchars($ga4MeasurementId); ?>', {
-            'anonymize_ip': true, // GDPR compliance
-            'cookie_flags': 'SameSite=None;Secure'
+            'anonymize_ip': true // GDPR compliance
+            // Let GA4 manage its own cookie expiration automatically
         });
         
         // Load the GA4 script

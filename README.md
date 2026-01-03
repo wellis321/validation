@@ -11,6 +11,9 @@ A complete PHP application for cleaning and validating UK data formats including
 - **File Processing**: Upload CSV files and get cleaned data back
 - **Multiple Export Formats**: CSV, JSON, and Excel-friendly formats
 - **Local Processing**: All data processing happens in your browser - no server required
+- **Detailed Issues Report**: View comprehensive validation errors with explanations
+- **Auto-Updating Reports**: Open report tabs automatically update when you process new files
+- **Persistent Reports**: Reports survive page refreshes and can be printed or downloaded
 
 ## Files
 
@@ -35,6 +38,15 @@ A complete PHP application for cleaning and validating UK data formats including
 4. Choose your preferred phone number format (International +44 or UK 0)
 5. Click "Clean My Data" to process
 6. Download your cleaned data in various formats
+
+### Viewing Validation Issues
+
+After processing your file:
+1. Click **"View Detailed Issues Report"** to see all validation errors
+2. The report opens in a new tab with detailed explanations for each issue
+3. **Auto-Update Feature**: Keep the report tab open - it automatically updates when you process new files
+4. **Persistent Storage**: Refresh the report page anytime - it won't disappear
+5. **Download or Print**: Save the report for permanent records using the buttons provided
 
 ## Supported Data Types
 

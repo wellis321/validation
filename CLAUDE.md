@@ -15,7 +15,7 @@ The application has two distinct processing layers:
 1. **Client-Side Data Validation** (Primary Feature)
    - All actual data cleaning happens in the browser via JavaScript
    - No user data is ever transmitted to the server
-   - Implemented in: `validators.js`, `fileProcessor.js`, `app.js`
+   - Implemented in: [validators.js](validators.js), [fileProcessor.js](fileProcessor.js), [app.js](app.js)
    - Supports CSV, JSON, and Excel file formats (using SheetJS library)
 
 2. **Server-Side User Management** (Supporting Infrastructure)
@@ -58,14 +58,40 @@ The application has two distinct processing layers:
 
 ## Common Development Commands
 
+### Local Development
+
+Start PHP built-in web server:
+```bash
+php -S localhost:8000
+```
+
+Access the application at: http://localhost:8000
+
+See [LOCAL_SETUP.md](LOCAL_SETUP.md) for detailed setup instructions.
+
 ### Database Setup
 
 ```bash
 # Import initial schema
-mysql -u [username] -p [database_name] < database/schema.sql
+mysql -u root -p simple_data_cleaner < database/schema.sql
 
-# Apply price updates
-mysql -u [username] -p [database_name] < database/update_prices.sql
+# Apply price updates (if needed)
+mysql -u root -p simple_data_cleaner < database/update_prices.sql
+
+# Grant subscription to user (for testing)
+mysql -u root -p simple_data_cleaner < database/grant_subscription.sql
+```
+
+### Tailwind CSS
+
+Build CSS for production:
+```bash
+npm run build-css
+```
+
+Watch CSS for development:
+```bash
+npm run watch-css
 ```
 
 ### Configuration
@@ -74,11 +100,18 @@ Environment variables are loaded from `.env` file in the root directory. Require
 
 - `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` - Database credentials
 - `MAIL_SMTP_*` - SMTP configuration for email
-- Stripe keys are in `config/stripe_config.php`
+- `APP_URL`, `APP_ENV`, `APP_DEBUG` - Application settings
+- Stripe keys are in [config/stripe_config.php](config/stripe_config.php)
 
 ### Testing Validators
 
-Open `test-validators.html` in a browser to test validation logic against various input formats. Variations test files (`*-variations.txt`) contain edge cases for each validator type.
+The `*-variations.txt` files contain edge cases for each validator type:
+- [phone-variations.txt](phone-variations.txt)
+- [ni-variations.txt](ni-variations.txt)
+- [postcode-variations.txt](postcode-variations.txt)
+- [sort-code-variations.txt](sort-code-variations.txt)
+
+The `*-variations-coverage.php` pages demonstrate test coverage for each validator.
 
 ## Key Architectural Patterns
 
@@ -92,13 +125,13 @@ Open `test-validators.html` in a browser to test validation logic against variou
    ```
    This loads environment variables, initializes database, security, error handling, and authentication in the correct order.
 
-3. **Model-Based Data Access**: Extend `Model` class for database tables. See `User.php` for subscription-related queries.
+3. **Model-Based Data Access**: Extend `Model` class for database tables. See [User.php](models/User.php) for subscription-related queries.
 
 4. **Authentication Flow**:
    - `Auth::requireAuth()` - Redirect if not logged in
    - `Auth::requireNoAuth()` - Redirect if already logged in
    - `$auth->getCurrentUser()` - Get current user data
-   - User data available in `$user` variable after init.php
+   - User data available in `$user` variable after [init.php](includes/init.php)
 
 ### Client-Side JavaScript
 
@@ -137,7 +170,7 @@ Open `test-validators.html` in a browser to test validation logic against variou
 - Session handling via `Security` class with secure settings
 - CSRF protection should be implemented for forms
 - Rate limiting table exists but may need implementation in code
-- Security headers set in `init.php`
+- Security headers set in [init.php](includes/init.php)
 
 ## Important Implementation Notes
 
@@ -145,11 +178,11 @@ Open `test-validators.html` in a browser to test validation logic against variou
 
 2. **Validator extensibility**: When adding new UK data types, follow the existing validator pattern with multi-step cleaning and normalization.
 
-3. **Database timezone**: Set to 'Europe/London' in `init.php`
+3. **Database timezone**: Set to 'Europe/London' in [init.php](includes/init.php)
 
 4. **Email verification**: Users receive verification emails after registration. Unverified users may have limited access.
 
-5. **Stripe webhook handling**: See `STRIPE_WEBHOOK_SETUP.md` for webhook event processing.
+5. **Stripe webhook handling**: See [STRIPE_WEBHOOK_SETUP.md](STRIPE_WEBHOOK_SETUP.md) for webhook event processing.
 
 6. **File size limits**: Calculated client-side based on subscription tier. All processing is memory-bound by browser capabilities.
 
@@ -160,7 +193,7 @@ The `*-variations-coverage.php` files demonstrate test coverage for each validat
 ## Stripe Integration
 
 - Products and prices configured in Stripe dashboard
-- Price IDs mapped in `config/stripe_config.php`
-- Checkout flow: `pricing.php` → `checkout.php` → `checkout-success.php`
+- Price IDs mapped in [config/stripe_config.php](config/stripe_config.php)
+- Checkout flow: [pricing.php](pricing.php) → [checkout.php](checkout.php) → [checkout-success.php](checkout-success.php)
 - One-time payments vs. subscriptions handled by plan `duration_months` field
-- See `STRIPE_SETUP.md` for complete integration guide
+- See [STRIPE_WEBHOOK_SETUP.md](STRIPE_WEBHOOK_SETUP.md) for webhook event processing
