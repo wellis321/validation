@@ -1504,6 +1504,51 @@ class UKDataCleanerApp {
             background: #d1fae5;
             color: #065f46;
         }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                display: block;
+            }
+            .sidebar {
+                display: none !important;
+            }
+            .warning-banner {
+                display: none !important;
+            }
+            .action-buttons {
+                display: none !important;
+            }
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+            h1 {
+                margin-top: 0;
+                page-break-after: avoid;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+            a[href]:after {
+                content: none !important;
+            }
+        }
     </style>
 </head>
 <body data-report-id="${reportId}">
