@@ -1170,12 +1170,66 @@ class UKDataCleanerApp {
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
+                padding: 10px;
             }
             .sidebar {
                 position: relative;
                 top: 0;
                 width: 100%;
                 margin-bottom: 20px;
+                max-height: none;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            table {
+                font-size: 0.875rem;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            th, td {
+                padding: 8px;
+                white-space: nowrap;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .warning-banner {
+                padding: 15px;
+            }
+            .explanation {
+                font-size: 0.875rem;
+                padding: 12px;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.25rem;
+            }
+            .subtitle {
+                font-size: 0.875rem;
+            }
+            th, td {
+                padding: 6px;
+                font-size: 0.75rem;
+            }
+            .value {
+                font-size: 0.75rem;
+                padding: 2px 6px;
             }
         }
         .sidebar h3 {
@@ -1412,7 +1466,7 @@ class UKDataCleanerApp {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <div style="flex: 1;">
-                    <strong>Important:</strong> This report is temporary. If you refresh this page, it will be lost. Save it now:
+                    <strong>Important:</strong> This report is temporary. It will be restored if you refresh the page, but will be lost if you close this tab. Save it now:
                 </div>
             </div>
             <div class="action-buttons">
@@ -1482,22 +1536,54 @@ class UKDataCleanerApp {
         // CRITICAL: Restoration check must run FIRST, before any other scripts
         // This ensures the report is restored immediately if the page was refreshed
         (function() {
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-init',message:'Restoration script started',data:{readyState:document.readyState,hasBody:!!document.body,url:window.location.href},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+            // #endregion
             try {
                 const storedReport = sessionStorage.getItem('detailedIssuesReport');
                 const storedReportId = sessionStorage.getItem('detailedIssuesReportId');
                 
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-check',message:'SessionStorage check',data:{hasStoredReport:!!storedReport,hasStoredReportId:!!storedReportId,reportId:storedReportId,reportLength:storedReport?storedReport.length:0},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                // #endregion
+                
                 if (!storedReport || !storedReportId) {
+                    // #region agent log
+                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-check',message:'No stored report found',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                    // #endregion
                     return; // No stored report to restore
                 }
+                
+                // Prevent any navigation during restoration
+                let isRestoring = false;
+                window.addEventListener('click', function(e) {
+                    if (isRestoring) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // #region agent log
+                        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-click-prevent',message:'Prevented click during restoration',data:{target:e.target.tagName},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                        // #endregion
+                        return false;
+                    }
+                }, true);
                 
                 function attemptRestore() {
                     const body = document.body;
                     
+                    // #region agent log
+                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Attempting restore',data:{hasBody:!!body,bodyTextLength:body?body.textContent.length:0,url:window.location.href},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                    // #endregion
+                    
                     // If body doesn't exist yet, the page is definitely blank - restore immediately
                     if (!body) {
+                        // #region agent log
+                        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Body missing, restoring',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                        // #endregion
+                        isRestoring = true;
                         document.open();
                         document.write(storedReport);
                         document.close();
+                        setTimeout(() => { isRestoring = false; }, 100);
                         return;
                     }
                     
@@ -1508,36 +1594,57 @@ class UKDataCleanerApp {
                         body.querySelector('.sidebar')
                     );
                     
+                    // #region agent log
+                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Content check',data:{currentReportId:currentReportId,storedReportId:storedReportId,idsMatch:currentReportId===storedReportId,hasReportContent:!!hasReportContent},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                    // #endregion
+                    
                     // If page is blank or doesn't match stored report, restore immediately
                     if (!currentReportId || currentReportId !== storedReportId || !hasReportContent) {
+                        // #region agent log
+                        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Restoring report',data:{reason:!currentReportId?'no-id':currentReportId!==storedReportId?'id-mismatch':'no-content'},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                        // #endregion
+                        isRestoring = true;
                         document.open();
                         document.write(storedReport);
                         document.close();
+                        // Reset flag after a short delay to allow restoration to complete
+                        setTimeout(() => { isRestoring = false; }, 100);
                         return; // Stop execution - page will reload with restored content
+                    } else {
+                        // #region agent log
+                        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'No restore needed',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                        // #endregion
                     }
                 }
                 
-                // Try immediately
-                if (document.readyState === 'loading' && !document.body) {
-                    // Wait for body to exist
-                    const observer = new MutationObserver(function(mutations, obs) {
-                        if (document.body) {
-                            obs.disconnect();
-                            attemptRestore();
-                        }
-                    });
-                    observer.observe(document.documentElement, { childList: true, subtree: true });
+                // Try immediately - don't wait, restore as soon as possible
+                attemptRestore();
+                
+                // Also set up listeners as backup
+                if (document.readyState === 'loading') {
+                    // #region agent log
+                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-check',message:'Setting up backup listeners',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                    // #endregion
+                    // Wait for body to exist if it doesn't yet
+                    if (!document.body) {
+                        const observer = new MutationObserver(function(mutations, obs) {
+                            if (document.body) {
+                                obs.disconnect();
+                                attemptRestore();
+                            }
+                        });
+                        observer.observe(document.documentElement, { childList: true, subtree: true });
+                    }
                     
                     // Also try on DOMContentLoaded as backup
                     document.addEventListener('DOMContentLoaded', function() {
-                        observer.disconnect();
                         attemptRestore();
                     });
-                } else {
-                    // Body exists or DOM is ready, check immediately
-                    attemptRestore();
                 }
             } catch (e) {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-check',message:'Restoration error',data:{error:e.message,stack:e.stack},timestamp:Date.now(),sessionId:'debug-session',runId:'restore-debug',hypothesisId:'A'})}).catch(()=>{});
+                // #endregion
                 console.warn('Restoration check failed:', e);
             }
         })();
@@ -1647,9 +1754,13 @@ class UKDataCleanerApp {
         }
 
         // Open in new window
-        const newWindow = window.open('', '_blank');
-        newWindow.document.write(html);
-        newWindow.document.close();
+        const newWindow = window.open('about:blank', '_blank');
+        if (newWindow) {
+            newWindow.document.write(html);
+            newWindow.document.close();
+            // Set the window name to help identify it
+            newWindow.name = 'detailedIssuesReport';
+        }
     }
 
     detectProtectedColumns(headers) {

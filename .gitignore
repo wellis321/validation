@@ -56,3 +56,6 @@ tests/results/
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Marketing/Content
+LINKEDIN_POST.md
