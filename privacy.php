@@ -111,7 +111,7 @@ require_once __DIR__ . '/includes/init.php';
                         <svg class="w-5 h-5 text-red-600 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
                         </svg>
-                        <span>Use cookies for tracking purposes (we only use essential cookies for account management)</span>
+                        <span>Access, view, or process your data files (all processing happens in your browser)</span>
                     </div>
                 </div>
             </section>
@@ -140,15 +140,41 @@ require_once __DIR__ . '/includes/init.php';
                 </div>
             </section>
 
-            <!-- Browser Storage -->
+            <!-- Cookies and Analytics -->
             <section class="mb-8 border-t border-gray-200 pt-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">Browser Storage</h2>
-                <p class="text-gray-700 mb-3">We use minimal browser storage for:</p>
-                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                    <li>Cookie consent preferences (stored for 365 days)</li>
-                    <li>Account authentication (session-based)</li>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Cookies and Website Analytics</h2>
+                <p class="text-gray-700 mb-3">We use cookies for the following purposes:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4 mb-4">
+                    <li><strong>Essential cookies:</strong> Account authentication and session management (required for service functionality)</li>
+                    <li><strong>Cookie consent preferences:</strong> Stored for 365 days to remember your cookie choices</li>
+                    <li><strong>Analytics cookies (optional):</strong> Google Analytics 4 to understand how visitors use our website</li>
                 </ul>
-                <p class="text-gray-700 mt-4">No file data or Personally Identifiable Information is stored in your browser. All processing is temporary and cleared when you close the page.</p>
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <h4 class="font-semibold text-blue-900 mb-2">Google Analytics</h4>
+                    <p class="text-sm text-blue-800 mb-2">
+                        We use Google Analytics 4 to collect anonymous usage statistics about our website, such as:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1 text-sm text-blue-800 ml-4">
+                        <li>Number of visitors and page views</li>
+                        <li>How users navigate through the site</li>
+                        <li>Traffic sources (how users found our site)</li>
+                        <li>General geographic location (country-level, not specific addresses)</li>
+                    </ul>
+                    <p class="text-sm text-blue-800 mt-2">
+                        <strong>Important:</strong> Google Analytics only loads if you accept cookies via our cookie banner. 
+                        We have enabled IP anonymization, and no personally identifiable information is collected. 
+                        Your data cleaning activities (file uploads, processing) are never tracked by analytics.
+                    </p>
+                    <p class="text-sm text-blue-800 mt-2">
+                        You can opt out of analytics cookies by clicking "Decline" on the cookie banner, or by 
+                        <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" class="underline">installing the Google Analytics Opt-out Browser Add-on</a>.
+                    </p>
+                </div>
+                <p class="text-gray-700 mt-4">
+                    <strong>Data Processing Privacy:</strong> No file data or Personally Identifiable Information from your 
+                    data cleaning activities is stored in your browser or tracked by analytics. All data processing is 
+                    temporary and cleared when you close the page.
+                </p>
             </section>
 
             <!-- Account Information -->
