@@ -127,7 +127,7 @@ require_once __DIR__ . '/includes/init.php';
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Rectification</h3>
-                        <p class="text-gray-700">You can update your account information at any time through your <a href="/account.php" class="text-blue-600 hover:underline">Account Settings</a> page.</p>
+                        <p class="text-gray-700">You can update your account information at any time through your <a href="/login.php" class="text-blue-600 hover:underline">Account Settings</a> page.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">

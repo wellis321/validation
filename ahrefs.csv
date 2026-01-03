@@ -1,0 +1,8 @@
+PR,URL,Title,Content type,Is rendered page,HTTP status code,Organic traffic,Redirect URL,Redirect URL code,Redirect URL patch,Redirect URL patch status,Redirect chain URLs,Redirect chain URLs codes,Is redirect loop,No. of all inlinks,No. of redirect inlinks,First found at
+1,https://simple-data-cleaner.com/index.php,,text/html,false,301,0,https://simple-data-cleaner.com/,200,,,https://simple-data-cleaner.com/,200,false,1,0,https://simple-data-cleaner.com/validation-rules.php
+1,https://simple-data-cleaner.com/account.php,,text/html; charset=utf-8,false,302,0,https://simple-data-cleaner.com/login.php,200,,,https://simple-data-cleaner.com/login.php,200,false,1,0,https://simple-data-cleaner.com/gdpr.php
+1,https://www.simple-data-cleaner.com/,,text/html,false,301,0,https://simple-data-cleaner.com/,200,,,https://simple-data-cleaner.com/,200,false,1,1,
+0,http://simple-data-cleaner.com/,,text/html,false,301,0,https://simple-data-cleaner.com/,200,,,https://simple-data-cleaner.com/,200,false,0,0,
+0,http://www.simple-data-cleaner.com/,,text/html,false,301,0,https://www.simple-data-cleaner.com/,301,,,"https://www.simple-data-cleaner.com/
+https://simple-data-cleaner.com/","301
+200",false,0,0,

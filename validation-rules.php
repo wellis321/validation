@@ -45,7 +45,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
 
             <!-- Navigation back to main validator -->
             <div class="mt-6">
-                <a href="index.php"
+                <a href="/"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

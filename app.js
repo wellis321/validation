@@ -2138,7 +2138,13 @@ class UKDataCleanerApp {
             const cancelBtn = document.getElementById('cancelDuplicateRemoval');
 
             if (!dialog || !countEl || !confirmBtn || !cancelBtn) {
-                resolve(false);
+                console.error('Duplicate confirmation dialog elements not found:', {
+                    dialog: !!dialog,
+                    countEl: !!countEl,
+                    confirmBtn: !!confirmBtn,
+                    cancelBtn: !!cancelBtn
+                });
+                resolve(true); // Default to allowing the action if dialog not found
                 return;
             }
 
