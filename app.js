@@ -1279,11 +1279,24 @@ class UKDataCleanerApp {
         const totalValid = document.getElementById('totalValid');
         const totalFixed = document.getElementById('totalFixed');
         const totalInvalid = document.getElementById('totalInvalid');
+        
+        // Also update example page elements (different IDs)
+        const validCount = document.getElementById('validCount');
+        const cleanedCount = document.getElementById('cleanedCount');
+        const issuesCount = document.getElementById('issuesCount');
 
-        if (totalRows) totalRows.textContent = this.results.totalRows;
+        const cleanedValue = (this.results.summary.totalFixed || 0) + (this.results.summary.totalNameSplits || 0);
+        const totalRowsValue = this.results.totalRows - 1; // Exclude header row
+
+        if (totalRows) totalRows.textContent = totalRowsValue;
         if (totalValid) totalValid.textContent = this.results.summary.totalValid;
-        if (totalFixed) totalFixed.textContent = (this.results.summary.totalFixed || 0) + (this.results.summary.totalNameSplits || 0);
+        if (totalFixed) totalFixed.textContent = cleanedValue;
         if (totalInvalid) totalInvalid.textContent = this.results.summary.totalInvalid;
+        
+        // Update example page elements
+        if (validCount) validCount.textContent = this.results.summary.totalValid;
+        if (cleanedCount) cleanedCount.textContent = cleanedValue;
+        if (issuesCount) issuesCount.textContent = this.results.summary.totalInvalid;
     }
 
     updateTabCounts() {
