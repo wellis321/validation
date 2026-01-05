@@ -40,28 +40,28 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
           "@type": "HowToStep",
           "position": 1,
           "name": "Upload Your File",
-          "text": "Upload your CSV, Excel (.xlsx, .xls), or JSON file containing UK phone numbers, National Insurance numbers, postcodes, or bank sort codes.",
+          "text": "Upload your CSV, Excel (.xlsx, .xls), or JSON file containing UK phone numbers, National Insurance numbers, postcodes, bank sort codes, bank account numbers, or full names.",
           "url": "https://simple-data-cleaner.com/how-it-works.php#step1"
         },
         {
           "@type": "HowToStep",
           "position": 2,
           "name": "Select Columns to Clean",
-          "text": "Choose which columns you want to clean. Our system can automatically detect phone numbers, NI numbers, postcodes, and sort codes, or you can manually select the columns.",
+          "text": "Choose which columns you want to clean. Use Auto-Select for automatic detection, or manually select columns. For full name columns, you can choose to split them into title, first_name, and last_name. Select your preferred phone number format (International or UK).",
           "url": "https://simple-data-cleaner.com/how-it-works.php#step2"
         },
         {
           "@type": "HowToStep",
           "position": 3,
           "name": "Review and Process",
-          "text": "Review your selections and click 'Clean My Data' to process. All validation happens in your browser - your data never leaves your device.",
+          "text": "Review your selections and click 'Clean My Data' to process. All validation happens in your browser - your data never leaves your device. View comprehensive reports including Full Preview, Issues Report, and Cleaned Report.",
           "url": "https://simple-data-cleaner.com/how-it-works.php#step3"
         },
         {
           "@type": "HowToStep",
           "position": 4,
           "name": "Download Cleaned Data",
-          "text": "Download your validated and cleaned data in CSV, Excel, or JSON format. Optionally include an Issues column or filter to only rows with problems.",
+          "text": "Customise your export options (format, remove duplicates, trim whitespace, include issues column, export only rows with issues, remove original name columns) and download your validated and cleaned data in CSV, Excel, or JSON format.",
           "url": "https://simple-data-cleaner.com/how-it-works.php#step4"
         }
       ]
@@ -99,7 +99,7 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                     <div class="flex-1">
                         <h2 class="text-2xl font-bold text-gray-900 mb-3">Upload Your File</h2>
                         <p class="text-gray-600 mb-4">
-                            Upload your CSV, Excel (.xlsx, .xls), or JSON file containing UK phone numbers, National Insurance numbers, postcodes, or bank sort codes.
+                            Upload your CSV, Excel (.xlsx, .xls), or JSON file containing UK phone numbers, National Insurance numbers, postcodes, bank sort codes, bank account numbers, or full names.
                         </p>
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                             <p class="text-base text-blue-900">
@@ -121,11 +121,21 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                     <div class="flex-1">
                         <h2 class="text-2xl font-bold text-gray-900 mb-3">Select Columns to Clean</h2>
                         <p class="text-gray-600 mb-4">
-                            Choose which columns you want to clean. Our system can automatically detect phone numbers, NI numbers, postcodes, and sort codes, or you can manually select the columns.
+                            Choose which columns you want to clean. Our system can automatically detect phone numbers, NI numbers, postcodes, sort codes, bank account numbers, and full names, or you can manually select the columns.
                         </p>
                         <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-3">
                             <p class="text-base text-indigo-900">
-                                <strong><svg class="inline w-5 h-5 text-indigo-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg> Auto-Select:</strong> Click "Auto-Select" to have our system automatically detect and select all cleanable columns based on column names and content.
+                                <strong><svg class="inline w-5 h-5 text-indigo-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg> Auto-Select:</strong> Click "Auto-Select" to have our system automatically detect and select all cleanable columns based on column names and content. For full name columns, it will also suggest name splitting.
+                            </p>
+                        </div>
+                        <div class="bg-pink-50 border border-pink-200 rounded-lg p-4 mb-3">
+                            <p class="text-base text-pink-900">
+                                <strong><svg class="inline w-5 h-5 text-pink-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> Name Splitting:</strong> For full name columns, you can choose to split them into separate `title`, `first_name`, and `last_name` columns. The system automatically extracts titles (Mr, Mrs, Dr, etc.) and handles name suffixes (like Jr., Sr., II, III) that appear after the last name.
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-3">
+                            <p class="text-base text-blue-900">
+                                <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg> Phone Number Format:</strong> Choose between International format (+44) or UK format (0) for phone number output. This applies to all phone and mobile columns you select.
                             </p>
                         </div>
                         <div class="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -155,9 +165,14 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                                 <strong><svg class="inline w-5 h-5 text-purple-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Privacy First:</strong> Your file is processed entirely in your browser using JavaScript. No uploads to our servers, no database storage, no third-party access.
                             </p>
                         </div>
-                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-3">
                             <p class="text-base text-indigo-900">
                                 <strong><svg class="inline w-5 h-5 text-indigo-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg> Data Insights:</strong> Get instant insights including missing values count, duplicate row detection, and data quality profiling before you download.
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <p class="text-base text-blue-900">
+                                <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> Comprehensive Reports:</strong> Access three detailed HTML reports: <strong>Full Preview</strong> (complete dataset with colour coding), <strong>Issues Report</strong> (invalid values with explanations), and <strong>Cleaned Report</strong> (all cleaned values with before/after). All reports persist on page refresh.
                             </p>
                         </div>
                     </div>
@@ -175,7 +190,7 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                     <div class="flex-1">
                         <h2 class="text-2xl font-bold text-gray-900 mb-3">Download Your Cleaned Data</h2>
                         <p class="text-gray-600 mb-4">
-                            Review the complete cleaned dataset with our Full Preview feature, customize your download options, and export with confidence knowing exactly what you're getting.
+                            Review the complete cleaned dataset with our Full Preview feature, customise your download options, and export with confidence knowing exactly what you're getting.
                         </p>
 
                         <!-- Full Preview Feature -->
@@ -192,6 +207,7 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                                 <li>• <strong class="text-blue-600">Blue rows</strong> = Original rows that have duplicates elsewhere</li>
                                 <li>• <strong class="text-amber-600">Yellow rows</strong> = Duplicate rows (removable via checkbox)</li>
                                 <li>• <strong class="text-green-600">Green cells</strong> = Values that were cleaned or fixed</li>
+                                <li>• <strong class="text-red-600">Red cells</strong> = Invalid values detected but cannot be cleaned (require manual correction)</li>
                                 <li>• <svg class="inline w-4 h-4 text-indigo-600 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Protected columns (IDs, keys) are marked and never modified</li>
                             </ul>
                         </div>
@@ -220,24 +236,24 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                                 <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                     </svg>
-                                    Export Customization Options:
+                                    Export Customisation Options:
                             </p>
                             <div class="space-y-3 ml-7">
                                 <div>
                                     <p class="text-base text-gray-800 font-medium flex items-center gap-2"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> Remove Duplicate Rows</p>
-                                    <p class="text-sm text-gray-600">Automatically removes exact duplicate rows, keeping only the first occurrence. Duplicates are highlighted in the preview so you can review before removing.</p>
+                                    <p class="text-base text-gray-600">Automatically removes exact duplicate rows, keeping only the first occurrence. Duplicates are highlighted in the preview so you can review before removing.</p>
                                 </div>
                                 <div>
                                     <p class="text-base text-gray-800 font-medium flex items-center gap-2"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg> Clean Whitespace</p>
-                                    <p class="text-sm text-gray-600">Trims leading/trailing spaces and normalizes multiple spaces to single spaces across all cells for consistent formatting.</p>
+                                    <p class="text-base text-gray-600">Trims leading/trailing spaces and normalizes multiple spaces to single spaces across all cells for consistent formatting.</p>
                                 </div>
                                 <div>
                                     <p class="text-base text-gray-800 font-medium flex items-center gap-2"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Include "Issues" Column</p>
-                                    <p class="text-sm text-gray-600">Adds an "Issues" column that lists any fields that still need attention. This helps you quickly identify which rows may require manual review after downloading.</p>
+                                    <p class="text-base text-gray-600">Adds an "Issues" column that lists any fields that still need attention. This helps you quickly identify which rows may require manual review after downloading.</p>
                                 </div>
                                 <div>
                                     <p class="text-base text-gray-800 font-medium flex items-center gap-2"><svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> Export Only Rows With Issues (Optional)</p>
-                                    <p class="text-sm text-gray-600">When enabled, you'll download <strong>only</strong> the rows that have validation issues (instead of the complete cleaned file). Perfect for creating a focused review file that you can fix manually and merge back into your main dataset.</p>
+                                    <p class="text-base text-gray-600">When enabled, you'll download <strong>only</strong> the rows that have validation issues (instead of the complete cleaned file). Perfect for creating a focused review file that you can fix manually and merge back into your main dataset.</p>
                                 </div>
                             </div>
                         </div>

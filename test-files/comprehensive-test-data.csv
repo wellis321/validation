@@ -1,0 +1,42 @@
+ID,Name,Email,Phone Number,Mobile,National Insurance,Postcode,Sort Code,Bank Account,Address,Notes
+1,Mr. John Smith,john.smith@example.com,020 7946 0958,07700 900123,AB123456C,sw1a1aa,123456,12345678,10 Downing Street,Valid data - all formats
+2,Mrs. Jane Doe,jane.doe@example.com,+44 20 7946 0958,07700900123,CD234567D,m1 1aa,234567,23456789,123 Main Street,Valid data - international format
+3,Dr. Bob Johnson,bob.johnson@example.com,02079460958,07700 900 123,EF345678E,ec1a1bb,34 56 78,34567890,456 High Street,Valid data - no spaces
+4,Alice Brown,alice.brown@example.com,+442079460958,07700900123,GH456789F,w1a1aa,45.67.89,45678901,789 Park Avenue,Valid data - dots as separators
+5,Prof. Charlie Wilson,charlie.wilson@example.com,020 7946 0958,07700-900-123,IJ567890G,cr2 6xh,567890,56789012,321 Oak Road,Valid data - dashes
+6,David Lee,david.lee@example.com,02079460958,07700.900.123,KL678901H,m60 1aa,67 89 01,67890123,654 Elm Street,Valid data - mixed separators
+7,Miss Emma Davis,emma.davis@example.com,+44 20 7946 0958,07700900123,MN789012I,SW1A 1AA,78-90-12,78901234,987 Pine Lane,Valid data - already formatted
+8,Frank Miller,frank.miller@example.com,020 7946 0958,07700 900123,OP890123J,ec1a1bb,890123,89012345,147 Maple Drive,Valid data
+9,Ms. Grace Taylor,grace.taylor@example.com,02079460958,07700900123,QR901234K,w1a 1aa,90 12 34,90123456,258 Cedar Court,Valid data
+10,Henry White,henry.white@example.com,+44 20 7946 0958,07700 900123,ST012345L,cr2 6xh,012345,01234567,369 Birch Way,Valid data
+11,Michael Thompson,michael.thompson@example.com,++44 7700 900123,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Invalid phone - multiple plus signs
+12,Patricia Anderson,patricia.anderson@example.com,020 7946,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,11 Test Street,Invalid phone - incomplete
+13,Christopher Mitchell,christopher.mitchell@example.com,020 7946 0958,07700 900123,AB123456C,SW1A1,12-34-56,12345678,12 Test Street,Invalid postcode - too short
+14,Jennifer Roberts,jennifer.roberts@example.com,020 7946 0958,07700 900123,AB123456C,SW1A1AA,12-34-56,12345678,13 Test Street,Invalid postcode - missing space
+15,Daniel Campbell,daniel.campbell@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-5,12345678,14 Test Street,Invalid sort code - 5 digits
+16,Lisa Parker,lisa.parker@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,AB-34-56,12345678,15 Test Street,Invalid sort code - contains letters
+17,James Turner,james.turner@example.com,020 7946 0958,07700 900123,BG123456C,SW1A 1AA,12-34-56,12345678,16 Test Street,Invalid NI - banned prefix
+18,Amanda Foster,amanda.foster@example.com,020 7946 0958,07700 900123,AB12345,SW1A 1AA,12-34-56,12345678,17 Test Street,Invalid NI - wrong format
+19,Robert Taylor III,smith@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,18 Test Street,Name with suffix
+20,Sarah Williams,jane@example.com,020 7946 0958,07700 900123,CD234567D,SW1A 1AA,12-34-56,12345678,19 Test Street,Valid data
+21,Mr. John Smith,john.smith@example.com,020 7946 0958,07700 900123,AB123456C,sw1a1aa,123456,12345678,10 Downing Street,Duplicate of row 1
+22,Mrs. Jane Doe,jane.doe@example.com,+44 20 7946 0958,07700900123,CD234567D,m1 1aa,234567,23456789,123 Main Street,Duplicate of row 2
+23,Dr. Bob Johnson,bob.johnson@example.com,02079460958,07700 900 123,EF345678E,ec1a1bb,34 56 78,34567890,456 High Street,Duplicate of row 3
+24,  John  Smith  ,john.smith@example.com,  020 7946 0958  ,  07700 900123  ,  AB123456C  ,  sw1a1aa  ,  123456  ,  12345678  ,  10 Downing Street  ,Whitespace test - leading/trailing spaces
+25,Alice    Brown,alice.brown@example.com,020    7946    0958,07700    900123,AB    123456    C,sw1a    1aa,12    34    56,1234    5678,10    Downing    Street,Whitespace test - multiple spaces
+26,,,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Missing name and email
+27,Test Name,test@example.com,,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Missing phone number
+28,Test Name,test@example.com,020 7946 0958,,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Missing mobile
+29,Test Name,test@example.com,020 7946 0958,07700 900123,,SW1A 1AA,12-34-56,12345678,10 Test Street,Missing NI number
+30,Test Name,test@example.com,020 7946 0958,07700 900123,AB123456C,,12-34-56,12345678,10 Test Street,Missing postcode
+31,Test Name,test@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,,12345678,10 Test Street,Missing sort code
+32,Test Name,test@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,,10 Test Street,Missing bank account
+33,Test Name,test@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,,Missing address
+34,Sir William Jones,sir.william@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Name with title "Sir"
+35,Dame Mary Smith,dame.mary@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Name with title "Dame"
+36,Lord James Brown,lord.james@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Name with title "Lord"
+37,Lady Sarah Wilson,lady.sarah@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Name with title "Lady"
+38,Rev. Peter Davis,rev.peter@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Name with title "Rev"
+39,Capt. Mark Taylor,capt.mark@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Name with title "Capt"
+40,Col. Richard White,col.richard@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street,Name with title "Col"
+

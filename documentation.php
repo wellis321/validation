@@ -119,6 +119,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Contents</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#getting-started" class="text-blue-600 hover:text-blue-800 hover:underline">Getting Started</a></li>
+                        <li><a href="#interactive-example" class="text-blue-600 hover:text-blue-800 hover:underline">Interactive Example</a></li>
                         <li><a href="#supported-formats" class="text-blue-600 hover:text-blue-800 hover:underline">Supported Formats</a></li>
                         <li><a href="#upload-process" class="text-blue-600 hover:text-blue-800 hover:underline">Upload Process</a></li>
                         <li><a href="#field-selection" class="text-blue-600 hover:text-blue-800 hover:underline">Field Selection</a></li>
@@ -159,6 +160,60 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                         <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mt-6">
                             <p class="text-sm text-blue-900">
                                 <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> Pro Tip:</strong> Always use the Full Preview feature before downloading to ensure the cleaning results match your expectations.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Interactive Example -->
+                <section id="interactive-example" class="bg-white rounded-lg shadow-lg p-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-blue-600 pb-2">Interactive Example</h2>
+                    <div class="prose max-w-none">
+                        <p class="text-gray-700 mb-4">
+                            Want to try Simple Data Cleaner without uploading your own file? Visit our <a href="/example" class="text-blue-600 hover:text-blue-800 underline">Interactive Example page</a> to explore the tool with pre-loaded sample data.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">What's Included in the Example:</h3>
+                        <p class="text-gray-700 mb-4">The example dataset includes 23 rows with various UK data formats, including:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4 mb-6">
+                            <li><strong>Names with titles:</strong> "Mr. John Smith", "Mrs. Jane Doe", "Dr. Bob Johnson" - perfect for testing name splitting</li>
+                            <li><strong>Phone numbers:</strong> Various formats (international, UK mobile, landline) - some valid, some invalid</li>
+                            <li><strong>Postcodes:</strong> Different formats (lowercase, no spaces, with spaces) that will be cleaned to standard UK format</li>
+                            <li><strong>Sort codes:</strong> Various formats (no dashes, with spaces, with dots) that will be cleaned to XX-XX-XX format</li>
+                            <li><strong>Bank account numbers:</strong> 8-digit account numbers that will be validated and formatted</li>
+                            <li><strong>National Insurance numbers:</strong> Valid and invalid examples</li>
+                            <li><strong>Duplicate rows:</strong> Rows 21-23 are duplicates of rows 1-3, perfect for testing duplicate detection</li>
+                        </ul>
+
+                        <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">How to Use the Example Page:</h3>
+                        <ol class="list-decimal list-inside space-y-3 text-gray-700 ml-4 mb-6">
+                            <li><strong>Load Example Data:</strong> Click the "Load Example Data" button to automatically load the sample dataset</li>
+                            <li><strong>Select Columns:</strong> Use "Auto-Select" to automatically detect cleanable columns, or manually select which fields to clean</li>
+                            <li><strong>Choose Phone Format:</strong> Select whether you want phone numbers formatted as International (+44) or UK (0) format</li>
+                            <li><strong>Clean the Data:</strong> Click "Clean My Data" to process the example file</li>
+                            <li><strong>Explore Results:</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li>View the <strong>Summary</strong> tab to see statistics</li>
+                                    <li>Check the <strong>Full Preview</strong> tab to see all cleaned data with green highlighting for modified cells</li>
+                                    <li>Open the <strong>Full Preview Report</strong> for a detailed HTML view</li>
+                                    <li>View the <strong>Cleaned</strong> tab to see what was fixed (postcodes, sort codes, names split, etc.)</li>
+                                    <li>Check the <strong>Issues</strong> tab to see validation errors</li>
+                                </ul>
+                            </li>
+                            <li><strong>Export Options:</strong> Customize your download format (CSV, Excel, JSON) and options (remove duplicates, trim whitespace, export only rows with issues)</li>
+                            <li><strong>Download:</strong> Download the cleaned file to see the results</li>
+                            <li><strong>Reset Demo:</strong> Click "Reset Demo" to clear all data and start over - perfect for trying different cleaning options</li>
+                        </ol>
+
+                        <div class="bg-green-50 border-l-4 border-green-600 p-4 mt-6">
+                            <p class="text-base text-green-900">
+                                <strong><svg class="inline w-5 h-5 text-green-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Perfect for Learning:</strong> The example data is specifically designed to demonstrate all features. You'll see postcodes cleaned from lowercase to uppercase, sort codes formatted from various formats to XX-XX-XX, names split into title/first_name/last_name, and duplicate rows highlighted.
+                            </p>
+                        </div>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mt-6">
+                            <p class="text-base text-blue-900">
+                                <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> Reset Demo Button:</strong> The "Reset Demo" button clears all loaded data and results, allowing you to start fresh and try different cleaning options. This is especially useful for experimenting with different field selections, phone number formats, and export options without having to reload the page.
                             </p>
                         </div>
                     </div>
@@ -344,6 +399,23 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                         </ul>
                                     </div>
                                 </div>
+
+                                <div class="border border-pink-200 rounded-lg p-4 bg-pink-50">
+                                    <h4 class="font-semibold text-gray-900 mb-2 flex items-center gap-2"><svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> Full Names (Split)</h4>
+                                    <p class="text-sm text-gray-600 mb-2">Split full names into separate columns</p>
+                                    <div class="text-sm text-gray-500">
+                                        <p class="font-medium mb-1">Creates:</p>
+                                        <ul class="list-disc list-inside ml-2">
+                                            <li>title (Mr, Mrs, Dr, etc.)</li>
+                                            <li>first_name</li>
+                                            <li>last_name</li>
+                                        </ul>
+                                        <p class="font-medium mt-2 mb-1">Example:</p>
+                                        <ul class="list-disc list-inside ml-2">
+                                            <li>"Mr. John Smith" → title: "Mr", first_name: "John", last_name: "Smith"</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -353,9 +425,9 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 Click the "Auto-Select" button to automatically detect and select all cleanable columns based on:
                             </p>
                             <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                                <li><strong>Column names:</strong> Matches keywords like "phone", "mobile", "postcode", "ni_number", "sort_code"</li>
-                                <li><strong>Data content:</strong> Analyzes sample values to identify UK data patterns</li>
-                                <li><strong>Smart suggestions:</strong> Recommends the appropriate data type for each column</li>
+                                <li><strong>Column names:</strong> Matches keywords like "phone", "mobile", "postcode", "ni_number", "sort_code", "name", "full_name"</li>
+                                <li><strong>Data content:</strong> Analyzes sample values to identify UK data patterns and name formats</li>
+                                <li><strong>Smart suggestions:</strong> Recommends the appropriate data type for each column, including name splitting for full name columns</li>
                             </ul>
                         </div>
 
@@ -367,8 +439,15 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             <ol class="list-decimal list-inside space-y-2 text-gray-700 ml-4">
                                 <li>Check the box next to each column you want to clean</li>
                                 <li>Select the data type from the dropdown (Phone, NI Number, Postcode, Sort Code)</li>
+                                <li>For name columns, check the "Split into first_name and last_name" option to split full names</li>
                                 <li>The system will validate and clean based on your selection</li>
                             </ol>
+                            
+                            <div class="bg-pink-50 border-l-4 border-pink-600 p-4 mt-4">
+                                <p class="text-sm text-pink-900">
+                                    <strong><svg class="inline w-5 h-5 text-pink-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Name Splitting:</strong> When you select a name column for splitting, it creates three new columns: <code>title</code> (extracted titles like Mr, Mrs, Dr), <code>first_name</code>, and <code>last_name</code>. The original name column is preserved unless you choose to remove it during export.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -546,9 +625,23 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                         </div>
 
                         <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4">
-                            <p class="text-sm text-indigo-900">
+                            <p class="text-base text-indigo-900">
                                 <strong><svg class="inline w-5 h-5 text-indigo-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> Preview Benefits:</strong> The Full Preview eliminates surprises. You can verify the cleaning results, check for any issues, and ensure the output matches your expectations before committing to a download.
                             </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">Full Preview HTML Report</h3>
+                            <p class="text-gray-700 mb-3">
+                                In addition to viewing the preview in the tab, you can open a dedicated HTML report page for a better viewing experience:
+                            </p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700 ml-4">
+                                <li>After processing your file, go to the <strong>"Full Preview"</strong> tab</li>
+                                <li>Click the <strong>"View Full Preview Report"</strong> button</li>
+                                <li>A comprehensive HTML report opens in a new page with the complete cleaned dataset</li>
+                                <li>The report includes highlighting for duplicate rows and modified cells</li>
+                                <li>You can print or bookmark this report page for easy reference</li>
+                            </ol>
                         </div>
                     </div>
                 </section>
@@ -801,24 +894,24 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     </svg>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2"><svg class="w-7 h-7 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> Detailed Issues Report</h3>
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Detailed Issues Report</h3>
                                     <p class="text-gray-700 mb-4">
                                         Get comprehensive, actionable explanations for every validation issue. No more guessing what's wrong with your data - we tell you exactly what the problem is and how to fix it.
                                     </p>
                                     
                                     <div class="bg-white rounded-lg p-4 mb-4 border border-blue-100">
                                         <h4 class="font-semibold text-gray-900 mb-3">How It Works</h4>
-                                        <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
+                                        <ol class="list-decimal list-inside space-y-2 text-base text-gray-700">
                                             <li>After processing your file, go to the <strong>"Issues"</strong> tab</li>
-                                            <li>Click the <strong>"View Detailed Issues Report"</strong> button</li>
-                                            <li>A comprehensive HTML report opens with detailed explanations for each issue</li>
+                                            <li>Click the <strong>"View Issues Report"</strong> button</li>
+                                            <li>A comprehensive HTML report opens in a new page with detailed explanations for each issue</li>
                                             <li>Each issue shows: the invalid value, specific problem, explanation, and actionable guidance</li>
                                         </ol>
                                         
                                         <div class="mt-4 pt-4 border-t border-gray-200">
-                                            <h5 class="font-semibold text-gray-900 mb-2 text-sm">Report Features:</h5>
-                                            <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
-                                                <li><strong>Auto-Update:</strong> Keep the report tab open! It automatically updates when you process new files - no need to close and reopen.</li>
+                                            <h5 class="font-semibold text-gray-900 mb-2 text-base">Report Features:</h5>
+                                            <ul class="list-disc list-inside space-y-1 text-base text-gray-700">
+                                                <li><strong>Dedicated HTML Page:</strong> Opens in a separate page for better viewing and printing</li>
                                                 <li><strong>Persistent Storage:</strong> Reports survive page refreshes. Your browser's localStorage keeps the report available even after refreshing.</li>
                                                 <li><strong>Print & Download:</strong> Use the print button to print the report, or download it as an HTML file for permanent storage and sharing.</li>
                                                 <li><strong>Navigation Sidebar:</strong> Quick links to jump to specific data type sections (NI Numbers, Phone Numbers, Postcodes, etc.)</li>
@@ -859,10 +952,10 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     </div>
 
                                     <div class="bg-blue-100 border-l-4 border-blue-600 p-4 rounded">
-                                        <p class="text-sm text-blue-900 mb-2">
+                                        <p class="text-base text-blue-900 mb-2">
                                             <strong><svg class="inline w-5 h-5 text-blue-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> Pro Tip:</strong> The detailed issues report is perfect for sharing with your team or documenting data quality issues. Each explanation includes the specific problem, why it's invalid according to UK standards, and clear steps to fix it.
                                         </p>
-                                        <p class="text-sm text-blue-900">
+                                        <p class="text-base text-blue-900">
                                             <strong>📌 Important:</strong> The report is stored in your browser's session storage, so if you refresh the page, it will automatically restore. You can also print the report directly from the browser or download it as an HTML file for permanent storage.
                                         </p>
                                     </div>
@@ -870,8 +963,54 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             </div>
                         </div>
 
+                        <!-- Cleaned Data Report Section -->
+                        <div class="mt-8 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="flex-shrink-0">
+                                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Cleaned Data Report</h3>
+                                    <p class="text-gray-700 mb-4">
+                                        View a comprehensive report of all values that were automatically cleaned during processing. See the original values alongside their cleaned versions, organized by data type.
+                                    </p>
+                                    
+                                    <div class="bg-white rounded-lg p-4 mb-4 border border-green-100">
+                                        <h4 class="font-semibold text-gray-900 mb-3">How It Works</h4>
+                                        <ol class="list-decimal list-inside space-y-2 text-base text-gray-700">
+                                            <li>After processing your file, go to the <strong>"Cleaned"</strong> tab</li>
+                                            <li>Click the <strong>"View Cleaned Report"</strong> button</li>
+                                            <li>A comprehensive HTML report opens in a new page showing all cleaned values</li>
+                                            <li>Values are organized by type (Phone Numbers, Postcodes, NI Numbers, Sort Codes, Name Splits, etc.)</li>
+                                            <li>Each entry shows the original value and the cleaned/fixed value side by side</li>
+                                        </ol>
+                                        
+                                        <div class="mt-4 pt-4 border-t border-gray-200">
+                                            <h5 class="font-semibold text-gray-900 mb-2 text-base">Report Features:</h5>
+                                            <ul class="list-disc list-inside space-y-1 text-base text-gray-700">
+                                                <li><strong>Dedicated HTML Page:</strong> Opens in a separate page for better viewing and printing</li>
+                                                <li><strong>Organized by Type:</strong> Values are grouped by data type (Phone Numbers, Postcodes, etc.) for easy navigation</li>
+                                                <li><strong>Before & After:</strong> See original values alongside their cleaned versions</li>
+                                                <li><strong>Navigation Sidebar:</strong> Quick links to jump to specific data type sections</li>
+                                                <li><strong>Persistent Storage:</strong> Reports survive page refreshes via browser localStorage</li>
+                                                <li><strong>Print & Share:</strong> Perfect for documenting your data cleaning process and sharing with your team</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-green-100 border-l-4 border-green-600 p-4 rounded">
+                                        <p class="text-base text-green-900">
+                                            <strong><svg class="inline w-5 h-5 text-green-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> Pro Tip:</strong> The cleaned data report is excellent for auditing your data cleaning process, tracking what changes were made, and documenting your data quality improvements for stakeholders.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="bg-red-50 border-l-4 border-red-600 p-4">
-                            <p class="text-sm text-red-900">
+                            <p class="text-base text-red-900">
                                 <strong><svg class="inline w-5 h-5 text-red-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> Important:</strong> Your cleaned data only exists in your browser session. Once you close the tab or refresh the page, it's gone. Make sure to download and save your file immediately after processing!
                             </p>
                         </div>

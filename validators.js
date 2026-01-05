@@ -1033,6 +1033,216 @@ class SortCodeValidator {
     }
 }
 
+// Name Splitter - Splits full names into first_name and last_name
+class NameSplitter {
+    getType() {
+        return 'name_split';
+    }
+
+    split(value) {
+        if (!value || typeof value !== 'string') {
+            return {
+                title: '',
+                first_name: '',
+                last_name: '',
+                error: 'Empty or invalid name value'
+            };
+        }
+
+        // Trim whitespace
+        let cleaned = value.trim();
+
+        if (!cleaned) {
+            return {
+                title: '',
+                first_name: '',
+                last_name: '',
+                error: 'Empty name'
+            };
+        }
+
+        // Extract titles (Mr, Mrs, Dr, etc.)
+        const titlePatterns = [
+            { pattern: /^Mr\.?\s+/i, title: 'Mr' },
+            { pattern: /^Mrs\.?\s+/i, title: 'Mrs' },
+            { pattern: /^Ms\.?\s+/i, title: 'Ms' },
+            { pattern: /^Miss\s+/i, title: 'Miss' },
+            { pattern: /^Dr\.?\s+/i, title: 'Dr' },
+            { pattern: /^Prof\.?\s+/i, title: 'Prof' },
+            { pattern: /^Rev\.?\s+/i, title: 'Rev' },
+            { pattern: /^Sir\s+/i, title: 'Sir' },
+            { pattern: /^Dame\s+/i, title: 'Dame' },
+            { pattern: /^Lord\s+/i, title: 'Lord' },
+            { pattern: /^Lady\s+/i, title: 'Lady' },
+            { pattern: /^Hon\.?\s+/i, title: 'Hon' },
+            { pattern: /^Capt\.?\s+/i, title: 'Capt' },
+            { pattern: /^Col\.?\s+/i, title: 'Col' },
+            { pattern: /^Major\s+/i, title: 'Major' },
+            { pattern: /^Lt\.?\s+/i, title: 'Lt' },
+            { pattern: /^Sgt\.?\s+/i, title: 'Sgt' }
+        ];
+
+        let extractedTitle = '';
+        for (const { pattern, title } of titlePatterns) {
+            if (pattern.test(cleaned)) {
+                extractedTitle = title;
+                cleaned = cleaned.replace(pattern, '');
+                break;
+            }
+        }
+
+        // Remove suffixes (Jr, Sr, III, etc.)
+        const suffixes = [
+            /\s+Jr\.?$/i,
+            /\s+Sr\.?$/i,
+            /\s+II$/i,
+            /\s+III$/i,
+            /\s+IV$/i,
+            /\s+V$/i,
+            /\s+Esq\.?$/i,
+            /\s+PhD\.?$/i,
+            /\s+MD\.?$/i
+        ];
+
+        for (const suffix of suffixes) {
+            cleaned = cleaned.replace(suffix, '');
+        }
+
+        cleaned = cleaned.trim();
+
+        // Split by spaces
+        const parts = cleaned.split(/\s+/).filter(part => part.length > 0);
+
+        if (parts.length === 0) {
+            return {
+                title: extractedTitle,
+                first_name: '',
+                last_name: '',
+                error: 'No name parts found after cleaning'
+            };
+        }
+
+        if (parts.length === 1) {
+            // Single name - treat as last name (common in some cultures)
+            return {
+                title: extractedTitle,
+                first_name: '',
+                last_name: parts[0],
+                error: null
+            };
+        }
+
+        // First word is first name
+        const first_name = parts[0];
+
+        // Remaining words are last name (join if multiple)
+        const last_name = parts.slice(1).join(' ');
+
+        return {
+            title: extractedTitle,
+            first_name: first_name,
+            last_name: last_name,
+            error: null
+        };
+    }
+
+    // Check if a column name suggests it contains full names
+    isNameColumn(columnName) {
+        if (!columnName || typeof columnName !== 'string') {
+            return false;
+        }
+
+        const columnLower = columnName.toLowerCase();
+        
+        // Pattern matching for name-related column names
+        const namePatterns = [
+            /^full[_\-]?name$/i,
+            /^name$/i,
+            /^customer[_\-]?name$/i,
+            /^contact[_\-]?name$/i,
+            /^person[_\-]?name$/i,
+            /^client[_\-]?name$/i,
+            /^user[_\-]?name$/i,
+            /^employee[_\-]?name$/i,
+            /^member[_\-]?name$/i,
+            /^patient[_\-]?name$/i,
+            /^applicant[_\-]?name$/i,
+            /^owner[_\-]?name$/i,
+            /^recipient[_\-]?name$/i,
+            /^sender[_\-]?name$/i,
+            /^payer[_\-]?name$/i,
+            /^beneficiary[_\-]?name$/i
+        ];
+
+        for (const pattern of namePatterns) {
+            if (pattern.test(columnName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Heuristic check: does the value look like a full name?
+    looksLikeName(value) {
+        if (!value || typeof value !== 'string') {
+            return false;
+        }
+
+        const trimmed = value.trim();
+        
+        // Must have at least 2 characters
+        if (trimmed.length < 2) {
+            return false;
+        }
+
+        // Should contain letters (not just numbers or symbols)
+        if (!/[A-Za-z]/.test(trimmed)) {
+            return false;
+        }
+
+        // Check if it looks like a postcode first - postcodes should not be treated as names
+        // UK postcode pattern: [1-2 letters][1-2 digits][0-1 letter] [1 digit][2 letters]
+        // Examples: SW1A 1AA, M1 1AA, M60 1AA, W1A 1AA, EC1A 1BB
+        const postcodePattern = /^[A-Z]{1,2}\d{1,2}[A-Z]?\s\d[A-Z]{2}$/i;
+        if (postcodePattern.test(trimmed)) {
+            return false; // It's a postcode, not a name
+        }
+
+        // Also check postcode patterns without spaces
+        const noSpaces = trimmed.replace(/\s/g, '');
+        const postcodePatternsNoSpace = [
+            /^[A-Z]\d{2,3}[A-Z]{2}$/i,           // M601AA
+            /^[A-Z]{2}\d{2}[A-Z]{2}$/i,          // CR26XH
+            /^[A-Z]{2}\d{2}\d[A-Z]{2}$/i,        // DN551PT
+            /^[A-Z]\d[A-Z]\d[A-Z]{2}$/i,         // W1A1AA
+            /^[A-Z]{2}\d[A-Z]\d[A-Z]{2}$/i       // EC1A1BB
+        ];
+        for (const pattern of postcodePatternsNoSpace) {
+            if (pattern.test(noSpaces)) {
+                return false; // It's a postcode, not a name
+            }
+        }
+
+        // Should have at least one space (indicating multiple words)
+        // But also accept single words (might be last name only)
+        const parts = trimmed.split(/\s+/).filter(p => p.length > 0);
+        
+        // If it has multiple parts, more likely to be a name
+        if (parts.length >= 2) {
+            // Check that parts contain letters
+            const allHaveLetters = parts.every(part => /[A-Za-z]/.test(part));
+            if (allHaveLetters) {
+                return true;
+            }
+        }
+
+        // Single word could still be a name (last name only)
+        // But we'll be more conservative - require multiple words for auto-detection
+        return false;
+    }
+}
+
 // Factory function to get appropriate validator
 function getValidator(type) {
     switch (type.toLowerCase()) {
@@ -1054,6 +1264,9 @@ function getValidator(type) {
         case 'account_number':
         case 'account':
             return new BankAccountValidator();
+        case 'name_split':
+        case 'name':
+            return new NameSplitter();
         default:
             return null;
     }
@@ -1120,6 +1333,7 @@ if (typeof module !== 'undefined' && module.exports) {
         PostcodeValidator,
         BankAccountValidator,
         SortCodeValidator,
+        NameSplitter,
         getValidator,
         autoValidate
     };

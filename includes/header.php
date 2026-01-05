@@ -57,12 +57,6 @@
                         </div>
                     </div>
                     
-                    <!-- Pricing (standalone - important) -->
-                    <a href="/pricing.php"
-                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'pricing.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
-                        Pricing
-                    </a>
-                    
                     <!-- Business Dropdown -->
                     <div class="relative group">
                         <button
@@ -84,6 +78,12 @@
                             </a>
                         </div>
                     </div>
+                    
+                    <!-- Pricing (standalone - important) -->
+                    <a href="/pricing.php"
+                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'pricing.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
+                        Pricing
+                    </a>
                 </div>
             </div>
 
@@ -198,11 +198,6 @@
                 </a>
             </div>
             
-            <!-- Pricing (standalone) -->
-            <a href="/pricing.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
-                Pricing
-            </a>
-            
             <!-- Business Section -->
             <div class="px-3 py-2">
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Business</p>
@@ -213,6 +208,11 @@
                     Bespoke Services
                 </a>
             </div>
+            
+            <!-- Pricing (standalone) -->
+            <a href="/pricing.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                Pricing
+            </a>
             
             <!-- Feedback (standalone) -->
             <a href="/feedback.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">

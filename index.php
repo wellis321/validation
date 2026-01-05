@@ -27,10 +27,10 @@ if ($user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/">
     <title>Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant</title>
-    <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, and bank sort codes in your browser. 100% private - your data never leaves your device. Perfect for businesses handling sensitive PII. GDPR compliant data cleaning.">
+    <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private - your data never leaves your device. Perfect for businesses handling sensitive PII. GDPR compliant data cleaning.">
     <meta name="keywords" content="UK data validation, phone number cleaning, NI number validation, GDPR compliant data cleaning, browser-based data processing, UK postcode validation">
     <meta property="og:title" content="Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant">
-    <meta property="og:description" content="Clean and validate UK phone numbers, NI numbers, postcodes, and bank sort codes in your browser. 100% private - your data never leaves your device.">
+    <meta property="og:description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private - your data never leaves your device.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simple-data-cleaner.com/">
     <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
@@ -61,7 +61,7 @@ if ($user) {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Simple Data Cleaner",
-      "description": "Clean and validate UK phone numbers, NI numbers, postcodes, and bank sort codes in your browser. 100% private - your data never leaves your device.",
+      "description": "Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private - your data never leaves your device.",
       "url": "https://simple-data-cleaner.com",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web Browser",
@@ -76,6 +76,8 @@ if ($user) {
         "National Insurance Number Validation",
         "UK Postcode Validation",
         "Bank Sort Code Validation",
+        "Bank Account Number Validation",
+        "Name Splitting (Title, First Name, Last Name)",
         "Browser-based Processing",
         "GDPR Compliant",
         "100% Private Data Processing",
@@ -119,7 +121,7 @@ if ($user) {
           "name": "What UK data formats can I validate?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Simple Data Cleaner validates UK phone numbers (mobile and landline), National Insurance numbers, UK postcodes, and bank sort codes. All validation follows official UK standards."
+            "text": "Simple Data Cleaner validates UK phone numbers (mobile and landline), National Insurance numbers, UK postcodes, bank sort codes, bank account numbers, and can split full names into title, first name, and last name. All validation follows official UK standards."
           }
         },
         {
@@ -160,7 +162,7 @@ if ($user) {
                     <p class="text-xl text-gray-600 text-center md:text-left flex-1">
                         The only UK data validation tool that processes everything in your browser.
                         Personally Identifiable Information (PII) <strong>never leaves your device</strong> - perfect for GDPR compliance.
-                        Join our beta to lock in lifetime access to phone numbers, bank sort codes, NI numbers, and postcode cleaning for just £99.99.
+                        Join our beta to lock in lifetime access to phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and name splitting for just £99.99.
                     </p>
                     <div class="flex-shrink-0">
                         <img src="/assets/images/transparent-logo.png" alt="Simple Data Cleaner Logo" class="h-24 w-auto" loading="lazy">
@@ -176,6 +178,9 @@ if ($user) {
                     <a href="/beta-offer.php" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
                         Join Lifetime Beta (£99.99)
                     </a>
+                    <a href="/example.php" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                        Try Interactive Demo
+                    </a>
                     <a href="/feedback.php" class="inline-block bg-white text-slate-700 border border-slate-300 px-8 py-3 rounded-lg hover:border-slate-500 font-semibold transition-colors">
                         Share Your Feedback
                     </a>
@@ -184,9 +189,90 @@ if ($user) {
                     </a>
                 </div>
             </div>
+        <?php endif; ?>
 
+        <?php if (!$user): ?>
+        <!-- Features Section -->
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">What We Clean</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+                HMRC-compliant validation for sensitive UK business data. All processing happens in your browser -
+                no data ever transmitted to our servers.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Phone Numbers -->
+                <a href="/validation-rules.php#phone_numbersTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
+                    <div class="text-blue-600 mb-4 group-hover:text-blue-700 transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Phone Numbers</h3>
+                    <p class="text-gray-600">Format UK mobile and landline numbers with proper spacing</p>
+                </a>
+
+                <!-- NI Numbers -->
+                <a href="/validation-rules.php#national_insuranceTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
+                    <div class="text-indigo-600 mb-4 group-hover:text-indigo-700 transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a2 2 0 100-4 2 2 0 000 4z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-indigo-600 transition-colors">NI Numbers</h3>
+                    <p class="text-gray-600">HMRC compliant validation with proper formatting</p>
+                </a>
+
+                <!-- Postcodes -->
+                <a href="/validation-rules.php#postcodesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
+                    <div class="text-teal-600 mb-4 group-hover:text-teal-700 transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-teal-600 transition-colors">Postcodes</h3>
+                    <p class="text-gray-600">Validate and format UK postcodes correctly</p>
+                </a>
+
+                <!-- Sort Codes -->
+                <a href="/validation-rules.php#sort_codesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
+                    <div class="text-amber-600 mb-4 group-hover:text-amber-700 transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-amber-600 transition-colors">Sort Codes</h3>
+                    <p class="text-gray-600">Format bank sort codes with proper hyphens</p>
+                </a>
+
+                <!-- Bank Account Numbers -->
+                <a href="/validation-rules.php" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
+                    <div class="text-orange-600 mb-4 group-hover:text-orange-700 transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-orange-600 transition-colors">Bank Account Numbers</h3>
+                    <p class="text-gray-600">Validate and format 8-digit UK bank account numbers</p>
+                </a>
+
+                <!-- Name Splitting -->
+                <a href="/documentation.php#name-splitting" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
+                    <div class="text-pink-600 mb-4 group-hover:text-pink-700 transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-pink-600 transition-colors">Name Splitting</h3>
+                    <p class="text-gray-600">Split full names into title, first name, and last name</p>
+                </a>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if (!$user): ?>
             <!-- Why Choose Browser-Based Processing -->
-            <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-16">
+            <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-16 mt-16">
                 <h2 class="text-3xl font-bold text-center mb-8">Why Businesses Choose Browser-Based Processing</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
@@ -262,12 +348,12 @@ if ($user) {
                     <div class="lg:w-1/2">
                         <h2 class="text-3xl font-bold mb-4">Help Shape Simple Data Cleaner</h2>
                         <p class="text-slate-200 text-base md:text-lg mb-6">
-                            We're in active beta and focused on the core UK data validators you already use daily. Purchase the lifetime licence once, keep access to phone numbers, NI numbers, postcodes, and sort codes forever, and tell us what to improve next.
+                            We're in active beta and focused on the core UK data validators you already use daily. Purchase the lifetime licence once, keep access to phone numbers, NI numbers, postcodes, sort codes, bank account numbers, and name splitting forever, and tell us what to improve next.
                         </p>
                         <ul class="space-y-4 text-sm md:text-base text-slate-200">
                             <li class="flex items-start gap-3">
                                 <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                                Lifetime access to today's feature set (phone numbers, NI numbers, postcodes, sort codes)
+                                Lifetime access to today's feature set (phone numbers, NI numbers, postcodes, sort codes, bank account numbers, name splitting)
                             </li>
                             <li class="flex items-start gap-3">
                                 <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
@@ -369,7 +455,7 @@ if ($user) {
                                     <svg class="w-4 h-4 mr-2 mt-0.5 text-slate-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                     </svg>
-                                    All data types: Phone, NI, Postcodes, Sort Codes
+                                    All data types: Phone, NI, Postcodes, Sort Codes, Bank Accounts, Name Splitting
                                 </li>
                                 <?php
                                 $features = json_decode($subscription['features'], true);
@@ -419,13 +505,50 @@ if ($user) {
                         </div>
                     </div>
 
+                    <!-- Preview Section (hidden by default) -->
+                    <div id="previewSection" class="hidden mt-6 p-4 bg-blue-50 border-2 border-blue-400 rounded">
+                        <h4 class="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            Preview: What will happen
+                        </h4>
+                        <div id="transformationSummary" class="mb-4">
+                            <!-- Plain English descriptions will be inserted here -->
+                        </div>
+                        <div id="previewBeforeAfter" class="mt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="text-sm font-semibold text-blue-800">Data Preview (first 5 rows):</h5>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" id="previewToggleBefore" class="px-3 py-1 text-xs font-medium rounded border-2 border-blue-600 bg-blue-600 text-white">
+                                        Before
+                                    </button>
+                                    <button type="button" id="previewToggleAfter" class="px-3 py-1 text-xs font-medium rounded border-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                                        After
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto bg-white rounded border border-blue-200">
+                                <table class="min-w-full border-collapse text-xs" id="previewBeforeAfterTable">
+                                    <thead id="previewBeforeAfterHeader" class="bg-gray-100">
+                                        <!-- Headers will be inserted here -->
+                                    </thead>
+                                    <tbody id="previewBeforeAfterBody">
+                                        <!-- Preview data will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Process Button (hidden by default) -->
                     <button type="button" id="processBtn" class="hidden w-full bg-slate-700 text-white py-3 rounded-lg hover:bg-slate-800 font-semibold transition-colors">
                         Clean My Data
                     </button>
 
                     <!-- Error Display (hidden by default) -->
-                    <div id="errorDisplay" class="hidden bg-red-50 border-l-4 border-red-400 rounded-lg p-4">
+                    <div id="errorDisplay" class="hidden bg-red-50 border-2 border-red-400 rounded p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
@@ -537,6 +660,10 @@ if ($user) {
                                 <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
                                     <p class="text-sm text-blue-700 font-medium">Missing Values</p>
                                     <p class="text-2xl font-bold text-blue-900" id="totalMissing">0</p>
+                                    <button type="button" id="showMissingValuesBtn" class="hidden mt-2 text-xs text-blue-600 hover:text-blue-800 underline" onclick="document.getElementById('missingValuesTable').scrollIntoView({behavior: 'smooth', block: 'start'});">
+                                        View details
+                                    </button>
+                                    <p class="text-xs text-blue-600 mt-1 opacity-75">Empty, null, or N/A values</p>
                                 </div>
                                 <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
                                     <p class="text-sm text-purple-700 font-medium">Duplicate Rows</p>
@@ -551,13 +678,13 @@ if ($user) {
                             <!-- Missing Values by Column -->
                             <div id="missingValuesTable" class="hidden mb-6">
                                 <h5 class="text-lg font-semibold mb-3 text-gray-800">Missing Values by Column</h5>
+                                <p class="text-sm text-gray-600 mb-3">Columns with empty, null, or N/A values in your data</p>
                                 <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
                                     <table class="min-w-full">
                                         <thead class="bg-gray-50">
                                             <tr>
                                                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Column</th>
                                                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Missing Count</th>
-                                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Percentage</th>
                                             </tr>
                                         </thead>
                                         <tbody id="missingValuesTableBody" class="divide-y divide-gray-200">
@@ -599,8 +726,8 @@ if ($user) {
                                     Full Preview
                                 </span>
                             </button>
-                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="cleaned">Cleaned <span id="cleanedCount">0</span></button>
-                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="issues">Issues <span id="issuesCount">0</span></button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="cleaned">Cleaned</button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="issues">Issues</button>
                         </div>
 
                         <!-- Tab Content -->
@@ -621,109 +748,52 @@ if ($user) {
                         </div>
 
                         <div id="previewTab" class="tab-content hidden">
-                            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
-                                <div class="flex">
-                                    <div class="flex-shrink-0">
-                                        <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm text-blue-700">
-                                            <strong>This is exactly what your downloaded file will contain.</strong> All columns are preserved in their original order, with cleaned values applied only to the fields you selected.
-                                            <span class="inline-flex items-center gap-1 mt-1">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                                </svg>
-                                                Columns marked with <svg class="inline w-4 h-4 text-gray-600 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> were protected and left unchanged.
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Color Legend -->
-                            <div class="mb-4 bg-white rounded-lg border border-gray-200 p-4">
-                                <h4 class="text-sm font-semibold text-gray-900 mb-3">Row Color Guide:</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-8 h-6 bg-blue-50 border-l-4 border-blue-400 rounded"></div>
-                                        <div>
-                                            <span class="font-medium text-blue-800">Blue</span> - Original row that has duplicates elsewhere
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-8 h-6 bg-amber-50 border-l-4 border-amber-400 rounded"></div>
-                                        <div>
-                                            <span class="font-medium text-amber-800">Yellow</span> - Duplicate row (will be removed if option checked)
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-8 h-6 bg-green-50 border border-gray-200 rounded flex items-center justify-center text-green-600">✓</div>
-                                        <div>
-                                            <span class="font-medium text-green-800">Green cells</span> - Values that were cleaned/fixed
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full border-collapse" id="previewTable">
-                                    <thead>
-                                        <tr class="bg-gray-100" id="previewTableHeader">
-                                            <!-- Headers will be inserted here -->
-                                        </tr>
-                                    </thead>
-                                    <tbody id="previewTableBody">
-                                        <!-- Full dataset preview will be inserted here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="mt-4 text-sm text-gray-600 text-center">
-                                Showing <span id="previewRowCount">0</span> rows × <span id="previewColCount">0</span> columns
+                            <div class="bg-blue-50 border-2 border-blue-400 p-6 rounded text-center">
+                                <svg class="w-12 h-12 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">View Full Preview Report</h3>
+                                <p class="text-gray-600 mb-4">See exactly what your downloaded file will contain. All columns preserved in their original order, with cleaned values applied only to selected fields.</p>
+                                <button type="button" id="previewReportBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    Open Full Preview Report
+                                </button>
                             </div>
                         </div>
 
                         <div id="cleanedTab" class="tab-content hidden">
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full">
-                                    <thead>
-                                        <tr>
-                                            <th class="px-4 py-2 text-left">Row</th>
-                                            <th class="px-4 py-2 text-left">Column</th>
-                                            <th class="px-4 py-2 text-left">Original</th>
-                                            <th class="px-4 py-2 text-left">Cleaned</th>
-                                            <th class="px-4 py-2 text-left">Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="cleanedTableBody"></tbody>
-                                </table>
+                            <div class="bg-blue-50 border-2 border-blue-400 p-6 rounded text-center">
+                                <svg class="w-12 h-12 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">View Cleaned Data Report</h3>
+                                <p class="text-gray-600 mb-4">See a detailed report of all cleaned data with original and fixed values</p>
+                                <button type="button" id="cleanedReportBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    Open Cleaned Data Report
+                                </button>
                             </div>
                         </div>
 
                         <div id="issuesTab" class="tab-content hidden">
-                            <div class="mb-4 flex items-center justify-between">
-                                <h3 class="text-lg font-semibold">Validation Issues Found</h3>
-                                <button type="button" id="issuesReportBtn" class="hidden px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                            <div class="bg-red-50 border-2 border-red-400 p-6 rounded text-center">
+                                <svg class="w-12 h-12 text-red-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">View Issues Report</h3>
+                                <p class="text-gray-600 mb-4">See a detailed report of all validation issues found in your data</p>
+                                <button type="button" id="issuesReportBtn" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 mx-auto">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
-                                    View Detailed Issues Report
+                                    Open Issues Report
                                 </button>
-                            </div>
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full">
-                                    <thead>
-                                        <tr>
-                                            <th class="px-4 py-2 text-left">Row</th>
-                                            <th class="px-4 py-2 text-left">Column</th>
-                                            <th class="px-4 py-2 text-left">Value</th>
-                                            <th class="px-4 py-2 text-left">Error</th>
-                                            <th class="px-4 py-2 text-left">Standard</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="issuesTableBody"></tbody>
-                                </table>
                             </div>
                         </div>
 
@@ -793,7 +863,7 @@ if ($user) {
                             </div>
 
                             <div class="bg-white rounded-lg p-4 border border-gray-200">
-                                <h5 class="text-sm font-semibold text-gray-900 mb-3">Export Customization:</h5>
+                                <h5 class="text-sm font-semibold text-gray-900 mb-3">Export Customisation:</h5>
                                 <div class="space-y-4">
                                     <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
                                         <input type="checkbox" id="includeIssuesColumn" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
@@ -807,6 +877,19 @@ if ($user) {
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-gray-900 block">Export Only Rows With Issues (Optional)</span>
                                             <span class="text-sm text-gray-600 block mt-1">When checked, you'll download <strong>only</strong> the rows that have validation issues (instead of the full file). Perfect for creating a focused review file to fix manually before merging back into your main dataset.</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="nameSplitOptions" class="hidden bg-white rounded-lg p-4 border border-gray-200">
+                                <h5 class="text-sm font-semibold text-gray-900 mb-3">Name Splitting Options:</h5>
+                                <div class="space-y-4">
+                                    <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                        <input type="checkbox" id="removeOriginalNameColumns" class="mt-1 mr-3 h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
+                                        <div class="flex-1">
+                                            <span class="text-sm font-medium text-gray-900 block">Remove Original Name Columns</span>
+                                            <span class="text-sm text-gray-600 block mt-1">When checked, the original name columns (e.g., <code class="bg-gray-100 px-1 rounded">full_name</code>) will be removed from the export, keeping only the new <code class="bg-gray-100 px-1 rounded">first_name</code> and <code class="bg-gray-100 px-1 rounded">last_name</code> columns.</span>
                                         </div>
                                     </label>
                                 </div>
@@ -881,115 +964,207 @@ if ($user) {
             </div>
         <?php endif; ?>
 
-        <!-- Features Section -->
+        <?php if (!$user): ?>
+        <!-- Additional Features Section -->
         <div class="mt-16">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">What We Clean</h2>
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Powerful Data Cleaning Features</h2>
             <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-                HMRC-compliant validation for sensitive UK business data. All processing happens in your browser -
-                no data ever transmitted to our servers.
+                Beyond validation - comprehensive data cleaning tools to prepare your data for use
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-                <!-- Phone Numbers -->
-                <a href="/validation-rules.php#phone_numbersTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-blue-600 mb-4 group-hover:text-blue-700 transition-colors">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Duplicate Removal -->
+                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+                    <div class="text-amber-600 mb-4">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Phone Numbers</h3>
-                    <p class="text-gray-600">Format UK mobile and landline numbers with proper spacing</p>
-                </a>
-
-                <!-- NI Numbers -->
-                <a href="/validation-rules.php#national_insuranceTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-indigo-600 mb-4 group-hover:text-indigo-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a2 2 0 100-4 2 2 0 000 4z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-indigo-600 transition-colors">NI Numbers</h3>
-                    <p class="text-gray-600">HMRC compliant validation with proper formatting</p>
-                </a>
-
-                <!-- Postcodes -->
-                <a href="/validation-rules.php#postcodesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-teal-600 mb-4 group-hover:text-teal-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-teal-600 transition-colors">Postcodes</h3>
-                    <p class="text-gray-600">Validate and format UK postcodes correctly</p>
-                </a>
-
-                <!-- Sort Codes -->
-                <a href="/validation-rules.php#sort_codesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-amber-600 mb-4 group-hover:text-amber-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-amber-600 transition-colors">Sort Codes</h3>
-                    <p class="text-gray-600">Format bank sort codes with proper hyphens</p>
-                </a>
-            </div>
-        </div>
-
-        <!-- Detailed Issues Report Feature -->
-        <div class="mt-16 max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-xl p-8 md:p-12 border border-blue-100">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div>
-                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-100 text-blue-900 mb-4">
-                        New Feature
-                    </div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Detailed Issues Report</h2>
-                    <p class="text-lg text-gray-700 mb-6">
-                        Get comprehensive explanations for every validation issue. Our detailed report tells you exactly what's wrong with each invalid value and how to fix it.
-                    </p>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Duplicate Removal</h3>
+                    <p class="text-gray-600 mb-3">Automatically detect and remove exact duplicate rows. Keep the first occurrence, remove the rest. Visual preview shows which rows will be removed.</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
-                            <span><strong>Specific problem identification</strong> - See exactly which letter, digit, or format is causing the issue</span>
+                            <span>Exact duplicate detection</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
-                            <span><strong>Clear explanations</strong> - Understand why each value is invalid according to UK standards</span>
+                            <span>Visual preview before export</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
-                            <span><strong>Actionable guidance</strong> - Get step-by-step instructions on how to fix each issue</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span><strong>Exportable HTML report</strong> - Download a professional report to share with your team</span>
+                            <span>Optional removal on export</span>
                         </li>
                     </ul>
                 </div>
-                <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Example: NI Number Issue</h3>
-                    <div class="space-y-3 text-sm">
-                        <div class="border-l-4 border-red-500 pl-4">
-                            <p class="font-semibold text-gray-900">NI Number: <code class="bg-red-100 px-2 py-1 rounded">CD234567D</code></p>
-                            <p class="text-gray-600 mt-1"><strong>Prefix:</strong> CD</p>
-                            <p class="text-red-600 mt-1"><strong>Problem:</strong> Second letter "D" is not allowed</strong></p>
-                            <p class="text-gray-700 mt-2"><strong>Explanation:</strong> The second letter "D" is not used in NI number prefixes according to UK HMRC standards.</p>
-                            <p class="text-gray-700 mt-2"><strong>What to do:</strong> Verify this NI number with the individual.</p>
-                        </div>
+
+                <!-- Whitespace Cleaning -->
+                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+                    <div class="text-green-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                     </div>
-                    <p class="text-xs text-gray-500 mt-4 italic">Every issue gets this level of detailed explanation</p>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Whitespace Cleaning</h3>
+                    <p class="text-gray-600 mb-3">Remove leading and trailing spaces, and collapse multiple spaces to single spaces across all cells. Ensures consistent formatting throughout your dataset.</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Trim leading/trailing spaces</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Normalize multiple spaces</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Applied to all columns</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Multiple Export Formats -->
+                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+                    <div class="text-purple-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Multiple Export Formats</h3>
+                    <p class="text-gray-600 mb-3">Export your cleaned data in CSV, Excel (.xlsx), or JSON format. Choose the format that works best for your workflow, regardless of what you uploaded.</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-purple-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>CSV, Excel, or JSON</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-purple-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Export only rows with issues</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-purple-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Optional "Issues" column</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Comprehensive Reports -->
+                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+                    <div class="text-blue-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Comprehensive Reports</h3>
+                    <p class="text-gray-600 mb-3">Get detailed HTML reports for issues, cleaned data, and full preview. Exportable, printable, and perfect for sharing with your team or documenting data quality.</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Detailed Issues Report</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Cleaned Data Report</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Full Preview Report</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Data Profiling -->
+                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
+                    <div class="text-teal-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Data Profiling</h3>
+                    <p class="text-gray-600 mb-3">Automatically analyze your data to identify missing values, duplicate rows, and data quality issues. Get insights before cleaning to understand your data better.</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-teal-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Missing values detection</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-teal-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Duplicate row counting</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-teal-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Summary statistics</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Detailed Issues Report Feature -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 shadow-lg border-2 border-blue-200">
+                    <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-100 text-blue-900 mb-3">
+                        Detailed Reports
+                    </div>
+                    <div class="text-blue-600 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Detailed Issues Report</h3>
+                    <p class="text-gray-600 mb-3">Get comprehensive explanations for every validation issue. See exactly what's wrong, why it's invalid, and how to fix it according to UK standards.</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Specific problem identification</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Clear explanations & guidance</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Exportable HTML reports</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
+        <?php if (!$user): ?>
         <!-- Bespoke & Enterprise Services -->
         <section id="bespoke-services" class="mt-20">
             <div class="max-w-6xl mx-auto bg-slate-900 text-white rounded-2xl shadow-2xl p-10 md:p-14 relative overflow-hidden">
@@ -1046,6 +1221,7 @@ if ($user) {
                 </div>
             </div>
         </section>
+        <?php endif; ?>
     </main>
 
     <?php include __DIR__ . '/includes/footer.php'; ?>

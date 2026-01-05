@@ -1,0 +1,378 @@
+<?php
+require_once __DIR__ . '/includes/init.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://simple-data-cleaner.com/example">
+    <title>Try Simple Data Cleaner - Interactive Demo | Free Example</title>
+    <meta name="description" content="Try Simple Data Cleaner with example data. Experience our UK data validation tool with a pre-loaded sample dataset. No sign-up required.">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="/assets/css/output.css">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js" 
+            integrity="sha384-7hwyYzxURfZMLwHgvEKrYEmM5tX+1DVWK5iDR4R69bOQeY90Q8B8n9Cobuyqybhw" 
+            crossorigin="anonymous" 
+            defer></script>
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
+</head>
+<body class="bg-gray-50">
+    <?php include __DIR__ . '/includes/header.php'; ?>
+
+    <main class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- File Upload Section (Demo Mode) -->
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
+            <h2 class="text-2xl font-bold text-center mb-2">Try with Example Data</h2>
+            <p class="text-center text-slate-700 mb-6 flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Your files are processed in your browser - 100% private & secure
+            </p>
+
+            <!-- Demo Button with Upload Interface -->
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors">
+                <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <p class="text-lg text-gray-600 mb-2">Click to load example data</p>
+                <p class="text-sm text-gray-500 mb-4">Sample dataset with UK data formats ready to explore</p>
+                <button type="button" id="loadExampleBtn" class="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl font-semibold text-lg">
+                    <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Load Example Data
+                </button>
+            </div>
+
+            <!-- File Selected Section (hidden initially) -->
+            <div id="fileSelected" class="hidden mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div>
+                            <p class="font-semibold text-gray-900" id="fileName">example-data.csv</p>
+                            <p class="text-sm text-gray-600" id="fileSize">Sample dataset loaded</p>
+                        </div>
+                    </div>
+                    <button type="button" id="chooseDifferentBtn" class="text-gray-600 hover:text-gray-800">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Field Selection Section (hidden initially) -->
+            <div id="fieldSelection" class="hidden mt-6">
+                <div class="bg-slate-50 border border-slate-200 rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Select columns to clean:</h3>
+                    <div class="flex gap-2 mb-4">
+                        <button type="button" id="selectAllBtn" class="px-4 py-2 bg-slate-600 text-white rounded hover:bg-slate-700 text-sm">
+                            Select All
+                        </button>
+                        <button type="button" id="clearAllBtn" class="px-4 py-2 bg-slate-500 text-white rounded hover:bg-slate-600 text-sm">
+                            Clear All
+                        </button>
+                        <button type="button" id="autoSelectBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+                            Auto-Select
+                        </button>
+                    </div>
+                    <div id="fieldCheckboxes" class="space-y-2">
+                        <!-- Field checkboxes will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Phone Number Format Selection -->
+                <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-semibold mb-3">Phone Number Format:</h4>
+                    <div class="flex gap-6">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="phoneFormat" value="international" checked class="mr-2">
+                            <span>International (+44 7700 900123)</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="phoneFormat" value="uk" class="mr-2">
+                            <span>UK (07700 900123)</span>
+                        </label>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">Choose how you want phone numbers formatted in the output</p>
+                </div>
+
+                <button type="button" id="processBtn" class="hidden mt-6 w-full bg-indigo-600 text-white px-8 py-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-xl font-semibold text-lg">
+                    Clean My Data
+                </button>
+            </div>
+
+            <!-- Results Section (hidden initially) -->
+            <div id="resultsSection" class="hidden mt-8">
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <p class="text-sm text-gray-600 mb-1">Total Rows</p>
+                        <p class="text-2xl font-bold text-gray-900" id="totalRows">0</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <p class="text-sm text-gray-600 mb-1">Valid</p>
+                        <p class="text-2xl font-bold text-green-600" id="validCount">0</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <p class="text-sm text-gray-600 mb-1">Cleaned</p>
+                        <p class="text-2xl font-bold text-blue-600" id="cleanedCount">0</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <p class="text-sm text-gray-600 mb-1">Issues</p>
+                        <p class="text-2xl font-bold text-red-600" id="issuesCount">0</p>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="border-b mb-4">
+                    <button type="button" class="tab-btn border-b-2 border-slate-700 text-slate-700 px-4 py-2 font-semibold" data-tab="summary">Summary</button>
+                    <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="preview">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            Full Preview
+                        </span>
+                    </button>
+                    <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="cleaned">Cleaned</button>
+                    <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="issues">Issues</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div id="summaryTab" class="tab-content active">
+                    <!-- Summary content will be rendered here -->
+                </div>
+
+                <div id="previewTab" class="tab-content hidden">
+                    <div class="bg-blue-50 border-2 border-blue-400 p-6 rounded text-center">
+                        <svg class="w-12 h-12 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">View Full Preview Report</h3>
+                        <p class="text-gray-600 mb-4">See exactly what your downloaded file will contain. All columns preserved in their original order, with cleaned values applied only to selected fields.</p>
+                        <button type="button" id="previewReportBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            Open Full Preview Report
+                        </button>
+                    </div>
+                </div>
+
+                <div id="cleanedTab" class="tab-content hidden">
+                    <div class="bg-blue-50 border-2 border-blue-400 p-6 rounded text-center">
+                        <svg class="w-12 h-12 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">View Cleaned Data Report</h3>
+                        <p class="text-gray-600 mb-4">See a detailed report of all cleaned data with original and fixed values</p>
+                        <button type="button" id="cleanedReportBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Open Cleaned Data Report
+                        </button>
+                    </div>
+                </div>
+
+                <div id="issuesTab" class="tab-content hidden">
+                    <div class="bg-red-50 border-2 border-red-400 p-6 rounded text-center">
+                        <svg class="w-12 h-12 text-red-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">View Issues Report</h3>
+                        <p class="text-gray-600 mb-4">See a detailed report of all validation issues found in your data</p>
+                        <button type="button" id="issuesReportBtn" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 mx-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Open Issues Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="mt-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-6 space-y-5">
+                    <div>
+                        <h4 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            Download Options - Customize Your Export
+                        </h4>
+                        <p class="text-sm text-gray-700 mb-4">Choose your preferred format and export options before downloading your cleaned file:</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2">Select Your Download Format:</label>
+                        <select id="downloadFormat" class="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white font-medium text-gray-900">
+                            <option value="csv">CSV (Comma Separated Values)</option>
+                            <option value="excel">Excel (.xlsx)</option>
+                            <option value="json">JSON</option>
+                        </select>
+                        <p class="text-xs text-blue-700 mt-2 flex items-center gap-1 font-medium">
+                            <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                            <span>You can download in any format, regardless of what you uploaded!</span>
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                        <h5 class="text-sm font-semibold text-gray-900 mb-3">Data Cleaning Options:</h5>
+                        <div class="space-y-4">
+                            <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                <input type="checkbox" id="removeDuplicates" class="mt-1 mr-3 h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded">
+                                <div class="flex-1">
+                                    <span class="text-sm font-medium text-gray-900 block">Remove Duplicate Rows (Keep First Occurrence)</span>
+                                    <span class="text-sm text-gray-600 block mt-1">
+                                        <span id="duplicateCountMessage">Checking for duplicates...</span>
+                                        <span class="block mt-1 text-blue-700"><svg class="inline w-4 h-4 text-blue-700 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> In the Full Preview tab: <strong>Blue</strong> = original rows with duplicates, <strong>Yellow</strong> = duplicate rows to be removed.</span>
+                                    </span>
+                                </div>
+                            </label>
+                            <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                <input type="checkbox" id="trimWhitespace" class="mt-1 mr-3 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" checked>
+                                <div class="flex-1">
+                                    <span class="text-sm font-medium text-gray-900 block">Clean Whitespace in All Cells</span>
+                                    <span class="text-sm text-gray-600 block mt-1">Remove leading/trailing spaces and extra spaces between words. Already applied to cleaned fields, this ensures all other columns are clean too.</span>
+                                </div>
+                            </label>
+                            <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
+                                <input type="checkbox" id="onlyRowsWithIssues" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <div class="flex-1">
+                                    <span class="text-sm font-medium text-gray-900 block">Export Only Rows With Issues (Optional)</span>
+                                    <span class="text-sm text-gray-600 block mt-1">When checked, you'll download <strong>only</strong> the rows that have validation issues (instead of the full file). Perfect for creating a focused review file to fix manually before merging back into your main dataset.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Buttons -->
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <button type="button" id="exportBtn" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl font-semibold">
+                        Download Cleaned File
+                    </button>
+                    <button type="button" id="processNewBtn" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                        Reset Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="max-w-4xl mx-auto mt-12 bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-center mb-4">What You'll Experience</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Data Validation</h3>
+                        <p class="text-sm text-gray-600">See how we validate UK phone numbers, postcodes, NI numbers, and sort codes according to HMRC standards.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Detailed Reports</h3>
+                        <p class="text-sm text-gray-600">Explore comprehensive HTML reports showing issues, cleaned data, and full previews with explanations.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">100% Private</h3>
+                        <p class="text-sm text-gray-600">All processing happens in your browser. Your data never leaves your device - perfect for sensitive information.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Export Options</h3>
+                        <p class="text-sm text-gray-600">Download cleaned data in CSV, Excel, or JSON format. Filter to only rows with issues if needed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+
+    <!-- Scripts -->
+    <script src="/validators.js"></script>
+    <script src="/fileProcessor.js"></script>
+    <script src="/app.js"></script>
+    
+    <!-- Example Data -->
+    <script>
+        // Example CSV data embedded in the page
+        const EXAMPLE_CSV_DATA = `ID,Name,Email,Phone Number,Mobile,National Insurance,Postcode,Sort Code,Bank Account,Address
+1,Mr. John Smith,john.smith@example.com,020 7946 0958,07700 900123,AB123456C,sw1a1aa,123456,12345678,10 Downing Street
+2,Mrs. Jane Doe,jane.doe@example.com,+44 20 7946 0958,07700900123,CD234567D,m1 1aa,234567,23456789,123 Main Street
+3,Dr. Bob Johnson,bob.johnson@example.com,02079460958,07700 900 123,EF345678E,ec1a1bb,34 56 78,34567890,456 High Street
+4,Alice Brown,alice.brown@example.com,+442079460958,07700900123,GH456789F,w1a1aa,45.67.89,45678901,789 Park Avenue
+5,Prof. Charlie Wilson,charlie.wilson@example.com,020 7946 0958,07700-900-123,IJ567890G,cr2 6xh,567890,56789012,321 Oak Road
+6,David Lee,david.lee@example.com,02079460958,07700.900.123,KL678901H,m60 1aa,67 89 01,67890123,654 Elm Street
+7,Miss Emma Davis,emma.davis@example.com,+44 20 7946 0958,07700900123,MN789012I,SW1A 1AA,78-90-12,78901234,987 Pine Lane
+8,Frank Miller,frank.miller@example.com,020 7946 0958,07700 900123,OP890123J,ec1a1bb,890123,89012345,147 Maple Drive
+9,Ms. Grace Taylor,grace.taylor@example.com,02079460958,07700900123,QR901234K,w1a 1aa,90 12 34,90123456,258 Cedar Court
+10,Henry White,henry.white@example.com,+44 20 7946 0958,07700 900123,ST012345L,cr2 6xh,012345,01234567,369 Birch Way
+11,Michael Thompson,michael.thompson@example.com,++44 7700 900123,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,10 Test Street
+12,Patricia Anderson,patricia.anderson@example.com,020 7946,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,11 Test Street
+13,Christopher Mitchell,christopher.mitchell@example.com,020 7946 0958,07700 900123,AB123456C,SW1A1,12-34-56,12345678,12 Test Street
+14,Jennifer Roberts,jennifer.roberts@example.com,020 7946 0958,07700 900123,AB123456C,SW1A1AA,12-34-56,12345678,13 Test Street
+15,Daniel Campbell,daniel.campbell@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-5,12345678,14 Test Street
+16,Lisa Parker,lisa.parker@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,AB-34-56,12345678,15 Test Street
+17,James Turner,james.turner@example.com,020 7946 0958,07700 900123,BG123456C,SW1A 1AA,12-34-56,12345678,16 Test Street
+18,Amanda Foster,amanda.foster@example.com,020 7946 0958,07700 900123,AB12345,SW1A 1AA,12-34-56,12345678,17 Test Street
+19,Robert Taylor III,smith@example.com,020 7946 0958,07700 900123,AB123456C,SW1A 1AA,12-34-56,12345678,18 Test Street
+20,Sarah Williams,jane@example.com,020 7946 0958,07700 900123,CD234567D,SW1A 1AA,12-34-56,12345678,19 Test Street
+21,Mr. John Smith,john.smith@example.com,020 7946 0958,07700 900123,AB123456C,sw1a1aa,123456,12345678,10 Downing Street
+22,Mrs. Jane Doe,jane.doe@example.com,+44 20 7946 0958,07700900123,CD234567D,m1 1aa,234567,23456789,123 Main Street
+23,Dr. Bob Johnson,bob.johnson@example.com,02079460958,07700 900 123,EF345678E,ec1a1bb,34 56 78,34567890,456 High Street`;
+
+        // Wait for app to initialize, then add demo functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait a bit for app.js to initialize
+            setTimeout(() => {
+                const loadExampleBtn = document.getElementById('loadExampleBtn');
+                if (loadExampleBtn && window.app) {
+                    loadExampleBtn.addEventListener('click', () => {
+                        loadExampleData();
+                    });
+                }
+            }, 500);
+        });
+
+        function loadExampleData() {
+            // Create a File object from the CSV string
+            const blob = new Blob([EXAMPLE_CSV_DATA], { type: 'text/csv' });
+            const file = new File([blob], 'example-data.csv', { type: 'text/csv' });
+
+            // Use the app's handleFile method to process it
+            if (window.app && typeof window.app.handleFile === 'function') {
+                window.app.handleFile(file);
+            } else {
+                console.error('App not initialized or handleFile method not available');
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -8,6 +8,7 @@ A complete PHP application for cleaning and validating UK data formats including
 - **NI Number Validation**: HMRC compliant National Insurance number validation
 - **Postcode Validation**: UK postcode formatting and validation
 - **Sort Code Validation**: Bank sort code formatting
+- **Name Splitting**: Automatically split full names into title, first_name, and last_name columns
 - **File Processing**: Upload CSV files and get cleaned data back
 - **Multiple Export Formats**: CSV, JSON, and Excel-friendly formats
 - **Local Processing**: All data processing happens in your browser - no server required

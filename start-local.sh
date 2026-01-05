@@ -42,4 +42,9 @@ echo ""
 echo "Press Ctrl+C to stop the server"
 echo ""
 
-php -S localhost:$PORT
+# Use router.php if it exists, otherwise use default routing
+if [ -f router.php ]; then
+    php -S localhost:$PORT router.php
+else
+    php -S localhost:$PORT
+fi

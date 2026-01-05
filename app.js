@@ -11,8 +11,10 @@ class UKDataCleanerApp {
         this.maxFileSizeMB = this.calculateMaxFileSize();
         this.fileHeaders = [];
         this.selectedFields = [];
+        this.selectedNameSplits = []; // Columns to split into first_name/last_name
         this.fileData = [];
         this.activeTab = 'summary';
+        this.nameSplitter = new NameSplitter();
 
         this.initializeEventListeners();
     }
@@ -40,6 +42,32 @@ class UKDataCleanerApp {
                 e.preventDefault();
                 e.stopPropagation();
                 this.viewIssuesReport();
+            });
+        }
+
+        // Cleaned report button
+        const cleanedReportBtn = document.getElementById('cleanedReportBtn');
+        if (cleanedReportBtn) {
+            // Remove any existing listeners first to prevent duplicates
+            const newBtn = cleanedReportBtn.cloneNode(true);
+            cleanedReportBtn.parentNode?.replaceChild(newBtn, cleanedReportBtn);
+            newBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.viewCleanedReport();
+            });
+        }
+
+        // Preview report button
+        const previewReportBtn = document.getElementById('previewReportBtn');
+        if (previewReportBtn) {
+            // Remove any existing listeners first to prevent duplicates
+            const newBtn = previewReportBtn.cloneNode(true);
+            previewReportBtn.parentNode?.replaceChild(newBtn, previewReportBtn);
+            newBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.viewPreviewReport();
             });
         }
 
@@ -374,12 +402,18 @@ class UKDataCleanerApp {
         // Detect protected columns early
         const protectedColumns = this.detectProtectedColumns(this.fileHeaders);
 
+        // Detect name columns
+        const detectedNameColumns = this.detectNameColumns();
+
         // Filter fields that we can actually clean
         const cleanableFields = this.fileHeaders.filter(field =>
             /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)
         );
 
-        if (cleanableFields.length === 0) {
+        // Combine cleanable fields and name columns
+        const allProcessableFields = [...new Set([...cleanableFields, ...detectedNameColumns])];
+
+        if (allProcessableFields.length === 0) {
             fieldCheckboxes.innerHTML = `
                 <div class="text-center p-6 bg-yellow-50 rounded-lg border border-yellow-200">
                     <svg class="w-12 h-12 text-yellow-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -387,7 +421,7 @@ class UKDataCleanerApp {
                     </svg>
                     <h4 class="text-lg font-semibold text-yellow-800 mb-2">No Cleanable Fields Found</h4>
                     <p class="text-yellow-700">
-                        This file doesn't contain columns we can clean (phone numbers, NI numbers, postcodes, or sort codes).
+                        This file doesn't contain columns we can clean (phone numbers, NI numbers, postcodes, sort codes, or names).
                     </p>
                 </div>
             `;
@@ -417,14 +451,26 @@ class UKDataCleanerApp {
 
         // Get field type and icon for each field
         const getFieldInfo = (fieldName) => {
-            const field = fieldName.toLowerCase();
-            if (field.includes('phone') || field.includes('mobile') || field.includes('tel')) {
+            const field = fieldName.toLowerCase().trim();
+            const isNameColumn = detectedNameColumns.includes(fieldName);
+            
+            if (isNameColumn) {
+                return {
+                    type: 'Full Name (can split)',
+                    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>`,
+                    bgColor: 'bg-pink-100',
+                    textColor: 'text-pink-600',
+                    borderColor: 'border-pink-200',
+                    canSplit: true
+                };
+            } else if (field.includes('phone') || field.includes('mobile') || field.includes('tel')) {
                 return {
                     type: 'Phone Number',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>`,
                     bgColor: 'bg-blue-100',
                     textColor: 'text-blue-600',
-                    borderColor: 'border-blue-200'
+                    borderColor: 'border-blue-200',
+                    canSplit: false
                 };
             } else if (field.includes('ni') || field.includes('insurance')) {
                 return {
@@ -432,7 +478,8 @@ class UKDataCleanerApp {
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 12a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M15 11h3m-3 4h2"></path></svg>`,
                     bgColor: 'bg-purple-100',
                     textColor: 'text-purple-600',
-                    borderColor: 'border-purple-200'
+                    borderColor: 'border-purple-200',
+                    canSplit: false
                 };
             } else if (field.includes('postcode') || field.includes('post_code') || field.includes('zip')) {
                 return {
@@ -440,15 +487,38 @@ class UKDataCleanerApp {
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>`,
                     bgColor: 'bg-green-100',
                     textColor: 'text-green-600',
-                    borderColor: 'border-green-200'
+                    borderColor: 'border-green-200',
+                    canSplit: false
                 };
-            } else if (field.includes('sort') || field.includes('bank') || field.includes('account')) {
+            } else if ((field.includes('bank') && field.includes('account')) || field === 'bank account') {
+                // Bank Account - must have both "bank" and "account", or exact match
+                return {
+                    type: 'Bank Account',
+                    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>`,
+                    bgColor: 'bg-orange-100',
+                    textColor: 'text-orange-600',
+                    borderColor: 'border-orange-200',
+                    canSplit: false
+                };
+            } else if ((field.includes('sort') && field.includes('code')) || field === 'sort code') {
+                // Sort Code - must have both "sort" and "code", or exact match
                 return {
                     type: 'Sort Code',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>`,
                     bgColor: 'bg-yellow-100',
                     textColor: 'text-yellow-600',
-                    borderColor: 'border-yellow-200'
+                    borderColor: 'border-yellow-200',
+                    canSplit: false
+                };
+            } else if (field.includes('account') && !field.includes('sort') && !field.includes('bank')) {
+                // Account number (without "bank" or "sort" in the name) - treat as Bank Account
+                return {
+                    type: 'Bank Account',
+                    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>`,
+                    bgColor: 'bg-orange-100',
+                    textColor: 'text-orange-600',
+                    borderColor: 'border-orange-200',
+                    canSplit: false
                 };
             }
             return {
@@ -456,33 +526,49 @@ class UKDataCleanerApp {
                 icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
                 bgColor: 'bg-gray-100',
                 textColor: 'text-gray-600',
-                borderColor: 'border-gray-200'
+                borderColor: 'border-gray-200',
+                canSplit: false
             };
         };
 
-        fieldCheckboxes.innerHTML = protectedInfo + cleanableFields.map(field => {
+        fieldCheckboxes.innerHTML = protectedInfo + allProcessableFields.map(field => {
             const fieldInfo = getFieldInfo(field);
+            const isNameColumn = detectedNameColumns.includes(field);
+            const isSplitChecked = this.selectedNameSplits.includes(field);
+            
             return `
-                <label class="field-card block cursor-pointer group">
-                    <div class="bg-white rounded-lg p-4 border-2 border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all duration-200 group-hover:bg-indigo-50">
+                <div class="field-card block group">
+                    <div class="bg-white rounded-lg p-4 border-2 ${fieldInfo.borderColor} hover:border-indigo-300 hover:shadow-md transition-all duration-200 group-hover:bg-indigo-50">
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-3 flex-1">
                                 <div class="w-10 h-10 ${fieldInfo.bgColor} rounded-full flex items-center justify-center ${fieldInfo.textColor}">
                                     ${fieldInfo.icon}
                                 </div>
-                                <div>
+                                <div class="flex-1">
                                     <h4 class="font-semibold text-gray-800 group-hover:text-indigo-800">${field}</h4>
                                     <p class="text-sm text-gray-600 group-hover:text-indigo-600">${fieldInfo.type}</p>
+                                    ${isNameColumn ? `
+                                        <span class="text-xs text-pink-600 mt-1 block">Split into first_name and last_name</span>
+                                    ` : ''}
                                 </div>
                             </div>
-                            <input
-                                type="checkbox"
-                                value="${field}"
-                                class="field-checkbox w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2"
-                            />
+                            ${isNameColumn ? `
+                                <input
+                                    type="checkbox"
+                                    value="${field}"
+                                    class="name-split-checkbox w-5 h-5 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 focus:ring-2"
+                                    ${isSplitChecked ? 'checked' : ''}
+                                />
+                            ` : `
+                                <input
+                                    type="checkbox"
+                                    value="${field}"
+                                    class="field-checkbox w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2"
+                                />
+                            `}
                         </div>
                     </div>
-                </label>
+                </div>
             `;
         }).join('');
 
@@ -492,7 +578,378 @@ class UKDataCleanerApp {
             checkbox.addEventListener('change', () => this.updateFieldSelection());
         });
 
+        // Add event listeners to name split checkboxes
+        const nameSplitCheckboxes = fieldCheckboxes.querySelectorAll('.name-split-checkbox');
+        nameSplitCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => this.updateNameSplitSelection());
+        });
+
         this.updateFieldSelection();
+        this.renderPreviewSample();
+    }
+
+    detectNameColumns() {
+        if (!this.nameSplitter || !this.fileHeaders || this.fileHeaders.length === 0) {
+            return [];
+        }
+
+        const nameColumns = [];
+        
+        // Check each column
+        for (const columnName of this.fileHeaders) {
+            // Exclude columns that are clearly not name columns
+            const columnLower = columnName.toLowerCase();
+            if (columnLower.includes('postcode') || columnLower.includes('post_code') || 
+                columnLower.includes('phone') || columnLower.includes('mobile') ||
+                columnLower.includes('email') || columnLower.includes('address') ||
+                columnLower.includes('sort') || columnLower.includes('bank') ||
+                columnLower.includes('account') || columnLower.includes('insurance') ||
+                columnLower.includes('ni') || columnLower.includes('id')) {
+                continue; // Skip this column - it's clearly not a name column
+            }
+
+            // First check column name pattern
+            if (this.nameSplitter.isNameColumn(columnName)) {
+                nameColumns.push(columnName);
+                continue;
+            }
+
+            // Then check sample data if available
+            if (this.fileData && this.fileData.length > 1) {
+                // Check first few non-empty values
+                let nameLikeCount = 0;
+                let checkedCount = 0;
+                
+                for (let i = 1; i < Math.min(this.fileData.length, 11); i++) {
+                    const row = this.fileData[i];
+                    const colIndex = this.fileHeaders.indexOf(columnName);
+                    if (colIndex >= 0 && colIndex < row.length) {
+                        const value = row[colIndex];
+                        if (value && typeof value === 'string' && value.trim()) {
+                            checkedCount++;
+                            if (this.nameSplitter.looksLikeName(value)) {
+                                nameLikeCount++;
+                            }
+                        }
+                    }
+                }
+
+                // If at least 60% of non-empty values look like names, consider it a name column
+                if (checkedCount > 0 && (nameLikeCount / checkedCount) >= 0.6) {
+                    nameColumns.push(columnName);
+                }
+            }
+        }
+
+        return nameColumns;
+    }
+
+    updateNameSplitSelection() {
+        const nameSplitCheckboxes = document.querySelectorAll('.name-split-checkbox');
+        this.selectedNameSplits = Array.from(nameSplitCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+        
+        // If a name column is selected for splitting, also add it to selectedFields
+        this.selectedNameSplits.forEach(nameCol => {
+            if (!this.selectedFields.includes(nameCol)) {
+                this.selectedFields.push(nameCol);
+            }
+        });
+        
+        this.updateFieldSelection();
+        this.renderPreviewSample();
+    }
+
+    generateTransformationSummary() {
+        const transformations = [];
+        
+        // Check for name splits
+        if (this.selectedNameSplits && this.selectedNameSplits.length > 0) {
+            this.selectedNameSplits.forEach(col => {
+                transformations.push(`Split <strong>${this.escapeHtml(col)}</strong> into <strong>first_name</strong> and <strong>last_name</strong>`);
+            });
+        }
+        
+        // Check for phone number cleaning
+        const phoneFields = this.selectedFields.filter(f => 
+            /phone|mobile|tel/i.test(f) && !this.selectedNameSplits.includes(f)
+        );
+        if (phoneFields.length > 0) {
+            const phoneFormat = document.querySelector('input[name="phoneFormat"]:checked')?.value || 'international';
+            const formatText = phoneFormat === 'international' ? '+44 7700 900123' : '07700 900123';
+            transformations.push(`Format phone numbers as <strong>${formatText}</strong> in ${phoneFields.length} column(s)`);
+        }
+        
+        // Check for other validations
+        const otherFields = this.selectedFields.filter(f => {
+            if (this.selectedNameSplits.includes(f)) return false;
+            const lower = f.toLowerCase();
+            if (/phone|mobile|tel/i.test(lower)) return false;
+            return /ni|insurance|postcode|sort|code|bank|account/i.test(lower);
+        });
+        
+        if (otherFields.length > 0) {
+            const types = [];
+            otherFields.forEach(f => {
+                const lower = f.toLowerCase();
+                if (/ni|insurance/i.test(lower) && !types.includes('NI numbers')) types.push('NI numbers');
+                if (/postcode|post_code|zip/i.test(lower) && !types.includes('postcodes')) types.push('postcodes');
+                if (/sort.*code/i.test(lower) && !types.includes('sort codes')) types.push('sort codes');
+                if (/bank.*account|account.*number/i.test(lower) && !types.includes('bank account numbers')) types.push('bank account numbers');
+            });
+            if (types.length > 0) {
+                transformations.push(`Validate and format <strong>${types.join(', ')}</strong>`);
+            }
+        }
+        
+        return transformations;
+    }
+
+    renderPreviewSample() {
+        const previewSection = document.getElementById('previewSection');
+        const transformationSummary = document.getElementById('transformationSummary');
+        const previewBeforeAfterHeader = document.getElementById('previewBeforeAfterHeader');
+        const previewBeforeAfterBody = document.getElementById('previewBeforeAfterBody');
+        
+        if (!previewSection || !transformationSummary) return;
+        
+        // Show preview section if fields are selected
+        if (this.selectedFields.length > 0 || this.selectedNameSplits.length > 0) {
+            previewSection.classList.remove('hidden');
+            
+            // Generate transformation descriptions
+            const transformations = this.generateTransformationSummary();
+            
+            if (transformations.length > 0) {
+                transformationSummary.innerHTML = `
+                    <ul class="list-disc list-inside space-y-2 text-sm text-blue-800">
+                        ${transformations.map(t => `<li>${t}</li>`).join('')}
+                    </ul>
+                `;
+            } else {
+                transformationSummary.innerHTML = '<p class="text-sm text-blue-700">No transformations selected.</p>';
+            }
+            
+            // Show before/after preview
+            if (previewBeforeAfterHeader && previewBeforeAfterBody && this.fileData && this.fileData.length > 1) {
+                this.renderPreviewBeforeAfter(previewBeforeAfterHeader, previewBeforeAfterBody);
+            }
+        } else {
+            previewSection.classList.add('hidden');
+        }
+    }
+
+    renderPreviewBeforeAfter(headerEl, bodyEl) {
+        if (!this.fileData || this.fileData.length < 2) return;
+        
+        const headers = this.fileHeaders;
+        const sampleRows = this.fileData.slice(1, Math.min(6, this.fileData.length)); // First 5 data rows
+        
+        // Simulate what headers will look like after processing (with name splits)
+        let processedHeaders = [...headers];
+        if (this.selectedNameSplits && this.selectedNameSplits.length > 0) {
+            // Add first_name and last_name columns after each name column being split
+            for (let i = this.selectedNameSplits.length - 1; i >= 0; i--) {
+                const nameCol = this.selectedNameSplits[i];
+                const nameIndex = processedHeaders.indexOf(nameCol);
+                if (nameIndex >= 0) {
+                    processedHeaders.splice(nameIndex + 1, 0, 'first_name', 'last_name');
+                }
+            }
+        }
+        
+        // Store headers for toggle
+        this.previewHeaders = headers;
+        this.previewProcessedHeaders = processedHeaders;
+        this.previewSampleRows = sampleRows;
+        
+        // Set initial view to "Before"
+        this.previewViewMode = 'before';
+        this.updatePreviewView(headerEl, bodyEl);
+        
+        // Add toggle button listeners
+        const beforeBtn = document.getElementById('previewToggleBefore');
+        const afterBtn = document.getElementById('previewToggleAfter');
+        
+        if (beforeBtn) {
+            beforeBtn.addEventListener('click', () => {
+                this.previewViewMode = 'before';
+                this.updatePreviewView(headerEl, bodyEl);
+                this.updatePreviewToggleButtons();
+            });
+        }
+        
+        if (afterBtn) {
+            afterBtn.addEventListener('click', () => {
+                this.previewViewMode = 'after';
+                this.updatePreviewView(headerEl, bodyEl);
+                this.updatePreviewToggleButtons();
+            });
+        }
+        
+        this.updatePreviewToggleButtons();
+    }
+    
+    updatePreviewToggleButtons() {
+        const beforeBtn = document.getElementById('previewToggleBefore');
+        const afterBtn = document.getElementById('previewToggleAfter');
+        
+        if (this.previewViewMode === 'before') {
+            if (beforeBtn) {
+                beforeBtn.classList.add('border-blue-600', 'bg-blue-600', 'text-white');
+                beforeBtn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
+            }
+            if (afterBtn) {
+                afterBtn.classList.remove('border-blue-600', 'bg-blue-600', 'text-white');
+                afterBtn.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
+            }
+        } else {
+            if (afterBtn) {
+                afterBtn.classList.add('border-blue-600', 'bg-blue-600', 'text-white');
+                afterBtn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
+            }
+            if (beforeBtn) {
+                beforeBtn.classList.remove('border-blue-600', 'bg-blue-600', 'text-white');
+                beforeBtn.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
+            }
+        }
+    }
+    
+    updatePreviewView(headerEl, bodyEl) {
+        if (!this.previewHeaders || !this.previewSampleRows) return;
+        
+        const headers = this.previewViewMode === 'before' ? this.previewHeaders : this.previewProcessedHeaders;
+        const sampleRows = this.previewSampleRows;
+        
+        // Build header row
+        headerEl.innerHTML = `
+            <tr>
+                <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-700">#</th>
+                ${headers.map(header => `
+                    <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-700">
+                        ${this.escapeHtml(header)}
+                    </th>
+                `).join('')}
+            </tr>
+        `;
+        
+        // Build before/after comparison rows
+        const nameSplitter = new NameSplitter();
+        const phoneFormat = document.querySelector('input[name="phoneFormat"]:checked')?.value || 'international';
+        const phoneValidator = new PhoneNumberValidator(phoneFormat);
+        const postcodeValidator = new PostcodeValidator();
+        const niValidator = new NINumberValidator();
+        const sortCodeValidator = new SortCodeValidator();
+        
+        // Render based on view mode
+        if (this.previewViewMode === 'before') {
+            // Show original data
+            bodyEl.innerHTML = sampleRows.map((row, index) => {
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-500 font-mono bg-gray-50">${index + 1}</td>
+                        ${headers.map((header, colIndex) => {
+                            const value = colIndex < row.length ? (row[colIndex] || '') : '';
+                            const isSelected = this.selectedFields.includes(header) || this.selectedNameSplits.includes(header);
+                            return `
+                                <td class="px-2 py-1 border-b border-gray-200 text-xs ${isSelected ? 'bg-blue-50 font-medium' : 'bg-white'}">
+                                    ${this.escapeHtml(String(value))}
+                                </td>
+                            `;
+                        }).join('')}
+                    </tr>
+                `;
+            }).join('');
+        } else {
+            // Show transformed data
+            const nameSplitter = new NameSplitter();
+            const phoneFormat = document.querySelector('input[name="phoneFormat"]:checked')?.value || 'international';
+            const phoneValidator = new PhoneNumberValidator(phoneFormat);
+            const postcodeValidator = new PostcodeValidator();
+            const niValidator = new NINumberValidator();
+            const sortCodeValidator = new SortCodeValidator();
+            
+            bodyEl.innerHTML = sampleRows.map((row, index) => {
+                // Build row cells for processed headers
+                const rowCells = headers.map((header) => {
+                    const isNameSplit = header === 'first_name' || header === 'last_name';
+                    
+                    if (isNameSplit) {
+                        // Get split value from the name column being split
+                        if (this.selectedNameSplits && this.selectedNameSplits.length > 0) {
+                            for (const nameCol of this.selectedNameSplits) {
+                                const nameIndex = this.previewHeaders.indexOf(nameCol);
+                                if (nameIndex >= 0 && nameIndex < row.length) {
+                                    const nameValue = row[nameIndex] || '';
+                                    const splitResult = nameSplitter.split(nameValue);
+                                    const value = header === 'first_name' ? (splitResult.first_name || '') : (splitResult.last_name || '');
+                                    return `
+                                        <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50">
+                                            <div class="font-medium text-green-700">${this.escapeHtml(String(value))}</div>
+                                        </td>
+                                    `;
+                                }
+                            }
+                        }
+                        return `
+                            <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50">
+                                <div class="font-medium text-green-700"></div>
+                            </td>
+                        `;
+                    } else {
+                        // Regular column - get original value and transform if needed
+                        const originalHeaderIndex = this.previewHeaders.indexOf(header);
+                        let value = '';
+                        let originalValue = '';
+                        
+                        if (originalHeaderIndex >= 0 && originalHeaderIndex < row.length) {
+                            originalValue = row[originalHeaderIndex] || '';
+                            value = originalValue;
+                            
+                            // Apply transformation if selected
+                            const isSelected = this.selectedFields.includes(header);
+                            if (isSelected && value && typeof value === 'string' && value.trim()) {
+                                const headerLower = header.toLowerCase();
+                                
+                                if (/phone|mobile|tel/i.test(headerLower)) {
+                                    const result = phoneValidator.validate(value);
+                                    value = result.isValid && result.fixed ? result.fixed : value;
+                                } else if (/postcode|post_code|zip/i.test(headerLower)) {
+                                    const result = postcodeValidator.validate(value);
+                                    value = result.isValid && result.fixed ? result.fixed : value;
+                                } else if (/ni|insurance/i.test(headerLower)) {
+                                    const result = niValidator.validate(value);
+                                    value = result.isValid && result.fixed ? result.fixed : value;
+                                } else if (/sort.*code/i.test(headerLower)) {
+                                    const result = sortCodeValidator.validate(value);
+                                    value = result.isValid && result.fixed ? result.fixed : value;
+                                }
+                            }
+                        }
+                        
+                        const isSelected = this.selectedFields.includes(header);
+                        const willChange = isSelected && originalValue !== value && value;
+                        
+                        return `
+                            <td class="px-2 py-1 border-b border-gray-200 text-xs ${willChange ? 'bg-green-50' : 'bg-white'}">
+                                <div class="font-medium ${willChange ? 'text-green-700' : 'text-gray-700'}">
+                                    ${this.escapeHtml(String(value))}
+                                    ${willChange ? '<svg class="inline w-4 h-4 text-green-600 align-middle ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>' : ''}
+                                </div>
+                            </td>
+                        `;
+                    }
+                }).join('');
+                
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-500 font-mono bg-gray-50">${index + 1}</td>
+                        ${rowCells}
+                    </tr>
+                `;
+            }).join('');
+        }
     }
 
     updateFieldSelection() {
@@ -501,31 +958,46 @@ class UKDataCleanerApp {
             .filter(cb => cb.checked)
             .map(cb => cb.value);
 
+        // Ensure name columns selected for splitting are also in selectedFields
+        if (this.selectedNameSplits && this.selectedNameSplits.length > 0) {
+            this.selectedNameSplits.forEach(nameCol => {
+                if (!this.selectedFields.includes(nameCol)) {
+                    this.selectedFields.push(nameCol);
+                }
+            });
+        }
+
         this.updateFieldSelectionStatus();
         this.updateProcessButton();
+        this.renderPreviewSample();
     }
 
     updateFieldSelectionStatus() {
         const status = document.getElementById('fieldSelectionStatus');
         if (!status) return;
 
-        if (this.selectedFields.length === 0) {
+        if (this.selectedFields.length === 0 && this.selectedNameSplits.length === 0) {
             status.innerHTML = `
                 <div class="flex items-center justify-center gap-2">
                     <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
-                    <span>Please select at least one field to clean</span>
+                    <span>Please select at least one field to clean or split</span>
                 </div>
             `;
             status.className = 'text-sm text-orange-600 mt-3 text-center';
         } else {
+            const transformations = this.generateTransformationSummary();
+            const summaryText = transformations.length > 0 
+                ? transformations.slice(0, 2).join(', ') + (transformations.length > 2 ? '...' : '')
+                : `${this.selectedFields.length + this.selectedNameSplits.length} field(s) selected`;
+            
             status.innerHTML = `
                 <div class="flex items-center justify-center gap-2">
                     <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                     </svg>
-                    <span>${this.selectedFields.length} field(s) selected for cleaning</span>
+                    <span>${summaryText}</span>
                 </div>
             `;
             status.className = 'text-sm text-green-600 mt-3 text-center';
@@ -536,7 +1008,8 @@ class UKDataCleanerApp {
         const processBtn = document.getElementById('processBtn');
         if (!processBtn) return;
 
-        if (this.selectedFields.length > 0) {
+        // Show button if any fields are selected OR any name splits are selected
+        if (this.selectedFields.length > 0 || (this.selectedNameSplits && this.selectedNameSplits.length > 0)) {
             processBtn.classList.remove('hidden');
         } else {
             processBtn.classList.add('hidden');
@@ -544,28 +1017,57 @@ class UKDataCleanerApp {
     }
 
     selectAllFields() {
+        // Select all regular field checkboxes
         const checkboxes = document.querySelectorAll('.field-checkbox');
         checkboxes.forEach(cb => cb.checked = true);
+        
+        // Also select all name split checkboxes
+        const nameSplitCheckboxes = document.querySelectorAll('.name-split-checkbox');
+        nameSplitCheckboxes.forEach(cb => cb.checked = true);
+        
+        // Update selections
         this.updateFieldSelection();
+        this.updateNameSplitSelection();
     }
 
     clearFieldSelection() {
+        // Clear all regular field checkboxes
         const checkboxes = document.querySelectorAll('.field-checkbox');
         checkboxes.forEach(cb => cb.checked = false);
+        
+        // Also clear all name split checkboxes
+        const nameSplitCheckboxes = document.querySelectorAll('.name-split-checkbox');
+        nameSplitCheckboxes.forEach(cb => cb.checked = false);
+        
+        // Update selections
         this.updateFieldSelection();
+        this.updateNameSplitSelection();
     }
 
     autoSelectCleanableFields() {
+        // Select fields that match cleanable patterns
         this.selectedFields = this.fileHeaders.filter(field =>
             /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)
         );
 
+        // Also detect and select name columns for splitting
+        const detectedNameColumns = this.detectNameColumns();
+        this.selectedNameSplits = [...detectedNameColumns];
+
+        // Check regular field checkboxes
         const checkboxes = document.querySelectorAll('.field-checkbox');
         checkboxes.forEach(cb => {
             cb.checked = this.selectedFields.includes(cb.value);
         });
 
+        // Check name split checkboxes
+        const nameSplitCheckboxes = document.querySelectorAll('.name-split-checkbox');
+        nameSplitCheckboxes.forEach(cb => {
+            cb.checked = this.selectedNameSplits.includes(cb.value);
+        });
+
         this.updateFieldSelection();
+        this.updateNameSplitSelection();
     }
 
     updatePhoneFormat() {
@@ -634,11 +1136,12 @@ class UKDataCleanerApp {
             // Ensure phone format is synchronized before processing
             this.updatePhoneFormat();
 
-            // Process the file with selected columns and progress callback
+            // Process the file with selected columns, progress callback, and name split columns
             this.results = await this.fileProcessor.processFile(
                 this.selectedFile,
                 this.selectedFields,
-                (current, total) => this.updateLoadingProgress(current, total)
+                (current, total) => this.updateLoadingProgress(current, total),
+                this.selectedNameSplits
             );
 
             this.hideLoadingState();
@@ -677,15 +1180,15 @@ class UKDataCleanerApp {
 
         // Render tables
         this.renderSummaryTable();
-        this.renderCleanedTable();
-        this.renderIssuesTable();
-        this.renderPreviewTable();
 
         // Update download summary
         this.updateDownloadSummary();
 
         // Update duplicate count message
         this.updateDuplicateCountMessage();
+        
+        // Show/hide name split options
+        this.updateNameSplitOptions();
 
         // Set initial tab visibility
         document.getElementById('summaryTab')?.classList.remove('hidden');
@@ -694,8 +1197,17 @@ class UKDataCleanerApp {
         document.getElementById('issuesTab')?.classList.add('hidden');
         document.getElementById('previewTab')?.classList.add('hidden');
 
-        // Scroll to results
-        resultsSection.scrollIntoView({ behavior: 'smooth' });
+        // Scroll to summary cards so user can see the counts at the top
+        const summaryCards = document.getElementById('summaryCards');
+        if (summaryCards) {
+            // Use setTimeout to ensure DOM is updated before scrolling
+            setTimeout(() => {
+                summaryCards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        } else {
+            // Fallback to results section if summary cards not found
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     updateDataProfiling() {
@@ -731,6 +1243,7 @@ class UKDataCleanerApp {
     renderMissingValuesTable(missingByColumn) {
         const tableContainer = document.getElementById('missingValuesTable');
         const tbody = document.getElementById('missingValuesTableBody');
+        const showMissingValuesBtn = document.getElementById('showMissingValuesBtn');
 
         if (!tableContainer || !tbody) return;
 
@@ -738,20 +1251,18 @@ class UKDataCleanerApp {
 
         if (entries.length === 0) {
             tableContainer.classList.add('hidden');
+            if (showMissingValuesBtn) showMissingValuesBtn.classList.add('hidden');
             return;
         }
 
         tableContainer.classList.remove('hidden');
-
-        const totalRows = this.results.totalRows - 1; // Exclude header
+        if (showMissingValuesBtn) showMissingValuesBtn.classList.remove('hidden');
 
         tbody.innerHTML = entries.map(([column, count]) => {
-            const percentage = totalRows > 0 ? ((count / totalRows) * 100).toFixed(1) : 0;
             return `
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 text-sm font-medium text-gray-900">${this.escapeHtml(column)}</td>
                     <td class="px-4 py-2 text-sm text-gray-700">${count}</td>
-                    <td class="px-4 py-2 text-sm text-gray-700">${percentage}%</td>
                 </tr>
             `;
         }).join('');
@@ -771,16 +1282,13 @@ class UKDataCleanerApp {
 
         if (totalRows) totalRows.textContent = this.results.totalRows;
         if (totalValid) totalValid.textContent = this.results.summary.totalValid;
-        if (totalFixed) totalFixed.textContent = this.results.summary.totalFixed;
+        if (totalFixed) totalFixed.textContent = (this.results.summary.totalFixed || 0) + (this.results.summary.totalNameSplits || 0);
         if (totalInvalid) totalInvalid.textContent = this.results.summary.totalInvalid;
     }
 
     updateTabCounts() {
-        const cleanedCount = document.getElementById('cleanedCount');
-        const issuesCount = document.getElementById('issuesCount');
-
-        if (cleanedCount) cleanedCount.textContent = this.results.summary.totalFixed;
-        if (issuesCount) issuesCount.textContent = this.results.summary.totalInvalid;
+        // Tab counts removed - counts are shown in summary row above
+        // This function kept for compatibility but no longer updates any elements
     }
 
     renderSummaryTable() {
@@ -835,7 +1343,13 @@ class UKDataCleanerApp {
         const issuesData = this.results.processedRows
             .flatMap(row =>
                 row.validationResults
-                    .filter(result => !result.isValid)
+                    .filter(result => {
+                        // Skip invalid results for name split columns - they're not validation issues
+                        if (this.results.nameSplitColumns && this.results.nameSplitColumns.includes(result.column)) {
+                            return false;
+                        }
+                        return !result.isValid;
+                    })
                     .map(result => ({ row, result }))
             );
 
@@ -878,7 +1392,13 @@ class UKDataCleanerApp {
         const issuesData = this.results.processedRows
             .flatMap(row =>
                 row.validationResults
-                    .filter(result => !result.isValid)
+                    .filter(result => {
+                        // Skip invalid results for name split columns - they're not validation issues
+                        if (this.results.nameSplitColumns && this.results.nameSplitColumns.includes(result.column)) {
+                            return false;
+                        }
+                        return !result.isValid;
+                    })
                     .map(result => ({ row, result }))
             );
 
@@ -1052,7 +1572,8 @@ class UKDataCleanerApp {
             }
 
             // Phone number explanations
-            if (column.includes('phone') || column.includes('mobile') || column.includes('tel') || result.detectedType === 'phone_number') {
+            // Only show phone number explanations for actual phone columns, not name columns incorrectly detected as phone
+            if ((column.includes('phone') || column.includes('mobile') || column.includes('tel')) && result.detectedType === 'phone_number') {
                 let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
                 explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Phone Number:</td><td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td></tr>`;
                 
@@ -1589,6 +2110,7 @@ class UKDataCleanerApp {
                     </svg>
                     Download Report
                 </button>
+                <a href="/" class="action-btn download-btn">Home</a>
             </div>
         </div>
         <h1>Detailed Validation Issues Report</h1>
@@ -1680,6 +2202,23 @@ class UKDataCleanerApp {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
+        
+        // Home - go back to the homepage
+        // Make it globally accessible so it works after document.write()
+        window.returnToDataCleaner = function returnToDataCleaner() {
+            if (window.opener && !window.opener.closed) {
+                // Focus the original window that opened this report (don't refresh it!)
+                try {
+                    window.opener.focus();
+                } catch (e) {
+                    // If we can't access opener (cross-origin or closed), navigate to home
+                    window.location.href = '/';
+                }
+            } else {
+                // Fallback: navigate to home page if opener doesn't exist
+                window.location.href = '/';
+            }
+        };
     </script>
     <script>
         // Simple restoration - only on refresh when page is blank
@@ -1766,6 +2305,1046 @@ class UKDataCleanerApp {
         return { html, reportId };
     }
 
+    generateCleanedReport() {
+        // Get original data to preserve original values
+        const originalData = this.results.originalData || [];
+        const originalHeaders = this.results.originalHeaders || [];
+        
+        const cleanedData = this.results.processedRows
+            .flatMap(row => {
+                const originalRowIndex = row.rowNumber - 1; // rowNumber is 1-based, starting at 2
+                const originalRow = originalRowIndex >= 1 && originalRowIndex < originalData.length 
+                    ? originalData[originalRowIndex] 
+                    : null;
+                
+                return row.validationResults
+                    .filter(result => {
+                        // Only include results that are valid AND have a fixed value
+                        if (!result.fixed || !result.isValid) return false;
+                        
+                        // Check if this column was selected for cleaning
+                        if (!this.selectedFields.includes(result.column)) return false;
+                        
+                        // Get original value to compare (normalize for comparison)
+                        let originalValue = result.value;
+                        if (originalRow) {
+                            const colIndex = originalHeaders.indexOf(result.column);
+                            if (colIndex !== -1 && colIndex < originalRow.length) {
+                                originalValue = originalRow[colIndex] || result.value;
+                            }
+                        }
+                        
+                        // Normalize both values for comparison (trim and case-insensitive for postcodes)
+                        const normalizedOriginal = String(originalValue).trim().toUpperCase();
+                        const normalizedFixed = String(result.fixed).trim().toUpperCase();
+                        
+                        // Only include if the value was actually changed
+                        return normalizedFixed !== normalizedOriginal;
+                    })
+                    .map(result => {
+                        // Get the original value from the original data, not from validation result
+                        let originalValue = result.value;
+                        if (originalRow) {
+                            const colIndex = originalHeaders.indexOf(result.column);
+                            if (colIndex !== -1 && colIndex < originalRow.length) {
+                                originalValue = originalRow[colIndex] || result.value;
+                            }
+                        }
+                        
+                        return { 
+                            row, 
+                            result: {
+                                ...result,
+                                value: originalValue // Use original value from file
+                            }
+                        };
+                    });
+            });
+
+        // Add name splits to cleaned data
+        if (this.results.nameSplitColumns && this.results.nameSplitColumns.length > 0) {
+            const originalHeaders = this.results.originalHeaders || [];
+            const processedHeaders = this.results.processedHeaders || [];
+            const originalData = this.results.originalData || [];
+
+            this.results.nameSplitColumns.forEach(nameColumn => {
+                const originalColIndex = originalHeaders.indexOf(nameColumn);
+                if (originalColIndex === -1) return;
+
+                const processedColIndex = processedHeaders.indexOf(nameColumn);
+                if (processedColIndex === -1) return;
+
+                this.results.processedRows.forEach(row => {
+                    const originalRowIndex = row.rowNumber - 1; // rowNumber is 1-based, starting at 2; originalData[0] is header, [1] is first data row
+                    if (originalRowIndex < 1 || originalRowIndex >= originalData.length) return;
+
+                    const originalRow = originalData[originalRowIndex];
+                    if (!originalRow || originalRow.length <= originalColIndex) return;
+
+                    const originalValue = originalRow[originalColIndex] || '';
+                    if (!originalValue.trim()) return; // Skip empty names
+
+                    const processedRow = row.processedData || [];
+                    // Order: original column, then title, then first_name, then last_name
+                    const titleIndex = processedColIndex + 1;
+                    const firstNameIndex = processedColIndex + 2;
+                    const lastNameIndex = processedColIndex + 3;
+
+                    // Add title entry
+                    if (titleIndex < processedRow.length) {
+                        const title = processedRow[titleIndex] || '';
+                        if (title.trim()) {
+                            cleanedData.push({
+                                row,
+                                result: {
+                                    column: 'title',
+                                    value: originalValue,
+                                    fixed: title,
+                                    detectedType: 'name_split'
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Add first_name entry
+                    if (firstNameIndex < processedRow.length) {
+                        const firstName = processedRow[firstNameIndex] || '';
+                        if (firstName.trim()) {
+                            cleanedData.push({
+                                row,
+                                result: {
+                                    column: 'first_name',
+                                    value: originalValue,
+                                    fixed: firstName,
+                                    detectedType: 'name_split'
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Add last_name entry
+                    if (lastNameIndex < processedRow.length) {
+                        const lastName = processedRow[lastNameIndex] || '';
+                        if (lastName.trim()) {
+                            cleanedData.push({
+                                row,
+                                result: {
+                                    column: 'last_name',
+                                    value: originalValue,
+                                    fixed: lastName,
+                                    detectedType: 'name_split'
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        if (cleanedData.length === 0) {
+            return null;
+        }
+
+        // Group cleaned data by type
+        const cleanedByType = {};
+        cleanedData.forEach(({ row, result }) => {
+            const type = result.detectedType || 'unknown';
+            if (!cleanedByType[type]) {
+                cleanedByType[type] = [];
+            }
+            cleanedByType[type].push({ row, result });
+        });
+
+        // Generate sidebar navigation
+        const sidebarNav = Object.entries(cleanedByType).map(([type, items]) => {
+            const typeId = 'cleaned-type-' + type.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+            const displayName = this.getTypeDisplayName(type);
+            return `<a href="#${typeId}" onclick="event.preventDefault(); document.getElementById('${typeId}').scrollIntoView({behavior: 'smooth', block: 'start'}); return false;">${displayName} (${items.length})</a>`;
+        }).join('');
+
+        // Generate unique report ID
+        const reportId = Date.now().toString();
+
+        // Build HTML report (similar structure to issues report but with cleaned values)
+        const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaned Data Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            width: 220px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .sidebar-header a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.2s;
+        }
+        .sidebar-header a:hover {
+            opacity: 0.8;
+        }
+        .sidebar-logo {
+            width: 60px;
+            height: auto;
+            margin: 0 auto 8px;
+            display: block;
+        }
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+        }
+        .sidebar h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 8px 12px;
+            color: #4b5563;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        .sidebar a:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+        .container {
+            flex: 1;
+            max-width: 1000px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        .summary {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .summary h2 {
+            color: #065f46;
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+        .cleaned-type {
+            margin-bottom: 40px;
+            scroll-margin-top: 20px;
+        }
+        .cleaned-type h3 {
+            color: #1f2937;
+            background: #e5e7eb;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+        }
+        th {
+            background: #f9fafb;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        tr:hover {
+            background: #f9fafb;
+        }
+        .row-number {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        .column-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .original-value {
+            font-family: 'Courier New', monospace;
+            background: #f3f4f6;
+            color: #374151;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        .cleaned-value {
+            font-family: 'Courier New', monospace;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+        .print-btn {
+            background: #ffffff;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+        .print-btn:hover {
+            background: #d1fae5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .download-btn {
+            background: #10b981;
+            color: #ffffff;
+        }
+        .download-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+                width: 100%;
+                margin-bottom: 20px;
+                max-height: none;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            table {
+                font-size: 0.875rem;
+                display: block;
+                overflow-x: auto;
+            }
+            th, td {
+                padding: 8px;
+                white-space: nowrap;
+            }
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                display: block;
+            }
+            .sidebar {
+                display: none !important;
+            }
+            .action-buttons {
+                display: none !important;
+            }
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+            h1 {
+                margin-top: 0;
+                page-break-after: avoid;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body data-report-id="${reportId}">
+        ${sidebarNav ? `
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a href="/">
+                    <img src="/assets/images/Data Cleaning Icon 300.png" alt="Simple Data Cleaner" class="sidebar-logo">
+                    <h2 class="sidebar-title">Simple Data Cleaner</h2>
+                </a>
+            </div>
+            <h3>Navigation</h3>
+            <nav>
+                ${sidebarNav}
+            </nav>
+        </div>
+        ` : ''}
+        <div class="container">
+            <h1>Cleaned Data Report</h1>
+            <p class="subtitle">File: ${this.escapeHtml(this.results.fileName || 'Unknown')} | ${(this.results.summary.totalFixed || 0) + (this.results.summary.totalNameSplits || 0)} value${((this.results.summary.totalFixed || 0) + (this.results.summary.totalNameSplits || 0)) === 1 ? '' : 's'} cleaned</p>
+            
+            <div class="summary">
+                <h2>Summary</h2>
+                <p>This report shows all values that were automatically cleaned during processing. Original values are shown alongside their cleaned versions.</p>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn print-btn" onclick="window.print();">Print Report</button>
+                <a href="/" class="action-btn download-btn">Home</a>
+            </div>
+
+            ${Object.entries(cleanedByType).map(([type, items]) => {
+                const typeId = 'cleaned-type-' + type.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+                const displayName = this.getTypeDisplayName(type);
+                
+                const itemsHtml = items.map(({ row, result }) => {
+                    return '<tr>' +
+                        '<td class="row-number">' + row.rowNumber + '</td>' +
+                        '<td class="column-name">' + this.escapeHtml(result.column) + '</td>' +
+                        '<td><code class="original-value">' + this.escapeHtml(String(result.value)) + '</code></td>' +
+                        '<td><code class="cleaned-value">' + this.escapeHtml(String(result.fixed)) + '</code></td>' +
+                        '</tr>';
+                }).join('');
+                
+                return '<div class="cleaned-type" id="' + typeId + '">' +
+                    '<h3>' + displayName + ' (' + items.length + ')</h3>' +
+                    '<table>' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th>Row</th>' +
+                    '<th>Column</th>' +
+                    '<th>Original Value</th>' +
+                    '<th>Cleaned Value</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>' +
+                    itemsHtml +
+                    '</tbody>' +
+                    '</table>' +
+                    '</div>';
+            }).join('')}
+
+            <div class="footer">
+                <p>Report generated on ${new Date().toLocaleString()}</p>
+            </div>
+        </div>
+    <script>
+        // Home - go back to the homepage
+        // Make it globally accessible so it works after document.write()
+        window.returnToDataCleaner = function returnToDataCleaner() {
+            if (window.opener && !window.opener.closed) {
+                // Focus the original window that opened this report (don't refresh it!)
+                try {
+                    window.opener.focus();
+                } catch (e) {
+                    // If we can't access opener (cross-origin or closed), navigate to home
+                    window.location.href = '/';
+                }
+            } else {
+                // Fallback: navigate to home page if opener doesn't exist
+                window.location.href = '/';
+            }
+        };
+    </script>
+</body>
+</html>`;
+
+        return { html, reportId };
+    }
+
+    viewCleanedReport() {
+        // Prevent multiple simultaneous calls
+        if (this._isOpeningCleanedReport) {
+            return;
+        }
+        
+        this._isOpeningCleanedReport = true;
+        
+        const result = this.generateCleanedReport();
+        if (!result || !result.html) {
+            this._isOpeningCleanedReport = false;
+            this.showError('No cleaned data found to generate report');
+            return;
+        }
+
+        const { html, reportId } = result;
+
+        // Store in localStorage for restoration on refresh
+        try {
+            localStorage.setItem('cleanedDataReport', html);
+            localStorage.setItem('cleanedDataReportId', reportId);
+        } catch (e) {
+            console.warn('Could not store report in localStorage:', e);
+        }
+
+        // Open the dedicated report viewer page
+        window.open('/cleaned-report.php', '_blank');
+        
+        // Reset flag after a delay
+        setTimeout(() => {
+            this._isOpeningCleanedReport = false;
+        }, 1000);
+    }
+
+    generatePreviewReport() {
+        if (!this.results) return null;
+
+        const datasetResult = this.buildFullCleanedDataset();
+        const cleanedData = datasetResult.cleanedData;
+        const headers = datasetResult.headers || this.fileHeaders;
+
+        // Generate unique report ID
+        const reportId = Date.now().toString();
+
+        // Serialize duplicate row indices for embedding in HTML
+        const duplicateIndices = this.duplicateRowIndices ? {
+            duplicates: Array.from(this.duplicateRowIndices.duplicates || []),
+            originals: Array.from(this.duplicateRowIndices.originals || [])
+        } : { duplicates: [], originals: [] };
+
+        // Helper functions (inline since they won't be available in the generated HTML)
+        const isDuplicateRow = (rowIndex) => {
+            return duplicateIndices.duplicates.includes(rowIndex);
+        };
+
+        const isOriginalOfDuplicate = (rowIndex) => {
+            return duplicateIndices.originals.includes(rowIndex);
+        };
+
+        const wasCellModified = (rowIndex, columnName, currentCellValue) => {
+            if (!this.results) return false;
+            
+            const rowNumber = rowIndex + 2;
+            const rowResults = this.results.processedRows.find(r => r.rowNumber === rowNumber);
+            if (!rowResults) return false;
+            
+            // Check for name splits - if this is a name split column, it was created/modified
+            if (this.results.nameSplitColumns) {
+                const isNameSplitColumn = columnName === 'title' || columnName === 'first_name' || columnName === 'last_name';
+                if (isNameSplitColumn && currentCellValue && String(currentCellValue).trim()) {
+                    return true;
+                }
+            }
+            
+            // Check validation results - if there's a fixed value that differs from original, it was modified
+            const result = rowResults.validationResults.find(r => r.column === columnName);
+            if (result && result.fixed && result.fixed !== result.value) {
+                return true;
+            }
+            
+            return false;
+        };
+
+        const isCellInvalid = (rowIndex, columnName) => {
+            if (!this.results) return false;
+            
+            // Skip name split columns - they're transformations, not validation issues
+            if (this.results.nameSplitColumns && this.results.nameSplitColumns.includes(columnName)) {
+                return false;
+            }
+            
+            // Skip name split result columns (title, first_name, last_name) - they're created, not validated
+            const isNameSplitResultColumn = columnName === 'title' || columnName === 'first_name' || columnName === 'last_name';
+            if (isNameSplitResultColumn) {
+                return false;
+            }
+            
+            const rowNumber = rowIndex + 2;
+            const rowResults = this.results.processedRows.find(r => r.rowNumber === rowNumber);
+            if (!rowResults) return false;
+            
+            const result = rowResults.validationResults.find(r => r.column === columnName);
+            
+            // #region agent log
+            if (columnName === 'Name' && rowIndex < 5) {
+                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:2887',message:'Checking if Name column is invalid',data:{rowIndex:rowIndex,columnName:columnName,hasResult:!!result,isValid:result?.isValid,error:result?.error,isNameSplitColumn:this.results.nameSplitColumns?.includes(columnName)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
+            }
+            // #endregion
+            
+            return result && !result.isValid;
+        };
+
+        // Build table HTML
+        const headerRow = `<thead>
+            <tr class="bg-gray-100">
+                <th class="px-4 py-2 text-left border-b-2 border-gray-300 text-xs font-semibold text-gray-700">#</th>
+                ${headers.map(header => {
+                    const isProtected = this.protectedColumns && this.protectedColumns.includes(header);
+                    return `<th class="px-4 py-2 text-left border-b-2 border-gray-300 text-xs font-semibold text-gray-700">
+                        ${isProtected ? '<svg class="inline w-4 h-4 text-gray-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>' : ''}${this.escapeHtml(header)}
+                    </th>`;
+                }).join('')}
+            </tr>
+        </thead>`;
+
+        const tableRows = cleanedData.map((row, index) => {
+            const isDuplicate = isDuplicateRow(index);
+            const isOriginal = isOriginalOfDuplicate(index);
+
+            // Determine row styling - use inline styles for guaranteed application
+            let rowStyle = '';
+            let badge = '';
+
+            if (isDuplicate) {
+                rowStyle = 'background-color: #fffbeb; border-left: 4px solid #fbbf24;';
+                badge = '<span style="margin-left: 0.25rem; display: inline-flex; align-items: center; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; background-color: #fde68a; color: #92400e;">DUPLICATE</span>';
+            } else if (isOriginal) {
+                rowStyle = 'background-color: #eff6ff; border-left: 4px solid #60a5fa;';
+                badge = '<span style="margin-left: 0.25rem; display: inline-flex; align-items: center; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; background-color: #bfdbfe; color: #1e40af;">HAS DUPLICATES</span>';
+            } else {
+                rowStyle = index % 2 === 0 ? 'background-color: #ffffff;' : 'background-color: #f9fafb;';
+            }
+
+            return `<tr style="${rowStyle}">
+                <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 0.75rem; color: #6b7280; font-family: monospace;">
+                    ${index + 1}
+                    ${badge}
+                </td>
+                ${row.map((cell, colIndex) => {
+                    const columnName = headers[colIndex];
+                    const wasModified = wasCellModified(index, columnName, cell);
+                    const isInvalid = isCellInvalid(index, columnName);
+                    let cellStyle = '';
+                    // Apply styling priority: invalid (red) > modified (green) > duplicate/original
+                    if (isInvalid) {
+                        cellStyle = 'background-color: #fef2f2; border-left: 3px solid #ef4444;';
+                    } else if (wasModified) {
+                        cellStyle = 'background-color: #f0fdf4;';
+                    } else if (isDuplicate) {
+                        cellStyle = 'background-color: #fffbeb;';
+                    } else if (isOriginal) {
+                        cellStyle = 'background-color: #eff6ff;';
+                    }
+                    const cellContent = isInvalid 
+                        ? `<span style="color: #dc2626; font-weight: 500;">${this.escapeHtml(String(cell || ''))}</span>`
+                        : this.escapeHtml(String(cell || ''));
+                    return `<td style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 0.75rem; ${cellStyle}">${cellContent}</td>`;
+                }).join('')}
+            </tr>`;
+        }).join('');
+
+        // Build HTML report
+        const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Preview Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        .summary {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .summary h2 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+        .table-wrapper {
+            position: relative;
+            max-height: calc(100vh - 350px);
+            overflow: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.875rem;
+            min-width: 100%;
+        }
+        th {
+            background: #f9fafb;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            white-space: nowrap;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+        tr:hover {
+            background: #f9fafb;
+        }
+        /* Row coloring for duplicates and modified cells */
+        .bg-amber-50 {
+            background-color: #fffbeb !important;
+        }
+        .bg-blue-50 {
+            background-color: #eff6ff !important;
+        }
+        .bg-green-50 {
+            background-color: #f0fdf4 !important;
+        }
+        .bg-gray-50 {
+            background-color: #f9fafb !important;
+        }
+        .bg-white {
+            background-color: #ffffff !important;
+        }
+        .border-l-4 {
+            border-left-width: 4px !important;
+        }
+        .border-amber-400 {
+            border-left-color: #fbbf24 !important;
+        }
+        .border-blue-400 {
+            border-left-color: #60a5fa !important;
+        }
+        tr.hover\\:bg-amber-100:hover {
+            background-color: #fef3c7 !important;
+        }
+        tr.hover\\:bg-blue-100:hover {
+            background-color: #dbeafe !important;
+        }
+        tr.hover\\:bg-gray-50:hover {
+            background-color: #f9fafb !important;
+        }
+        .bg-amber-200 {
+            background-color: #fde68a !important;
+        }
+        .text-amber-800 {
+            color: #92400e !important;
+        }
+        .bg-blue-200 {
+            background-color: #bfdbfe !important;
+        }
+        .text-blue-800 {
+            color: #1e40af !important;
+        }
+        .inline-flex {
+            display: inline-flex;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .px-1\\.5 {
+            padding-left: 0.375rem;
+            padding-right: 0.375rem;
+        }
+        .py-0\\.5 {
+            padding-top: 0.125rem;
+            padding-bottom: 0.125rem;
+        }
+        .rounded {
+            border-radius: 0.25rem;
+        }
+        .text-xs {
+            font-size: 0.75rem;
+            line-height: 1rem;
+        }
+        .font-medium {
+            font-weight: 500;
+        }
+        .ml-1 {
+            margin-left: 0.25rem;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+        .print-btn {
+            background: #ffffff;
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+        .print-btn:hover {
+            background: #dbeafe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .download-btn {
+            background: #3b82f6;
+            color: #ffffff;
+        }
+        .download-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .action-buttons {
+                display: none !important;
+            }
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+            h1 {
+                margin-top: 0;
+                page-break-after: avoid;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body data-report-id="${reportId}">
+    <div class="container">
+        <h1>Full Preview Report</h1>
+        <p class="subtitle">File: ${this.escapeHtml(this.results.fileName || 'Unknown')} | ${cleanedData.length} rows × ${headers.length} columns</p>
+        
+        <div class="summary">
+            <h2>Preview</h2>
+            <p>This is exactly what your downloaded file will contain. All columns are preserved in their original order, with cleaned values applied only to the fields you selected.</p>
+            <div style="margin-top: 15px; padding: 12px; background: white; border-radius: 4px; border: 1px solid #e5e7eb;">
+                <h3 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; color: #374151;">Color Coding:</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.875rem; line-height: 1.8;">
+                    <li style="padding: 4px 0;">
+                        <span style="display: inline-block; width: 20px; height: 16px; background-color: #f0fdf4; border: 1px solid #d1fae5; margin-right: 8px; vertical-align: middle;"></span>
+                        <strong>Green cells</strong> - Values that were cleaned/fixed
+                    </li>
+                    <li style="padding: 4px 0;">
+                        <span style="display: inline-block; width: 20px; height: 16px; background-color: #fef2f2; border-left: 3px solid #ef4444; margin-right: 8px; vertical-align: middle;"></span>
+                        <strong>Red cells</strong> - Invalid values detected but cannot be cleaned (require manual correction)
+                    </li>
+                    <li style="padding: 4px 0;">
+                        <span style="display: inline-block; width: 20px; height: 16px; background-color: #eff6ff; border-left: 4px solid #60a5fa; margin-right: 8px; vertical-align: middle;"></span>
+                        <strong>Blue rows</strong> - Original rows that have duplicates elsewhere
+                    </li>
+                    <li style="padding: 4px 0;">
+                        <span style="display: inline-block; width: 20px; height: 16px; background-color: #fffbeb; border-left: 4px solid #fbbf24; margin-right: 8px; vertical-align: middle;"></span>
+                        <strong>Yellow rows</strong> - Duplicate rows (will be removed if "Remove Duplicates" option is checked)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="action-buttons">
+            <button class="action-btn print-btn" onclick="window.print();">Print Report</button>
+            <a href="/" class="action-btn download-btn">Home</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                ${headerRow}
+                <tbody>
+                    ${tableRows}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>Report generated on ${new Date().toLocaleString()}</p>
+        </div>
+    </div>
+    <script>
+        // Home - go back to the homepage
+        // Make it globally accessible so it works after document.write()
+        window.returnToDataCleaner = function returnToDataCleaner() {
+            if (window.opener && !window.opener.closed) {
+                // Focus the original window that opened this report (don't refresh it!)
+                try {
+                    window.opener.focus();
+                } catch (e) {
+                    // If we can't access opener (cross-origin or closed), navigate to home
+                    window.location.href = '/';
+                }
+            } else {
+                // Fallback: navigate to home page if opener doesn't exist
+                window.location.href = '/';
+            }
+        };
+    </script>
+</body>
+</html>`;
+
+        return { html, reportId };
+    }
+
+    viewPreviewReport() {
+        // Prevent multiple simultaneous calls
+        if (this._isOpeningPreviewReport) {
+            return;
+        }
+        
+        this._isOpeningPreviewReport = true;
+        
+        const result = this.generatePreviewReport();
+        if (!result || !result.html) {
+            this._isOpeningPreviewReport = false;
+            this.showError('No data available to generate preview report');
+            return;
+        }
+
+        const { html, reportId } = result;
+
+        // Store in localStorage for restoration on refresh
+        try {
+            localStorage.setItem('previewReport', html);
+            localStorage.setItem('previewReportId', reportId);
+        } catch (e) {
+            console.warn('Could not store report in localStorage:', e);
+        }
+
+        // Open the dedicated report viewer page
+        window.open('/preview-report.php', '_blank');
+        
+        // Reset flag after a delay
+        setTimeout(() => {
+            this._isOpeningPreviewReport = false;
+        }, 1000);
+    }
+
     getTypeDisplayName(type) {
         const names = {
             'ni_number': 'National Insurance Numbers',
@@ -1773,6 +3352,7 @@ class UKDataCleanerApp {
             'postcode': 'Postcodes',
             'sort_code': 'Sort Codes',
             'bank_account': 'Bank Account Numbers',
+            'name_split': 'Full Names (Split)',
             'unknown': 'Other Issues'
         };
         return names[type] || type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ');
@@ -1861,9 +3441,9 @@ class UKDataCleanerApp {
 
         if (!headerRow || !tbody || !this.results) return;
 
-        const headers = this.fileHeaders;
         const datasetResult = this.buildFullCleanedDataset();
         const cleanedData = datasetResult.cleanedData;
+        const headers = datasetResult.headers || this.fileHeaders;
 
         // Build header row
         headerRow.innerHTML = `
@@ -1931,37 +3511,131 @@ class UKDataCleanerApp {
     buildFullCleanedDataset() {
         if (!this.results || !this.fileData) return { cleanedData: [], issuesByRow: [] };
 
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3408',message:'buildFullCleanedDataset entry',data:{totalRows:this.fileData.length,processedRowsCount:this.results.processedRows?.length,selectedFields:this.selectedFields?.length,nameSplits:this.selectedNameSplits?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+        // #endregion
+
         const cleanedData = [];
         const issuesByRow = [];
-        const headers = this.fileHeaders;
+        
+        // Use processed headers if name splitting was done, otherwise use original headers
+        const headers = this.results.processedHeaders || this.fileHeaders;
+        const useProcessedData = this.results.processedData && this.results.processedData.length > 0;
+
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3416',message:'Dataset build config',data:{headersCount:headers.length,useProcessedData:useProcessedData,processedDataLength:this.results.processedData?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+        // #endregion
 
         // For each original row (skip header row which is index 0)
         for (let i = 1; i < this.fileData.length; i++) {
-            const originalRow = this.fileData[i];
-            const cleanedRow = [...originalRow]; // Start with original
+            // Use processed data if available (includes name splits), otherwise use original
+            const originalRow = useProcessedData && this.results.processedData[i - 1] 
+                ? [...this.results.processedData[i - 1]]
+                : [...this.fileData[i]];
+            
+            const cleanedRow = [...originalRow]; // Start with original/processed
             const issuesList = [];
 
             // Find validation results for this row (row numbers are 1-indexed, starting from 2 for data)
-            const rowResults = this.results.processedRows.find(r => r.rowNumber === i + 1);
+            // In processRows: dataRows.forEach((row, index) => { rowNumber = index + 2 })
+            //   - index=0 (first data row) -> rowNumber = 2
+            //   - index=1 (second data row) -> rowNumber = 3
+            // In buildFullCleanedDataset: loop starts at i=1 (skipping header at index 0)
+            //   - fileData[1] (first data row) -> i=1, expectedRowNumber should be 2
+            //   - fileData[2] (second data row) -> i=2, expectedRowNumber should be 3
+            // So expectedRowNumber = i + 1 (not i + 2)
+            const expectedRowNumber = i + 1;
+            const rowResults = this.results.processedRows.find(r => r.rowNumber === expectedRowNumber);
+
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3436',message:'Row processing',data:{rowIndex:i,expectedRowNumber:expectedRowNumber,hasRowResults:!!rowResults,validationResultsCount:rowResults?.validationResults?.length,originalRowSample:originalRow.slice(0,3)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+            // #endregion
 
             if (rowResults) {
                 // Apply cleaned values to selected columns only and collect issues
+                let appliedCount = 0;
+                let invalidCount = 0;
                 rowResults.validationResults.forEach(result => {
+                    // Skip name columns that were split - they're not validation issues
+                    if (this.results.nameSplitColumns && this.results.nameSplitColumns.includes(result.column)) {
+                        return; // Don't track split columns as issues
+                    }
+                    
                     const colIndex = headers.indexOf(result.column);
                     if (colIndex !== -1 && result.isValid && result.fixed) {
+                        const beforeValue = cleanedRow[colIndex];
                         cleanedRow[colIndex] = result.fixed;
+                        appliedCount++;
+                        // #region agent log
+                        if (i <= 20) { // Log first 20 rows only
+                            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3460',message:'Applied cleaned value',data:{rowIndex:i,column:result.column,before:beforeValue,after:result.fixed,detectedType:result.detectedType},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+                        }
+                        // #endregion
                     } else if (colIndex !== -1 && !result.isValid) {
                         // Track invalid values for Issues column
                         issuesList.push(result.column);
+                        invalidCount++;
+                        // #region agent log
+                        if (i <= 20) { // Log first 20 rows only
+                            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3465',message:'Invalid value not cleaned',data:{rowIndex:i,column:result.column,value:result.value,error:result.error,detectedType:result.detectedType},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+                        }
+                        // #endregion
                     }
                 });
+                // #region agent log
+                if (i <= 20) {
+                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3472',message:'Row validation summary',data:{rowIndex:i,appliedCount:appliedCount,invalidCount:invalidCount,totalResults:rowResults.validationResults.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+                }
+                // #endregion
+            } else {
+                // #region agent log
+                if (i <= 20) {
+                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3478',message:'No validation results found',data:{rowIndex:i,expectedRowNumber:expectedRowNumber,availableRowNumbers:this.results.processedRows?.map(r => r.rowNumber).slice(0,5)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+                }
+                // #endregion
             }
+            
+            // Ensure valid NI numbers are consistently formatted, even if not selected for cleaning
+            // Only format VALID NI numbers - invalid ones should remain as-is
+            // This ensures the preview shows exactly what will be exported
+            headers.forEach((header, colIndex) => {
+                if (colIndex < cleanedRow.length) {
+                    const headerLower = header.toLowerCase();
+                    if ((headerLower.includes('ni') || headerLower.includes('insurance')) && cleanedRow[colIndex]) {
+                        const value = String(cleanedRow[colIndex]).trim();
+                        if (value) {
+                            // Check if this value was already validated
+                            let shouldFormat = false;
+                            if (rowResults) {
+                                const niResult = rowResults.validationResults.find(r => r.column === header);
+                                if (niResult && niResult.isValid && niResult.fixed) {
+                                    // This NI number was validated and is valid - use the formatted version
+                                    // The fixed value should already be formatted, but ensure we use it
+                                    cleanedRow[colIndex] = niResult.fixed;
+                                    shouldFormat = true; // Already formatted via validation result
+                                }
+                            }
+                            
+                            // If not already validated/cleaned, validate it now to see if it's valid
+                            if (!shouldFormat) {
+                                const niValidator = new NINumberValidator();
+                                const validationResult = niValidator.validate(value);
+                                if (validationResult.isValid && validationResult.fixed) {
+                                    // It's valid, format it
+                                    cleanedRow[colIndex] = validationResult.fixed;
+                                }
+                                // If invalid, leave it as-is (don't format invalid NI numbers)
+                            }
+                        }
+                    }
+                }
+            });
 
             cleanedData.push(cleanedRow);
             issuesByRow.push(issuesList);
         }
 
-        return { cleanedData, issuesByRow };
+        return { cleanedData, issuesByRow, headers };
     }
 
     wasCellModified(rowIndex, columnName) {
@@ -2026,7 +3700,14 @@ class UKDataCleanerApp {
 
         const rowsWithIssues = new Set();
         this.results.processedRows.forEach(row => {
-            const hasIssue = row.validationResults.some(result => !result.isValid);
+            // Check if row has any invalid results, excluding name split columns
+            const hasIssue = row.validationResults.some(result => {
+                // Skip name split columns - they're not validation issues
+                if (this.results.nameSplitColumns && this.results.nameSplitColumns.includes(result.column)) {
+                    return false;
+                }
+                return !result.isValid;
+            });
             if (hasIssue) {
                 rowsWithIssues.add(row.rowNumber);
             }
@@ -2091,7 +3772,7 @@ class UKDataCleanerApp {
                                this.duplicateRowIndices.duplicates.size : 0;
 
         if (duplicateCount === 0) {
-            messageEl.textContent = '✓ No duplicate rows found in your data.';
+            messageEl.innerHTML = '<svg class="inline w-4 h-4 text-green-600 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> No duplicate rows found in your data.';
             messageEl.classList.add('text-green-700');
             messageEl.classList.remove('text-gray-600');
         } else {
@@ -2102,15 +3783,30 @@ class UKDataCleanerApp {
         }
     }
 
+    updateNameSplitOptions() {
+        const nameSplitOptions = document.getElementById('nameSplitOptions');
+        if (!nameSplitOptions) return;
+        
+        // Show options if name splitting was used
+        if (this.results && this.results.nameSplitColumns && this.results.nameSplitColumns.length > 0) {
+            nameSplitOptions.classList.remove('hidden');
+        } else {
+            nameSplitOptions.classList.add('hidden');
+            // Uncheck the option if name splitting wasn't used
+            const checkbox = document.getElementById('removeOriginalNameColumns');
+            if (checkbox) checkbox.checked = false;
+        }
+    }
+
     switchTab(tabName) {
         // Update active tab button
         const tabBtns = document.querySelectorAll('.tab-btn');
         tabBtns.forEach(btn => {
             if (btn.dataset.tab === tabName) {
-                btn.classList.add('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-slate-700', 'text-slate-700', 'font-semibold');
                 btn.classList.remove('border-transparent', 'text-gray-500');
             } else {
-                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.remove('border-slate-700', 'text-slate-700', 'font-semibold');
                 btn.classList.add('border-transparent', 'text-gray-500');
             }
         });
@@ -2129,6 +3825,7 @@ class UKDataCleanerApp {
 
         this.activeTab = tabName;
     }
+
 
     showDuplicateConfirmation(duplicateCount) {
         return new Promise((resolve) => {
@@ -2184,11 +3881,41 @@ class UKDataCleanerApp {
             const onlyRowsWithIssues = document.getElementById('onlyRowsWithIssues')?.checked || false;
             const removeDuplicates = document.getElementById('removeDuplicates')?.checked || false;
             const trimWhitespace = document.getElementById('trimWhitespace')?.checked || false;
+            const removeOriginalNameColumns = document.getElementById('removeOriginalNameColumns')?.checked || false;
 
             // Build cleaned dataset
             const datasetResult = this.buildFullCleanedDataset();
             let cleanedData = datasetResult.cleanedData;
-            const issuesByRow = datasetResult.issuesByRow;
+            let headers = datasetResult.headers || this.fileHeaders;
+            let issuesByRow = datasetResult.issuesByRow;
+            
+            // Remove original name columns if requested
+            if (removeOriginalNameColumns && this.results.nameSplitColumns && this.results.nameSplitColumns.length > 0) {
+                const columnsToRemove = this.results.nameSplitColumns;
+                // Find indices in processed headers (which may have name splits inserted)
+                const columnIndicesToRemove = columnsToRemove
+                    .map(col => headers.indexOf(col))
+                    .filter(idx => idx >= 0)
+                    .sort((a, b) => b - a); // Sort descending for safe removal
+                
+                if (columnIndicesToRemove.length > 0) {
+                    // Remove columns from headers
+                    columnIndicesToRemove.forEach(idx => {
+                        headers.splice(idx, 1);
+                    });
+                    
+                    // Remove columns from data rows
+                    cleanedData = cleanedData.map(row => {
+                        const newRow = [...row];
+                        columnIndicesToRemove.forEach(idx => {
+                            if (idx < newRow.length) {
+                                newRow.splice(idx, 1);
+                            }
+                        });
+                        return newRow;
+                    });
+                }
+            }
 
             // Apply duplicate removal if requested
             // IMPORTANT: Duplicates must be identified based on ORIGINAL data, not cleaned data
@@ -2224,6 +3951,10 @@ class UKDataCleanerApp {
                         // But duplicateRowIndices uses 0-based index for data rows (fileData[1] = index 0)
                         return !this.duplicateRowIndices.duplicates.has(index);
                     });
+                    // CRITICAL: Also filter issuesByRow to maintain alignment
+                    issuesByRow = issuesByRow.filter((issues, index) => {
+                        return !this.duplicateRowIndices.duplicates.has(index);
+                    });
                 } else {
                     // Fallback: use removeDuplicates method (compares cleaned rows)
                     cleanedData = this.removeDuplicates(cleanedData);
@@ -2248,7 +3979,7 @@ class UKDataCleanerApp {
             const modifiedResults = {
                 ...this.results,
                 cleanedData: cleanedData,
-                headers: this.fileHeaders,
+                headers: headers, // Use updated headers (may have removed name columns)
                 issuesByRow: issuesByRow // Include issues information for export
             };
 
@@ -2455,14 +4186,14 @@ class UKDataCleanerApp {
 
 // Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const app = new UKDataCleanerApp();
+    window.app = new UKDataCleanerApp();
 
     // Display file size limit info
     const fileSizeLimit = document.getElementById('fileSizeLimit');
-    if (fileSizeLimit && app.browserInfo) {
-        const browserText = app.browserInfo.hasDeviceMemory
-            ? `${app.browserInfo.name} with ${app.browserInfo.memoryGB}GB RAM`
-            : `${app.browserInfo.name} (conservative estimate)`;
-        fileSizeLimit.textContent = `Recommended limit: ${app.maxFileSizeMB.toFixed(0)} MB (${browserText})`;
+    if (fileSizeLimit && window.app.browserInfo) {
+        const browserText = window.app.browserInfo.hasDeviceMemory
+            ? `${window.app.browserInfo.name} with ${window.app.browserInfo.memoryGB}GB RAM`
+            : `${window.app.browserInfo.name} (conservative estimate)`;
+        fileSizeLimit.textContent = `Recommended limit: ${window.app.maxFileSizeMB.toFixed(0)} MB (${browserText})`;
     }
 });

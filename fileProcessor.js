@@ -17,7 +17,7 @@ class FileProcessor {
         this.phoneFormat = format;
     }
 
-    async processFile(file, selectedColumns = null, progressCallback = null) {
+    async processFile(file, selectedColumns = null, progressCallback = null, nameSplitColumns = null) {
         // Check MIME type and file extension as fallback
         const isValidType = this.supportedTypes.includes(file.type) ||
             file.name.endsWith('.csv') ||
@@ -33,7 +33,7 @@ class FileProcessor {
         const content = await this.readFileContent(file);
         const rows = this.parseContent(content, file.type);
 
-        return this.processRows(rows, file.name, selectedColumns, progressCallback);
+        return this.processRows(rows, file.name, selectedColumns, progressCallback, nameSplitColumns);
     }
 
     async readFileContent(file) {
@@ -313,15 +313,43 @@ class FileProcessor {
         });
     }
 
-    processRows(rows, fileName, selectedColumns = null, progressCallback = null) {
+    processRows(rows, fileName, selectedColumns = null, progressCallback = null, nameSplitColumns = null) {
         if (rows.length === 0) {
             throw new Error('File is empty');
         }
 
-        const headerRow = rows[0];
+        let headerRow = [...rows[0]]; // Copy header row
         const dataRows = rows.slice(1);
         const errors = [];
         const totalRows = dataRows.length;
+
+        // Handle name splitting: insert new columns for first_name and last_name
+        const nameSplitter = new NameSplitter();
+        const nameSplitInfo = {}; // Map of original column index to {first_name_index, last_name_index}
+        
+        if (nameSplitColumns && nameSplitColumns.length > 0) {
+            // Process name splits in reverse order to maintain indices
+            for (let i = nameSplitColumns.length - 1; i >= 0; i--) {
+                const nameColumn = nameSplitColumns[i];
+                const originalIndex = headerRow.indexOf(nameColumn);
+                
+                if (originalIndex >= 0) {
+                    // Insert title, first_name and last_name columns after the original
+                    const title_col = 'title';
+                    const first_name_col = 'first_name';
+                    const last_name_col = 'last_name';
+                    
+                    headerRow.splice(originalIndex + 1, 0, title_col, first_name_col, last_name_col);
+                    
+                    nameSplitInfo[nameColumn] = {
+                        originalIndex: originalIndex,
+                        title_index: originalIndex + 1,
+                        first_name_index: originalIndex + 2,
+                        last_name_index: originalIndex + 3
+                    };
+                }
+            }
+        }
 
         // Process all columns, not just phone numbers
         const processedRows = [];
@@ -329,20 +357,48 @@ class FileProcessor {
         dataRows.forEach((row, index) => {
             const rowNumber = index + 2; // +2 because we start from row 2 (after header) and want 1-based indexing
 
+            // Create a copy of the row for processing (will be expanded for name splits)
+            let processedRow = [...row];
+            
+            // Handle name splitting first - expand row with split values
+            if (nameSplitColumns && nameSplitColumns.length > 0) {
+                // Process in reverse order to maintain indices
+                for (let i = nameSplitColumns.length - 1; i >= 0; i--) {
+                    const nameColumn = nameSplitColumns[i];
+                    const splitInfo = nameSplitInfo[nameColumn];
+                    
+                    if (splitInfo) {
+                        const originalIndex = splitInfo.originalIndex;
+                        const originalValue = processedRow[originalIndex] || '';
+                        
+                        // Split the name
+                        const splitResult = nameSplitter.split(originalValue);
+                        
+                        // Insert title, first_name and last_name values after the original column
+                        processedRow.splice(originalIndex + 1, 0, splitResult.title || '', splitResult.first_name || '', splitResult.last_name || '');
+                    }
+                }
+            }
+
             const validationResults = [];
 
-            // Process each column in the row (up to the number of columns the row actually has)
-            const columnsToProcess = Math.min(headerRow.length, row.length);
+            // Process each column in the row (up to the number of columns the processed row has)
+            const columnsToProcess = Math.min(headerRow.length, processedRow.length);
 
             for (let colIndex = 0; colIndex < columnsToProcess; colIndex++) {
                 const columnName = headerRow[colIndex];
+
+                // Skip newly created first_name/last_name columns from validation
+                if (columnName === 'first_name' || columnName === 'last_name') {
+                    continue;
+                }
 
                 // If selectedColumns is specified, only process those columns
                 if (selectedColumns && !selectedColumns.includes(columnName)) {
                     continue;
                 }
 
-                const cellValue = row[colIndex] || '';
+                const cellValue = processedRow[colIndex] || '';
 
                 // Skip empty cells
                 if (!cellValue.trim()) {
@@ -396,6 +452,7 @@ class FileProcessor {
             processedRows.push({
                 rowNumber,
                 originalData: row.join(', '),
+                processedData: processedRow, // Store processed row with name splits
                 validationResults
             });
 
@@ -409,10 +466,21 @@ class FileProcessor {
         let totalValid = 0;
         let totalInvalid = 0;
         let totalFixed = 0;
+        let totalNameSplits = 0;
+
+        // Count name splits (each name column split = 1 transformation)
+        if (nameSplitColumns && nameSplitColumns.length > 0) {
+            totalNameSplits = nameSplitColumns.length * processedRows.length;
+        }
 
         processedRows.forEach(row => {
             row.validationResults.forEach(result => {
                 if (result.detectedType === 'header') return; // Skip header
+                
+                // Skip name split columns from invalid count - they're not validation issues
+                if (nameSplitColumns && nameSplitColumns.includes(result.column)) {
+                    return; // Don't count name split columns as invalid
+                }
 
                 if (result.isValid) {
                     totalValid++;
@@ -426,18 +494,23 @@ class FileProcessor {
         });
 
         // Calculate data profiling statistics
-        const profiling = this.calculateProfiling(rows, headerRow);
+        // Use original headers (rows[0]) not processed headers, since profiling should analyze original data
+        const profiling = this.calculateProfiling(rows, rows[0]);
 
         return {
             fileName,
             totalRows: rows.length,
             processedRows,
-            originalHeaders: headerRow,
+            originalHeaders: rows[0], // Original headers before name splitting
+            processedHeaders: headerRow, // Headers after name splitting
             originalData: rows,
+            processedData: processedRows.map(pr => pr.processedData || pr.originalData.split(', ')), // Data with name splits
+            nameSplitColumns: nameSplitColumns || [],
             summary: {
                 totalValid,
                 totalInvalid,
                 totalFixed,
+                totalNameSplits,
                 errors
             },
             profiling: profiling
@@ -455,7 +528,9 @@ class FileProcessor {
         }
 
         const headerRow = rows[0];
-        const dataRows = rows.slice(1);
+        const expectedColumns = headers.length;
+        // Filter out rows with incorrect column counts (likely malformed/blank rows)
+        const dataRows = rows.slice(1).filter(row => row.length === expectedColumns);
 
         // Calculate missing values per column
         const missingByColumn = {};
@@ -475,22 +550,26 @@ class FileProcessor {
             }
         });
 
-        // Find duplicate rows
+        // Find duplicate rows (using all rows for accurate row numbers, but only checking rows with correct column count)
+        const allDataRows = rows.slice(1);
         const rowMap = new Map();
         const duplicateRowPairs = [];
         let duplicateRows = 0;
 
-        dataRows.forEach((row, index) => {
+        allDataRows.forEach((row, originalIndex) => {
+            // Only check duplicates for rows with correct column count
+            if (row.length !== expectedColumns) return;
+            
             const rowKey = JSON.stringify(row);
             if (rowMap.has(rowKey)) {
                 duplicateRows++;
                 duplicateRowPairs.push({
                     row1: rowMap.get(rowKey) + 2, // +2 because header is row 1, and we want 1-based
-                    row2: index + 2,
+                    row2: originalIndex + 2,
                     data: row
                 });
             } else {
-                rowMap.set(rowKey, index);
+                rowMap.set(rowKey, originalIndex);
             }
         });
 
@@ -577,6 +656,10 @@ class FileProcessor {
             // If cleanedData was provided, use pre-computed issues from buildFullCleanedDataset
             if (results.cleanedData && results.issuesByRow && results.issuesByRow[i]) {
                 issuesList = results.issuesByRow[i];
+                // Filter out name split columns from issues (they're not validation issues)
+                if (results.nameSplitColumns && results.nameSplitColumns.length > 0) {
+                    issuesList = issuesList.filter(issue => !results.nameSplitColumns.includes(issue));
+                }
             } else if (!results.cleanedData) {
                 // If cleanedData is NOT provided, we need to process validation results
                 const processedRow = results.processedRows.find(p => p.rowNumber === (i + 2));
@@ -624,6 +707,15 @@ class FileProcessor {
             });
 
             if (!onlyRowsWithIssues || issuesList.length > 0) {
+                // Ensure row length matches headers length (important for name splits and column alignment)
+                while (cleanedRow.length < headers.length) {
+                    cleanedRow.push(''); // Fill missing columns
+                }
+                // Trim row if it's too long (shouldn't happen, but safety check)
+                if (cleanedRow.length > headers.length) {
+                    cleanedRow = cleanedRow.slice(0, headers.length);
+                }
+                
                 if (includeIssuesColumn) {
                     cleanedRow.push(issuesList.join(', '));
                 }
@@ -752,15 +844,32 @@ class FileProcessor {
             const processedRow = results.cleanedData ? null : results.processedRows.find(p => p.rowNumber === i + 2);
 
             // Create a copy of the original row with normalized empty values
-            const cleanedRow = originalRow.map(val => this.normalizeCellValue(val));
+            // Ensure the row length matches headers length (important for name splits)
+            const cleanedRow = [];
+            for (let j = 0; j < headers.length; j++) {
+                if (j < originalRow.length) {
+                    cleanedRow.push(this.normalizeCellValue(originalRow[j]));
+                } else {
+                    cleanedRow.push(''); // Fill missing columns with empty string
+                }
+            }
             let issuesList = [];
 
             // If cleanedData was provided, use pre-computed issues from buildFullCleanedDataset
             if (results.cleanedData && results.issuesByRow && results.issuesByRow[i]) {
                 issuesList = results.issuesByRow[i];
+                // Filter out name split columns from issues (they're not validation issues)
+                if (results.nameSplitColumns && results.nameSplitColumns.length > 0) {
+                    issuesList = issuesList.filter(issue => !results.nameSplitColumns.includes(issue));
+                }
             } else if (processedRow) {
                 // Apply all validation results to the row and collect issues
                 processedRow.validationResults.forEach(result => {
+                    // Skip name columns that were split - they're not validation issues
+                    if (results.nameSplitColumns && results.nameSplitColumns.includes(result.column)) {
+                        return;
+                    }
+                    
                     // Find the column index for this validation result
                     const columnIndex = headers.indexOf(result.column);
                     if (columnIndex !== -1) {
@@ -779,6 +888,15 @@ class FileProcessor {
 
             // Only include this row if we're not filtering or if it has issues
             if (!onlyRowsWithIssues || issuesList.length > 0) {
+                // Ensure row length matches headers length (important for name splits and column alignment)
+                while (cleanedRow.length < headers.length) {
+                    cleanedRow.push(''); // Fill missing columns
+                }
+                // Trim row if it's too long (shouldn't happen, but safety check)
+                if (cleanedRow.length > headers.length) {
+                    cleanedRow = cleanedRow.slice(0, headers.length);
+                }
+                
                 // Add "Issues" column if requested
                 if (includeIssuesColumn) {
                     cleanedRow.push(issuesList.join(', '));
@@ -948,6 +1066,10 @@ class FileProcessor {
             // If cleanedData was provided, use pre-computed issues from buildFullCleanedDataset
             if (results.cleanedData && results.issuesByRow && results.issuesByRow[i]) {
                 issuesList = results.issuesByRow[i];
+                // Filter out name split columns from issues (they're not validation issues)
+                if (results.nameSplitColumns && results.nameSplitColumns.length > 0) {
+                    issuesList = issuesList.filter(issue => !results.nameSplitColumns.includes(issue));
+                }
                 // Map cleaned data to object
                 headers.forEach((header, index) => {
                     rowObject[header] = originalRow[index] || '';

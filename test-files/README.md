@@ -2,6 +2,20 @@
 
 This folder contains test files for validating the Simple Data Cleaner workflow.
 
+## Comprehensive Test Suite
+
+**NEW**: Comprehensive test documentation and test data have been added:
+
+- **`comprehensive-test-suite.md`** - Complete test specification covering all data types and features
+- **`comprehensive-test-data.csv`** - Comprehensive test dataset with valid, invalid, and edge case data
+- **`TEST_EXECUTION_GUIDE.md`** - Step-by-step guide for executing all tests
+
+### Quick Start Testing
+
+1. Use `comprehensive-test-data.csv` for comprehensive testing
+2. Follow `TEST_EXECUTION_GUIDE.md` for systematic test execution
+3. Refer to `comprehensive-test-suite.md` for test specifications
+
 ## Files Included
 
 ### 1. `sample-data.csv`
