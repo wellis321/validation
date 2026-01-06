@@ -55,14 +55,6 @@ if ($user) {
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     
-    <!-- Datafast Analytics -->
-    <script
-      defer
-      data-website-id="dfid_6ZF7Une67NtLSGzeygosq"
-      data-domain="simple-data-cleaner.com"
-      src="https://datafa.st/js/script.js">
-    </script>
-    
     <!-- JSON-LD Structured Data for Rich Results -->
     <script type="application/ld+json">
     {
