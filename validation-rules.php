@@ -84,6 +84,18 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                         Sort Codes
                     </button>
+                    <button
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        data-tab="bank_account">
+                        <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                        Bank Accounts
+                    </button>
+                    <button
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        data-tab="names">
+                        <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        Names
+                    </button>
                 </nav>
             </div>
         </div>
@@ -537,6 +549,372 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                         </svg>
                         See Full List of Supported Formats
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Account Numbers Tab -->
+        <div id="bank_accountTab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <!-- Rule Header -->
+                <div class="flex items-start mb-8">
+                    <svg class="w-10 h-10 mr-4 text-orange-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                    </svg>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Bank Account Numbers</h2>
+                        <p class="text-lg text-gray-600">UK bank account number validation and formatting</p>
+                    </div>
+                </div>
+
+                <!-- Introduction -->
+                <div class="bg-blue-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
+                    <p class="text-blue-800">We validate UK bank account numbers by checking their digit structure and applying automatic formatting. UK bank account numbers are typically 7-12 digits long, with 8 digits being the most common format. Our system handles various formatting issues automatically, including spacing, labels, and scientific notation from Excel.</p>
+                </div>
+
+                <!-- What We Check -->
+                <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">What We Check</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Number length (7-12 digits, typically 8)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Digit-only format validation</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Spacing and formatting consistency</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Labels and prefixes removal</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Wrapping characters (quotes, brackets)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Scientific notation handling (Excel)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Separator standardization</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Combined sort code and account number separation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Automatic Fixes -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Automatic Fixes We Apply</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Spacing Standardization</h4>
+                            <p class="text-gray-600 mb-4">Remove or standardize spacing for consistent formatting</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">1234 5678 → 12345678</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">1234-5678 → 12345678</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Label and Prefix Removal</h4>
+                            <p class="text-gray-600 mb-4">Remove common prefixes and labels</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">Account: 12345678 → 12345678</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">Acc No. 12345678 → 12345678</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Scientific Notation Conversion</h4>
+                            <p class="text-gray-600 mb-4">Convert Excel scientific notation to standard format</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">1.2345678E+7 → 12345678</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">1.23E+7 → 12300000</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Wrapping Character Removal</h4>
+                            <p class="text-gray-600 mb-4">Remove quotes, brackets, and other wrapping characters</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">"12345678" → 12345678</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">(12345678) → 12345678</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supported Formats -->
+                <div class="bg-green-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-green-900 mb-4">Supported Formats</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-green-800">Standard Format (8 digits)</h4>
+                                <code class="text-sm font-mono text-green-700 bg-green-100 px-2 py-1 rounded">8 digits</code>
+                            </div>
+                            <p class="text-green-700 text-sm mb-3">Most common UK bank account number format</p>
+                            <div class="space-x-2">
+                                <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">12345678</code>
+                                <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">87654321</code>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-green-800">With Spaces</h4>
+                                <code class="text-sm font-mono text-green-700 bg-green-100 px-2 py-1 rounded">xxxx xxxx</code>
+                            </div>
+                            <p class="text-green-700 text-sm mb-3">8 digits with space separator (formatted)</p>
+                            <div class="space-x-2">
+                                <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">1234 5678</code>
+                                <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">8765 4321</code>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-green-800">Extended Format (7-12 digits)</h4>
+                                <code class="text-sm font-mono text-green-700 bg-green-100 px-2 py-1 rounded">7-12 digits</code>
+                            </div>
+                            <p class="text-green-700 text-sm mb-3">Some banks use longer account numbers</p>
+                            <div class="space-x-2">
+                                <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">1234567</code>
+                                <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">123456789012</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supported Variations -->
+                <div class="bg-white rounded-lg p-4 border border-blue-200">
+                    <p class="text-blue-800">
+                        <strong>Supported formats:</strong> We clean bank account numbers from many variations including different separators (spaces, hyphens, dots), labels and prefixes (Account:, Acc:, Bank Account:, Account Number:), wrapping characters (quotes, brackets), scientific notation from Excel, and even when combined with sort codes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Names Tab -->
+        <div id="namesTab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <!-- Rule Header -->
+                <div class="flex items-start mb-8">
+                    <svg class="w-10 h-10 mr-4 text-pink-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Names</h2>
+                        <p class="text-lg text-gray-600">UK name validation and intelligent name splitting</p>
+                    </div>
+                </div>
+
+                <!-- Introduction -->
+                <div class="bg-blue-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
+                    <p class="text-blue-800">We process full names and intelligently split them into their component parts: title (Mr, Mrs, Dr, etc.), first name, and last name. Our system handles common UK name formats, including middle names, suffixes, compound surnames, and various title formats. The splitting process preserves the original data while creating new structured columns for easier data management.</p>
+                </div>
+
+                <!-- What We Check -->
+                <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">What We Check</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Title detection (Mr, Mrs, Miss, Ms, Dr, Prof, etc.)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">First name extraction</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Last name identification</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Middle name handling</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Suffix recognition (Jr, Sr, II, III, etc.)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Compound surname support</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Hyphenated names handling</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Multiple word surname detection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Automatic Processing -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Automatic Processing We Apply</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Title Extraction</h4>
+                            <p class="text-gray-600 mb-4">Identify and extract titles from full names</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">Mr John Smith → Title: Mr</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">Dr Sarah Johnson → Title: Dr</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Name Component Separation</h4>
+                            <p class="text-gray-600 mb-4">Split names into first and last name components</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">John Smith → First: John, Last: Smith</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">Mary Smith-Jones → First: Mary, Last: Smith-Jones</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Middle Name Handling</h4>
+                            <p class="text-gray-600 mb-4">Include middle names with first name</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">John Michael Smith → First: John Michael, Last: Smith</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Suffix Recognition</h4>
+                            <p class="text-gray-600 mb-4">Handle name suffixes correctly</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">John Smith Jr → First: John, Last: Smith Jr</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">Robert Williams III → First: Robert, Last: Williams III</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supported Formats -->
+                <div class="bg-green-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-green-900 mb-4">Supported Formats</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-green-800">Standard Format</h4>
+                                <code class="text-sm font-mono text-green-700 bg-green-100 px-2 py-1 rounded">Title First Last</code>
+                            </div>
+                            <p class="text-green-700 text-sm mb-3">Full name with title</p>
+                            <div class="space-y-2">
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">Mr John Smith</code>
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">Dr Sarah Johnson</code>
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">Mrs Emma Brown</code>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-green-800">With Middle Name</h4>
+                                <code class="text-sm font-mono text-green-700 bg-green-100 px-2 py-1 rounded">Title First Middle Last</code>
+                            </div>
+                            <p class="text-green-700 text-sm mb-3">Full name with middle name</p>
+                            <div class="space-y-2">
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">Mr John Michael Smith</code>
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">Mrs Emma Louise Brown</code>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-green-800">With Suffix</h4>
+                                <code class="text-sm font-mono text-green-700 bg-green-100 px-2 py-1 rounded">First Last Suffix</code>
+                            </div>
+                            <p class="text-green-700 text-sm mb-3">Name with suffix (Jr, Sr, II, III)</p>
+                            <div class="space-y-2">
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">John Smith Jr</code>
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">Robert Williams III</code>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-green-800">Compound Surnames</h4>
+                                <code class="text-sm font-mono text-green-700 bg-green-100 px-2 py-1 rounded">First Last-Last</code>
+                            </div>
+                            <p class="text-green-700 text-sm mb-3">Names with hyphenated or compound surnames</p>
+                            <div class="space-y-2">
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">Mary Smith-Jones</code>
+                                <code class="block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">David O'Brien</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output Format -->
+                <div class="bg-blue-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-blue-900 mb-4">Output Format</h3>
+                    <p class="text-blue-800 mb-4">When name splitting is enabled, we create three new columns:</p>
+                    <div class="space-y-3">
+                        <div class="bg-white rounded-lg p-4 border border-blue-200">
+                            <h4 class="font-semibold text-blue-800 mb-2">title</h4>
+                            <p class="text-blue-700 text-sm">Extracted title (Mr, Mrs, Dr, etc.) or empty if no title detected</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-blue-200">
+                            <h4 class="font-semibold text-blue-800 mb-2">first_name</h4>
+                            <p class="text-blue-700 text-sm">First name (and middle name if present)</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-blue-200">
+                            <h4 class="font-semibold text-blue-800 mb-2">last_name</h4>
+                            <p class="text-blue-700 text-sm">Last name (including suffixes and compound surnames)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supported Variations -->
+                <div class="bg-white rounded-lg p-4 border border-blue-200">
+                    <p class="text-blue-800 mb-3">
+                        <strong>Supported formats:</strong> We handle names in many variations including titles (Mr, Mrs, Miss, Ms, Dr, Prof, Rev, etc.), middle names, suffixes (Jr, Sr, II, III, etc.), compound surnames (hyphenated and multi-word), and various spacing formats. For detailed information about name splitting options and advanced features, see our <a href="/documentation.php#name-splitting" class="text-blue-600 hover:text-blue-800 underline font-semibold">name splitting documentation</a>.
+                    </p>
                 </div>
             </div>
         </div>
