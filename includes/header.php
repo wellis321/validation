@@ -57,6 +57,9 @@
                             <a href="/documentation.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
                                 Documentation
                             </a>
+                            <a href="/blog/ai-data-cleaning-limitations.php" class="block px-4 py-2 transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
+                                Blog
+                            </a>
                         </div>
                     </div>
                     
@@ -201,6 +204,9 @@
                 </a>
                 <a href="/documentation.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
                     Documentation
+                </a>
+                <a href="/blog/ai-data-cleaning-limitations.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                    Blog
                 </a>
             </div>
             
