@@ -90,7 +90,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
             line-height: 1.5;
         }
 
-        /* Color swatch styles */
+        /* Colour swatch styles */
         .color-swatch {
             display: inline-block;
             width: 1.5rem;
@@ -126,7 +126,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                         <li><a href="#protected-columns" class="text-blue-600 hover:text-blue-800 hover:underline">Protected Columns</a></li>
                         <li><a href="#data-profiling" class="text-blue-600 hover:text-blue-800 hover:underline">Data Profiling</a></li>
                         <li><a href="#full-preview" class="text-blue-600 hover:text-blue-800 hover:underline">Full Preview</a></li>
-                        <li><a href="#color-coding" class="text-blue-600 hover:text-blue-800 hover:underline">Color Coding System</a></li>
+                        <li><a href="#color-coding" class="text-blue-600 hover:text-blue-800 hover:underline">Colour Coding System</a></li>
                         <li><a href="#duplicate-handling" class="text-blue-600 hover:text-blue-800 hover:underline">Duplicate Handling</a></li>
                         <li><a href="#export-options" class="text-blue-600 hover:text-blue-800 hover:underline">Export Options</a></li>
                         <li><a href="#validation-rules" class="text-blue-600 hover:text-blue-800 hover:underline">Validation Rules</a></li>
@@ -153,7 +153,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                             <li>Select which columns contain UK data to clean (or use Auto-Select)</li>
                             <li>Click "Clean My Data" to process</li>
                             <li>Review results in the Full Preview tab</li>
-                            <li>Customize export options (format, duplicates, whitespace)</li>
+                            <li>Customise export options (format, duplicates, whitespace)</li>
                             <li>Download your cleaned file</li>
                         </ol>
 
@@ -200,7 +200,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     <li>Check the <strong>Issues</strong> tab to see validation errors</li>
                                 </ul>
                             </li>
-                            <li><strong>Export Options:</strong> Customize your download format (CSV, Excel, JSON) and options (remove duplicates, trim whitespace, export only rows with issues)</li>
+                            <li><strong>Export Options:</strong> Customise your download format (CSV, Excel, JSON) and options (remove duplicates, trim whitespace, export only rows with issues)</li>
                             <li><strong>Download:</strong> Download the cleaned file to see the results</li>
                             <li><strong>Reset Demo:</strong> Click "Reset Demo" to clear all data and start over - perfect for trying different cleaning options</li>
                         </ol>
@@ -607,7 +607,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                     </svg>
-                                    <span><strong>Color coding</strong> to highlight changes and issues</span>
+                                    <span><strong>Colour coding</strong> to highlight changes and issues</span>
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -646,14 +646,14 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                     </div>
                 </section>
 
-                <!-- Color Coding System -->
+                <!-- Colour Coding System -->
                 <section id="color-coding" class="bg-white rounded-lg shadow-lg p-8">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-blue-600 pb-2">Color Coding System</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-blue-600 pb-2">Colour Coding System</h2>
 
                     <div class="space-y-6">
                         <div>
                             <p class="text-gray-700 mb-4">
-                                The Full Preview uses a color coding system to help you quickly identify different types of data and changes:
+                                The Full Preview uses a colour coding system to help you quickly identify different types of data and changes:
                             </p>
                         </div>
 
@@ -974,7 +974,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                 <div class="flex-1">
                                     <h3 class="text-2xl font-bold text-gray-900 mb-2">Cleaned Data Report</h3>
                                     <p class="text-gray-700 mb-4">
-                                        View a comprehensive report of all values that were automatically cleaned during processing. See the original values alongside their cleaned versions, organized by data type.
+                                        View a comprehensive report of all values that were automatically cleaned during processing. See the original values alongside their cleaned versions, organised by data type.
                                     </p>
                                     
                                     <div class="bg-white rounded-lg p-4 mb-4 border border-green-100">
@@ -983,7 +983,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                             <li>After processing your file, go to the <strong>"Cleaned"</strong> tab</li>
                                             <li>Click the <strong>"View Cleaned Report"</strong> button</li>
                                             <li>A comprehensive HTML report opens in a new page showing all cleaned values</li>
-                                            <li>Values are organized by type (Phone Numbers, Postcodes, NI Numbers, Sort Codes, Name Splits, etc.)</li>
+                                            <li>Values are organised by type (Phone Numbers, Postcodes, NI Numbers, Sort Codes, Name Splits, etc.)</li>
                                             <li>Each entry shows the original value and the cleaned/fixed value side by side</li>
                                         </ol>
                                         
@@ -991,7 +991,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                             <h5 class="font-semibold text-gray-900 mb-2 text-base">Report Features:</h5>
                                             <ul class="list-disc list-inside space-y-1 text-base text-gray-700">
                                                 <li><strong>Dedicated HTML Page:</strong> Opens in a separate page for better viewing and printing</li>
-                                                <li><strong>Organized by Type:</strong> Values are grouped by data type (Phone Numbers, Postcodes, etc.) for easy navigation</li>
+                                                <li><strong>Organised by Type:</strong> Values are grouped by data type (Phone Numbers, Postcodes, etc.) for easy navigation</li>
                                                 <li><strong>Before & After:</strong> See original values alongside their cleaned versions</li>
                                                 <li><strong>Navigation Sidebar:</strong> Quick links to jump to specific data type sections</li>
                                                 <li><strong>Persistent Storage:</strong> Reports survive page refreshes via browser localStorage</li>
@@ -1198,7 +1198,7 @@ w1a 1aa          → W1A 1AA</div>
                         <div>
                             <h4 class="font-semibold text-gray-900 mb-2">Q: Can I clean non-UK data?</h4>
                             <p class="text-sm text-gray-700 pl-4">
-                                <strong>A:</strong> Currently, Simple Data Cleaner specializes in UK data formats only (UK phone numbers, NI numbers, postcodes, and sort codes). International data formats are not supported at this time.
+                                <strong>A:</strong> Currently, Simple Data Cleaner specialises in UK data formats only (UK phone numbers, NI numbers, postcodes, and sort codes). International data formats are not supported at this time.
                             </p>
                         </div>
 

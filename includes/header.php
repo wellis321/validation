@@ -51,6 +51,9 @@
                             <a href="/how-it-works.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
                                 How It Works
                             </a>
+                            <a href="/why-choose-us.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'why-choose-us.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
+                                Why Choose Us
+                            </a>
                             <a href="/documentation.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
                                 Documentation
                             </a>
@@ -192,6 +195,9 @@
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Product</p>
                 <a href="/how-it-works.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
                     How It Works
+                </a>
+                <a href="/why-choose-us.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'why-choose-us.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                    Why Choose Us
                 </a>
                 <a href="/documentation.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
                     Documentation

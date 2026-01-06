@@ -2,8 +2,8 @@
 require_once __DIR__ . '/includes/init.php';
 
 // Set page meta
-$pageTitle = 'How It Works';
-$pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clean your data in your browser, and download in any format. 100% private, no data leaves your device.';
+$pageTitle = 'How It Works - UK Data Cleaning Tool | Browser-Based Processing';
+$pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clean UK data formats in your browser, and download in any format. 100% private, GDPR compliant, no data leaves your device. Perfect for UK businesses.';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,8 +11,9 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/how-it-works.php">
-    <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
+    <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta name="keywords" content="UK data cleaning how it works, browser-based data validation, GDPR compliant data cleaning process, UK data validation tool, clean UK phone numbers postcodes NI numbers">
     
     <!-- Open Graph Tags -->
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">

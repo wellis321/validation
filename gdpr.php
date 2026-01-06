@@ -7,8 +7,23 @@ require_once __DIR__ . '/includes/init.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/gdpr.php">
-    <title>GDPR Compliance - Simple Data Cleaner | Data Protection & Privacy</title>
-    <meta name="description" content="Simple Data Cleaner is GDPR compliant. Learn how our browser-based processing means your data never leaves your device and we're not a data processor.">
+    <title>GDPR Compliant Data Cleaning | Browser-Based Processing | Simple Data Cleaner</title>
+    <meta name="description" content="GDPR compliant data cleaning tool. Browser-based processing means your data never leaves your device - we're not a data processor. Perfect for UK businesses handling sensitive PII. No data processing agreements needed.">
+    <meta name="keywords" content="GDPR compliant data cleaning, browser-based GDPR compliance, data processor exemption, UK GDPR data cleaning, privacy-first data validation, GDPR data processing agreement">
+    <meta property="og:title" content="GDPR Compliant Data Cleaning | Browser-Based Processing">
+    <meta property="og:description" content="Learn how browser-based data cleaning ensures GDPR compliance. Your data never leaves your device - we're not a data processor under GDPR.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simple-data-cleaner.com/gdpr.php">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "GDPR Compliance - Simple Data Cleaner",
+      "description": "Learn how browser-based data cleaning ensures GDPR compliance. Your data never leaves your device.",
+      "url": "https://simple-data-cleaner.com/gdpr.php"
+    }
+    </script>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

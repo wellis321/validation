@@ -26,9 +26,9 @@ if ($user) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/">
-    <title>Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant</title>
-    <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private - your data never leaves your device. Perfect for businesses handling sensitive PII. GDPR compliant data cleaning.">
-    <meta name="keywords" content="UK data validation, phone number cleaning, NI number validation, GDPR compliant data cleaning, browser-based data processing, UK postcode validation">
+    <title>UK Data Cleaning Tool | Browser-Based & GDPR Compliant | Simple Data Cleaner</title>
+    <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, and split names in your browser. 100% private - your data never leaves your device. GDPR compliant data cleaning for UK businesses. Try free example page.">
+    <meta name="keywords" content="UK data cleaning, UK data validation, GDPR compliant data cleaning, browser-based data cleaning, UK phone number cleaning, UK postcode validation, NI number validation, privacy-first data cleaning, UK data cleaning tool, browser data validation">
     <meta property="og:title" content="Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant">
     <meta property="og:description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private - your data never leaves your device.">
     <meta property="og:type" content="website">
@@ -61,10 +61,11 @@ if ($user) {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Simple Data Cleaner",
-      "description": "Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private - your data never leaves your device.",
+      "description": "UK data cleaning and validation tool. Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private, GDPR compliant - your data never leaves your device.",
       "url": "https://simple-data-cleaner.com",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web Browser",
+      "keywords": "UK data cleaning, UK data validation, GDPR compliant data cleaning, browser-based data cleaning, UK phone number cleaning, UK postcode validation",
       "offers": {
         "@type": "Offer",
         "price": "0",
