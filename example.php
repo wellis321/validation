@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/init.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/example">
+    <link rel="canonical" href="https://simple-data-cleaner.com/example.php">
     <title>Try Simple Data Cleaner - Interactive Demo | Free Example</title>
     <meta name="description" content="Try Simple Data Cleaner with example data. Experience our UK data validation tool with a pre-loaded sample dataset. No sign-up required.">
     <meta name="robots" content="index, follow">

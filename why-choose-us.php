@@ -6,14 +6,14 @@ require_once __DIR__ . '/includes/init.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/why-choose-us">
+    <link rel="canonical" href="https://simple-data-cleaner.com/why-choose-us.php">
     <title>Why Choose Simple Data Cleaner? | Browser-Based UK Data Validation</title>
     <meta name="description" content="Discover why Simple Data Cleaner is the best choice for UK data cleaning. 100% browser-based processing, GDPR compliant, no data uploads required. Compare with cloud-based alternatives.">
     <meta name="keywords" content="browser-based data cleaning, privacy-first data validation, GDPR compliant data cleaning, UK data cleaning comparison, cloud vs browser data cleaning">
     <meta property="og:title" content="Why Choose Simple Data Cleaner? | Browser-Based UK Data Validation">
     <meta property="og:description" content="The only UK data validation tool that processes everything in your browser. Your data never leaves your device - guaranteed privacy and GDPR compliance.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://simple-data-cleaner.com/why-choose-us">
+    <meta property="og:url" content="https://simple-data-cleaner.com/why-choose-us.php">
     <link rel="stylesheet" href="/assets/css/output.css">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     
@@ -23,7 +23,7 @@ require_once __DIR__ . '/includes/init.php';
       "@type": "WebPage",
       "name": "Why Choose Simple Data Cleaner",
       "description": "Compare browser-based data cleaning with cloud alternatives. Learn why privacy-first processing is essential for GDPR compliance.",
-      "url": "https://simple-data-cleaner.com/why-choose-us"
+      "url": "https://simple-data-cleaner.com/why-choose-us.php"
     }
     </script>
 </head>

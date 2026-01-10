@@ -170,7 +170,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                     <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-blue-600 pb-2">Interactive Example</h2>
                     <div class="prose max-w-none">
                         <p class="text-gray-700 mb-4">
-                            Want to try Simple Data Cleaner without uploading your own file? Visit our <a href="/example" class="text-blue-600 hover:text-blue-800 underline">Interactive Example page</a> to explore the tool with pre-loaded sample data.
+                            Want to try Simple Data Cleaner without uploading your own file? Visit our <a href="/example.php" class="text-blue-600 hover:text-blue-800 underline">Interactive Example page</a> to explore the tool with pre-loaded sample data.
                         </p>
 
                         <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">What's Included in the Example:</h3>

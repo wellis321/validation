@@ -11,7 +11,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations">
+    <link rel="canonical" href="https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> | Simple Data Cleaner Blog</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($pageKeywords); ?>">
@@ -22,7 +22,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations">
+    <meta property="og:url" content="https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php">
     <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/blog/ai-data-cleaning-limitations.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -70,7 +70,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
       "dateModified": "2026-01-04T00:00:00+00:00",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations"
+        "@id": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php"
       },
       "image": {
         "@type": "ImageObject",
@@ -101,13 +101,13 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations"
+          "item": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "<?php echo htmlspecialchars($pageTitle); ?>",
-          "item": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations"
+          "item": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php"
         }
       ]
     }
