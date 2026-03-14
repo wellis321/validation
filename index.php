@@ -197,11 +197,11 @@ if ($user) {
             </section>
 
             <!-- Pain points: prose + before/after data visuals -->
-            <section class="ds-scroll-reveal pain-points-section max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" aria-labelledby="pain-points-heading">
+            <section class="ds-scroll-reveal pain-points-section max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-6 md:pb-8" aria-labelledby="pain-points-heading">
                 <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
                     <!-- Left: Prose -->
                     <div class="flex flex-col min-h-0">
-                        <h2 id="pain-points-heading" class="ds-reveal-item pain-points-heading text-4xl md:text-5xl lg:text-[2.75rem] font-extrabold text-white tracking-tight pl-8 border-l-[6px] border-yellow-400 mb-8 transition-colors duration-300">Sound familiar?</h2>
+                        <h2 id="pain-points-heading" class="ds-reveal-item pain-points-heading text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight pl-8 border-l-[8px] border-yellow-400 mb-8 transition-colors duration-300">Sound familiar?</h2>
                         <div class="space-y-6 text-neutral-200 text-lg md:text-xl leading-relaxed flex-1 flex flex-col justify-start">
                             <p class="ds-reveal-item">Phone numbers in every format. Postcodes with no spaces. NI numbers in lowercase. One export from your CRM, another from a survey — same data, five different styles.</p>
                             <p class="ds-reveal-item">Manually fixing it means find-and-replace, copy-paste, and hoping you didn&rsquo;t miss a typo.</p>
@@ -210,20 +210,20 @@ if ($user) {
                                 <span class="block">Another cloud tool?</span>
                                 <span class="block">GDPR paperwork?</span>
                             </p>
-                            <p class="ds-reveal-item pain-points-callout inline-flex self-start" data-stagger-add="2">No thanks!!!</p>
+                            <p class="ds-reveal-item pain-points-callout inline-flex self-start text-lg" data-stagger-add="2">No thanks!</p>
                         </div>
                     </div>
                     <!-- Right: Before + After cards stacked, equal height -->
                     <div class="ds-reveal-item grid grid-rows-[1fr_auto_1fr] gap-4 items-stretch min-h-[340px]">
                         <div class="flex flex-col min-h-0">
-                            <p class="text-sm font-bold uppercase tracking-widest text-amber-500/90 mb-3">Your data today</p>
-                            <div class="before-after-card before-after-before rounded-xl border-2 border-amber-500/40 bg-neutral-900/95 shadow-lg shadow-amber-950/30 p-5 overflow-hidden flex-1 min-h-0 flex flex-col justify-center">
-                                <div class="space-y-2.5 font-mono text-base">
-                                    <div class="text-amber-400 font-medium">07700900461</div>
-                                    <div class="text-neutral-400">+44 770 0 90 04 61</div>
-                                    <div class="text-neutral-500">SW1A1AA</div>
-                                    <div class="text-neutral-500">ab123456c</div>
-                                    <div class="text-red-400 line-through">0044770000000</div>
+                            <p class="text-sm font-bold uppercase tracking-widest text-amber-400 mb-3">Your data today</p>
+                            <div class="before-after-card before-after-before rounded-xl border-2 border-amber-500/40 bg-neutral-900/95 shadow-lg shadow-amber-950/30 p-0 overflow-hidden flex-1 min-h-0 flex flex-col justify-center before-after-excel-grid">
+                                <div class="font-mono text-base before-after-excel-rows">
+                                    <div class="before-after-row-excel py-2.5 px-5 border-b border-neutral-700/80 text-amber-400 font-medium">07700900461</div>
+                                    <div class="before-after-row-excel py-2.5 px-5 border-b border-neutral-700/80 text-neutral-400">+44 770 0 90 04 61</div>
+                                    <div class="before-after-row-excel py-2.5 px-5 border-b border-neutral-700/80 text-neutral-500">SW1A1AA</div>
+                                    <div class="before-after-row-excel py-2.5 px-5 border-b border-neutral-700/80 text-neutral-500">ab123456c</div>
+                                    <div class="before-after-row-excel py-2.5 px-5 text-red-400 line-through">0044770000000</div>
                                 </div>
                             </div>
                         </div>
@@ -231,47 +231,51 @@ if ($user) {
                             <svg class="w-8 h-8 animate-bounce-slow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
                         </div>
                         <div class="flex flex-col min-h-0">
-                            <p class="text-sm font-bold uppercase tracking-widest text-green-400/90 mb-3">After Simple Data Cleaner</p>
-                            <div class="before-after-card before-after-after rounded-xl border-2 border-green-500/50 bg-neutral-900/95 shadow-xl shadow-green-950/20 p-5 overflow-hidden flex-1 min-h-0 flex flex-col justify-center ring-1 ring-green-500/20">
-                                <div class="space-y-2.5 font-mono text-base">
-                                    <div class="before-after-row flex items-center justify-between gap-3 text-green-400 font-medium">
+                            <p class="text-sm font-bold uppercase tracking-widest text-green-400 mb-3">After Simple Data Cleaner</p>
+                            <div class="before-after-card before-after-after rounded-xl border-2 border-green-500/50 bg-neutral-900/95 p-0 overflow-hidden flex-1 min-h-0 flex flex-col justify-center before-after-excel-grid before-after-glow">
+                                <div class="font-mono text-base before-after-excel-rows">
+                                    <div class="before-after-row flex items-center justify-between gap-3 py-2.5 px-5 border-b border-neutral-700/80 text-green-400 font-medium">
                                         <span>+44 7700 900461</span>
-                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                        <span class="before-after-check text-green-500 shrink-0 w-6 h-6 flex items-center justify-center" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg></span>
                                     </div>
-                                    <div class="before-after-row flex items-center justify-between gap-3 text-neutral-200">
+                                    <div class="before-after-row flex items-center justify-between gap-3 py-2.5 px-5 border-b border-neutral-700/80 text-neutral-200">
                                         <span>+44 7700 900461</span>
-                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                        <span class="before-after-check text-green-500 shrink-0 w-6 h-6 flex items-center justify-center" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg></span>
                                     </div>
-                                    <div class="before-after-row flex items-center justify-between gap-3 text-neutral-200">
+                                    <div class="before-after-row flex items-center justify-between gap-3 py-2.5 px-5 border-b border-neutral-700/80 text-neutral-200">
                                         <span>SW1A 1AA</span>
-                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                        <span class="before-after-check text-green-500 shrink-0 w-6 h-6 flex items-center justify-center" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg></span>
                                     </div>
-                                    <div class="before-after-row flex items-center justify-between gap-3 text-neutral-200">
+                                    <div class="before-after-row flex items-center justify-between gap-3 py-2.5 px-5 border-b border-neutral-700/80 text-neutral-200">
                                         <span>AB 12 34 56 C</span>
-                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                        <span class="before-after-check text-green-500 shrink-0 w-6 h-6 flex items-center justify-center" aria-hidden="true"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg></span>
                                     </div>
-                                    <div class="before-after-row before-after-row-invalid flex items-center justify-between gap-3 text-red-400">
+                                    <div class="before-after-row before-after-row-invalid flex items-center justify-between gap-3 py-2.5 px-5 text-red-400">
                                         <span>Invalid — in report</span>
-                                        <span class="before-after-check-invalid text-amber-500 shrink-0" aria-hidden="true">!</span>
+                                        <span class="before-after-check-invalid text-amber-500 shrink-0 w-6 h-6 flex items-center justify-center text-lg font-bold" aria-hidden="true">!</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p class="ds-reveal-item mt-6 text-center text-neutral-400 text-base flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5 text-yellow-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                    <span>All in your browser. No uploads, no cloud, no risk.</span>
-                </p>
+                <div class="ds-reveal-item flex items-center justify-center mt-12 pt-12 pb-6 md:mt-16 md:pt-16 md:pb-8">
+                    <div class="px-6 py-5 border-l-4 border-yellow-500 bg-yellow-500/5 max-w-2xl">
+                        <p class="text-center text-white text-lg md:text-xl font-semibold flex items-center justify-center gap-3">
+                            <svg class="w-7 h-7 text-yellow-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                            <span>All in your browser. No uploads, no cloud, no risk.</span>
+                        </p>
+                    </div>
+                </div>
             </section>
 
             <!-- GDPR & Privacy banner: why we're different -->
-            <section id="privacy-banner" class="ds-scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" aria-labelledby="privacy-banner-heading">
+            <section id="privacy-banner" class="ds-scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 pb-12 md:pb-16" aria-labelledby="privacy-banner-heading">
                 <hr class="ds-section-hr ds-section-hr-section-top" aria-hidden="true">
                 <div class="grid lg:grid-cols-[1fr,minmax(300px,420px)] gap-8 lg:gap-12 items-center">
                     <div>
                         <h2 id="privacy-banner-heading" class="ds-reveal-item text-2xl md:text-3xl font-bold text-white mb-4">GDPR &amp; privacy done right</h2>
-                        <p class="ds-reveal-item text-neutral-300 text-lg leading-relaxed mb-6">Other tools upload your data to their servers. That means DPAs, processor agreements, and risk. Simple Data Cleaner runs entirely in your browser — your files never leave your device.</p>
+                        <p class="ds-reveal-item text-neutral-300 text-lg leading-relaxed mb-6">Other tools upload your data to their servers. That means data processing agreements, extra paperwork, and risk. Simple Data Cleaner runs entirely in your browser — your files never leave your device.</p>
                         <ul class="space-y-3">
                             <li class="ds-reveal-item privacy-bullet group flex items-start gap-3 text-neutral-200 rounded-lg px-3 py-2 -mx-3 -my-1 transition-colors duration-200 hover:bg-neutral-800/40">
                                 <span class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true">
@@ -294,17 +298,17 @@ if ($user) {
                         </ul>
                     </div>
                     <div class="ds-reveal-item">
-                        <div class="privacy-report-card rounded-xl border border-neutral-700 overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/5 bg-neutral-900 transition-all duration-300 hover:border-neutral-600 hover:shadow-2xl hover:shadow-green-500/5">
+                        <button type="button" id="privacy-report-image-btn" class="privacy-report-card rounded-xl border border-neutral-700 overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/5 bg-neutral-900 transition-all duration-300 hover:border-neutral-600 hover:shadow-2xl hover:shadow-green-500/5 cursor-zoom-in w-full text-left block" aria-label="Click to view larger">
                             <img src="/assets/images/cleaned-data-report.png" alt="Cleaned Data Report showing phone numbers, NI numbers, postcodes and more — all processed in your browser with original and cleaned values side by side" class="w-full h-auto block">
-                        </div>
-                        <p class="mt-4 text-center text-sm text-neutral-500">Example report — generated locally, never sent to a server</p>
+                        </button>
+                        <p class="mt-4 text-center text-sm text-neutral-500">Click image to view larger</p>
                     </div>
                 </div>
                 <hr class="ds-section-hr ds-section-hr-section-bottom ds-section-hr-tight-top" aria-hidden="true">
             </section>
 
             <!-- How It Works + What You Get (merged) -->
-            <section class="ds-scroll-reveal max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" aria-labelledby="how-it-works-heading">
+            <section class="ds-scroll-reveal max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-24 pb-12 md:pb-16" aria-labelledby="how-it-works-heading">
                 <h2 id="how-it-works-heading" class="ds-reveal-item text-2xl font-bold text-white mb-2">How it works</h2>
                 <p class="ds-reveal-item text-neutral-400 mb-2">Three steps. Your data never leaves your device.</p>
                 <p class="ds-reveal-item flex items-center gap-2 text-neutral-500 text-sm mb-10">
@@ -354,36 +358,48 @@ if ($user) {
                     <div class="grid lg:grid-cols-2 gap-8 items-stretch">
                         <!-- Left: We validate data types -->
                         <div class="ds-vocab-card shadow-2xl shadow-black/40 ring-1 ring-white/10">
-                            <div class="px-6 py-4 border-b border-white/5">
-                                <h3 class="text-lg font-semibold text-white">We validate</h3>
-                                <p class="text-sm text-neutral-500 mt-0.5">7 UK data types</p>
+                            <div class="px-6 py-4 border-b border-white/5 flex items-start gap-3">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center border border-green-500/20 mt-0.5" aria-hidden="true">
+                                    <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                                </span>
+                                <div>
+                                    <div class="flex items-baseline gap-2">
+                                        <h3 class="text-lg font-semibold text-white">We validate</h3>
+                                        <p class="text-sm text-neutral-500">7 UK data types</p>
+                                    </div>
+                                    <p class="text-sm font-medium text-neutral-300 mt-2 flex items-center gap-1.5">
+                                        <span>Click one</span>
+                                        <span class="text-yellow-400" aria-hidden="true">→</span>
+                                        <span class="text-yellow-400/95">cleaned instantly</span>
+                                    </p>
+                                </div>
                             </div>
                             <div class="ds-vocab-list">
-                                <div class="ds-reveal-item ds-vocab-item group">
+                                <div class="ds-reveal-item ds-vocab-item group cursor-pointer" role="button" tabindex="0" data-sample="07700 900 123" aria-label="Try phone number example">
                                     <i data-lucide="phone" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     <span class="ds-vocab-label">Phone numbers</span>
                                 </div>
-                                <div class="ds-reveal-item ds-vocab-item group">
+                                <div class="ds-reveal-item ds-vocab-item group cursor-pointer" role="button" tabindex="0" data-sample="  ab.12.34.56.c  " aria-label="Try NI number example">
                                     <i data-lucide="badge" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     <span class="ds-vocab-label">NI numbers</span>
                                 </div>
-                                <div class="ds-reveal-item ds-vocab-item group">
+                                <div class="ds-reveal-item ds-vocab-item group cursor-pointer" role="button" tabindex="0" data-sample="  sw1a.1aa  " aria-label="Try postcode example">
                                     <i data-lucide="map-pin" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     <span class="ds-vocab-label">Postcodes</span>
                                 </div>
-                                <div class="ds-reveal-item ds-vocab-item group">
+                                <div class="ds-reveal-item ds-vocab-item group cursor-pointer" role="button" tabindex="0" data-sample="1.2.3.4.5.6" aria-label="Try sort code example">
                                     <i data-lucide="hash" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     <span class="ds-vocab-label">Sort codes</span>
                                 </div>
-                                <div class="ds-reveal-item ds-vocab-item group">
+                                <div class="ds-reveal-item ds-vocab-item group cursor-pointer" role="button" tabindex="0" data-sample="12 34 56 78" aria-label="Try bank account example">
                                     <i data-lucide="landmark" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     <span class="ds-vocab-label">Bank accounts</span>
                                 </div>
-                                <div class="ds-reveal-item ds-vocab-item group">
+                                <div class="ds-reveal-item ds-vocab-item group cursor-pointer" role="button" tabindex="0" data-sample="user@gmial.com" aria-label="Try email example">
                                     <i data-lucide="mail" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     <span class="ds-vocab-label">Emails</span>
                                 </div>
-                                <div class="ds-reveal-item ds-vocab-item group">
+                                <div class="ds-reveal-item ds-vocab-item group cursor-pointer" role="button" tabindex="0" data-sample="  dr.  john   smith  " aria-label="Try name splitting example">
                                     <i data-lucide="type" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     <span class="ds-vocab-label">Name splitting</span>
                                 </div>
@@ -394,7 +410,7 @@ if ($user) {
                             <h3 id="try-demo-heading" class="text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">Try it now</h3>
                             <p class="text-base md:text-lg font-medium text-neutral-300 mb-5">Messy data in. Clean data out. <span class="text-yellow-400 font-semibold">Instant.</span></p>
                             <div class="try-demo-card flex-1 flex flex-col bg-neutral-900/95 rounded-2xl border border-neutral-600/80 p-6 md:p-8 transition-all duration-300 focus-within:border-yellow-500/50 focus-within:shadow-[0_0_0_1px_rgba(234,179,8,0.2)] min-h-[280px]">
-                                <label for="mini-demo-input" class="ds-reveal-item block text-sm font-semibold uppercase tracking-wider text-neutral-400 mb-3">Paste or type any UK data</label>
+                                <label for="mini-demo-input" class="try-demo-label ds-reveal-item block text-sm font-semibold uppercase tracking-wider text-neutral-400 mb-3 transition-colors duration-200">Paste or type — we'll clean it</label>
                                 <div class="ds-reveal-item flex flex-wrap gap-1.5 mb-3">
                                     <span class="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide bg-yellow-500/10 text-yellow-400/90 border border-yellow-500/20">Phone</span>
                                     <span class="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide bg-yellow-500/10 text-yellow-400/90 border border-yellow-500/20">NI</span>
@@ -412,13 +428,19 @@ if ($user) {
                                         <span class="try-demo-text">—</span>
                                     </div>
                                 </div>
-                                <p class="mt-5 flex items-center gap-2 text-sm font-semibold text-neutral-400">
-                                    <svg class="w-5 h-5 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                                    <span>100% in-browser. Nothing leaves your device.</span>
+                                <p class="mt-5 flex gap-2 text-sm font-semibold text-neutral-400">
+                                    <svg class="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                    <span class="flex flex-col">
+                                        <span>100% in-browser.</span>
+                                        <span>Nothing leaves your device.</span>
+                                    </span>
                                 </p>
                             </div>
-                            <a href="/validation-rules.php" class="hiw-rules-link mt-4 inline-flex items-center gap-1.5 text-yellow-400 hover:text-yellow-300 font-medium text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded">
-                                Full rules <span class="hiw-arrow" aria-hidden="true">→</span>
+                            <a href="/validation-rules.php" class="hiw-rules-link group mt-4 inline-flex items-center gap-1.5 text-yellow-400 hover:text-yellow-300 font-medium text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded relative pb-0.5" title="See every validation rule we support">
+                                <span class="relative inline-block">Full rules
+                                    <span class="hiw-rules-underline absolute bottom-0 left-0 h-px w-0 bg-yellow-400/80 group-hover:w-full" aria-hidden="true"></span>
+                                </span>
+                                <span class="hiw-arrow" aria-hidden="true">→</span>
                             </a>
                         </div>
                     </div>
@@ -1280,13 +1302,44 @@ if ($user) {
         <?php endif; ?>
     </main>
 
+    <!-- Image lightbox for privacy report -->
+    <div id="privacy-report-lightbox" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Enlarged report preview">
+        <button type="button" id="privacy-lightbox-close" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-neutral-800 hover:bg-neutral-700 text-white transition-colors z-10" aria-label="Close">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <img src="/assets/images/cleaned-data-report.png" alt="Cleaned Data Report — enlarged view" class="max-w-[95vw] max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()">
+    </div>
+
     <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <!-- Scripts: homepage needs only validators (mini-demo); fileProcessor/app load on example.php -->
     <?php if (!$user): ?>
     <script src="/hero-shader.js?v=<?php echo time(); ?>" defer></script>
     <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
-    <script <?php echo script_nonce(); ?>>if (typeof lucide !== 'undefined') lucide.createIcons();</script>
+    <script <?php echo script_nonce(); ?>>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    </script>
+    <script <?php echo script_nonce(); ?>>
+    (function() {
+        var btn = document.getElementById('privacy-report-image-btn');
+        var lb = document.getElementById('privacy-report-lightbox');
+        if (!btn || !lb) return;
+        btn.addEventListener('click', function() {
+            lb.classList.add('is-open');
+            lb.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        });
+        function closeLb() {
+            lb.classList.remove('is-open');
+            lb.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+        lb.addEventListener('click', function(e) { if (e.target === lb) closeLb(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && lb.classList.contains('is-open')) closeLb(); });
+        var closeBtn = document.getElementById('privacy-lightbox-close');
+        if (closeBtn) closeBtn.addEventListener('click', closeLb);
+    })();
+    </script>
     <?php endif; ?>
     <script src="/validators.js?v=<?php echo time(); ?>" defer></script>
     <?php if (!$user): ?>
@@ -1307,9 +1360,34 @@ if ($user) {
                 return;
             }
             var r = autoValidate(val);
-            var display = r.fixed || r.value || (r.error ? 'Invalid: ' + r.error : '\u2014');
+            var display;
+            var rawVal = inp.value;
+            var looksLikeName = /^[a-zA-Z\s\-'.]+$/.test(rawVal) && rawVal.replace(/\s+/g, ' ').trim().split(/\s+/).length >= 2 && rawVal.indexOf('@') === -1;
+            if (looksLikeName && typeof getValidator === 'function') {
+                var nameVal = getValidator('name_split');
+                if (nameVal && nameVal.split) {
+                    var splitResult = nameVal.split(rawVal);
+                    if (!splitResult.error && (splitResult.first_name || splitResult.last_name)) {
+                        var parts = [splitResult.last_name, splitResult.first_name, splitResult.title].filter(Boolean);
+                        display = parts.length ? parts.join(' \u00B7 ') : null;
+                        if (display) r = { fixed: display, isValid: true };
+                    }
+                }
+            }
+            if (!display && r.error === 'Could not determine data type' && typeof getValidator === 'function') {
+                var nameVal2 = getValidator('name_split');
+                if (nameVal2 && nameVal2.split) {
+                    var splitResult2 = nameVal2.split(rawVal);
+                    if (!splitResult2.error && (splitResult2.first_name || splitResult2.last_name)) {
+                        var parts2 = [splitResult2.last_name, splitResult2.first_name, splitResult2.title].filter(Boolean);
+                        display = parts2.length ? parts2.join(' \u00B7 ') : null;
+                        if (display) r = { fixed: display, isValid: true };
+                    }
+                }
+            }
+            if (!display) display = r.fixed || r.value || (r.error ? 'Invalid: ' + r.error : '\u2014');
             textEl.textContent = display;
-            if (r.fixed) {
+            if (r.fixed || (r.isValid && display !== '\u2014')) {
                 out.classList.add('is-valid');
                 if (checkEl) checkEl.classList.remove('hidden');
             } else {
@@ -1321,6 +1399,26 @@ if ($user) {
         }
         inp.addEventListener('input', update);
         inp.addEventListener('paste', function() { setTimeout(update, 10); });
+        document.querySelectorAll('.ds-vocab-item[data-sample]').forEach(function(el) {
+            function fillSample() {
+                var sample = el.getAttribute('data-sample');
+                if (sample && inp) {
+                    document.querySelectorAll('.ds-vocab-item.is-just-selected').forEach(function(other) { other.classList.remove('is-just-selected'); });
+                    el.classList.add('is-just-selected');
+                    setTimeout(function() { el.classList.remove('is-just-selected'); }, 1400);
+                    inp.value = sample;
+                    inp.focus();
+                    update();
+                }
+            }
+            el.addEventListener('click', fillSample);
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    fillSample();
+                }
+            });
+        });
     });
     </script>
     <?php endif; ?>

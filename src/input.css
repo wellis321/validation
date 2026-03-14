@@ -8,6 +8,11 @@
     body {
         font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     }
+
+    /* Offset scroll targets so they sit below the sticky navbar (h-14 = 56px) */
+    [id] {
+        scroll-margin-top: 5rem;
+    }
 }
 
 /* Design system tokens — dark theme (FieldFix-style black, white, yellow) */
@@ -103,6 +108,9 @@
     .doc-toc-link:focus-visible {
         @apply outline-none ring-2 ring-yellow-500/50 ring-offset-2 ring-offset-neutral-900;
     }
+    .doc-toc-link.is-active {
+        @apply bg-yellow-500/15 text-yellow-400 border-l-yellow-500 font-semibold;
+    }
     @media (prefers-reduced-motion: reduce) {
         .doc-toc-link {
             transition-duration: 0.01ms;
@@ -191,19 +199,27 @@
 }
 .hiw-step-delay-4 { animation-delay: 0.55s; }
 
-/* Full rules link – arrow slides on hover */
+/* Full rules link – arrow slides + underline draws on hover */
+.hiw-rules-link .hiw-rules-underline {
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
 .hiw-rules-link {
     transition: color 0.2s ease;
 }
 .hiw-rules-link .hiw-arrow {
     display: inline-block;
-    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .hiw-rules-link:hover .hiw-arrow {
-    transform: translateX(4px);
+    transform: translateX(5px);
+}
+.hiw-rules-link:focus-visible .hiw-arrow {
+    transform: translateX(5px);
 }
 @media (prefers-reduced-motion: reduce) {
-    .hiw-rules-link:hover .hiw-arrow { transform: none; }
+    .hiw-rules-link:hover .hiw-arrow,
+    .hiw-rules-link:focus-visible .hiw-arrow { transform: none; }
+    .hiw-rules-link .hiw-rules-underline { transition: none; }
 }
 
 /* Sectional full-width dividers (extends beyond content padding) – unified styling */
@@ -233,6 +249,30 @@
 /* Reduce gap when How it works follows privacy banner */
 #privacy-banner + section {
     @apply pt-6 md:pt-8;
+}
+
+/* Privacy report image – click to expand lightbox */
+#privacy-report-lightbox.is-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+#privacy-report-lightbox.is-open img {
+    animation: lightbox-image-in 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes lightbox-image-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    #privacy-report-lightbox.is-open img {
+        animation: none;
+    }
 }
 
 /* GDPR / privacy section – animate & delight */
@@ -275,6 +315,9 @@
 .try-demo-card {
     animation: hiw-step-in 0.5s ease-out 0.15s forwards;
     opacity: 0;
+}
+.try-demo-card:focus-within .try-demo-label {
+    color: rgb(234 179 8 / 0.85);
 }
 .try-demo-result.is-updated {
     animation: try-demo-result-in 0.35s ease-out;
@@ -741,8 +784,11 @@
     .before-after-before:hover {
         box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(245, 158, 11, 0.15);
     }
-    .before-after-after:hover {
-        box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.35), 0 0 24px -4px rgba(34, 197, 94, 0.15);
+    .before-after-glow:hover {
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.45),
+                    0 0 0 1px rgba(34, 197, 94, 0.35),
+                    0 0 40px -4px rgba(34, 197, 94, 0.3),
+                    0 0 80px -8px rgba(34, 197, 94, 0.15);
     }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -755,6 +801,13 @@
     animation: before-after-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     animation-delay: 0.4s;
     opacity: 0;
+}
+/* Lasting, prominent glow on the "After" card */
+.before-after-glow {
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(34, 197, 94, 0.25),
+                0 0 32px -4px rgba(34, 197, 94, 0.2),
+                0 0 64px -8px rgba(34, 197, 94, 0.1);
 }
 .ds-scroll-reveal.ds-revealed .before-after-after {
     animation: before-after-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
@@ -770,12 +823,12 @@
 
 /* Pain points – "No thanks" callout */
 .pain-points-callout {
-    @apply border-2 border-yellow-500/50 text-yellow-300 font-semibold px-4 py-2 rounded-lg bg-yellow-500/5;
+    @apply border-2 border-yellow-400/70 text-yellow-200 font-bold px-5 py-2.5 rounded-lg bg-yellow-500/10;
 }
 
 /* Pain points – delight: headline hover glow, staggered checkmarks */
 .pain-points-section:hover .pain-points-heading {
-    text-shadow: 0 0 32px rgba(234, 179, 8, 0.25), 0 0 64px rgba(234, 179, 8, 0.1);
+    text-shadow: 0 0 40px rgba(234, 179, 8, 0.3), 0 0 80px rgba(234, 179, 8, 0.15);
 }
 @keyframes before-after-check-pop {
     from {
@@ -817,12 +870,29 @@
 .ds-vocab-item {
     @apply flex items-center gap-3 px-4 py-3 rounded-xl border border-white/5;
     background-color: #1c1c1e;
-    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .ds-vocab-item:hover {
     background-color: #252528;
     border-color: rgba(255, 255, 255, 0.08);
+}
+
+.ds-vocab-item[role="button"]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px theme('colors.yellow.500');
+}
+
+/* Brief "you picked this" highlight when vocab item populates the demo */
+.ds-vocab-item.is-just-selected {
+    background-color: rgba(234, 179, 8, 0.08);
+    border-color: rgba(234, 179, 8, 0.25);
+    box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.15);
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-vocab-item.is-just-selected {
+        box-shadow: none;
+    }
 }
 
 @media (hover: hover) {

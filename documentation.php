@@ -146,7 +146,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
             background: rgba(255, 255, 255, 0.03);
         }
         .ds-faq-item .ds-faq-answer {
-            padding: 0 1.25rem 1.25rem 2.5rem;
+            padding: 0.75rem 1.25rem 1.25rem 2.5rem;
             font-size: 0.875rem;
             color: #a3a3a3;
             line-height: 1.6;
@@ -1331,6 +1331,46 @@ w1a 1aa            →  W1A 1AA</div>
                 }
             });
         });
+
+        // Active TOC link based on section in view
+        (function() {
+            const sections = document.querySelectorAll('main section[id]');
+            const tocLinks = document.querySelectorAll('.doc-toc-link');
+            const ZONE_BOTTOM = 180; // px from top of viewport – section in this zone is "active"
+
+            function setActiveLink() {
+                let activeSection = null;
+                sections.forEach(function(section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < ZONE_BOTTOM && rect.bottom > 0 && !activeSection) {
+                        activeSection = section;
+                    }
+                });
+                if (!activeSection && sections.length) {
+                    activeSection = sections[0];
+                }
+                tocLinks.forEach(function(link) {
+                    const href = link.getAttribute('href');
+                    if (activeSection && href === '#' + activeSection.id) {
+                        link.classList.add('is-active');
+                    } else {
+                        link.classList.remove('is-active');
+                    }
+                });
+            }
+
+            var ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        setActiveLink();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+            setActiveLink();
+        })();
     </script>
 </body>
 </html>

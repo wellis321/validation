@@ -780,6 +780,12 @@ class BankAccountValidator {
             return new ValidationResult(false, value, `Bank account number must be 7-12 digits (found ${digits.length} digits)`);
         }
 
+        // Step 6.5: Reject values that look like incomplete UK phone numbers
+        // UK mobiles are 07xxx xxxxxx (11 digits). 9–10 digits starting 07 = likely truncated phone
+        if (digits.startsWith('07') && digits.length >= 9 && digits.length <= 10) {
+            return new ValidationResult(false, value, 'Looks like an incomplete UK mobile number (need 11 digits, e.g. 07700 900123)');
+        }
+
         // Step 7: Accept 7-12 digit account numbers
         if (digits.length >= 7 && digits.length <= 12) {
             // Remove any spaces for validation
