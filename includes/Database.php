@@ -4,6 +4,39 @@ class Database {
     private $connection;
     private $connectionError = null;
 
+    // Whitelist of allowed table names to prevent SQL injection
+    private static $allowedTables = [
+        'users',
+        'user_subscriptions',
+        'subscription_plans',
+        'api_usage',
+        'password_reset_tokens',
+        'rate_limits',
+        'feedback'
+    ];
+
+    /**
+     * Validate table name against whitelist
+     * @throws Exception if table name is not in whitelist
+     */
+    private function validateTableName($table) {
+        if (!in_array($table, self::$allowedTables, true)) {
+            throw new Exception("Invalid table name");
+        }
+        return $table;
+    }
+
+    /**
+     * Validate column names - must be alphanumeric with underscores only
+     * @throws Exception if column name contains invalid characters
+     */
+    private function validateColumnName($column) {
+        if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $column)) {
+            throw new Exception("Invalid column name");
+        }
+        return $column;
+    }
+
     private function __construct() {
         try {
             // Load database configuration
@@ -67,9 +100,15 @@ class Database {
     }
 
     public function insert($table, $data) {
+        // Validate table name against whitelist
+        $this->validateTableName($table);
+
         // Clean and normalize data for MySQL compatibility
         $cleanedData = [];
         foreach ($data as $key => $value) {
+            // Validate column name
+            $this->validateColumnName($key);
+
             // Convert boolean to integer (0 or 1) - always include in insert
             if (is_bool($value)) {
                 $cleanedData[$key] = $value ? 1 : 0;
@@ -102,20 +141,26 @@ class Database {
     }
 
     public function update($table, $data, $where, $whereParams = []) {
-        // Convert boolean values to integers (0 or 1) for MySQL compatibility
-        $data = array_map(function($value) {
-            if (is_bool($value)) {
-                return $value ? 1 : 0;
-            }
-            return $value;
-        }, $data);
+        // Validate table name against whitelist
+        $this->validateTableName($table);
 
-        $set = implode(' = ?, ', array_keys($data)) . ' = ?';
+        // Validate and convert data
+        $validatedData = [];
+        foreach ($data as $key => $value) {
+            $this->validateColumnName($key);
+            if (is_bool($value)) {
+                $validatedData[$key] = $value ? 1 : 0;
+            } else {
+                $validatedData[$key] = $value;
+            }
+        }
+
+        $set = implode(' = ?, ', array_keys($validatedData)) . ' = ?';
         $sql = "UPDATE {$table} SET {$set} WHERE {$where}";
 
         try {
             $stmt = $this->connection->prepare($sql);
-            $stmt->execute(array_merge(array_values($data), $whereParams));
+            $stmt->execute(array_merge(array_values($validatedData), $whereParams));
             return $stmt->rowCount();
         } catch (PDOException $e) {
             throw new Exception("Update failed: " . $e->getMessage());
@@ -123,6 +168,9 @@ class Database {
     }
 
     public function delete($table, $where, $params = []) {
+        // Validate table name against whitelist
+        $this->validateTableName($table);
+
         $sql = "DELETE FROM {$table} WHERE {$where}";
 
         try {

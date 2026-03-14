@@ -135,9 +135,9 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
 
     <main class="max-w-4xl mx-auto py-12 px-4" id="main-content">
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div class="bg-blue-600 text-white px-6 py-8">
+            <div class="bg-yellow-500 text-black px-6 py-8">
                 <h1 class="text-3xl font-bold">Contact Us</h1>
-                <p class="text-blue-100 mt-3 text-base">
+                <p class="text-amber-100 mt-3 text-base">
                     Have a question, need support, or want to provide feedback? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
                 </p>
             </div>
@@ -187,7 +187,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                                 name="name" 
                                 required 
                                 value="<?php echo htmlspecialchars($contactSubmitted ? '' : ($defaultName ?: ($_POST['name'] ?? ''))); ?>" 
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                                 placeholder="Your full name"
                             >
                         </div>
@@ -200,7 +200,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                                 name="email" 
                                 required 
                                 value="<?php echo htmlspecialchars($contactSubmitted ? '' : ($defaultEmail ?: ($_POST['email'] ?? ''))); ?>" 
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                                 placeholder="your.email@example.com"
                             >
                         </div>
@@ -214,7 +214,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                             name="subject" 
                             required 
                             value="<?php echo htmlspecialchars($contactSubmitted ? '' : ($_POST['subject'] ?? '')); ?>" 
-                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             placeholder="What is your message about?"
                         >
                     </div>
@@ -226,7 +226,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                             name="message" 
                             required 
                             rows="8" 
-                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             placeholder="Please provide as much detail as possible so we can help you effectively..."
                         ><?php echo htmlspecialchars($contactSubmitted ? '' : ($_POST['message'] ?? '')); ?></textarea>
                     </div>
@@ -234,7 +234,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                     <div class="flex flex-wrap items-center gap-4 pt-4">
                         <button 
                             type="submit" 
-                            class="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg"
+                            class="bg-yellow-500 text-black px-6 py-2.5 rounded-lg hover:bg-yellow-400 transition-colors font-semibold shadow-md hover:shadow-lg"
                         >
                             Send Message
                         </button>
@@ -248,12 +248,12 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Other Ways to Reach Us</h3>
                     <div class="space-y-3 text-gray-700">
                         <p class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                             <span>
                                 <strong>Email:</strong> 
-                                <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:text-blue-700 underline">noreply@simple-data-cleaner.com</a>
+                                <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:text-amber-700 underline">noreply@simple-data-cleaner.com</a>
                             </span>
                         </p>
                         <p class="text-sm text-gray-600">

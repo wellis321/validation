@@ -29,13 +29,19 @@ if (!function_exists('getEmailConfig')) {
         $envLoaded = true;
     }
 
+    // Validate required environment variables
+    $smtpPassword = getenv('MAIL_SMTP_PASSWORD');
+    if (empty($smtpPassword)) {
+        throw new RuntimeException('MAIL_SMTP_PASSWORD environment variable is required. Check your .env file.');
+    }
+
     return [
         'driver' => 'smtp',
         'smtp' => [
             'host' => getenv('MAIL_SMTP_HOST') ?: 'smtp.hostinger.com',
             'port' => getenv('MAIL_SMTP_PORT') ?: 587,
             'username' => getenv('MAIL_SMTP_USERNAME') ?: 'noreply@simple-data-cleaner.com',
-            'password' => getenv('MAIL_SMTP_PASSWORD') ?: 'YOUR_EMAIL_PASSWORD',
+            'password' => $smtpPassword,
             'encryption' => getenv('MAIL_SMTP_ENCRYPTION') ?: 'tls'
         ],
         'from' => [

@@ -1,0 +1,31 @@
+# 90 Day Plan
+
+## Month 1: Foundation (Weeks 1–4)
+
+- Write and publish 3 SEO-targeted blog posts:
+  - NI number validation
+  - UK postcode formatting
+  - Sort code / bank account cleaning
+- Set up Google Search Console and basic analytics to track organic search performance
+- Begin LinkedIn posting schedule: 3 posts per week focused on data quality pain points and GDPR data accuracy
+- Identify and join 3–5 relevant online communities (Reddit, accountancy forums, payroll groups)
+- Review and optimise the interactive demo experience — can a first-time visitor try it without any signup?
+- Create a simple email capture mechanism for demo users who don’t purchase
+
+## Month 2: Outreach (Weeks 5–8)
+
+- Write and publish 2 more blog posts targeting long-tail search queries
+- Approach 5 small accountancy practices or payroll bureaux — offer free lifetime licences in exchange for honest feedback and testimonial permission
+- Create a "Why Browser-Based?" explainer page on the website that clearly communicates the privacy advantage in non-technical language
+- Begin engaging authentically in 2–3 community forums: answer questions, share expertise, mention the tool where genuinely relevant
+- Continue LinkedIn posting — start sharing before/after data examples (using dummy data)
+
+## Month 3: Conversion (Weeks 9–12)
+
+**Goal:** First paying customer
+
+- Review analytics: which blog posts are getting traffic? Which demo pages have the highest engagement? Double down on what’s working
+- If any beta users have given feedback, ask for a written testimonial and add to the website
+- Consider a time-limited offer to drive urgency (e.g., “Beta pricing ends [date]”)
+- Begin documenting customer conversations to inform future feature development and marketing messaging
+- Review this business plan against actual progress and update projections accordingly

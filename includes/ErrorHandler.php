@@ -229,37 +229,42 @@ class ErrorHandler {
         $this->clearSuccess();
     }
 
-    public function displayErrors() {
+    public function displayErrors($theme = 'dark') {
         if ($this->hasErrors()) {
             foreach ($this->errors as $error) {
-                echo $this->formatMessage($error, 'error');
+                echo $this->formatMessage($error, 'error', $theme);
             }
         }
 
         if ($this->hasWarnings()) {
             foreach ($this->warnings as $warning) {
-                echo $this->formatMessage($warning, 'warning');
+                echo $this->formatMessage($warning, 'warning', $theme);
             }
         }
 
         if ($this->hasInfo()) {
             foreach ($this->info as $info) {
-                echo $this->formatMessage($info, 'info');
+                echo $this->formatMessage($info, 'info', $theme);
             }
         }
 
         if ($this->hasSuccess()) {
             foreach ($this->success as $success) {
-                echo $this->formatMessage($success, 'success');
+                echo $this->formatMessage($success, 'success', $theme);
             }
         }
     }
 
-    private function formatMessage($message, $type) {
-        $classes = [
+    private function formatMessage($message, $type, $theme = 'dark') {
+        $classes = ($theme === 'dark') ? [
+            'error' => 'bg-red-500/20 border-red-500/40 text-red-200',
+            'warning' => 'bg-yellow-500/20 border-yellow-500/40 text-yellow-200',
+            'info' => 'bg-yellow-500/20 border-yellow-500/40 text-yellow-200',
+            'success' => 'bg-green-500/20 border-green-500/40 text-green-200'
+        ] : [
             'error' => 'bg-red-50 border-red-200 text-red-700',
             'warning' => 'bg-yellow-50 border-yellow-200 text-yellow-700',
-            'info' => 'bg-blue-50 border-blue-200 text-blue-700',
+            'info' => 'bg-amber-50 border-amber-200 text-amber-800',
             'success' => 'bg-green-50 border-green-200 text-green-700'
         ];
 

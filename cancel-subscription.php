@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="border-t border-gray-200 pt-6">
                         <h3 class="text-md font-semibold text-gray-900 mb-3">Why are you cancelling?</h3>
                         <p class="text-sm text-gray-600 mb-4">
-                            We'd love to hear your feedback. Email us at <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600">noreply@simple-data-cleaner.com</a>
+                            We'd love to hear your feedback. Email us at <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500">noreply@simple-data-cleaner.com</a>
                         </p>
                     </div>
                 <?php endif; ?>

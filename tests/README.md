@@ -13,7 +13,7 @@ This directory contains testing tools and checklists to verify your production s
 
 **⚠️ IMPORTANT:** Remove or password-protect this file after testing!
 
-### 2. `automated-security-tests.js` - Client-Side Tests
+### 2. `automated-security-tests.js` - Client-Side Security Tests
 **Purpose:** Browser-based security checks  
 **Usage:**
 1. Open your production site
@@ -24,7 +24,17 @@ This directory contains testing tools and checklists to verify your production s
 
 **Results:** Check console for test results
 
-### 3. `manual-test-checklist.md` - Manual Testing Guide
+### 3. `email-validation-tests.js` - Email Validator Tests
+**Purpose:** Automated tests for the EmailValidator (validators.js) — valid formats, trimming, domain typo fixes, invalid detection, empty/edge cases, and `getValidator('email')`.  
+**Usage:**
+1. Open a page that loads **validators.js** (e.g. the app homepage or dashboard)
+2. Open browser DevTools (F12) → Console
+3. Copy and paste the entire script from `tests/email-validation-tests.js`
+4. Press Enter to run
+
+**Results:** Check console for ✅/❌ and a summary. All tests should pass if the EmailValidator implementation is correct.
+
+### 4. `manual-test-checklist.md` - Manual Testing Guide
 **Purpose:** Comprehensive manual testing checklist  
 **Usage:**
 1. Open the checklist
@@ -82,7 +92,8 @@ This directory contains testing tools and checklists to verify your production s
 # 1. Open production site in browser
 # 2. Open DevTools Console
 # 3. Run automated-security-tests.js
-# 4. Review console output
+# 4. Run email-validation-tests.js (on a page that loads validators.js)
+# 5. Review console output
 ```
 
 ### Step 3: External Security Scans

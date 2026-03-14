@@ -18,14 +18,11 @@ require_once __DIR__ . '/Auth.php';
 // Initialize error handler
 $errorHandler = ErrorHandler::getInstance();
 
-// Set security headers
-header('X-Content-Type-Options: nosniff');
-header('X-Frame-Options: DENY');
-header('X-XSS-Protection: 1; mode=block');
-header('Referrer-Policy: strict-origin-when-cross-origin');
-
 // Initialize security first (this starts the session with secure settings)
 $security = Security::getInstance();
+
+// Set all security headers including CSP with nonce
+$security->secureHeaders();
 
 // Initialize authentication
 $auth = Auth::getInstance();

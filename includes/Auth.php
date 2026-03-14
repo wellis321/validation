@@ -85,6 +85,9 @@ class Auth {
         // Update last login timestamp
         $user->update($userData['id'], ['last_login' => date('Y-m-d H:i:s')]);
 
+        // Regenerate session ID to prevent session fixation attacks
+        session_regenerate_id(true);
+
         // Set session
         $_SESSION['user_id'] = $userData['id'];
         $this->user = $userData;
@@ -133,14 +136,67 @@ class Auth {
         $emailSent = $this->sendVerificationEmail($data['email'], $verificationToken);
 
         if (!$emailSent) {
-            error_log("Failed to send verification email to: {$data['email']}");
+            error_log("Auth: Failed to send verification email for user ID: {$userId}");
             // Don't throw exception, just log the error
             // User is still created, they can request resend later
-        } else {
-            error_log("Verification email sent successfully to: {$data['email']}");
         }
 
+        // Grant 7-day free trial if eligible
+        $this->grantFreeTrial($userId);
+
         return $userId;
+    }
+
+    /**
+     * Grant a 7-day free trial subscription to a new user
+     * Only grants if user has never had any subscription before
+     */
+    private function grantFreeTrial($userId) {
+        try {
+            // Check if user has ever had a subscription (including expired/cancelled)
+            $stmt = $this->db->query(
+                "SELECT COUNT(*) as count FROM user_subscriptions WHERE user_id = ?",
+                [$userId]
+            );
+            $result = $stmt->fetch();
+            
+            // Only grant trial if user has never had any subscription
+            if ($result && $result['count'] > 0) {
+                return false;
+            }
+
+            // Get the Free Trial plan
+            $stmt = $this->db->query(
+                "SELECT id FROM subscription_plans WHERE name = 'Free Trial' AND is_active = 1 LIMIT 1"
+            );
+            $trialPlan = $stmt->fetch();
+
+            if (!$trialPlan) {
+                error_log("Auth: Free Trial plan not found in database. Run database/add_free_trial_plan.sql");
+                return false;
+            }
+
+            // Calculate trial dates (7 days from now)
+            $startDate = date('Y-m-d H:i:s');
+            $endDate = date('Y-m-d H:i:s', strtotime('+7 days'));
+
+            // Create trial subscription
+            $this->db->insert('user_subscriptions', [
+                'user_id' => $userId,
+                'plan_id' => $trialPlan['id'],
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'status' => 'active',
+                'payment_status' => 'completed' // Trial is free, so payment is "completed"
+            ]);
+
+            error_log("Auth: Granted 7-day free trial to user ID: {$userId}");
+            return true;
+        } catch (Exception $e) {
+            // Don't fail registration if trial grant fails
+            error_log("Auth: Failed to grant free trial to user ID {$userId}: " . $e->getMessage());
+            return false;
+        }
     }
 
     public function logout() {
@@ -179,53 +235,44 @@ class Auth {
             $userData = $user->findBy('email', $email);
 
             if (!$userData) {
-                // Log that user was not found (for debugging) but don't reveal to user
-                error_log("Password reset requested for non-existent email: {$email}");
+                // Log without exposing email (use hash for correlation if needed)
+                error_log("Auth: Password reset requested for non-existent account");
                 throw new Exception('User not found');
             }
 
-            // Log that we found the user and are generating token
-            error_log("Password reset requested for existing user: {$email} (ID: {$userData['id']})");
-
             // Set the user ID so generatePasswordResetToken() can use it
             if (!isset($userData['id']) || empty($userData['id'])) {
-                error_log("ERROR: User data missing ID for email: {$email}");
+                error_log("Auth: Invalid user data during password reset");
                 throw new Exception('Invalid user data');
             }
 
             $user->id = $userData['id'];
-            error_log("Set user ID to: {$user->id} for email: {$email}");
 
             // Generate password reset token
             try {
                 $token = $user->generatePasswordResetToken();
-                error_log("Password reset token generated for: {$email} (User ID: {$user->id})");
             } catch (Exception $e) {
-                error_log("ERROR: Failed to generate password reset token for: {$email} - " . $e->getMessage());
-                error_log("ERROR: Stack trace: " . $e->getTraceAsString());
-                throw new Exception('Failed to generate reset token: ' . $e->getMessage());
+                error_log("Auth: Failed to generate password reset token for user ID: {$user->id}");
+                throw new Exception('Failed to generate reset token');
             }
 
-            // Send password reset email and check if it was successful
+            // Send password reset email
             try {
                 $emailSent = $this->sendPasswordResetEmail($email, $token);
 
                 if (!$emailSent) {
-                    error_log("Failed to send password reset email to: {$email}. Token generated: {$token}");
+                    error_log("Auth: Failed to send password reset email for user ID: {$user->id}");
                     // Don't throw exception - still return true to prevent email enumeration
-                    // But log the error for debugging
-                } else {
-                    error_log("Password reset email sent successfully to: {$email}");
                 }
             } catch (Exception $e) {
-                error_log("ERROR: Failed to send password reset email to: {$email} - " . $e->getMessage());
+                error_log("Auth: Email send error for user ID: {$user->id}");
                 // Don't throw - still return true to prevent email enumeration
             }
 
             return true;
         } catch (Exception $e) {
-            error_log("ERROR in requestPasswordReset for {$email}: " . $e->getMessage());
-            error_log("ERROR: Stack trace: " . $e->getTraceAsString());
+            // Log without sensitive data - just the error type
+            error_log("Auth: Password reset error - " . get_class($e));
             throw $e; // Re-throw to be caught by caller
         }
     }

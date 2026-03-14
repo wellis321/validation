@@ -39,7 +39,7 @@ $pageTitle = 'UK Postcode Format Support';
             <!-- Spacing Variations -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                     Spacing Variations
@@ -57,7 +57,7 @@ $pageTitle = 'UK Postcode Format Support';
             <!-- Separator Types -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
                     Separator Types Handled
@@ -77,7 +77,7 @@ $pageTitle = 'UK Postcode Format Support';
             <!-- Labels & Prefixes -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                     </svg>
                     Labels & Prefixes Removed
@@ -97,7 +97,7 @@ $pageTitle = 'UK Postcode Format Support';
             <!-- Wrapping Characters -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                     Wrapping Characters
@@ -115,7 +115,7 @@ $pageTitle = 'UK Postcode Format Support';
             <!-- Lowercase Variations -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                     </svg>
                     Lowercase & Case Variations
@@ -136,43 +136,43 @@ $pageTitle = 'UK Postcode Format Support';
             <!-- Different Postcode Formats -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
                     All UK Postcode Formats
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">M1 1AA</code><br><small class="text-gray-600">A# #AA</small></div>
-                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">M60 1AA</code><br><small class="text-gray-600">A## #AA</small></div>
-                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">CR2 6XH</code><br><small class="text-gray-600">AA# #AA</small></div>
-                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">DN55 1PT</code><br><small class="text-gray-600">AA## #AA</small></div>
-                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">W1A 1AA</code><br><small class="text-gray-600">A#A #AA</small></div>
-                    <div class="bg-blue-50 p-3 rounded"><code class="text-sm">EC1A 1BB</code><br><small class="text-gray-600">AA#A #AA</small></div>
+                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">M1 1AA</code><br><small class="text-gray-600">A# #AA</small></div>
+                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">M60 1AA</code><br><small class="text-gray-600">A## #AA</small></div>
+                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">CR2 6XH</code><br><small class="text-gray-600">AA# #AA</small></div>
+                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">DN55 1PT</code><br><small class="text-gray-600">AA## #AA</small></div>
+                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">W1A 1AA</code><br><small class="text-gray-600">A#A #AA</small></div>
+                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">EC1A 1BB</code><br><small class="text-gray-600">AA#A #AA</small></div>
                 </div>
             </div>
 
             <!-- Special Cases -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                     </svg>
                     Special Cases Handled
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-blue-50 p-3 rounded">
+                    <div class="bg-amber-50 p-3 rounded">
                         <strong>No Space Variation:</strong><br>
                         <code class="text-sm">SW1A1AA</code> → <code class="text-sm">SW1A 1AA</code>
                     </div>
-                    <div class="bg-blue-50 p-3 rounded">
+                    <div class="bg-amber-50 p-3 rounded">
                         <strong>Missing Space:</strong><br>
                         <code class="text-sm">M11AA</code> → <code class="text-sm">M1 1AA</code>
                     </div>
-                    <div class="bg-blue-50 p-3 rounded">
+                    <div class="bg-amber-50 p-3 rounded">
                         <strong>With Address:</strong><br>
                         <code class="text-sm">10 Downing Street, SW1A 1AA</code> → <code class="text-sm">SW1A 1AA</code>
                     </div>
-                    <div class="bg-blue-50 p-3 rounded">
+                    <div class="bg-amber-50 p-3 rounded">
                         <strong>With City:</strong><br>
                         <code class="text-sm">London SW1A 1AA</code> → <code class="text-sm">SW1A 1AA</code>
                     </div>
@@ -182,7 +182,7 @@ $pageTitle = 'UK Postcode Format Support';
             <!-- Output Format -->
             <div class="mb-8 border-t pt-8">
                 <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                     </svg>
                     Output Format
@@ -200,22 +200,22 @@ $pageTitle = 'UK Postcode Format Support';
         </div>
 
         <!-- Get in Touch -->
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-8">
+        <div class="bg-amber-50 border border-amber-200 rounded-lg p-8">
             <h2 class="text-2xl font-bold mb-4 flex items-center">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                 </svg>
                 Have a Format We Don't Support?
             </h2>
-            <p class="text-blue-800 mb-4">
+            <p class="text-amber-800 mb-4">
                 If you have postcode data in a format we don't currently handle, please
-                <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a>
+                <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>
                 with examples and we'll add support!
             </p>
         </div>
 
         <div class="mt-8 text-center">
-            <a href="validation-rules.php" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+            <a href="validation-rules.php" class="inline-flex items-center text-yellow-500 hover:text-amber-800">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>

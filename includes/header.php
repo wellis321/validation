@@ -1,93 +1,71 @@
 <?php $currentPath = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)); ?>
 <!-- Skip to main content link for keyboard navigation -->
-<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-yellow-400 text-black px-4 py-2 rounded-lg font-medium shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
     Skip to main content
 </a>
-<div class="bg-amber-50 border-b border-amber-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-amber-900 text-sm">
-        <div class="flex items-center gap-2">
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 font-semibold uppercase tracking-wide text-xs">Beta</span>
-            <span>We're in open beta - lock in lifetime access to today's feature set for just £99.99.</span>
-        </div>
-        <div class="flex items-center gap-3">
-            <a href="/beta-offer.php" class="inline-flex items-center text-amber-900 font-semibold hover:text-amber-700 transition-colors">
-                Join the lifetime beta offer
-                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-            </a>
-            <span class="hidden md:inline text-amber-300">|</span>
-            <a href="/feedback.php" class="inline-flex items-center text-amber-900 hover:text-amber-700 transition-colors">
-                Share feedback
-                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4h9" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h.01" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 20h.01" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18" /></svg>
-            </a>
-        </div>
-    </div>
-</div>
 <!-- Navigation -->
-<nav class="bg-white shadow sticky top-0 z-50">
+<nav class="bg-neutral-900 border-b border-neutral-700 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-14">
             <div class="flex items-center">
                 <div class="flex-shrink-0 flex items-center">
                     <a href="/" class="flex items-center group">
-                        <img src="/assets/images/Data Cleaning Icon 300.png" alt="Simple Data Cleaner" class="h-10 w-auto mr-2 transition-transform group-hover:scale-105">
-                        <span class="text-xl font-bold text-slate-800 group-hover:text-slate-900 transition-colors">Simple Data Cleaner</span>
+                        <img src="/assets/images/smooth-white-transparent.png" alt="Simple Data Cleaner" class="h-12 w-auto mr-2 transition-transform group-hover:scale-105">
+                        <span class="text-lg font-bold transition-colors"><span class="text-white group-hover:text-yellow-400">Simple Data</span> <span class="text-yellow-400 group-hover:text-yellow-300">Cleaner</span></span>
                     </a>
                 </div>
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-4 ml-6 xl:space-x-6 xl:ml-10">
+                <div class="hidden md:flex items-center space-x-3 ml-5 xl:space-x-5 xl:ml-8">
                     <!-- Product Dropdown -->
                     <div class="relative group">
                         <button
                             aria-haspopup="true"
                             aria-expanded="false"
                             aria-controls="product-menu"
-                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php']) ? 'text-blue-600 border-blue-500' : ''; ?>">
+                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php']) ? 'text-white border-yellow-500' : ''; ?>">
                             Product
-                            <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div id="product-menu" role="menu" class="absolute left-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                            <a href="/how-it-works.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
+                        <div id="product-menu" role="menu" class="absolute left-0 w-48 mt-2 py-2 bg-neutral-800 shadow-xl border border-neutral-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
+                            <a href="/how-it-works.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'how-it-works.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 How It Works
                             </a>
-                            <a href="/why-choose-us.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'why-choose-us.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
+                            <a href="/why-choose-us.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'why-choose-us.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Why Choose Us
                             </a>
-                            <a href="/documentation.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
+                            <a href="/documentation.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Documentation
                             </a>
-                            <a href="/blog/ai-data-cleaning-limitations.php" class="block px-4 py-2 transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
+                            <a href="/blog/ai-data-cleaning-limitations.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo strpos($currentPath, 'blog') !== false ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Blog
                             </a>
                         </div>
                     </div>
-                    
+
                     <!-- Business Dropdown -->
                     <div class="relative group">
                         <button
                             aria-haspopup="true"
                             aria-expanded="false"
                             aria-controls="business-menu"
-                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo in_array($currentPath, ['beta-offer.php', 'bespoke.php']) ? 'text-blue-600 border-blue-500' : ''; ?>">
+                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo $currentPath === 'bespoke.php' ? 'text-white border-yellow-500' : ''; ?>">
                             Business
-                            <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div id="business-menu" role="menu" class="absolute left-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                            <a href="/beta-offer.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'beta-offer.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
-                                Lifetime Beta
-                            </a>
-                            <a href="/bespoke.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'bespoke.php' ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">
+                        <div id="business-menu" role="menu" class="absolute left-0 w-48 mt-2 py-2 bg-neutral-800 shadow-xl border border-neutral-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
+                            <a href="/bespoke.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'bespoke.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Bespoke Services
                             </a>
                         </div>
                     </div>
-                    
+
                     <!-- Pricing (standalone - important) -->
                     <a href="/pricing.php"
-                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-gray-700 hover:text-gray-900 hover:border-blue-400 <?php echo $currentPath === 'pricing.php' ? 'text-blue-600 border-blue-500' : ''; ?>">
+                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo $currentPath === 'pricing.php' ? 'text-white border-yellow-500' : ''; ?>">
                         Pricing
                     </a>
                 </div>
@@ -120,35 +98,35 @@
                             aria-expanded="false"
                             aria-controls="user-menu"
                             aria-label="User account menu"
-                            class="flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors text-sm md:text-base">
+                            class="flex items-center space-x-1 text-neutral-200 hover:text-white transition-colors text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-2 py-1 -mx-2 -my-1">
                             <span class="hidden sm:inline"><?php echo htmlspecialchars($user['email']); ?></span>
                             <span class="sm:hidden">Account</span>
-                            <svg aria-hidden="true" class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg aria-hidden="true" class="w-4 h-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        <div id="user-menu" role="menu" class="absolute right-0 w-56 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div id="user-menu" role="menu" class="absolute right-0 w-56 mt-2 py-2 bg-neutral-800 shadow-xl border border-neutral-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
                             <?php if ($subscription): ?>
-                                <div class="px-4 pb-3 border-b border-gray-100 text-xs text-gray-600">
-                                    <p class="font-semibold text-gray-800 mb-1 flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="px-4 pb-3 border-b border-neutral-600 text-xs text-neutral-400">
+                                    <p class="font-semibold text-white mb-1 flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                         </svg>
                                         Active Subscription
                                     </p>
-                                    <p class="text-gray-500 mb-2"><?php echo htmlspecialchars($subscription['name'] ?? ''); ?></p>
+                                    <p class="text-neutral-400 mb-2"><?php echo htmlspecialchars($subscription['name'] ?? ''); ?></p>
                                     <div class="flex items-center gap-2 flex-wrap">
                                         <?php if (!empty($subscriptionFeatureSetVersion)): ?>
-                                            <span class="inline-flex items-center rounded-full bg-blue-100 text-blue-700 px-2 py-0.5 font-semibold uppercase tracking-wide text-[10px]">
+                                            <span class="inline-flex items-center rounded-full bg-yellow-400/20 text-yellow-400 px-2 py-0.5 font-semibold uppercase tracking-wide text-[10px]">
                                                 v<?php echo htmlspecialchars($subscriptionFeatureSetVersion); ?>
                                             </span>
                                         <?php endif; ?>
                                         <?php if (!empty($subscriptionLifetime)): ?>
-                                            <span class="inline-flex items-center rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 font-semibold uppercase tracking-wide text-[10px]">
+                                            <span class="inline-flex items-center rounded-full bg-amber-400/20 text-amber-400 px-2 py-0.5 font-semibold uppercase tracking-wide text-[10px]">
                                                 Lifetime
                                             </span>
                                         <?php elseif (!empty($subscriptionLicenseScope) && $subscriptionLicenseScope === 'subscription'): ?>
-                                            <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-700 px-2 py-0.5 font-semibold uppercase tracking-wide text-[10px]">
+                                            <span class="inline-flex items-center rounded-full bg-neutral-600 text-neutral-300 px-2 py-0.5 font-semibold uppercase tracking-wide text-[10px]">
                                                 Subscription
                                             </span>
                                         <?php endif; ?>
@@ -156,29 +134,29 @@
                                 </div>
                             <?php endif; ?>
                             <?php if ($subscription): ?>
-                                <a href="/dashboard.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'dashboard.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Dashboard</a>
+                                <a href="/dashboard.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'dashboard.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">Dashboard</a>
                             <?php else: ?>
-                                <a href="/pricing.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Choose a Plan</a>
+                                <a href="/pricing.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'pricing.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">Choose a Plan</a>
                             <?php endif; ?>
-                            <a href="/account.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'account.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Account Settings</a>
-                            <a href="/feedback.php" class="block px-4 py-2 transition-colors <?php echo $currentPath === 'feedback.php' ? 'bg-gray-100 text-blue-600 font-semibold' : 'text-gray-800 hover:bg-gray-100'; ?>">Feedback</a>
-                            <hr class="my-2">
-                            <a href="/logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors">Logout</a>
+                            <a href="/account.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'account.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">Account Settings</a>
+                            <a href="/feedback.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'feedback.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">Feedback</a>
+                            <hr class="my-2 border-neutral-600">
+                            <a href="/logout.php" role="menuitem" class="block px-4 py-2 text-red-400 hover:bg-neutral-700 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2">Logout</a>
                         </div>
                     </div>
                 <?php else: ?>
                     <!-- Not logged in - show Feedback link -->
-                    <a href="/feedback.php" class="hidden md:inline-block font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'text-blue-600' : 'text-gray-700 hover:text-gray-900'; ?>">Feedback</a>
+                    <a href="/feedback.php" class="hidden md:inline-block font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'text-white font-semibold' : 'text-neutral-300 hover:text-white'; ?>">Feedback</a>
                     <!-- Not logged in -->
-                    <a href="/login.php" class="hidden sm:inline-block transition-colors <?php echo $currentPath === 'login.php' ? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-gray-900'; ?>">Login</a>
-                    <a href="/register.php" class="bg-blue-600 text-white px-3 py-2 md:px-4 md:py-2 rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-medium text-sm md:text-base">
-                        <span class="hidden sm:inline">Sign Up Free</span>
+                    <a href="/login.php" class="hidden sm:inline-block transition-colors <?php echo $currentPath === 'login.php' ? 'text-white font-semibold font-medium' : 'text-neutral-300 hover:text-white'; ?>">Login</a>
+                    <a href="/register.php" class="bg-yellow-400 text-black px-3 py-1.5 md:px-4 md:py-2 hover:bg-yellow-500 transition-all font-semibold text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
+                        <span class="hidden sm:inline">Start for Free</span>
                         <span class="sm:hidden">Sign Up</span>
                     </a>
                 <?php endif; ?>
-                
+
                 <!-- Mobile menu button -->
-                <button id="mobileMenuButton" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-expanded="false" aria-label="Toggle menu">
+                <button id="mobileMenuButton" class="md:hidden inline-flex items-center justify-center min-w-[44px] min-h-[44px] p-3 text-neutral-200 hover:text-white hover:bg-neutral-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-yellow-500" aria-expanded="false" aria-label="Toggle menu">
                     <svg class="block h-6 w-6" id="mobileMenuIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -189,70 +167,67 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Mobile menu (hidden by default) -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 bg-white">
+    <div id="mobileMenu" class="hidden md:hidden border-t border-neutral-700 bg-neutral-800">
         <div class="px-2 pt-2 pb-3 space-y-1">
             <!-- Product Section -->
             <div class="px-3 py-2">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Product</p>
-                <a href="/how-it-works.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                <p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-1">Product</p>
+                <a href="/how-it-works.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     How It Works
                 </a>
-                <a href="/why-choose-us.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'why-choose-us.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                <a href="/why-choose-us.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'why-choose-us.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Why Choose Us
                 </a>
-                <a href="/documentation.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                <a href="/documentation.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Documentation
                 </a>
-                <a href="/blog/ai-data-cleaning-limitations.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                <a href="/blog/ai-data-cleaning-limitations.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Blog
                 </a>
             </div>
-            
+
             <!-- Business Section -->
             <div class="px-3 py-2">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Business</p>
-                <a href="/beta-offer.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'beta-offer.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
-                    Lifetime Beta
-                </a>
-                <a href="/bespoke.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'bespoke.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                <p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-1">Business</p>
+                <a href="/bespoke.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'bespoke.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Bespoke Services
                 </a>
             </div>
-            
+
             <!-- Pricing (standalone) -->
-            <a href="/pricing.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+            <a href="/pricing.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                 Pricing
             </a>
-            
+
             <!-- Feedback (standalone) -->
-            <a href="/feedback.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+            <a href="/feedback.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'feedback.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                 Feedback
             </a>
             <?php if ($user): ?>
-                <hr class="my-2 border-gray-200">
+                <hr class="my-2 border-neutral-700">
                 <?php if ($subscription): ?>
-                    <a href="/dashboard.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'dashboard.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                    <a href="/dashboard.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'dashboard.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                         Dashboard
                     </a>
                 <?php else: ?>
-                    <a href="/pricing.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                    <a href="/pricing.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                         Choose a Plan
                     </a>
                 <?php endif; ?>
-                <a href="/account.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'account.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                <a href="/account.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'account.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Account Settings
                 </a>
-                <a href="/logout.php" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-gray-50 transition-colors">
+                <a href="/logout.php" class="block px-3 py-2 text-base font-medium text-red-400 hover:bg-neutral-700 transition-colors">
                     Logout
                 </a>
             <?php else: ?>
-                <hr class="my-2 border-gray-200">
-                <a href="/login.php" class="block px-3 py-2 rounded-md text-base font-medium transition-colors <?php echo $currentPath === 'login.php' ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'; ?>">
+                <hr class="my-2 border-neutral-700">
+                <a href="/login.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'login.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Login
                 </a>
-                <a href="/register.php" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                <a href="/register.php" class="block px-3 py-2 text-base font-medium bg-yellow-400 text-black hover:bg-yellow-500 transition-colors">
                     Sign Up Free
                 </a>
             <?php endif; ?>
@@ -260,18 +235,31 @@
     </div>
 </nav>
 
-<script>
+<script <?php echo script_nonce(); ?>>
+// Keyboard: Escape closes dropdowns and returns focus to trigger
+document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Escape') return;
+    var active = document.activeElement;
+    if (!active || !active.closest) return;
+    var group = active.closest('.group');
+    if (!group) return;
+    var btn = group.querySelector('button[aria-haspopup="true"]');
+    if (btn) {
+        btn.focus();
+    }
+});
+
 // Mobile menu toggle functionality
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuIcon = document.getElementById('mobileMenuIcon');
     const mobileMenuCloseIcon = document.getElementById('mobileMenuCloseIcon');
-    
+
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', function() {
             const isHidden = mobileMenu.classList.contains('hidden');
-            
+
             if (isHidden) {
                 // Show menu
                 mobileMenu.classList.remove('hidden');
@@ -286,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
             }
         });
-        
+
         // Close menu when clicking on a link (mobile)
         const mobileMenuLinks = mobileMenu.querySelectorAll('a');
         mobileMenuLinks.forEach(link => {
@@ -297,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
             });
         });
-        
+
         // Close menu when clicking outside (optional)
         document.addEventListener('click', function(event) {
             const isClickInside = mobileMenu.contains(event.target) || mobileMenuButton.contains(event.target);

@@ -11,10 +11,15 @@ class FileProcessor {
             'application/json'
         ];
         this.phoneFormat = phoneFormat;
+        this.emailDomainTypos = {};
     }
 
     setPhoneFormat(format) {
         this.phoneFormat = format;
+    }
+
+    setEmailDomainTypos(typos) {
+        this.emailDomainTypos = typos && typeof typos === 'object' ? typos : {};
     }
 
     async processFile(file, selectedColumns = null, progressCallback = null, nameSplitColumns = null) {
@@ -434,6 +439,11 @@ class FileProcessor {
                     const bankAccountValidator = new BankAccountValidator();
                     validation = bankAccountValidator.validate(cellValue);
                     validation.detectedType = 'bank_account';
+                } else if (columnLower.includes('email') || columnLower.includes('e-mail') || columnLower.includes('email_address')) {
+                    // Use email validator for email columns (with optional custom domain typos)
+                    const emailValidator = new EmailValidator(true, this.emailDomainTypos);
+                    validation = emailValidator.validate(cellValue);
+                    validation.detectedType = 'email';
                 } else {
                     // Fall back to auto-detect for other columns
                     validation = autoValidate(cellValue, this.phoneFormat);
@@ -975,6 +985,7 @@ class FileProcessor {
             'account', 'account_number', 'bank_account',
             'sort', 'sort_code', 'sortcode',
             'postcode', 'post_code',
+            'email', 'e-mail', 'email_address',
             'issues'
         ];
 
@@ -1006,11 +1017,11 @@ class FileProcessor {
                 row.validationResults.map(result => [
                     row.rowNumber,
                     `"${result.column}"`,
-                    // Always quote phone number, account number, and sort code values to prevent formatting issues
-                    (this.isPhoneColumn(result.column) || this.isAccountColumn(result.column) || this.isSortCodeColumn(result.column)) ? `"${result.value}"` : result.value,
+                    // Always quote phone, account, sort code, and email values to prevent formatting issues
+                    (this.isPhoneColumn(result.column) || this.isAccountColumn(result.column) || this.isSortCodeColumn(result.column) || this.isEmailColumn(result.column)) ? `"${result.value}"` : result.value,
                     result.isValid ? 'Yes' : 'No',
                     result.detectedType,
-                    result.fixed ? ((this.isPhoneColumn(result.column) || this.isAccountColumn(result.column) || this.isSortCodeColumn(result.column)) ? `"${result.fixed}"` : result.fixed) : '',
+                    result.fixed ? ((this.isPhoneColumn(result.column) || this.isAccountColumn(result.column) || this.isSortCodeColumn(result.column) || this.isEmailColumn(result.column)) ? `"${result.fixed}"` : result.fixed) : '',
                     result.error ? `"${result.error}"` : '',
                     this.getComplianceStandard(result.column, result.detectedType)
                 ].join(','))
@@ -1029,6 +1040,8 @@ class FileProcessor {
             return 'UK Phone Number Standards';
         } else if (column.includes('postcode') || column.includes('post_code')) {
             return 'UK Postcode Standards';
+        } else if (column.includes('email') || column.includes('e-mail')) {
+            return 'Email Format Standards';
         } else if (column.includes('account') && (column.includes('number') || column.includes('acc'))) {
             return 'UK Banking Standards';
         } else if (column.includes('sort') || column.includes('bank')) {
@@ -1150,6 +1163,16 @@ class FileProcessor {
             'bank_sort_code', 'sc', 'bank_code'
         ];
         return sortCodeColumnNames.some(name =>
+            columnName.toLowerCase().includes(name.toLowerCase())
+        );
+    }
+
+    isEmailColumn(columnName) {
+        const emailColumnNames = [
+            'email', 'e-mail', 'e_mail', 'email_address',
+            'emailaddress', 'mail', 'contact_email'
+        ];
+        return emailColumnNames.some(name =>
             columnName.toLowerCase().includes(name.toLowerCase())
         );
     }

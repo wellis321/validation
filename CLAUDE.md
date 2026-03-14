@@ -28,6 +28,10 @@ The application has two distinct processing layers:
 
 **Privacy-first architecture**: User data files are processed entirely in the browser. The server only knows *that* a user has access, not *what* data they're cleaning. This GDPR-compliant approach is a core selling point.
 
+### Design System
+
+Visual design follows [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) for a consistent, FieldFix-style look. Use design tokens (colours, spacing, typography) and component classes (e.g. `.ds-section`, `.ds-card`, `.ds-btn-primary`, `.ds-badge-*`) from `src/input.css` and `tailwind.config.js` so new pages match the existing layout and style.
+
 ## Directory Structure
 
 ```

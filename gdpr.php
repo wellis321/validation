@@ -65,7 +65,7 @@ require_once __DIR__ . '/includes/init.php';
 
                 <div class="space-y-4">
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-4">1</div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 font-semibold mr-4">1</div>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1">Upload Happens Only in Your Browser</h3>
                             <p class="text-gray-700">When you select a file, it's read using JavaScript in your browser. The file content never leaves your computer's memory.</p>
@@ -73,7 +73,7 @@ require_once __DIR__ . '/includes/init.php';
                     </div>
 
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-4">2</div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 font-semibold mr-4">2</div>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1">Processing is Local</h3>
                             <p class="text-gray-700">Validation algorithms run entirely in your browser's JavaScript engine. No network requests are made to send your data anywhere.</p>
@@ -81,7 +81,7 @@ require_once __DIR__ . '/includes/init.php';
                     </div>
 
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-4">3</div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 font-semibold mr-4">3</div>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1">Download Stays Local</h3>
                             <p class="text-gray-700">When you download the cleaned file, it's generated in your browser and saved directly to your device. We never see it.</p>
@@ -89,7 +89,7 @@ require_once __DIR__ . '/includes/init.php';
                     </div>
 
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-4">4</div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 font-semibold mr-4">4</div>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1">Memory is Cleared</h3>
                             <p class="text-gray-700">When you close the browser tab, all data is removed from memory. Nothing persists on our servers.</p>
@@ -102,19 +102,19 @@ require_once __DIR__ . '/includes/init.php';
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">GDPR Legal Basis</h2>
 
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                    <h3 class="font-semibold text-blue-900 mb-3">For Personal Data We Store (Account Information)</h3>
-                    <p class="text-blue-800 mb-3">
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-6">
+                    <h3 class="font-semibold text-amber-900 mb-3">For Personal Data We Store (Account Information)</h3>
+                    <p class="text-amber-800 mb-3">
                         We only collect and process the following account information:
                     </p>
-                    <ul class="list-disc list-inside text-blue-800 space-y-1 mb-4">
+                    <ul class="list-disc list-inside text-amber-800 space-y-1 mb-4">
                         <li>Email address</li>
                         <li>Hashed password (using bcrypt)</li>
                         <li>Name (if provided)</li>
                         <li>Subscription status and billing information</li>
                         <li>Usage metrics (for service limits)</li>
                     </ul>
-                    <p class="text-blue-800">
+                    <p class="text-amber-800">
                         <strong>Legal Basis:</strong> Legitimate interest - we need this information to provide you with the subscription service you requested and to manage your account.
                     </p>
                 </div>
@@ -137,22 +137,22 @@ require_once __DIR__ . '/includes/init.php';
                 <div class="space-y-4">
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Access</h3>
-                        <p class="text-gray-700">You can request a copy of all personal data we hold about you (account information only). <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">Contact us</a> to make a request.</p>
+                        <p class="text-gray-700">You can request a copy of all personal data we hold about you (account information only). <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">Contact us</a> to make a request.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Rectification</h3>
-                        <p class="text-gray-700">You can update your account information at any time through your <a href="/login.php" class="text-blue-600 hover:underline">Account Settings</a> page.</p>
+                        <p class="text-gray-700">You can update your account information at any time through your <a href="/login.php" class="text-yellow-500 hover:underline">Account Settings</a> page.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Erasure (Right to be Forgotten)</h3>
-                        <p class="text-gray-700">You can delete your account at any time. This permanently removes all personal data we hold about you. <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">Contact us</a> to request account deletion.</p>
+                        <p class="text-gray-700">You can delete your account at any time. This permanently removes all personal data we hold about you. <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">Contact us</a> to request account deletion.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Data Portability</h3>
-                        <p class="text-gray-700">You can export your account data in a machine-readable format. <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">Contact us</a> to request an export.</p>
+                        <p class="text-gray-700">You can export your account data in a machine-readable format. <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">Contact us</a> to request an export.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
@@ -186,7 +186,7 @@ require_once __DIR__ . '/includes/init.php';
                         <li>Regular security updates</li>
                         <li>Access controls and authentication</li>
                     </ul>
-                    <p>For more details, see our <a href="/security.php" class="text-blue-600 hover:underline">Security & Privacy page</a>.</p>
+                    <p>For more details, see our <a href="/security.php" class="text-yellow-500 hover:underline">Security & Privacy page</a>.</p>
                 </div>
             </section>
 
@@ -221,10 +221,10 @@ require_once __DIR__ . '/includes/init.php';
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Contact & Complaints</h2>
                 <div class="space-y-3 text-gray-700">
-                    <p>If you have any questions about our GDPR compliance or wish to exercise your rights, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a>.</p>
+                    <p>If you have any questions about our GDPR compliance or wish to exercise your rights, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>.</p>
                     <p class="mt-4">
                         You also have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at
-                        <a href="https://ico.org.uk" target="_blank" class="text-blue-600 hover:underline">ico.org.uk</a>
+                        <a href="https://ico.org.uk" target="_blank" class="text-yellow-500 hover:underline">ico.org.uk</a>
                     </p>
                 </div>
             </section>
@@ -232,7 +232,7 @@ require_once __DIR__ . '/includes/init.php';
             <!-- Bottom CTA -->
             <div class="border-t border-gray-200 pt-8">
                 <div class="text-center">
-                    <a href="/" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold">
+                    <a href="/" class="inline-block bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-400 font-semibold">
                         Start Using Simple Data Cleaner
                     </a>
                 </div>

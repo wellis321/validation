@@ -21,7 +21,7 @@ require_once __DIR__ . '/includes/init.php';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-blue-600">Simple Data Cleaner</a>
+                    <a href="/" class="text-2xl font-bold text-yellow-500">Simple Data Cleaner</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <?php if ($user): ?>
@@ -31,7 +31,7 @@ require_once __DIR__ . '/includes/init.php';
                             </span>
                             <a href="/dashboard.php" class="text-gray-700 hover:text-gray-900">Dashboard</a>
                         <?php else: ?>
-                            <a href="/pricing.php" class="text-blue-600 hover:text-blue-800 font-medium">Choose a Plan</a>
+                            <a href="/pricing.php" class="text-yellow-500 hover:text-amber-800 font-medium">Choose a Plan</a>
                         <?php endif; ?>
                         <div class="relative group">
                             <button class="flex items-center space-x-1 text-gray-700 hover:text-gray-900">
@@ -48,7 +48,7 @@ require_once __DIR__ . '/includes/init.php';
                         </div>
                     <?php else: ?>
                         <a href="/login.php" class="text-gray-700 hover:text-gray-900">Login</a>
-                        <a href="/register.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Sign Up</a>
+                        <a href="/register.php" class="bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-400">Sign Up</a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -62,14 +62,14 @@ require_once __DIR__ . '/includes/init.php';
             <p class="text-xl text-gray-600 mb-8">Our commitment to privacy means no server-side API</p>
 
             <!-- No API Banner -->
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
                 <div class="flex items-start">
-                    <svg class="w-6 h-6 text-blue-600 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-yellow-500 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-lg font-semibold text-blue-900 mb-2">No Server-Side API</h3>
-                        <p class="text-blue-800">
+                        <h3 class="text-lg font-semibold text-amber-900 mb-2">No Server-Side API</h3>
+                        <p class="text-amber-800">
                             Simple Data Cleaner does not offer a server-side API. Instead, all data processing
                             happens entirely in your browser to guarantee that your data never leaves your device.
                         </p>
@@ -155,14 +155,14 @@ require_once __DIR__ . '/includes/init.php';
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Need Help with Automation?</h2>
                 <p class="text-gray-700">
-                    If you have questions about automating data cleaning while maintaining privacy, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a>.
+                    If you have questions about automating data cleaning while maintaining privacy, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>.
                 </p>
             </section>
 
             <!-- CTA -->
             <div class="border-t border-gray-200 pt-8">
                 <div class="text-center">
-                    <a href="/" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold">
+                    <a href="/" class="inline-block bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-400 font-semibold">
                         Start Cleaning Your Data Now
                     </a>
                 </div>

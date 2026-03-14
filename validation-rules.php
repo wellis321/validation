@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/init.php';
 
 // Set page meta
 $pageTitle = 'Validation Rules & Standards';
-$pageDescription = 'Comprehensive guide to all validation rules for UK data formats including phone numbers, NI numbers, postcodes, and bank sort codes';
+$pageDescription = 'Comprehensive guide to all validation rules for UK data formats including phone numbers, NI numbers, postcodes, bank sort codes, and email addresses';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +46,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
             <!-- Navigation back to main validator -->
             <div class="mt-6">
                 <a href="/"
-                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    class="inline-flex items-center px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -61,7 +61,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
             <div class="border-b border-gray-200">
                 <nav class="-mb-px flex space-x-8 overflow-x-auto">
                     <button
-                        class="tab-btn active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600"
+                        class="tab-btn active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-yellow-500 text-amber-800"
                         data-tab="phone_numbers">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                         Phone Numbers
@@ -92,6 +92,12 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                     </button>
                     <button
                         class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        data-tab="emails">
+                        <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        Email
+                    </button>
+                    <button
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                         data-tab="names">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         Names
@@ -105,7 +111,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <!-- Rule Header -->
                 <div class="flex items-start mb-8">
-                    <svg class="w-10 h-10 mr-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-10 h-10 mr-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                     </svg>
                     <div>
@@ -116,9 +122,9 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Introduction -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
-                    <p class="text-blue-800">We take your phone number input and automatically check it against UK phone
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">How It Works</h3>
+                    <p class="text-amber-800">We take your phone number input and automatically check it against UK phone
                         number standards. Our system detects the type of number, validates the format, and applies
                         automatic fixes to ensure consistency. We can handle most common formatting issues
                         automatically, but some cases require manual correction.</p>
@@ -274,29 +280,29 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Output Format Options -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">Output Format Options</h3>
-                    <p class="text-blue-700 mb-4">Choose how you want your phone numbers formatted in the results:</p>
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">Output Format Options</h3>
+                    <p class="text-amber-800 mb-4">Choose how you want your phone numbers formatted in the results:</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div class="bg-white rounded-lg p-4">
-                            <h4 class="font-medium text-blue-800 mb-2">International (+44)</h4>
-                            <p class="text-blue-700 text-sm mb-2">Always includes +44 country code</p>
+                            <h4 class="font-medium text-amber-800 mb-2">International (+44)</h4>
+                            <p class="text-amber-800 text-sm mb-2">Always includes +44 country code</p>
                             <code
-                                class="inline-block bg-blue-100 px-2 py-1 rounded text-sm font-mono text-blue-800">+44 7700 900123</code>
+                                class="inline-block bg-amber-100 px-2 py-1 rounded text-sm font-mono text-amber-800">+44 7700 900123</code>
                         </div>
                         <div class="bg-white rounded-lg p-4">
-                            <h4 class="font-medium text-blue-800 mb-2">UK (0)</h4>
-                            <p class="text-blue-700 text-sm mb-2">UK domestic format starting with 0</p>
+                            <h4 class="font-medium text-amber-800 mb-2">UK (0)</h4>
+                            <p class="text-amber-800 text-sm mb-2">UK domestic format starting with 0</p>
                             <code
-                                class="inline-block bg-blue-100 px-2 py-1 rounded text-sm font-mono text-blue-800">07700 900123</code>
+                                class="inline-block bg-amber-100 px-2 py-1 rounded text-sm font-mono text-amber-800">07700 900123</code>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg p-4 mt-4 border border-blue-200">
-                        <p class="text-blue-800">
+                    <div class="bg-white rounded-lg p-4 mt-4 border border-amber-200">
+                        <p class="text-amber-800">
                             <strong>Supported formats:</strong> We clean 100+ phone number variations including Excel scientific notation,
                             labels, names, extensions, and multiple formats.
                         </p>
-                        <a href="phone-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                        <a href="phone-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors font-medium">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
@@ -312,7 +318,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <!-- Rule Header -->
                 <div class="flex items-start mb-8">
-                    <svg class="w-10 h-10 mr-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-10 h-10 mr-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
                     </svg>
                     <div>
@@ -322,9 +328,9 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Introduction -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
-                    <p class="text-blue-800">We validate UK National Insurance numbers by checking their format
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">How It Works</h3>
+                    <p class="text-amber-800">We validate UK National Insurance numbers by checking their format
                         structure and applying automatic corrections for common issues.</p>
                 </div>
 
@@ -376,11 +382,11 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- HMRC Compliance -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">HMRC Compliance Standards</h3>
-                    <p class="text-blue-700 mb-4">Your NI numbers are validated against official HMRC standards. Common
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">HMRC Compliance Standards</h3>
+                    <p class="text-amber-800 mb-4">Your NI numbers are validated against official HMRC standards. Common
                         rejection reasons:</p>
-                    <ul class="text-blue-700 space-y-1 ml-4">
+                    <ul class="text-amber-800 space-y-1 ml-4">
                         <li>• <strong>Banned prefixes:</strong> BG, GB, KN, NK, NT, TN, ZZ</li>
                         <li>• <strong>Invalid letters:</strong> D, F, I, Q, U, V in first position; O in second position
                         </li>
@@ -390,12 +396,12 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Supported Variations -->
-                <div class="bg-white rounded-lg p-4 border border-blue-200">
-                    <p class="text-blue-800">
+                <div class="bg-white rounded-lg p-4 border border-amber-200">
+                    <p class="text-amber-800">
                         <strong>Supported formats:</strong> We clean NI numbers from many variations including different
                         separators (spaces, hyphens, dots, slashes, commas, pipes, and more), labels and prefixes, wrapping characters, and case variations.
                     </p>
-                    <a href="ni-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                    <a href="ni-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors font-medium">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
@@ -410,7 +416,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <!-- Rule Header -->
                 <div class="flex items-start mb-8">
-                    <svg class="w-10 h-10 mr-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-10 h-10 mr-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
@@ -421,9 +427,9 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Introduction -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
-                    <p class="text-blue-800">We validate UK postcodes by checking their structure and applying automatic
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">How It Works</h3>
+                    <p class="text-amber-800">We validate UK postcodes by checking their structure and applying automatic
                         formatting corrections.</p>
                 </div>
 
@@ -465,12 +471,12 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Supported Variations -->
-                <div class="bg-white rounded-lg p-4 border border-blue-200">
-                    <p class="text-blue-800">
+                <div class="bg-white rounded-lg p-4 border border-amber-200">
+                    <p class="text-amber-800">
                         <strong>Supported formats:</strong> We clean postcodes from many variations including different
                         separators (dashes, dots, slashes, and more), labels and prefixes (Postcode:, PC:, UK:, city names), wrapping characters, and even with addresses attached.
                     </p>
-                    <a href="postcode-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                    <a href="postcode-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors font-medium">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
@@ -485,7 +491,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
             <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <!-- Rule Header -->
                 <div class="flex items-start mb-8">
-                    <svg class="w-10 h-10 mr-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-10 h-10 mr-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                     </svg>
                     <div>
@@ -495,9 +501,9 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Introduction -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
-                    <p class="text-blue-800">We validate UK bank sort codes by checking their digit structure and
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">How It Works</h3>
+                    <p class="text-amber-800">We validate UK bank sort codes by checking their digit structure and
                         applying automatic formatting.</p>
                 </div>
 
@@ -538,12 +544,12 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Supported Variations -->
-                <div class="bg-white rounded-lg p-4 border border-blue-200">
-                    <p class="text-blue-800">
+                <div class="bg-white rounded-lg p-4 border border-amber-200">
+                    <p class="text-amber-800">
                         <strong>Supported formats:</strong> We clean sort codes from many variations including different
                         separators, labels and prefixes (Sort Code:, SC:, Bank:, UK banks), wrapping characters, and even with account numbers attached.
                     </p>
-                    <a href="sort-code-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                    <a href="sort-code-variations-coverage.php" class="inline-flex items-center mt-3 px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors font-medium">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
@@ -568,9 +574,9 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Introduction -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
-                    <p class="text-blue-800">We validate UK bank account numbers by checking their digit structure and applying automatic formatting. UK bank account numbers are typically 7-12 digits long, with 8 digits being the most common format. Our system handles various formatting issues automatically, including spacing, labels, and scientific notation from Excel.</p>
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">How It Works</h3>
+                    <p class="text-amber-800">We validate UK bank account numbers by checking their digit structure and applying automatic formatting. UK bank account numbers are typically 7-12 digits long, with 8 digits being the most common format. Our system handles various formatting issues automatically, including spacing, labels, and scientific notation from Excel.</p>
                 </div>
 
                 <!-- What We Check -->
@@ -713,10 +719,114 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Supported Variations -->
-                <div class="bg-white rounded-lg p-4 border border-blue-200">
-                    <p class="text-blue-800">
+                <div class="bg-white rounded-lg p-4 border border-amber-200">
+                    <p class="text-amber-800">
                         <strong>Supported formats:</strong> We clean bank account numbers from many variations including different separators (spaces, hyphens, dots), labels and prefixes (Account:, Acc:, Bank Account:, Account Number:), wrapping characters (quotes, brackets), scientific notation from Excel, and even when combined with sort codes.
                     </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Tab -->
+        <div id="emailsTab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <!-- Rule Header -->
+                <div class="flex items-start mb-8">
+                    <svg class="w-10 h-10 mr-4 text-slate-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Email</h2>
+                        <p class="text-lg text-gray-600">Email validation and cleaning for system-to-system data moves</p>
+                    </div>
+                </div>
+
+                <!-- Introduction -->
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">How It Works</h3>
+                    <p class="text-amber-800">We trim whitespace, validate email format (local@domain), fix common domain typos (e.g. gmial → gmail, yaho → yahoo), and optionally normalise to lowercase so your data is consistent for the next system. All processing happens in your browser — your data never leaves your device.</p>
+                </div>
+
+                <!-- What We Check -->
+                <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">What We Check</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Valid format: local part @ domain</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Domain has at least one dot (e.g. example.com)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Local part: letters, digits, . _ % + -</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span class="text-gray-700">Reasonable length (local ≤ 64, domain ≤ 253)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What We Fix -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">Automatic Fixes We Apply</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Trimming</h4>
+                            <p class="text-gray-600 mb-4">Remove leading and trailing whitespace</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800"> user@example.com  → user@example.com</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Common domain typos</h4>
+                            <p class="text-gray-600 mb-4">Fix frequent misspellings in the domain part</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">user@gmial.com → user@gmail.com</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">user@yaho.com → user@yahoo.com</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">user@hotmial.com → user@hotmail.com</code>
+                                </div>
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">user@outlok.com → user@outlook.com</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Case normalisation</h4>
+                            <p class="text-gray-600 mb-4">Lowercase for consistent system-to-system output</p>
+                            <div class="space-y-2">
+                                <div class="bg-gray-50 rounded p-3">
+                                    <code class="text-sm font-mono text-gray-800">User@Example.COM → user@example.com</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-3">Your own domain corrections</h4>
+                            <p class="text-gray-600 mb-4">When you select an email column, you can add custom typo fixes for your organisation’s domain (e.g. <code class="bg-gray-100 px-1 rounded">my-orgcom</code> → <code class="bg-gray-100 px-1 rounded">myorg.com</code>). One per line in the “Custom email domain corrections” box.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Examples -->
+                <div class="bg-green-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-green-900 mb-4">Valid examples</h3>
+                    <div class="space-y-2">
+                        <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">user@example.com</code>
+                        <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">first.last@company.co.uk</code>
+                        <code class="inline-block bg-white px-2 py-1 rounded text-sm font-mono text-green-800 border border-green-200">name+tag@gmail.com</code>
+                    </div>
+                    <h3 class="text-xl font-semibold text-green-900 mb-4 mt-6">Invalid (we report as issues)</h3>
+                    <p class="text-green-800 text-sm">Missing @, domain without a dot, invalid characters in local part, or empty value.</p>
                 </div>
             </div>
         </div>
@@ -736,9 +846,9 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Introduction -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">How It Works</h3>
-                    <p class="text-blue-800">We process full names and intelligently split them into their component parts: title (Mr, Mrs, Dr, etc.), first name, and last name. Our system handles common UK name formats, including middle names, suffixes, compound surnames, and various title formats. The splitting process preserves the original data while creating new structured columns for easier data management.</p>
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">How It Works</h3>
+                    <p class="text-amber-800">We process full names and intelligently split them into their component parts: title (Mr, Mrs, Dr, etc.), first name, and last name. Our system handles common UK name formats, including middle names, suffixes, compound surnames, and various title formats. The splitting process preserves the original data while creating new structured columns for easier data management.</p>
                 </div>
 
                 <!-- What We Check -->
@@ -891,29 +1001,29 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Output Format -->
-                <div class="bg-blue-50 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-blue-900 mb-4">Output Format</h3>
-                    <p class="text-blue-800 mb-4">When name splitting is enabled, we create three new columns:</p>
+                <div class="bg-amber-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-amber-900 mb-4">Output Format</h3>
+                    <p class="text-amber-800 mb-4">When name splitting is enabled, we create three new columns:</p>
                     <div class="space-y-3">
-                        <div class="bg-white rounded-lg p-4 border border-blue-200">
-                            <h4 class="font-semibold text-blue-800 mb-2">title</h4>
-                            <p class="text-blue-700 text-sm">Extracted title (Mr, Mrs, Dr, etc.) or empty if no title detected</p>
+                        <div class="bg-white rounded-lg p-4 border border-amber-200">
+                            <h4 class="font-semibold text-amber-800 mb-2">title</h4>
+                            <p class="text-amber-800 text-sm">Extracted title (Mr, Mrs, Dr, etc.) or empty if no title detected</p>
                         </div>
-                        <div class="bg-white rounded-lg p-4 border border-blue-200">
-                            <h4 class="font-semibold text-blue-800 mb-2">first_name</h4>
-                            <p class="text-blue-700 text-sm">First name (and middle name if present)</p>
+                        <div class="bg-white rounded-lg p-4 border border-amber-200">
+                            <h4 class="font-semibold text-amber-800 mb-2">first_name</h4>
+                            <p class="text-amber-800 text-sm">First name (and middle name if present)</p>
                         </div>
-                        <div class="bg-white rounded-lg p-4 border border-blue-200">
-                            <h4 class="font-semibold text-blue-800 mb-2">last_name</h4>
-                            <p class="text-blue-700 text-sm">Last name (including suffixes and compound surnames)</p>
+                        <div class="bg-white rounded-lg p-4 border border-amber-200">
+                            <h4 class="font-semibold text-amber-800 mb-2">last_name</h4>
+                            <p class="text-amber-800 text-sm">Last name (including suffixes and compound surnames)</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Supported Variations -->
-                <div class="bg-white rounded-lg p-4 border border-blue-200">
-                    <p class="text-blue-800 mb-3">
-                        <strong>Supported formats:</strong> We handle names in many variations including titles (Mr, Mrs, Miss, Ms, Dr, Prof, Rev, etc.), middle names, suffixes (Jr, Sr, II, III, etc.), compound surnames (hyphenated and multi-word), and various spacing formats. For detailed information about name splitting options and advanced features, see our <a href="/documentation.php#name-splitting" class="text-blue-600 hover:text-blue-800 underline font-semibold">name splitting documentation</a>.
+                <div class="bg-white rounded-lg p-4 border border-amber-200">
+                    <p class="text-amber-800 mb-3">
+                        <strong>Supported formats:</strong> We handle names in many variations including titles (Mr, Mrs, Miss, Ms, Dr, Prof, Rev, etc.), middle names, suffixes (Jr, Sr, II, III, etc.), compound surnames (hyphenated and multi-word), and various spacing formats. For detailed information about name splitting options and advanced features, see our <a href="/documentation.php#name-splitting" class="text-yellow-500 hover:text-amber-800 underline font-semibold">name splitting documentation</a>.
                     </p>
                 </div>
             </div>
@@ -923,9 +1033,9 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
         <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Browser Compatibility & File Size Limits</h2>
 
-            <div class="bg-blue-50 rounded-lg p-6 mb-6">
-                <h3 class="text-xl font-semibold text-blue-900 mb-4">How File Size Limits Are Calculated</h3>
-                <p class="text-blue-800 mb-4">
+            <div class="bg-amber-50 rounded-lg p-6 mb-6">
+                <h3 class="text-xl font-semibold text-amber-900 mb-4">How File Size Limits Are Calculated</h3>
+                <p class="text-amber-800 mb-4">
                     Since all processing happens in your browser, file size limits depend on your device's memory and browser capabilities. Our system automatically detects your setup and recommends an appropriate file size limit.
                 </p>
             </div>
@@ -951,13 +1061,13 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Edge -->
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-6 border border-blue-200">
+                <div class="bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg p-6 border border-amber-200">
                     <div class="flex items-center mb-3">
                         <img src="/assets/images/browser-images/edge.png" alt="Microsoft Edge logo" class="w-10 h-10 mr-3 rounded-lg shadow-sm">
-                        <h3 class="text-xl font-semibold text-blue-900">Microsoft Edge</h3>
+                        <h3 class="text-xl font-semibold text-amber-900">Microsoft Edge</h3>
                     </div>
-                    <p class="text-blue-800 mb-3">Also provides accurate file size detection like Chrome.</p>
-                    <ul class="text-blue-700 space-y-2 ml-5 list-disc">
+                    <p class="text-amber-800 mb-3">Also provides accurate file size detection like Chrome.</p>
+                    <ul class="text-amber-800 space-y-2 ml-5 list-disc">
                         <li><strong>Accurate detection:</strong> Uses your actual RAM amount</li>
                         <li><strong>Typical limits:</strong></li>
                         <ul class="ml-6 space-y-1">
@@ -986,13 +1096,13 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 </div>
 
                 <!-- Safari -->
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
+                <div class="bg-gradient-to-br from-amber-50 to-yellow-100 rounded-lg p-6 border border-amber-200">
                     <div class="flex items-center mb-3">
                         <img src="/assets/images/browser-images/safari.png" alt="Safari browser logo" class="w-10 h-10 mr-3 rounded-lg shadow-sm">
-                        <h3 class="text-xl font-semibold text-blue-900">Safari</h3>
+                        <h3 class="text-xl font-semibold text-amber-900">Safari</h3>
                     </div>
-                    <p class="text-blue-800 mb-3">Similar to Firefox with conservative limits.</p>
-                    <ul class="text-blue-700 space-y-2 ml-5 list-disc">
+                    <p class="text-amber-800 mb-3">Similar to Firefox with conservative limits.</p>
+                    <ul class="text-amber-800 space-y-2 ml-5 list-disc">
                         <li><strong>Conservative detection:</strong> Uses a safe estimate</li>
                         <li><strong>Standard limit:</strong> 50 MB</li>
                         <li><strong>Note:</strong> Performance typically excellent on macOS devices</li>
@@ -1026,7 +1136,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                     <p class="text-gray-600 text-sm mb-3">Email validation with domain checking and format verification
                     </p>
                     <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">planned</span>
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">planned</span>
                 </div>
 
                 <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border border-gray-200">
@@ -1036,7 +1146,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">UK Driving Licenses</h3>
                     <p class="text-gray-600 text-sm mb-3">UK driving license number validation and format checking</p>
                     <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">planned</span>
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">planned</span>
                 </div>
 
                 <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border border-gray-200">
@@ -1046,7 +1156,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">UK Passport Numbers</h3>
                     <p class="text-gray-600 text-sm mb-3">UK passport number validation and format verification</p>
                     <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">planned</span>
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">planned</span>
                 </div>
             </div>
         </div>
@@ -1055,7 +1165,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 
-    <script>
+    <script <?php echo script_nonce(); ?>>
         // Tab functionality
         document.addEventListener('DOMContentLoaded', function () {
             const tabBtns = document.querySelectorAll('.tab-btn');
@@ -1065,10 +1175,10 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 // Update active tab button
                 tabBtns.forEach(b => {
                     if (b.dataset.tab === targetTab) {
-                        b.classList.add('border-blue-500', 'text-blue-600');
+                        b.classList.add('border-yellow-500', 'text-amber-800');
                         b.classList.remove('border-transparent', 'text-gray-500');
                     } else {
-                        b.classList.remove('border-blue-500', 'text-blue-600');
+                        b.classList.remove('border-yellow-500', 'text-amber-800');
                         b.classList.add('border-transparent', 'text-gray-500');
                     }
                 });

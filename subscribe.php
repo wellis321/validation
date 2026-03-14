@@ -1,13 +1,7 @@
 <?php
-require_once __DIR__ . '/includes/Database.php';
-require_once __DIR__ . '/models/Model.php';
-require_once __DIR__ . '/models/User.php';
-require_once __DIR__ . '/includes/Auth.php';
+require_once __DIR__ . '/includes/init.php';
 
-$auth = Auth::getInstance();
 $auth->requireAuth(); // Redirect to login if not authenticated
-
-$user = $auth->getCurrentUser();
 $error = null;
 $success = null;
 
@@ -71,40 +65,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
+    <?php include __DIR__ . '/includes/header.php'; ?>
     <div class="container mx-auto px-4 py-16">
         <div class="max-w-2xl mx-auto">
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-900">Subscribe to <?php echo htmlspecialchars($plan['name']); ?></h1>
-                <p class="text-gray-600 mt-2">Complete your subscription to start cleaning data</p>
+                <h1 class="text-4xl font-bold text-white">Subscribe to <?php echo htmlspecialchars($plan['name']); ?></h1>
+                <p class="text-neutral-400 mt-2">Complete your subscription to start cleaning data</p>
             </div>
 
             <?php if ($error): ?>
-                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+                <div class="bg-red-500/20 border border-red-500/40 text-red-200 px-4 py-3 rounded-lg mb-4">
                     <?php echo htmlspecialchars($error); ?>
                 </div>
             <?php endif; ?>
 
             <?php if ($success): ?>
-                <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-4">
+                <div class="bg-green-500/20 border border-green-500/40 text-green-200 px-4 py-3 rounded-lg mb-4">
                     <?php echo htmlspecialchars($success); ?>
                     <div class="mt-4">
                         <a href="/dashboard.php"
-                            class="inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
+                            class="inline-block bg-yellow-500 text-black py-2 px-4 rounded-lg hover:bg-yellow-400 font-semibold">
                             Go to Dashboard
                         </a>
                     </div>
                 </div>
             <?php else: ?>
-                <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="bg-neutral-900 rounded-xl border border-neutral-700 p-8">
                     <div class="mb-8">
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Plan Details</h2>
-                        <div class="bg-gray-50 rounded-lg p-4">
+                        <h2 class="text-xl font-semibold text-white mb-4">Plan Details</h2>
+                        <div class="bg-neutral-800/50 rounded-lg p-4 border border-neutral-700">
                             <div class="flex justify-between items-center mb-4">
-                                <span class="text-gray-700"><?php echo htmlspecialchars($plan['name']); ?></span>
-                                <span class="text-xl font-bold">£<?php echo number_format($plan['price'], 2); ?>/month</span>
+                                <span class="text-neutral-300"><?php echo htmlspecialchars($plan['name']); ?></span>
+                                <span class="text-xl font-bold text-white">£<?php echo number_format($plan['price'], 2); ?>/month</span>
                             </div>
-                            <ul class="space-y-2 text-gray-600">
+                            <ul class="space-y-2 text-neutral-400">
                                 <li>• <?php echo number_format($plan['max_requests_per_day']); ?> requests per day</li>
                                 <li>• Up to <?php echo $plan['max_file_size_mb']; ?>MB file size</li>
                                 <?php
@@ -121,30 +116,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <form method="POST" class="space-y-6">
                             <?php echo csrf_field(); ?>
                             <div>
-                                <label for="card_number" class="block text-gray-700 text-sm font-medium mb-2">Card Number</label>
+                                <label for="card_number" class="block text-neutral-300 text-sm font-medium mb-2">Card Number</label>
                                 <input type="text" id="card_number" name="card_number" required
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                                     placeholder="1234 5678 9012 3456">
                             </div>
 
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="expiry" class="block text-gray-700 text-sm font-medium mb-2">Expiry Date</label>
+                                    <label for="expiry" class="block text-neutral-300 text-sm font-medium mb-2">Expiry Date</label>
                                     <input type="text" id="expiry" name="expiry" required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                                         placeholder="MM/YY">
                                 </div>
 
                                 <div>
-                                    <label for="cvc" class="block text-gray-700 text-sm font-medium mb-2">CVC</label>
+                                    <label for="cvc" class="block text-neutral-300 text-sm font-medium mb-2">CVC</label>
                                     <input type="text" id="cvc" name="cvc" required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                                         placeholder="123">
                                 </div>
                             </div>
 
                             <button type="submit"
-                                class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                class="w-full bg-yellow-500 text-black py-3 px-6 rounded-lg font-semibold hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950">
                                 Subscribe Now
                             </button>
                         </form>
@@ -152,17 +147,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <form method="POST">
                             <?php echo csrf_field(); ?>
                             <button type="submit"
-                                class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                class="w-full bg-yellow-500 text-black py-3 px-6 rounded-lg font-semibold hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950">
                                 Activate Free Plan
                             </button>
                         </form>
                     <?php endif; ?>
 
-                    <p class="text-sm text-gray-500 mt-6">
+                    <p class="text-sm text-neutral-500 mt-6">
                         By subscribing, you agree to our
-                        <a href="/terms.php" class="text-blue-600 hover:text-blue-800">Terms of Service</a>
+                        <a href="/terms.php" class="text-yellow-400 hover:text-yellow-300">Terms of Service</a>
                         and
-                        <a href="/privacy.php" class="text-blue-600 hover:text-blue-800">Privacy Policy</a>
+                        <a href="/privacy.php" class="text-yellow-400 hover:text-yellow-300">Privacy Policy</a>
                     </p>
                 </div>
             <?php endif; ?>
@@ -170,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <?php if (!$success): ?>
-        <script>
+        <script <?php echo script_nonce(); ?>>
             // Basic form validation
             document.querySelector('form')?.addEventListener('submit', function(e) {
                 const cardNumber = document.getElementById('card_number')?.value;
@@ -227,5 +222,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         </script>
     <?php endif; ?>
+
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+    <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>
 </html>

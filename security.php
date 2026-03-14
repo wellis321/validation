@@ -27,12 +27,12 @@ require_once __DIR__ . '/includes/init.php';
 
             <!-- Key Features -->
             <div class="grid md:grid-cols-2 gap-6 mb-12">
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-6">
                     <div class="flex items-center mb-3">
-                        <svg class="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-yellow-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
-                        <h3 class="text-xl font-semibold text-blue-900">100% Client-Side Processing</h3>
+                        <h3 class="text-xl font-semibold text-amber-900">100% Client-Side Processing</h3>
                     </div>
                     <p class="text-gray-700">All data cleaning happens in your browser using JavaScript. Your sensitive data never leaves your computer.</p>
                 </div>
@@ -74,7 +74,7 @@ require_once __DIR__ . '/includes/init.php';
 
                 <div class="space-y-4 mb-6">
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-4">1</div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 font-semibold mr-4">1</div>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1">You Upload a File</h3>
                             <p class="text-gray-700">Files are read directly in your browser using the FileReader API. No data is transmitted over the network.</p>
@@ -82,15 +82,15 @@ require_once __DIR__ . '/includes/init.php';
                     </div>
 
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-4">2</div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 font-semibold mr-4">2</div>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1">Validation Runs Locally</h3>
-                            <p class="text-gray-700">Our JavaScript validators check phone numbers, NI numbers, postcodes, and sort codes entirely in your browser's memory.</p>
+                            <p class="text-gray-700">Our JavaScript validators check phone numbers, NI numbers, postcodes, sort codes, and email addresses entirely in your browser's memory.</p>
                         </div>
                     </div>
 
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mr-4">3</div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 font-semibold mr-4">3</div>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1">Results Stay Private</h3>
                             <p class="text-gray-700">Download your cleaned file directly from your browser. No server ever sees your data.</p>
@@ -187,12 +187,12 @@ require_once __DIR__ . '/includes/init.php';
             <!-- Contact -->
             <div class="border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Have Security Concerns?</h2>
-                <p class="text-gray-700 mb-4">We take security seriously. If you discover a vulnerability or have concerns about our security practices, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a>.</p>
+                <p class="text-gray-700 mb-4">We take security seriously. If you discover a vulnerability or have concerns about our security practices, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>.</p>
             </div>
 
             <!-- CTA -->
             <div class="mt-8 text-center">
-                <a href="/" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold">
+                <a href="/" class="inline-block bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-400 font-semibold">
                     Start Cleaning Your Data
                 </a>
             </div>

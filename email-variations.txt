@@ -1,0 +1,47 @@
+Valid formats
+
+user@example.com
+User@Example.COM
+first.last@company.co.uk
+user+tag@gmail.com
+name_123@domain.org
+user%2B@example.com
+a@b.co
+
+Trimming
+
+  user@example.com
+user@example.com  
+  user@example.com  
+	user@example.com
+
+Domain typo fixes (expected cleaned output)
+
+user@gmial.com
+user@gmai.com
+user@gmail.con
+user@gmail.cmo
+user@yaho.com
+user@yahoo.con
+user@hotmial.com
+user@hotmail.con
+user@outlok.com
+user@outlook.con
+user@icloud.con
+user@live.con
+user@msn.con
+user@btinternet.con
+
+Invalid (should be reported as invalid)
+
+user@example
+@example.com
+user@
+user example@domain.com
+user@.com
+user@domain
+no-at-sign
+
+Empty / edge
+
+(empty line)

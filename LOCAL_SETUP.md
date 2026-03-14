@@ -6,21 +6,78 @@ This guide will help you run Simple Data Cleaner locally on your machine.
 
 1. **PHP 7.4 or higher** (with extensions: `pdo`, `pdo_mysql`, `mbstring`)
 2. **MySQL 5.7+ or MariaDB 10.2+**
-3. **Composer** (optional, for PHP dependencies if needed)
+3. **phpMyAdmin** (optional; e.g. at http://localhost:8080/phpMyAdmin5/)
 4. **Web browser** (Chrome, Firefox, Safari, or Edge)
 
-## Quick Start
+## Quick Start: phpMyAdmin + PHP Built-in Server
 
-### Option 1: Using PHP Built-in Server (Simplest)
+Use **phpMyAdmin** for the database and the **PHP built-in server** for the app.
 
-This is the easiest way to run the app locally without configuring a web server.
+### 1. Database (phpMyAdmin)
+
+1. Open **http://localhost:8080/phpMyAdmin5/** in your browser and log in.
+2. Create a database:
+   - Click **New** (or “Databases”) and create a database named: `simple_data_cleaner`
+   - Collation: `utf8mb4_unicode_ci` (or leave default).
+3. Import the schema:
+   - Select the `simple_data_cleaner` database.
+   - Go to the **Import** tab.
+   - Choose file: `database/schema.sql` from this project.
+   - Click **Go** and wait for “Import has been successfully finished”.
+
+### 2. Environment (.env)
+
+In the **project root**, create a `.env` file with at least:
+
+```env
+# Database (use the same user/password you use in phpMyAdmin)
+DB_HOST=localhost
+DB_NAME=simple_data_cleaner
+DB_USER=root
+DB_PASS=your_mysql_password
+
+# Application
+APP_URL=http://localhost:8000
+APP_ENV=local
+APP_DEBUG=true
+```
+
+Replace `your_mysql_password` with the MySQL password for the user you use in phpMyAdmin.
+
+### 3. Run the app
+
+From the project root:
+
+```bash
+cd /Volumes/SSD/From-M4/validation
+php -S localhost:8000 router.php
+```
+
+Or use the helper script:
+
+```bash
+./start-local.sh
+```
+
+Then open: **http://localhost:8000**
+
+- **App**: http://localhost:8000  
+- **phpMyAdmin**: http://localhost:8080/phpMyAdmin5/
+
+---
+
+## Other options
+
+### Option 1: Using PHP Built-in Server only
+
+If the database is already set up (e.g. via phpMyAdmin or command line):
 
 ```bash
 # 1. Navigate to the project directory
-cd /Volumes/SSD/SvelteKit/github/validation
+cd /Volumes/SSD/From-M4/validation
 
-# 2. Start PHP's built-in web server
-php -S localhost:8000
+# 2. Start PHP's built-in web server (router.php for pretty URLs)
+php -S localhost:8000 router.php
 ```
 
 Then open your browser and go to: **http://localhost:8000**

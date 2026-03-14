@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1 class="text-2xl font-bold text-gray-900">Account Settings</h1>
             </div>
 
-            <?php display_messages(); ?>
+            <?php display_messages('light'); ?>
 
             <?php if ($profileUpdated): ?>
                 <div class="mx-6 mt-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
@@ -122,20 +122,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
                                 <input type="text" id="first_name" name="first_name"
                                     value="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
                             </div>
                             <div>
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
                                 <input type="text" id="last_name" name="last_name"
                                     value="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Email Address</label>
                             <p class="mt-1 text-gray-600"><?php echo htmlspecialchars($user['email']); ?></p>
                         </div>
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                        <button type="submit" class="bg-yellow-500 text-black px-4 py-2 rounded-md hover:bg-yellow-400">
                             Update Profile
                         </button>
                     </form>
@@ -162,19 +162,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div>
                             <label for="current_password" class="block text-sm font-medium text-gray-700">Current Password</label>
                             <input type="password" id="current_password" name="current_password" required
-                                class="mt-1 block w-full rounded-md <?php echo $passwordError ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'; ?> shadow-sm">
+                                class="mt-1 block w-full rounded-md <?php echo $passwordError ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-yellow-500 focus:ring-yellow-500'; ?> shadow-sm">
                         </div>
                         <div>
                             <label for="new_password" class="block text-sm font-medium text-gray-700">New Password</label>
                             <input type="password" id="new_password" name="new_password" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
                         </div>
                         <div>
                             <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
                             <input type="password" id="confirm_password" name="confirm_password" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
                         </div>
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                        <button type="submit" class="bg-yellow-500 text-black px-4 py-2 rounded-md hover:bg-yellow-400">
                             Change Password
                         </button>
                     </form>
@@ -210,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?php if ($lifetimeAccess): ?>
                                             <span class="text-xs font-medium uppercase tracking-wide text-amber-600 ml-1 align-middle">Lifetime</span>
                                         <?php elseif ($licenseScope === 'subscription'): ?>
-                                            <span class="text-xs font-medium uppercase tracking-wide text-blue-600 ml-1 align-middle">Subscription</span>
+                                            <span class="text-xs font-medium uppercase tracking-wide text-yellow-500 ml-1 align-middle">Subscription</span>
                                         <?php endif; ?>
                                     </p>
                                 </div>
@@ -226,48 +226,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         activated on <span class="font-semibold"><?php echo date('F j, Y', strtotime($subscription['start_date'] ?? $subscription['created_at'] ?? 'now')); ?></span>
                                     </p>
                                     <p class="text-xs text-gray-500 mb-4">
-                                        Access to phone numbers, NI numbers, postcodes, and sort codes is locked in forever for your account. Future validator families that land after the v<?php echo htmlspecialchars($featureSetVersion ?? '2025-uk-validators'); ?> set may require an upgraded plan once out of beta.
+                                        Access to phone numbers, NI numbers, postcodes, sort codes, and email addresses is locked in forever for your account. Future validator families that land after the v<?php echo htmlspecialchars($featureSetVersion ?? '2025-uk-validators'); ?> set may require an upgraded plan.
                                     </p>
                                     <a href="/feedback.php" class="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 text-sm font-medium">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9M12 4h9M3 4h.01M3 20h.01M3 12h18" /></svg>
-                                        Share beta feedback
+                                        Share feedback
                                     </a>
                                     <span class="text-gray-300 mx-2">|</span>
-                                    <a href="/pricing.php" class="text-blue-600 hover:text-blue-800 text-sm">View other plans</a>
+                                    <a href="/pricing.php" class="text-yellow-500 hover:text-amber-800 text-sm">View other plans</a>
                                 </div>
                             <?php elseif (isset($subscription['end_date']) && !empty($subscription['end_date'])): ?>
                                 <?php
                                 $endDate = new DateTime($subscription['end_date']);
                                 $now = new DateTime();
                                 $daysLeft = $now->diff($endDate)->days;
+                                $hoursLeft = $now->diff($endDate)->h;
                                 $isAnnual = $subscription['duration_months'] == 12;
                                 $isMonthly = $subscription['duration_months'] == 1;
                                 $isRecurring = $isAnnual || $isMonthly;
+                                $isTrial = !empty($subscriptionFeatures['trial']);
                                 ?>
                                 <div class="mt-4 pt-4 border-t border-gray-200">
-                                    <p class="text-sm text-gray-600 mb-1">
-                                        <?php if ($isRecurring && $subscription['duration_months'] != 0 && $subscription['duration_months'] != 0.033): ?>
-                                            Subscription renews: <span class="font-semibold"><?php echo $endDate->format('F j, Y'); ?></span>
-                                        <?php elseif ($subscription['duration_months'] == 0.033): ?>
-                                            Expires: <span class="font-semibold"><?php echo $endDate->format('F j, Y \a\t g:i A'); ?></span>
-                                        <?php else: ?>
-                                            Valid until: <span class="font-semibold"><?php echo $endDate->format('F j, Y'); ?></span>
-                                        <?php endif; ?>
-                                    </p>
-                                    <?php if ($isRecurring): ?>
-                                        <p class="text-xs text-gray-500 mb-3">
-                                            You'll have access until <?php echo $endDate->format('F j, Y'); ?> (<?php echo $daysLeft; ?> days remaining)
+                                    <?php if ($isTrial): ?>
+                                        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-3">
+                                            <p class="text-sm font-semibold text-green-800 mb-1">Free Trial Active</p>
+                                            <p class="text-sm text-green-700 mb-2">
+                                                <?php if ($daysLeft > 0): ?>
+                                                    <span class="font-bold"><?php echo $daysLeft; ?> day<?php echo $daysLeft !== 1 ? 's' : ''; ?></span> remaining in your free trial.
+                                                <?php else: ?>
+                                                    <span class="font-bold"><?php echo $hoursLeft; ?> hour<?php echo $hoursLeft !== 1 ? 's' : ''; ?></span> remaining in your free trial.
+                                                <?php endif; ?>
+                                            </p>
+                                            <p class="text-xs text-green-600 mb-3">
+                                                Subscribe before <?php echo $endDate->format('F j, Y'); ?> to continue using Simple Data Cleaner.
+                                            </p>
+                                            <a href="/pricing.php" class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                                                Subscribe Now
+                                            </a>
+                                        </div>
+                                    <?php else: ?>
+                                        <p class="text-sm text-gray-600 mb-1">
+                                            <?php if ($isRecurring && $subscription['duration_months'] != 0 && $subscription['duration_months'] != 0.033): ?>
+                                                Subscription renews: <span class="font-semibold"><?php echo $endDate->format('F j, Y'); ?></span>
+                                            <?php elseif ($subscription['duration_months'] == 0.033): ?>
+                                                Expires: <span class="font-semibold"><?php echo $endDate->format('F j, Y \a\t g:i A'); ?></span>
+                                            <?php else: ?>
+                                                Valid until: <span class="font-semibold"><?php echo $endDate->format('F j, Y'); ?></span>
+                                            <?php endif; ?>
                                         </p>
-                                        <a href="/cancel-subscription.php" class="inline-block text-red-600 hover:text-red-800 text-sm font-medium">
-                                            Cancel Subscription
-                                        </a>
+                                        <?php if ($isRecurring): ?>
+                                            <p class="text-xs text-gray-500 mb-3">
+                                                You'll have access until <?php echo $endDate->format('F j, Y'); ?> (<?php echo $daysLeft; ?> days remaining)
+                                            </p>
+                                            <a href="/cancel-subscription.php" class="inline-block text-red-600 hover:text-red-800 text-sm font-medium">
+                                                Cancel Subscription
+                                            </a>
+                                        <?php endif; ?>
+                                        <span class="text-gray-400 mx-2">|</span>
+                                        <a href="/pricing.php" class="text-yellow-500 hover:text-amber-800 text-sm">View Plans</a>
                                     <?php endif; ?>
-                                    <span class="text-gray-400 mx-2">|</span>
-                                    <a href="/pricing.php" class="text-blue-600 hover:text-blue-800 text-sm">View Plans</a>
                                 </div>
                             <?php else: ?>
                                 <div class="mt-4">
-                                    <a href="/pricing.php" class="text-blue-600 hover:text-blue-800">View Plans</a>
+                                    <a href="/pricing.php" class="text-yellow-500 hover:text-amber-800">View Plans</a>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -288,7 +309,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 
     <?php if ($passwordError || $passwordUpdated): ?>
-    <script>
+    <script <?php echo script_nonce(); ?>>
         // Scroll to password section when there's an error or success
         window.addEventListener('load', function() {
             const passwordSection = document.getElementById('password-section');

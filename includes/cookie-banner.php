@@ -1,19 +1,19 @@
 <!-- Cookie Consent Banner -->
-<div id="cookieBanner" class="hidden fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 shadow-lg">
+<div id="cookieBanner" class="hidden fixed bottom-0 left-0 right-0 bg-neutral-900 border-t border-neutral-700 text-white p-4 z-50 shadow-lg" role="dialog" aria-label="Cookie consent">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex-1">
-                <p class="text-sm">
-                    We use cookies to improve your experience and analyze site usage. 
+                <p class="text-sm text-neutral-300">
+                    We use cookies to improve your experience and analyze site usage.
                     Your data processing remains 100% private in your browser.
-                    <a href="/privacy.php" class="underline hover:text-blue-300">Learn more about our privacy policy</a>
+                    <a href="/privacy.php" class="underline text-yellow-400 hover:text-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-900 rounded">Learn more about our privacy policy</a>
                 </p>
             </div>
             <div class="flex space-x-4">
-                <button id="acceptCookies" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors text-sm font-medium">
+                <button id="acceptCookies" aria-label="Accept cookies" class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-lg transition-colors text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
                     Accept
                 </button>
-                <button id="declineCookies" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors text-sm font-medium">
+                <button id="declineCookies" aria-label="Decline cookies" class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center bg-neutral-700 hover:bg-neutral-600 text-white px-6 py-3 rounded-lg transition-colors text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
                     Decline
                 </button>
             </div>
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<script>
+<script <?php echo script_nonce(); ?>>
 // Cookie Consent Logic
 (function() {
     const COOKIE_CONSENT_KEY = 'cookie_consent';

@@ -108,14 +108,6 @@ class User extends Model {
         $expiresAt = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
         try {
-            // Check if table exists by trying to query it first
-            try {
-                $testQuery = $this->db->query("SELECT 1 FROM password_reset_tokens LIMIT 1");
-            } catch (Exception $e) {
-                error_log("ERROR: password_reset_tokens table might not exist: " . $e->getMessage());
-                // Continue anyway - the insert will fail if table doesn't exist
-            }
-
             $result = $this->db->insert('password_reset_tokens', [
                 'user_id' => $this->id,
                 'token' => $token,
@@ -123,21 +115,16 @@ class User extends Model {
             ]);
 
             if (!$result || $result === 0) {
-                error_log("ERROR: Failed to insert password reset token for user ID: {$this->id}");
-                error_log("ERROR: Insert returned: " . var_export($result, true));
+                error_log("User: Failed to create password reset token for user ID: {$this->id}");
                 throw new Exception('Failed to save password reset token to database');
             }
 
-            error_log("Password reset token inserted successfully. ID: {$result}");
             return $token;
         } catch (\PDOException $e) {
-            error_log("ERROR: PDO exception while inserting password reset token: " . $e->getMessage());
-            error_log("ERROR: SQL State: " . $e->getCode());
-            error_log("ERROR: SQL Error Info: " . print_r($e->errorInfo ?? [], true));
-            throw new Exception('Database error while generating reset token: ' . $e->getMessage());
+            error_log("User: Database error during token generation for user ID: {$this->id}");
+            throw new Exception('Database error while generating reset token');
         } catch (Exception $e) {
-            error_log("ERROR: Exception while generating password reset token: " . $e->getMessage());
-            error_log("ERROR: Exception class: " . get_class($e));
+            error_log("User: Token generation error for user ID: {$this->id}");
             throw $e;
         }
     }
@@ -153,26 +140,23 @@ class User extends Model {
         $tokenData = $stmt->fetch();
 
         if (!$tokenData) {
-            error_log("Password reset token not found or expired: {$token}");
+            // Don't log the token itself - just that verification failed
             return false;
         }
 
         // Set the user ID from the token
         $this->id = $tokenData['user_id'];
-        error_log("Password reset token verified for user ID: {$this->id}");
-
         return true;
     }
 
     public function resetPassword($token, $newPassword) {
         // Verify token and set user ID
         if (!$this->verifyPasswordResetToken($token)) {
-            error_log("Failed to verify password reset token: {$token}");
             return false;
         }
 
         if (!$this->id || empty($this->id)) {
-            error_log("ERROR: User ID not set after token verification");
+            error_log("User: Invalid state after token verification");
             return false;
         }
 
@@ -181,25 +165,21 @@ class User extends Model {
             $success = $this->update($this->id, ['password' => $newPassword]);
 
             if (!$success) {
-                error_log("ERROR: Failed to update password for user ID: {$this->id}");
+                error_log("User: Password update failed for user ID: {$this->id}");
                 return false;
             }
 
-            error_log("Password updated successfully for user ID: {$this->id}");
-
-            // Delete used token
+            // Delete used token (don't log the token value)
             try {
                 $this->db->delete('password_reset_tokens', 'token = ?', [$token]);
-                error_log("Password reset token deleted: {$token}");
             } catch (Exception $e) {
-                error_log("ERROR: Failed to delete password reset token: " . $e->getMessage());
                 // Don't fail if token deletion fails - password is already updated
+                error_log("User: Token cleanup failed for user ID: {$this->id}");
             }
 
             return true;
         } catch (Exception $e) {
-            error_log("ERROR: Exception while resetting password: " . $e->getMessage());
-            error_log("ERROR: Stack trace: " . $e->getTraceAsString());
+            error_log("User: Password reset error for user ID: {$this->id}");
             return false;
         }
     }

@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Validate required fields
         if (empty($email) || empty($password) || empty($confirmPassword)) {
-            throw new Exception('Please fill in all required fields');
+            throw new Exception('Email and password are required. Please fill in all fields.');
         }
 
         // Validate email format
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'last_name' => $lastName
         ]);
 
-        add_success('Registration successful! Please check your email to verify your account.');
+        add_success('Registration successful! Your 7-day free trial has started. Please check your email to verify your account, then you can start cleaning your data.');
     } catch (Exception $e) {
         add_error($e->getMessage());
     }
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/register.php">
     <title>Register - Simple Data Cleaner</title>
-    <meta name="description" content="Create your free Simple Data Cleaner account to clean UK phone numbers, NI numbers, postcodes and sort codes. 100% browser-based, GDPR compliant data validation.">
+    <meta name="description" content="Create your free Simple Data Cleaner account to clean UK phone numbers, NI numbers, postcodes, sort codes, and email addresses. 100% browser-based, GDPR compliant data validation.">
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Register - Simple Data Cleaner">
@@ -84,84 +84,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
     <div id="main-content" class="container mx-auto px-4 py-16">
         <div class="max-w-md mx-auto">
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-900">Create Account</h1>
-                <p class="text-gray-600 mt-2">Join Simple Data Cleaner today</p>
+                <h1 class="text-4xl font-bold text-white">Start Your 7-Day Free Trial</h1>
+                <p class="text-neutral-400 mt-2">Create your account and get full access for 7 days. No card required.</p>
+                <div class="mt-4 bg-green-500/10 border border-green-500/30 rounded-lg p-4 max-w-md mx-auto">
+                    <p class="text-sm text-green-300 font-medium mb-1">✓ Full access to all features</p>
+                    <p class="text-sm text-green-400/90">✓ Upload your own files • Unlimited cleaning • Export results</p>
+                </div>
             </div>
 
             <?php display_messages(); ?>
 
-            <div class="bg-white rounded-lg shadow-lg p-8">
+            <div class="bg-neutral-900 rounded-xl border border-neutral-700 p-8">
                 <form method="POST" action="register.php">
                     <?php echo csrf_field(); ?>
                     <div class="grid grid-cols-2 gap-4 mb-6">
                         <div>
-                            <label for="first_name" class="block text-gray-700 text-sm font-medium mb-2">First Name</label>
+                            <label for="first_name" class="block text-neutral-300 text-sm font-medium mb-2">First Name</label>
                             <input type="text" id="first_name" name="first_name"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                                 placeholder="John"
                                 value="<?php echo old('first_name'); ?>">
                         </div>
 
                         <div>
-                            <label for="last_name" class="block text-gray-700 text-sm font-medium mb-2">Last Name</label>
+                            <label for="last_name" class="block text-neutral-300 text-sm font-medium mb-2">Last Name</label>
                             <input type="text" id="last_name" name="last_name"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                                 placeholder="Doe"
                                 value="<?php echo old('last_name'); ?>">
                         </div>
                     </div>
 
                     <div class="mb-6">
-                        <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+                        <label for="email" class="block text-neutral-300 text-sm font-medium mb-2">Email Address</label>
                         <input type="email" id="email" name="email" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder="your@email.com"
                             value="<?php echo old('email'); ?>">
                     </div>
 
                     <div class="mb-6">
-                        <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                        <label for="password" class="block text-neutral-300 text-sm font-medium mb-2">Password</label>
                         <input type="password" id="password" name="password" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder="••••••••">
-                        <p class="mt-1 text-sm text-gray-500">Must be at least 8 characters long</p>
+                        <p class="mt-1 text-sm text-neutral-500">Must be at least 8 characters long</p>
                     </div>
 
                     <div class="mb-6">
-                        <label for="confirm_password" class="block text-gray-700 text-sm font-medium mb-2">Confirm Password</label>
+                        <label for="confirm_password" class="block text-neutral-300 text-sm font-medium mb-2">Confirm Password</label>
                         <input type="password" id="confirm_password" name="confirm_password" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder="••••••••">
                     </div>
 
                     <div class="mb-6">
                         <label class="flex items-center">
                             <input type="checkbox" required
-                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                            <span class="ml-2 text-sm text-gray-600">
+                                class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-neutral-600 rounded bg-neutral-800">
+                            <span class="ml-2 text-sm text-neutral-400">
                                 I agree to the
-                                <a href="/terms.php" class="text-blue-600 hover:text-blue-800">Terms of Service</a>
+                                <a href="/terms.php" class="text-yellow-400 hover:text-yellow-300">Terms of Service</a>
                                 and
-                                <a href="/privacy.php" class="text-blue-600 hover:text-blue-800">Privacy Policy</a>
+                                <a href="/privacy.php" class="text-yellow-400 hover:text-yellow-300">Privacy Policy</a>
                             </span>
                         </label>
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        class="w-full bg-yellow-500 text-black py-2 px-4 rounded-lg hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950">
                         Create Account
                     </button>
                 </form>
 
                 <div class="mt-6 text-center">
-                    <p class="text-gray-600">
+                    <p class="text-neutral-400">
                         Already have an account?
-                        <a href="login.php" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <a href="login.php" class="text-yellow-400 hover:text-yellow-300 font-medium">
                             Log in
                         </a>
                     </p>

@@ -5,6 +5,15 @@ function csrf_field() {
     return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">';
 }
 
+function csp_nonce() {
+    $security = Security::getInstance();
+    return $security->getCspNonce();
+}
+
+function script_nonce() {
+    return 'nonce="' . csp_nonce() . '"';
+}
+
 function old($field, $default = '') {
     return htmlspecialchars($_POST[$field] ?? $default);
 }
@@ -162,9 +171,9 @@ function get_client_ip() {
     return $ipaddress;
 }
 
-function display_messages() {
+function display_messages($theme = 'dark') {
     $errorHandler = ErrorHandler::getInstance();
-    $errorHandler->displayErrors();
+    $errorHandler->displayErrors($theme);
 }
 
 function add_error($message) {

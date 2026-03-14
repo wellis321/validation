@@ -394,28 +394,15 @@ class NINumberValidator {
             const invalidFirstLetters = ['D', 'F', 'I', 'Q', 'U', 'V'];
             const invalidSecondLetters = ['D', 'F', 'I', 'O', 'Q', 'U', 'V'];
 
-            // #region agent log
-            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:392',message:'NI validation check',data:{originalValue:value,cleaned:cleaned,prefix:prefix},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-            // #endregion
-
             if (invalidPrefixes.includes(prefix)) {
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:399',message:'NI rejected - invalid prefix',data:{prefix:prefix,reason:'banned by HMRC'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-                // #endregion
                 return new ValidationResult(false, value, `Invalid prefix '${prefix}' - banned by HMRC standards`);
             }
 
             if (invalidFirstLetters.includes(prefix[0])) {
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:405',message:'NI rejected - invalid first letter',data:{prefix:prefix,firstLetter:prefix[0],reason:'not used in NI prefixes'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-                // #endregion
                 return new ValidationResult(false, value, `Invalid first letter '${prefix[0]}' - not used in NI number prefixes`);
             }
 
             if (invalidSecondLetters.includes(prefix[1])) {
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'validators.js:411',message:'NI rejected - invalid second letter',data:{prefix:prefix,secondLetter:prefix[1],reason:'not used in NI prefixes'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-                // #endregion
                 return new ValidationResult(false, value, `Invalid second letter '${prefix[1]}' - not used in NI number prefixes`);
             }
 
@@ -1243,6 +1230,95 @@ class NameSplitter {
     }
 }
 
+// Email Validator – trim, format check, common domain typos, optional lowercasing, optional custom domain typos
+class EmailValidator {
+    constructor(normalizeCase = true, customDomainTypos = null) {
+        this.normalizeCase = normalizeCase;
+        this.customDomainTypos = customDomainTypos && typeof customDomainTypos === 'object' ? customDomainTypos : {};
+    }
+
+    getType() {
+        return 'email';
+    }
+
+    validate(value) {
+        if (value === null || value === undefined) {
+            return new ValidationResult(false, '', 'Email is empty', null);
+        }
+        let str = String(value).trim();
+        if (!str) {
+            return new ValidationResult(false, str, 'Email is empty', null);
+        }
+
+        // Remove spaces (common typo: "user @domain.com" or "user@ domain.com")
+        str = str.replace(/\s+/g, '');
+
+        // Optional lowercase for system-to-system consistency
+        if (this.normalizeCase) {
+            str = str.toLowerCase();
+        }
+
+        // Split into local and domain
+        const atIndex = str.lastIndexOf('@');
+        if (atIndex < 1 || atIndex === str.length - 1) {
+            return new ValidationResult(false, str, 'Invalid email: missing or invalid @', null);
+        }
+        let local = str.slice(0, atIndex);
+        let domain = str.slice(atIndex + 1);
+
+        // Built-in common domain typos (domain part only)
+        const builtInTypos = {
+            'gmial.com': 'gmail.com',
+            'gmai.com': 'gmail.com',
+            'gmail.con': 'gmail.com',
+            'gmail.cmo': 'gmail.com',
+            'yaho.com': 'yahoo.com',
+            'yahoo.con': 'yahoo.com',
+            'yahoo.cmo': 'yahoo.com',
+            'hotmial.com': 'hotmail.com',
+            'hotmail.con': 'hotmail.com',
+            'hotmail.cmo': 'hotmail.com',
+            'outlok.com': 'outlook.com',
+            'outlook.con': 'outlook.com',
+            'outlook.cmo': 'outlook.com',
+            'icloud.con': 'icloud.com',
+            'icloud.cmo': 'icloud.com',
+            'live.con': 'live.com',
+            'live.cmo': 'live.com',
+            'msn.con': 'msn.com',
+            'btinternet.con': 'btinternet.com',
+            'btopenworld.con': 'btopenworld.com'
+        };
+        const domainTypos = { ...builtInTypos, ...this.customDomainTypos };
+        const domainLower = domain.toLowerCase();
+        for (const [typo, fix] of Object.entries(domainTypos)) {
+            const typoLower = typo.toLowerCase();
+            if (domainLower === typoLower || domainLower.endsWith('.' + typoLower)) {
+                domain = domainLower.endsWith('.' + typoLower)
+                    ? domain.slice(0, domain.length - typoLower.length) + fix
+                    : fix;
+                break;
+            }
+        }
+
+        const cleaned = local + '@' + domain;
+
+        // Practical format: local@domain with at least one dot in domain, reasonable length
+        // Local: allow letters, digits, . _ % + - (common in RFC)
+        // Domain: letters, digits, dots, hyphens
+        const localOk = /^[a-zA-Z0-9._%+-]+$/.test(local) && local.length <= 64;
+        const domainOk = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(domain) && domain.length <= 253;
+        if (!localOk) {
+            return new ValidationResult(false, value, 'Invalid email: local part contains invalid characters or is too long', null);
+        }
+        if (!domainOk) {
+            return new ValidationResult(false, value, 'Invalid email: domain must have at least one dot and valid characters', null);
+        }
+
+        return new ValidationResult(true, value, null, cleaned);
+    }
+}
+
 // Factory function to get appropriate validator
 function getValidator(type) {
     switch (type.toLowerCase()) {
@@ -1264,6 +1340,10 @@ function getValidator(type) {
         case 'account_number':
         case 'account':
             return new BankAccountValidator();
+        case 'email':
+        case 'e-mail':
+        case 'e_mail':
+            return new EmailValidator();
         case 'name_split':
         case 'name':
             return new NameSplitter();
@@ -1275,6 +1355,7 @@ function getValidator(type) {
 // Auto-detect data type and validate
 function autoValidate(value, phoneFormat = 'international') {
     const validators = [
+        new EmailValidator(),           // Check email first (@ is unambiguous)
         new PhoneNumberValidator(phoneFormat),
         new NINumberValidator(),        // Check NI numbers before bank codes
         new PostcodeValidator(),
@@ -1333,6 +1414,7 @@ if (typeof module !== 'undefined' && module.exports) {
         PostcodeValidator,
         BankAccountValidator,
         SortCodeValidator,
+        EmailValidator,
         NameSplitter,
         getValidator,
         autoValidate

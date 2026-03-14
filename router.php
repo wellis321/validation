@@ -5,9 +5,37 @@
 // Get the requested file path
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestPath = parse_url($requestUri, PHP_URL_PATH);
+// Strip /public prefix so /public/hero-shader.js resolves to project root
+$requestPath = preg_replace('#^/public#', '', $requestPath) ?: '/';
+// Decode %20 etc. so paths like "Data Cleaning Icon 300.png" resolve correctly
+$filePath = __DIR__ . rawurldecode($requestPath);
 
-// Remove query string for file checking
-$filePath = __DIR__ . $requestPath;
+// MIME types for static files (needed when serving with correct Content-Type)
+$mimeTypes = [
+    'js' => 'application/javascript',
+    'css' => 'text/css',
+    'png' => 'image/png',
+    'jpg' => 'image/jpeg',
+    'jpeg' => 'image/jpeg',
+    'gif' => 'image/gif',
+    'ico' => 'image/x-icon',
+    'svg' => 'image/svg+xml',
+    'woff' => 'font/woff',
+    'woff2' => 'font/woff2',
+    'json' => 'application/json',
+    'webmanifest' => 'application/manifest+json',
+];
+
+// For static files (non-PHP) that exist, serve with correct MIME type (fixes /public/ path)
+if (file_exists($filePath) && is_file($filePath) && pathinfo($filePath, PATHINFO_EXTENSION) !== 'php') {
+    $ext = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+    if (isset($mimeTypes[$ext])) {
+        header('Content-Type: ' . $mimeTypes[$ext]);
+        header('Content-Length: ' . filesize($filePath));
+        readfile($filePath);
+        return true;
+    }
+}
 
 // If the requested file exists and is a PHP file, serve it
 if (file_exists($filePath) && is_file($filePath) && pathinfo($filePath, PATHINFO_EXTENSION) === 'php') {
@@ -25,7 +53,7 @@ if (is_dir($filePath)) {
     }
 }
 
-// For static files (CSS, JS, images, etc.), let PHP serve them
+// For other static files, let PHP serve them
 if (file_exists($filePath) && is_file($filePath)) {
     return false;
 }

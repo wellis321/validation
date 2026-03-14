@@ -173,23 +173,23 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
             </div>
 
             <!-- Key Takeaways -->
-            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-dotted border-blue-600 rounded-lg p-6 mb-12">
+            <div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-dotted border-yellow-500 rounded-lg p-6 mb-12">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Key Takeaways</h2>
                 <ul class="space-y-3 text-gray-700">
                     <li class="flex items-start gap-3">
-                        <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 text-yellow-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
                         <span><strong>AI struggles with precision:</strong> Format-specific validation requires exact rules, not probabilistic guesses</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 text-yellow-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
                         <span><strong>Rule-based systems excel:</strong> For UK data formats, deterministic validation provides 100% accuracy</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 text-yellow-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
                         <span><strong>Hybrid approaches work best:</strong> AI for pattern recognition, rules for validation</span>
@@ -222,7 +222,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                     <li>Or worse, "correct" a valid postcode to an invalid one</li>
                 </ul>
                 <p class="text-gray-700 leading-relaxed">
-                    A rule-based system, on the other hand, follows <a href="/validation-rules.php#postcodesTab" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">HMRC and Royal Mail standards</a> exactly: uppercase letters, proper spacing, and format validation. <strong>Every time. Without fail.</strong>
+                    A rule-based system, on the other hand, follows <a href="/validation-rules.php#postcodesTab" target="_blank" rel="noopener noreferrer" class="text-yellow-500 hover:text-amber-800 underline">HMRC and Royal Mail standards</a> exactly: uppercase letters, proper spacing, and format validation. <strong>Every time. Without fail.</strong>
                 </p>
             </section>
 
@@ -329,23 +329,23 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                     The most effective data cleaning systems combine AI and rule-based validation:
                 </p>
 
-                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-8 mb-6">
+                <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg p-8 mb-6">
                     <h3 class="text-2xl font-semibold text-gray-900 mb-4">Recommended Workflow</h3>
                     <ol class="space-y-4 text-gray-700">
                         <li class="flex items-start gap-4">
-                            <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+                            <span class="flex-shrink-0 w-8 h-8 bg-yellow-500 text-black rounded-full flex items-center justify-center font-bold">1</span>
                             <div>
                                 <strong class="text-gray-900">AI for Detection:</strong> Use AI to identify which fields need cleaning and suggest data types
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
-                            <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+                            <span class="flex-shrink-0 w-8 h-8 bg-yellow-500 text-black rounded-full flex items-center justify-center font-bold">2</span>
                             <div>
                                 <strong class="text-gray-900">Rules for Validation:</strong> Apply deterministic rule-based validation for format-specific data (phone numbers, postcodes, etc.)
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
-                            <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+                            <span class="flex-shrink-0 w-8 h-8 bg-yellow-500 text-black rounded-full flex items-center justify-center font-bold">3</span>
                             <div>
                                 <strong class="text-gray-900">AI for Enrichment:</strong> Use AI to add context, detect anomalies, or suggest improvements
                             </div>
@@ -369,7 +369,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="border border-gray-200 rounded-lg p-6">
                         <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
@@ -383,7 +383,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                     </div>
                     <div class="border border-gray-200 rounded-lg p-6">
                         <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
                             </svg>
                             NI Numbers
@@ -396,7 +396,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                     </div>
                     <div class="border border-gray-200 rounded-lg p-6">
                         <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
                             Phone Numbers
@@ -409,7 +409,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                     </div>
                     <div class="border border-gray-200 rounded-lg p-6">
                         <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                             </svg>
                             Sort Codes
@@ -430,14 +430,14 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
             </section>
 
             <!-- Conclusion -->
-            <section class="bg-white rounded-xl shadow-lg p-8 md:p-12 mb-12 border-2 border-dotted border-blue-600">
+            <section class="bg-white rounded-xl shadow-lg p-8 md:p-12 mb-12 border-2 border-dotted border-yellow-500">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">Conclusion: Choose the Right Tool for the Job</h2>
                 
                 <p class="text-lg text-gray-700 mb-6 leading-relaxed">
                     AI has transformed data processing, but it's not a one-size-fits-all solution. For format-specific validation—especially UK data formats with strict regulatory requirements—rule-based systems provide the precision, consistency, and reliability that AI cannot match.
                 </p>
 
-                <div class="bg-blue-50 rounded-lg p-6 mb-6 border-2 border-dotted border-blue-300">
+                <div class="bg-amber-50 rounded-lg p-6 mb-6 border-2 border-dotted border-amber-300">
                     <h3 class="text-xl font-semibold mb-3 text-gray-900">The Bottom Line</h3>
                     <ul class="space-y-2 text-gray-700">
                         <li>✓ Use <strong class="text-gray-900">rule-based validation</strong> for format-specific data (postcodes, phone numbers, NI numbers)</li>
@@ -447,7 +447,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                 </div>
 
                 <p class="text-lg text-gray-700 leading-relaxed">
-                    At <a href="/" class="text-blue-200 hover:text-white underline font-semibold">Simple Data Cleaner</a>, we use rule-based validation to ensure 100% accuracy for UK data formats, while remaining open to AI enhancements where they add genuine value. Because when it comes to data quality, precision matters.
+                    At <a href="/" class="text-amber-200 hover:text-white underline font-semibold">Simple Data Cleaner</a>, we use rule-based validation to ensure 100% accuracy for UK data formats, while remaining open to AI enhancements where they add genuine value. Because when it comes to data quality, precision matters.
                 </p>
             </section>
 
@@ -458,7 +458,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                     Experience the precision of rule-based validation. Clean UK phone numbers, postcodes, NI numbers, and more with 100% accuracy.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="/example.php" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" aria-label="Try our free example data cleaning tool">
+                    <a href="/example.php" class="bg-yellow-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2" aria-label="Try our free example data cleaning tool">
                         Try Free Example
                     </a>
                     <a href="/pricing.php" class="bg-gray-200 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" aria-label="View pricing plans">
@@ -472,23 +472,23 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
         <div class="mt-12 bg-white rounded-xl shadow-lg p-8" role="complementary" aria-label="Related articles">
             <h2 class="text-2xl font-bold text-gray-900 mb-6">More from Our Data Cleaning Series</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <article class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow focus-within:ring-2 focus-within:ring-blue-500">
-                    <div class="text-sm text-blue-600 font-semibold mb-2">Coming Soon</div>
+                <article class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow focus-within:ring-2 focus-within:ring-yellow-500">
+                    <div class="text-sm text-yellow-500 font-semibold mb-2">Coming Soon</div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                        <a href="/validation-rules.php" class="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded">
+                        <a href="/validation-rules.php" class="hover:text-yellow-500 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded">
                             The Complete Guide to UK Data Validation Standards
                         </a>
                     </h3>
-                    <p class="text-gray-600 text-sm">Learn about <a href="/validation-rules.php" class="text-blue-600 hover:underline">HMRC, Royal Mail, and Ofcom standards</a> for UK data formats.</p>
+                    <p class="text-gray-600 text-sm">Learn about <a href="/validation-rules.php" class="text-yellow-500 hover:underline">HMRC, Royal Mail, and Ofcom standards</a> for UK data formats.</p>
                 </article>
-                <article class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow focus-within:ring-2 focus-within:ring-blue-500">
-                    <div class="text-sm text-blue-600 font-semibold mb-2">Coming Soon</div>
+                <article class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow focus-within:ring-2 focus-within:ring-yellow-500">
+                    <div class="text-sm text-yellow-500 font-semibold mb-2">Coming Soon</div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                        <a href="/gdpr.php" class="hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded">
+                        <a href="/gdpr.php" class="hover:text-yellow-500 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded">
                             GDPR Compliance and Browser-Based Data Processing
                         </a>
                     </h3>
-                    <p class="text-gray-600 text-sm">Why <a href="/gdpr.php" class="text-blue-600 hover:underline">processing data in your browser ensures GDPR compliance</a>.</p>
+                    <p class="text-gray-600 text-sm">Why <a href="/gdpr.php" class="text-yellow-500 hover:underline">processing data in your browser ensures GDPR compliance</a>.</p>
                 </article>
             </div>
         </div>

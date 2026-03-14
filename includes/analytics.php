@@ -18,7 +18,7 @@ $ga4MeasurementId = getenv('GA4_MEASUREMENT_ID') ?: 'G-ST8EVR3BBJ';
 if (!empty($ga4MeasurementId)) {
 ?>
 <!-- Google Analytics 4 - Only loads if cookies accepted -->
-<script>
+<script <?php echo script_nonce(); ?>>
 (function() {
     // Check if user has accepted cookies
     function getCookie(name) {

@@ -51,7 +51,7 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
       "itemOffered": {
         "@type": "Service",
         "name": "Lifetime Beta Access",
-        "description": "Lifetime access to UK data validation validators including phone numbers, NI numbers, postcodes, and bank sort codes"
+        "description": "Lifetime access to UK data validation validators including phone numbers, NI numbers, postcodes, bank sort codes, and email addresses"
       }
     }
     </script>
@@ -77,7 +77,7 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
                     maintenance fixes and UX refinements to those validators.
                 </p>
                 <div class="mt-8 flex flex-wrap items-center gap-4">
-                    <a href="/pricing.php#lifetime-beta-plan" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">
+                    <a href="/pricing.php#lifetime-beta-plan" class="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
@@ -169,7 +169,7 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
                         </p>
                     </div>
                     <div class="mt-6 flex flex-wrap items-center gap-4">
-                        <a href="/pricing.php#lifetime-beta-plan" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-colors">
+                        <a href="/pricing.php#lifetime-beta-plan" class="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold shadow-lg transition-colors">
                             View plan details on pricing
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

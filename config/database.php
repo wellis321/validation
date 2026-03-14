@@ -28,12 +28,18 @@ function getDatabaseConfig() {
         $envLoaded = true;
     }
 
+    // Validate required environment variables
+    $dbPass = getenv('DB_PASS');
+    if (empty($dbPass)) {
+        throw new RuntimeException('DB_PASS environment variable is required. Check your .env file.');
+    }
+
     return [
         'host' => getenv('DB_HOST') ?: 'localhost',
         'port' => getenv('DB_PORT') ?: 3306,
-        'database' => getenv('DB_NAME') ?: 'u248320297_ukdata',
-        'username' => getenv('DB_USER') ?: 'u248320297_ukdata_user',
-        'password' => getenv('DB_PASS') ?: 'YOUR_DATABASE_PASSWORD',
+        'database' => getenv('DB_NAME') ?: 'simple_data_cleaner',
+        'username' => getenv('DB_USER') ?: 'root',
+        'password' => $dbPass,
         'charset' => 'utf8',
         'collation' => 'utf8_general_ci',
         'options' => [

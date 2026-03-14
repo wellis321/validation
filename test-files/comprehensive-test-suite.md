@@ -147,7 +147,39 @@ This document outlines comprehensive tests for all data types and features in Si
 - Scientific notation: `1.2345678E+7` → Should convert to `1234 5678`
 - With spaces: `1234 5678` → Should format to `1234 5678`
 
-### 6. Name Splitting
+### 6. Email Addresses
+**Validator**: `EmailValidator`
+**Behaviour**: Trim, optional lowercase, common domain typo fixes, format validation (local@domain)
+
+#### Valid Email Formats (Should Clean Successfully)
+- `user@example.com` → `user@example.com` (unchanged or lowercased)
+- `User@Example.COM` → `user@example.com` (lowercased)
+- `user+tag@gmail.com` → `user+tag@gmail.com` (plus addressing allowed)
+- `first.last@company.co.uk` → `first.last@company.co.uk`
+- `  user@example.com  ` → `user@example.com` (trimmed)
+
+#### Domain Typo Fixes (Should Clean Successfully)
+- `user@gmial.com` → `user@gmail.com`
+- `user@gmai.com` → `user@gmail.com`
+- `user@yaho.com` → `user@yahoo.com`
+- `user@hotmial.com` → `user@hotmail.com`
+- `user@outlok.com` → `user@outlook.com`
+- `user@icloud.con` → `user@icloud.com`
+
+#### Invalid Email Formats (Should Detect as Invalid)
+- `user@example` - Domain has no dot
+- `@example.com` - Missing local part
+- `user@` - Missing domain
+- `user example@domain.com` - Space in local part
+- `` (empty) - Empty value
+- `user@.com` - Invalid domain (starts with dot)
+
+#### Edge Cases
+- Trimming: `  user@example.com  ` → `user@example.com`
+- Case: `User@Example.COM` → `user@example.com` (when normaliseCase is true)
+- Local part: letters, digits, `.` `_` `%` `+` `-` allowed
+
+### 7. Name Splitting
 **Validator**: `NameSplitter`
 **Output**: `title`, `first_name`, `last_name`
 
@@ -205,7 +237,7 @@ This document outlines comprehensive tests for all data types and features in Si
 
 ### 5. Auto-Select Feature
 **Test Cases**:
-- Should auto-select columns matching: phone, mobile, tel, number, ni, insurance, postcode, sort, code, bank
+- Should auto-select columns matching: phone, mobile, tel, number, ni, insurance, postcode, sort, code, bank, email, e-mail
 - Should auto-detect name columns and suggest name splitting
 - Should NOT select protected columns (ID, etc.)
 

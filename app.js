@@ -16,7 +16,24 @@ class UKDataCleanerApp {
         this.activeTab = 'summary';
         this.nameSplitter = new NameSplitter();
 
+        this.initializeReportOpenerListener();
         this.initializeEventListeners();
+    }
+
+    // One-time listener: report pages can request HTML from opener when localStorage is empty
+    initializeReportOpenerListener() {
+        if (window.__reportOpenerListenerAdded) return;
+        window.__reportOpenerListenerAdded = true;
+        window.addEventListener('message', function (e) {
+            if (e.origin !== window.location.origin) return;
+            if (!e.data || e.data.type !== 'REPORT_PLEASE' || !e.source) return;
+            const key = e.data.reportKey;
+            let html = null;
+            if (key === 'previewReport') html = window.__lastPreviewReport;
+            else if (key === 'cleanedDataReport') html = window.__lastCleanedReport;
+            else if (key === 'detailedIssuesReport') html = window.__lastIssuesReport;
+            if (html) e.source.postMessage({ type: 'REPORT_DATA', html: html }, e.origin);
+        });
     }
 
     initializeEventListeners() {
@@ -68,6 +85,18 @@ class UKDataCleanerApp {
                 e.preventDefault();
                 e.stopPropagation();
                 this.viewPreviewReport();
+            });
+        }
+
+        // Missing values "View details" – show table and scroll into view
+        const showMissingValuesBtn = document.getElementById('showMissingValuesBtn');
+        if (showMissingValuesBtn) {
+            showMissingValuesBtn.addEventListener('click', () => {
+                const tableEl = document.getElementById('missingValuesTable');
+                if (tableEl) {
+                    tableEl.classList.remove('hidden');
+                    tableEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
         }
 
@@ -237,7 +266,7 @@ class UKDataCleanerApp {
             return {
                 safe: true,
                 warning: true,
-                message: `<svg class="inline w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> This file (${fileSizeMB.toFixed(1)} MB) is close to the recommended limit. Processing may take a moment.`
+                message: `<svg class="inline w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> This file (${fileSizeMB.toFixed(1)} MB) is close to the recommended limit. Processing may take a moment.`
             };
         }
 
@@ -407,7 +436,7 @@ class UKDataCleanerApp {
 
         // Filter fields that we can actually clean
         const cleanableFields = this.fileHeaders.filter(field =>
-            /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank/i.test(field)
+            /phone|mobile|tel|number|ni|insurance|postcode|sort|code|bank|email|e-mail/i.test(field)
         );
 
         // Combine cleanable fields and name columns
@@ -421,7 +450,7 @@ class UKDataCleanerApp {
                     </svg>
                     <h4 class="text-lg font-semibold text-yellow-800 mb-2">No Cleanable Fields Found</h4>
                     <p class="text-yellow-700">
-                        This file doesn't contain columns we can clean (phone numbers, NI numbers, postcodes, sort codes, or names).
+                        This file doesn't contain columns we can clean (phone numbers, NI numbers, postcodes, sort codes, emails, or names).
                     </p>
                 </div>
             `;
@@ -432,14 +461,14 @@ class UKDataCleanerApp {
         let protectedInfo = '';
         if (protectedColumns.length > 0) {
             protectedInfo = `
-                <div class="mb-4 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
+                <div class="mb-4 p-4 bg-yellow-500/10 border-l-4 border-yellow-500/50 rounded-r-lg">
                     <div class="flex items-start">
-                        <svg class="w-5 h-5 text-blue-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-yellow-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
                         <div>
-                            <p class="text-sm font-semibold text-blue-800 mb-1">Protected Columns Detected</p>
-                            <p class="text-xs text-blue-700">
+                            <p class="text-sm font-semibold text-white mb-1">Protected Columns Detected</p>
+                            <p class="text-xs text-neutral-300">
                                 The following columns appear to be identifiers and will never be modified:
                                 <strong>${protectedColumns.join(', ')}</strong>
                             </p>
@@ -458,115 +487,125 @@ class UKDataCleanerApp {
                 return {
                     type: 'Full Name (can split)',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>`,
-                    bgColor: 'bg-pink-100',
-                    textColor: 'text-pink-600',
-                    borderColor: 'border-pink-200',
+                    bgColor: 'bg-pink-500/20',
+                    textColor: 'text-pink-400',
+                    borderColor: 'border-pink-500/30',
                     canSplit: true
                 };
             } else if (field.includes('phone') || field.includes('mobile') || field.includes('tel')) {
                 return {
                     type: 'Phone Number',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>`,
-                    bgColor: 'bg-blue-100',
-                    textColor: 'text-blue-600',
-                    borderColor: 'border-blue-200',
+                    bgColor: 'bg-yellow-500/20',
+                    textColor: 'text-yellow-400',
+                    borderColor: 'border-yellow-500/30',
                     canSplit: false
                 };
             } else if (field.includes('ni') || field.includes('insurance')) {
                 return {
                     type: 'NI Number',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 12a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M15 11h3m-3 4h2"></path></svg>`,
-                    bgColor: 'bg-purple-100',
-                    textColor: 'text-purple-600',
-                    borderColor: 'border-purple-200',
+                    bgColor: 'bg-amber-500/20',
+                    textColor: 'text-amber-400',
+                    borderColor: 'border-amber-500/30',
                     canSplit: false
                 };
             } else if (field.includes('postcode') || field.includes('post_code') || field.includes('zip')) {
                 return {
                     type: 'Postcode',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>`,
-                    bgColor: 'bg-green-100',
-                    textColor: 'text-green-600',
-                    borderColor: 'border-green-200',
+                    bgColor: 'bg-green-500/20',
+                    textColor: 'text-green-400',
+                    borderColor: 'border-green-500/30',
                     canSplit: false
                 };
             } else if ((field.includes('bank') && field.includes('account')) || field === 'bank account') {
-                // Bank Account - must have both "bank" and "account", or exact match
                 return {
                     type: 'Bank Account',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>`,
-                    bgColor: 'bg-orange-100',
-                    textColor: 'text-orange-600',
-                    borderColor: 'border-orange-200',
+                    bgColor: 'bg-amber-500/20',
+                    textColor: 'text-amber-400',
+                    borderColor: 'border-amber-500/30',
                     canSplit: false
                 };
             } else if ((field.includes('sort') && field.includes('code')) || field === 'sort code') {
-                // Sort Code - must have both "sort" and "code", or exact match
                 return {
                     type: 'Sort Code',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>`,
-                    bgColor: 'bg-yellow-100',
-                    textColor: 'text-yellow-600',
-                    borderColor: 'border-yellow-200',
+                    bgColor: 'bg-yellow-500/20',
+                    textColor: 'text-yellow-400',
+                    borderColor: 'border-yellow-500/30',
+                    canSplit: false
+                };
+            } else if (field.includes('email') || field.includes('e-mail')) {
+                return {
+                    type: 'Email',
+                    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
+                    bgColor: 'bg-neutral-700',
+                    textColor: 'text-yellow-400',
+                    borderColor: 'border-neutral-600',
                     canSplit: false
                 };
             } else if (field.includes('account') && !field.includes('sort') && !field.includes('bank')) {
-                // Account number (without "bank" or "sort" in the name) - treat as Bank Account
                 return {
                     type: 'Bank Account',
                     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>`,
-                    bgColor: 'bg-orange-100',
-                    textColor: 'text-orange-600',
-                    borderColor: 'border-orange-200',
+                    bgColor: 'bg-amber-500/20',
+                    textColor: 'text-amber-400',
+                    borderColor: 'border-amber-500/30',
                     canSplit: false
                 };
             }
             return {
                 type: 'Other',
                 icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
-                bgColor: 'bg-gray-100',
-                textColor: 'text-gray-600',
-                borderColor: 'border-gray-200',
+                bgColor: 'bg-neutral-700',
+                textColor: 'text-neutral-400',
+                borderColor: 'border-neutral-600',
                 canSplit: false
             };
         };
 
-        fieldCheckboxes.innerHTML = protectedInfo + allProcessableFields.map(field => {
+        fieldCheckboxes.innerHTML = protectedInfo + allProcessableFields.map((field, i) => {
             const fieldInfo = getFieldInfo(field);
             const isNameColumn = detectedNameColumns.includes(field);
             const isSplitChecked = this.selectedNameSplits.includes(field);
+            const cbId = `field-cb-${i}`;
+            const splitCbId = `name-split-cb-${i}`;
             
             return `
                 <div class="field-card block group">
-                    <div class="bg-white rounded-lg p-4 border-2 ${fieldInfo.borderColor} hover:border-indigo-300 hover:shadow-md transition-all duration-200 group-hover:bg-indigo-50">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3 flex-1">
-                                <div class="w-10 h-10 ${fieldInfo.bgColor} rounded-full flex items-center justify-center ${fieldInfo.textColor}">
+                    <div class="bg-neutral-800 rounded-xl p-4 border ${fieldInfo.borderColor} hover:border-yellow-500/40 transition-all duration-200">
+                        <label for="${isNameColumn ? splitCbId : cbId}" class="flex items-center justify-between cursor-pointer min-h-[44px]">
+                            <div class="flex items-center space-x-3 flex-1 min-w-0">
+                                <div class="w-10 h-10 ${fieldInfo.bgColor} rounded-full flex items-center justify-center ${fieldInfo.textColor} flex-shrink-0">
                                     ${fieldInfo.icon}
                                 </div>
-                                <div class="flex-1">
-                                    <h4 class="font-semibold text-gray-800 group-hover:text-indigo-800">${field}</h4>
-                                    <p class="text-sm text-gray-600 group-hover:text-indigo-600">${fieldInfo.type}</p>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-white">${field}</h4>
+                                    <p class="text-sm text-neutral-400">${fieldInfo.type}</p>
                                     ${isNameColumn ? `
-                                        <span class="text-xs text-pink-600 mt-1 block">Split into first_name and last_name</span>
+                                        <span class="text-xs text-pink-400 mt-1 block">Split into first_name and last_name</span>
                                     ` : ''}
                                 </div>
                             </div>
                             ${isNameColumn ? `
                                 <input
+                                    id="${splitCbId}"
                                     type="checkbox"
                                     value="${field}"
-                                    class="name-split-checkbox w-5 h-5 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 focus:ring-2"
+                                    class="name-split-checkbox w-5 h-5 shrink-0 text-pink-500 bg-neutral-700 border-neutral-500 rounded focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-neutral-900 accent-pink-500"
                                     ${isSplitChecked ? 'checked' : ''}
                                 />
                             ` : `
                                 <input
+                                    id="${cbId}"
                                     type="checkbox"
                                     value="${field}"
-                                    class="field-checkbox w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2"
+                                    class="field-checkbox w-5 h-5 shrink-0 text-yellow-500 bg-neutral-700 border-neutral-500 rounded focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-900 accent-yellow-500"
                                 />
                             `}
-                        </div>
+                        </label>
                     </div>
                 </div>
             `;
@@ -686,7 +725,7 @@ class UKDataCleanerApp {
             if (this.selectedNameSplits.includes(f)) return false;
             const lower = f.toLowerCase();
             if (/phone|mobile|tel/i.test(lower)) return false;
-            return /ni|insurance|postcode|sort|code|bank|account/i.test(lower);
+            return /ni|insurance|postcode|sort|code|bank|account|email|e-mail/i.test(lower);
         });
         
         if (otherFields.length > 0) {
@@ -697,10 +736,17 @@ class UKDataCleanerApp {
                 if (/postcode|post_code|zip/i.test(lower) && !types.includes('postcodes')) types.push('postcodes');
                 if (/sort.*code/i.test(lower) && !types.includes('sort codes')) types.push('sort codes');
                 if (/bank.*account|account.*number/i.test(lower) && !types.includes('bank account numbers')) types.push('bank account numbers');
+                if (/email|e-mail/i.test(lower) && !types.includes('emails')) types.push('emails');
             });
             if (types.length > 0) {
                 transformations.push(`Validate and format <strong>${types.join(', ')}</strong>`);
             }
+        }
+
+        const hasEmailColumn = this.selectedFields.some(f => /email|e-mail/i.test(f));
+        const customEmailTypos = this.parseCustomEmailDomainTypos(document.getElementById('emailDomainTyposInput')?.value || '');
+        if (hasEmailColumn && Object.keys(customEmailTypos).length > 0) {
+            transformations.push(`Apply <strong>${Object.keys(customEmailTypos).length}</strong> custom domain correction(s) to emails`);
         }
         
         return transformations;
@@ -723,12 +769,12 @@ class UKDataCleanerApp {
             
             if (transformations.length > 0) {
                 transformationSummary.innerHTML = `
-                    <ul class="list-disc list-inside space-y-2 text-sm text-blue-800">
+                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-900">
                         ${transformations.map(t => `<li>${t}</li>`).join('')}
                     </ul>
                 `;
             } else {
-                transformationSummary.innerHTML = '<p class="text-sm text-blue-700">No transformations selected.</p>';
+                transformationSummary.innerHTML = '<p class="text-sm text-gray-800">No transformations selected.</p>';
             }
             
             // Show before/after preview
@@ -797,20 +843,20 @@ class UKDataCleanerApp {
         
         if (this.previewViewMode === 'before') {
             if (beforeBtn) {
-                beforeBtn.classList.add('border-blue-600', 'bg-blue-600', 'text-white');
+                beforeBtn.classList.add('border-yellow-500', 'bg-yellow-500', 'text-black');
                 beforeBtn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
             }
             if (afterBtn) {
-                afterBtn.classList.remove('border-blue-600', 'bg-blue-600', 'text-white');
+                afterBtn.classList.remove('border-yellow-500', 'bg-yellow-500', 'text-black');
                 afterBtn.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
             }
         } else {
             if (afterBtn) {
-                afterBtn.classList.add('border-blue-600', 'bg-blue-600', 'text-white');
+                afterBtn.classList.add('border-yellow-500', 'bg-yellow-500', 'text-black');
                 afterBtn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
             }
             if (beforeBtn) {
-                beforeBtn.classList.remove('border-blue-600', 'bg-blue-600', 'text-white');
+                beforeBtn.classList.remove('border-yellow-500', 'bg-yellow-500', 'text-black');
                 beforeBtn.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
             }
         }
@@ -822,12 +868,12 @@ class UKDataCleanerApp {
         const headers = this.previewViewMode === 'before' ? this.previewHeaders : this.previewProcessedHeaders;
         const sampleRows = this.previewSampleRows;
         
-        // Build header row
+        // Build header row (explicit text-gray-900 so readable inside dark parent)
         headerEl.innerHTML = `
             <tr>
-                <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-700">#</th>
+                <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-900">#</th>
                 ${headers.map(header => `
-                    <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-700">
+                    <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-900">
                         ${this.escapeHtml(header)}
                     </th>
                 `).join('')}
@@ -841,19 +887,21 @@ class UKDataCleanerApp {
         const postcodeValidator = new PostcodeValidator();
         const niValidator = new NINumberValidator();
         const sortCodeValidator = new SortCodeValidator();
+        const customEmailTypos = this.parseCustomEmailDomainTypos(document.getElementById('emailDomainTyposInput')?.value || '');
+        const emailValidator = new EmailValidator(true, customEmailTypos);
         
         // Render based on view mode
         if (this.previewViewMode === 'before') {
-            // Show original data
+            // Show original data (explicit text-gray-900 so readable inside dark parent)
             bodyEl.innerHTML = sampleRows.map((row, index) => {
                 return `
                     <tr class="hover:bg-gray-50">
-                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-500 font-mono bg-gray-50">${index + 1}</td>
+                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-700 font-mono bg-gray-50">${index + 1}</td>
                         ${headers.map((header, colIndex) => {
                             const value = colIndex < row.length ? (row[colIndex] || '') : '';
                             const isSelected = this.selectedFields.includes(header) || this.selectedNameSplits.includes(header);
                             return `
-                                <td class="px-2 py-1 border-b border-gray-200 text-xs ${isSelected ? 'bg-blue-50 font-medium' : 'bg-white'}">
+                                <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-900 ${isSelected ? 'bg-amber-50 font-medium' : 'bg-white'}">
                                     ${this.escapeHtml(String(value))}
                                 </td>
                             `;
@@ -869,6 +917,8 @@ class UKDataCleanerApp {
             const postcodeValidator = new PostcodeValidator();
             const niValidator = new NINumberValidator();
             const sortCodeValidator = new SortCodeValidator();
+            const customEmailTyposInner = this.parseCustomEmailDomainTypos(document.getElementById('emailDomainTyposInput')?.value || '');
+            const emailValidator = new EmailValidator(true, customEmailTyposInner);
             
             bodyEl.innerHTML = sampleRows.map((row, index) => {
                 // Build row cells for processed headers
@@ -884,17 +934,17 @@ class UKDataCleanerApp {
                                     const nameValue = row[nameIndex] || '';
                                     const splitResult = nameSplitter.split(nameValue);
                                     const value = header === 'first_name' ? (splitResult.first_name || '') : (splitResult.last_name || '');
-                                    return `
-                                        <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50">
-                                            <div class="font-medium text-green-700">${this.escapeHtml(String(value))}</div>
-                                        </td>
-                                    `;
+                        return `
+                            <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50 text-green-800">
+                                <div class="font-medium">${this.escapeHtml(String(value))}</div>
+                            </td>
+                        `;
                                 }
                             }
                         }
                         return `
-                            <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50">
-                                <div class="font-medium text-green-700"></div>
+                            <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50 text-green-800">
+                                <div class="font-medium"></div>
                             </td>
                         `;
                     } else {
@@ -924,6 +974,9 @@ class UKDataCleanerApp {
                                 } else if (/sort.*code/i.test(headerLower)) {
                                     const result = sortCodeValidator.validate(value);
                                     value = result.isValid && result.fixed ? result.fixed : value;
+                                } else if (/email|e-mail/i.test(headerLower)) {
+                                    const result = emailValidator.validate(value);
+                                    value = result.isValid && result.fixed ? result.fixed : value;
                                 }
                             }
                         }
@@ -932,8 +985,8 @@ class UKDataCleanerApp {
                         const willChange = isSelected && originalValue !== value && value;
                         
                         return `
-                            <td class="px-2 py-1 border-b border-gray-200 text-xs ${willChange ? 'bg-green-50' : 'bg-white'}">
-                                <div class="font-medium ${willChange ? 'text-green-700' : 'text-gray-700'}">
+                            <td class="px-2 py-1 border-b border-gray-200 text-xs ${willChange ? 'bg-green-50 text-green-800' : 'bg-white text-gray-900'}">
+                                <div class="font-medium">
                                     ${this.escapeHtml(String(value))}
                                     ${willChange ? '<svg class="inline w-4 h-4 text-green-600 align-middle ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>' : ''}
                                 </div>
@@ -944,7 +997,7 @@ class UKDataCleanerApp {
                 
                 return `
                     <tr class="hover:bg-gray-50">
-                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-500 font-mono bg-gray-50">${index + 1}</td>
+                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-700 font-mono bg-gray-50">${index + 1}</td>
                         ${rowCells}
                     </tr>
                 `;
@@ -970,6 +1023,16 @@ class UKDataCleanerApp {
         this.updateFieldSelectionStatus();
         this.updateProcessButton();
         this.renderPreviewSample();
+
+        const emailSection = document.getElementById('emailDomainTyposSection');
+        const hasEmailColumn = this.selectedFields.some(f => /email|e-mail/i.test(f));
+        if (emailSection) {
+            if (hasEmailColumn) {
+                emailSection.classList.remove('hidden');
+            } else {
+                emailSection.classList.add('hidden');
+            }
+        }
     }
 
     updateFieldSelectionStatus() {
@@ -982,7 +1045,7 @@ class UKDataCleanerApp {
                     <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
-                    <span>Please select at least one field to clean or split</span>
+                    <span>Select at least one column to clean or split — or use Auto-Select to detect them automatically</span>
                 </div>
             `;
             status.className = 'text-sm text-orange-600 mt-3 text-center';
@@ -1076,48 +1139,92 @@ class UKDataCleanerApp {
         this.phoneValidator.setOutputFormat(selectedFormat);
     }
 
-    showLoadingState(message = 'Please wait while we validate your data...', progress = 0) {
+    /**
+     * Parse custom email domain typo mappings from textarea (one per line: "typo → correct" or "typo=correct").
+     * Returns object { typoLowerCase: correctDomain } for EmailValidator.
+     */
+    parseCustomEmailDomainTypos(text) {
+        if (!text || typeof text !== 'string') return {};
+        const out = {};
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        for (const line of lines) {
+            let typo = '';
+            let correct = '';
+            if (line.includes('→') || line.includes('->')) {
+                const sep = line.includes('→') ? '→' : '->';
+                const idx = line.indexOf(sep);
+                typo = line.slice(0, idx).trim();
+                correct = line.slice(idx + sep.length).trim();
+            } else if (line.includes('=')) {
+                const idx = line.indexOf('=');
+                typo = line.slice(0, idx).trim();
+                correct = line.slice(idx + 1).trim();
+            } else if (line.includes(',')) {
+                const [a, b] = line.split(',').map(s => s.trim());
+                typo = a || '';
+                correct = b || '';
+            }
+            if (typo && correct) {
+                out[typo.toLowerCase()] = correct;
+            }
+        }
+        return out;
+    }
+
+    formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    showLoadingState(message = 'Validating your data…', progress = 0, fileName = null, fileSize = null) {
         const overlay = document.getElementById('loadingOverlay');
+        const processingState = document.getElementById('loadingProcessingState');
+        const successState = document.getElementById('loadingSuccessState');
         const messageEl = document.getElementById('loadingMessage');
         const progressBar = document.getElementById('loadingProgressBar');
         const progressText = document.getElementById('loadingProgress');
+        const fileNameEl = document.getElementById('loadingFileName');
+        const fileSizeEl = document.getElementById('loadingFileSize');
 
-        if (overlay) {
-            overlay.classList.remove('hidden');
+        if (overlay) overlay.classList.remove('hidden');
+        const card = document.getElementById('loadingOverlayCard');
+        if (card) {
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = '';
         }
-        if (messageEl) {
-            messageEl.textContent = message;
-        }
-        if (progressBar) {
-            progressBar.style.width = `${progress}%`;
-        }
-        if (progressText) {
-            if (progress > 0) {
-                progressText.textContent = `${Math.round(progress)}% complete`;
-            } else {
-                progressText.textContent = 'Preparing...';
-            }
-        }
+        if (processingState) processingState.classList.remove('hidden');
+        if (successState) successState.classList.add('hidden');
+
+        if (fileNameEl) fileNameEl.textContent = fileName || 'Your file';
+        if (fileSizeEl) fileSizeEl.textContent = fileSize != null ? fileSize : '—';
+        if (messageEl) messageEl.textContent = message;
+        if (progressBar) progressBar.style.width = `${progress}%`;
+        if (progressText) progressText.textContent = progress > 0 ? `${Math.round(progress)}%` : '0%';
+    }
+
+    showLoadingSuccess() {
+        const processingState = document.getElementById('loadingProcessingState');
+        const successState = document.getElementById('loadingSuccessState');
+        if (processingState) processingState.classList.add('hidden');
+        if (successState) successState.classList.remove('hidden');
     }
 
     hideLoadingState() {
         const overlay = document.getElementById('loadingOverlay');
-        if (overlay) {
-            overlay.classList.add('hidden');
-        }
+        if (overlay) overlay.classList.add('hidden');
     }
 
     updateLoadingProgress(current, total) {
-        const progress = (current / total) * 100;
+        const progress = total > 0 ? (current / total) * 100 : 0;
         const progressBar = document.getElementById('loadingProgressBar');
         const progressText = document.getElementById('loadingProgress');
+        const messageEl = document.getElementById('loadingMessage');
 
-        if (progressBar) {
-            progressBar.style.width = `${progress}%`;
-        }
-        if (progressText) {
-            progressText.textContent = `Processing row ${current.toLocaleString()} of ${total.toLocaleString()}`;
-        }
+        if (progressBar) progressBar.style.width = `${progress}%`;
+        if (progressText) progressText.textContent = `${Math.round(progress)}%`;
+        if (messageEl) messageEl.textContent = `Processing row ${current.toLocaleString()} of ${total.toLocaleString()}`;
     }
 
     async processFile() {
@@ -1130,11 +1237,17 @@ class UKDataCleanerApp {
         }
 
         this.hideError();
-        this.showLoadingState();
+        const fileName = this.selectedFile?.name || 'Your file';
+        const fileSize = this.selectedFile?.size != null ? this.formatFileSize(this.selectedFile.size) : null;
+        this.showLoadingState('Validating your data…', 0, fileName, fileSize);
 
         try {
             // Ensure phone format is synchronized before processing
             this.updatePhoneFormat();
+
+            const emailTyposInput = document.getElementById('emailDomainTyposInput');
+            const customEmailTypos = emailTyposInput ? this.parseCustomEmailDomainTypos(emailTyposInput.value) : {};
+            this.fileProcessor.setEmailDomainTypos(customEmailTypos);
 
             // Process the file with selected columns, progress callback, and name split columns
             this.results = await this.fileProcessor.processFile(
@@ -1144,12 +1257,23 @@ class UKDataCleanerApp {
                 this.selectedNameSplits
             );
 
-            this.hideLoadingState();
-            this.showResults();
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!reduceMotion) {
+                this.showLoadingSuccess();
+            }
+            const self = this;
+            const delay = reduceMotion ? 0 : 1200;
+            setTimeout(function () {
+                self.hideLoadingState();
+                self.showResults();
+                if (processBtn) {
+                    processBtn.disabled = false;
+                    processBtn.textContent = 'Clean My Data';
+                }
+            }, delay);
         } catch (err) {
             this.hideLoadingState();
             this.showError(err instanceof Error ? err.message : 'An error occurred while processing the file');
-        } finally {
             if (processBtn) {
                 processBtn.disabled = false;
                 processBtn.textContent = 'Clean My Data';
@@ -1344,7 +1468,7 @@ class UKDataCleanerApp {
                 <td class="px-4 py-2 text-sm font-medium">${result.column}</td>
                 <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">${result.value}</code></td>
                 <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">${result.fixed}</code></td>
-                <td class="px-4 py-2 text-sm text-blue-600">${result.detectedType}</td>
+                <td class="px-4 py-2 text-sm text-amber-800">${result.detectedType}</td>
             </tr>
         `).join('');
     }
@@ -1393,7 +1517,7 @@ class UKDataCleanerApp {
         const column = columnName.toLowerCase();
 
         if (column.includes('ni') || column.includes('insurance')) {
-            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">HMRC Compliant</span>';
+            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">HMRC Compliant</span>';
         } else if (column.includes('phone') || column.includes('mobile')) {
             return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">UK Standard</span>';
         } else {
@@ -1612,6 +1736,17 @@ class UKDataCleanerApp {
                 return explanation;
             }
 
+            // Email explanations
+            if ((column.includes('email') || column.includes('e-mail')) || result.detectedType === 'email') {
+                let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600; width: 150px;">Email:</td><td style="padding: 8px;"><code style="background: #fee2e2; padding: 4px 8px; border-radius: 4px;">${this.escapeHtml(value)}</code></td></tr>`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Problem:</td><td style="padding: 8px; color: #dc2626;"><strong>${this.escapeHtml(error)}</strong></td></tr>`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">Explanation:</td><td style="padding: 8px;">Emails must be in the format <strong>local@domain</strong>. The domain must have at least one dot (e.g. example.com). We trim whitespace, fix common domain typos (e.g. gmial → gmail), and optionally lowercase for system-to-system consistency.</td></tr>`;
+                explanation += `<tr><td style="padding: 8px; background: #f9fafb; font-weight: 600;">What to do:</td><td style="padding: 8px;">Check for missing @, invalid characters in the local part, or a domain without a dot. Fix typos (e.g. gmail.com, yahoo.com, hotmail.com) and ensure the address is valid.</td></tr>`;
+                explanation += `</table>`;
+                return explanation;
+            }
+
             // Postcode explanations
             if (column.includes('postcode') || column.includes('post code') || result.detectedType === 'postcode') {
                 let explanation = `<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">`;
@@ -1797,6 +1932,7 @@ class UKDataCleanerApp {
             .action-btn {
                 width: 100%;
                 justify-content: center;
+                white-space: nowrap;
             }
             .warning-banner {
                 padding: 15px;
@@ -1994,6 +2130,7 @@ class UKDataCleanerApp {
             transition: all 0.2s;
             border: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
         }
         .print-btn {
             background: #ffffff;
@@ -2236,78 +2373,31 @@ class UKDataCleanerApp {
     <script>
         // Simple restoration - only on refresh when page is blank
         (function() {
-            // #region agent log
-            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-script',message:'Restoration script loaded',data:{readyState:document.readyState,bodyExists:!!document.body,bodyChildren:document.body?document.body.children.length:0,url:window.location.href},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'A'})}).catch(()=>{});
-            // #endregion
-            
             function attemptRestore() {
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'attemptRestore called',data:{readyState:document.readyState,bodyExists:!!document.body,bodyChildren:document.body?document.body.children.length:0,url:window.location.href,isAboutBlank:window.location.href==='about:blank'},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'C'})}).catch(()=>{});
-                // #endregion
-                
                 const stored = localStorage.getItem('detailedIssuesReport');
                 const storedId = localStorage.getItem('detailedIssuesReportId');
-
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Checked localStorage',data:{hasStored:!!stored,hasStoredId:!!storedId,storedLength:stored?stored.length:0},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'B'})}).catch(()=>{});
-                // #endregion
-                
-                if (!stored || !storedId) {
-                    // #region agent log
-                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'No stored report found, aborting',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'B'})}).catch(()=>{});
-                    // #endregion
-                    return;
-                }
+                if (!stored || !storedId) return;
                 
                 const body = document.body;
                 const url = window.location.href;
                 const isAboutBlank = url === 'about:blank' || url === 'about:srcdoc';
                 const bodyEmpty = body && body.children.length === 0;
-                // Check if body contains report content (has data-report-id attribute on body or any element)
                 const hasReportContent = body && (body.hasAttribute('data-report-id') || body.querySelector('[data-report-id]'));
                 
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Checking body state',data:{bodyExists:!!body,bodyChildren:body?body.children.length:0,bodyEmpty:bodyEmpty,url:url,isAboutBlank:isAboutBlank,hasReportContent:!!hasReportContent},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'C'})}).catch(()=>{});
-                // #endregion
-                
-                // Always restore if body is empty OR we don't have report content
-                // This handles: empty body (refresh clears content), about:blank, or browser navigation
                 if (bodyEmpty || !hasReportContent) {
-                    // #region agent log
-                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Conditions met, attempting restore',data:{bodyEmpty:bodyEmpty,isAboutBlank:isAboutBlank,hasReportContent:!!hasReportContent,url:url},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'E'})}).catch(()=>{});
-                    // #endregion
                     try {
                         document.open('text/html', 'replace');
                         document.write(stored);
                         document.close();
-                        // #region agent log
-                        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Restore completed',data:{bodyChildren:document.body?document.body.children.length:0,url:window.location.href},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'E'})}).catch(()=>{});
-                        // #endregion
-                    } catch (e) {
-                        // #region agent log
-                        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Restore failed',data:{error:e.message},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'E'})}).catch(()=>{});
-                        // #endregion
-                    }
-                } else {
-                    // #region agent log
-                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:attemptRestore',message:'Conditions not met, skipping restore',data:{bodyEmpty:bodyEmpty,isAboutBlank:isAboutBlank,hasReportContent:!!hasReportContent,url:url},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'C'})}).catch(()=>{});
-                    // #endregion
+                    } catch (e) {}
                 }
             }
             
-            // Run immediately - don't wait
             attemptRestore();
-            
-            // Also try on DOMContentLoaded as backup
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', attemptRestore);
             }
-            
-            // Also listen for pageshow (refresh/back button)
             window.addEventListener('pageshow', function(e) {
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:restore-script',message:'pageshow event fired',data:{persisted:e.persisted,bodyChildren:document.body?document.body.children.length:0,url:window.location.href},timestamp:Date.now(),sessionId:'debug-session',runId:'refresh-debug',hypothesisId:'D'})}).catch(()=>{});
-                // #endregion
                 setTimeout(attemptRestore, 10);
             });
         })();
@@ -2675,6 +2765,7 @@ class UKDataCleanerApp {
             border: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             text-decoration: none;
+            white-space: nowrap;
         }
         .print-btn {
             background: #ffffff;
@@ -2860,13 +2951,16 @@ class UKDataCleanerApp {
         this._isOpeningCleanedReport = true;
         
         const result = this.generateCleanedReport();
-        if (!result || !result.html) {
-            this._isOpeningCleanedReport = false;
-            this.showError('No cleaned data found to generate report');
-            return;
+        const reportId = (result && result.reportId) ? result.reportId : Date.now().toString();
+        let html;
+        if (result && result.html) {
+            html = result.html;
+        } else {
+            html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Cleaned Data Report</title><style>body{font-family:system-ui,sans-serif;padding:40px;text-align:center;max-width:480px;margin:0 auto;}h1{font-size:1.5rem;margin-bottom:1rem;}p{color:#374151;line-height:1.6;}a{color:#2563eb;text-decoration:none;}a:hover{text-decoration:underline;}.links{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.75rem;align-items:center;}</style></head><body><h1>No Cleaned Cells in This Run</h1><p>No cells were modified by cleaning. Either no columns were selected for cleaning, or all values were already valid and unchanged.</p><div class="links"><a href="/">Home</a><a href="/index.php">Upload &amp; clean data</a></div></body></html>`;
         }
 
-        const { html, reportId } = result;
+        // Keep in memory so report page can request via postMessage when localStorage is empty
+        window.__lastCleanedReport = html;
 
         // Store in localStorage for restoration on refresh
         try {
@@ -2876,8 +2970,8 @@ class UKDataCleanerApp {
             console.warn('Could not store report in localStorage:', e);
         }
 
-        // Open the dedicated report viewer page
-        window.open('/cleaned-report.php', '_blank');
+        // Open the dedicated report viewer page on the same origin so localStorage is shared
+        window.open(window.location.origin + '/cleaned-report.php', '_blank');
         
         // Reset flag after a delay
         setTimeout(() => {
@@ -2953,13 +3047,6 @@ class UKDataCleanerApp {
             if (!rowResults) return false;
             
             const result = rowResults.validationResults.find(r => r.column === columnName);
-            
-            // #region agent log
-            if (columnName === 'Name' && rowIndex < 5) {
-                fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:2887',message:'Checking if Name column is invalid',data:{rowIndex:rowIndex,columnName:columnName,hasResult:!!result,isValid:result?.isValid,error:result?.error,isNameSplitColumn:this.results.nameSplitColumns?.includes(columnName)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
-            }
-            // #endregion
-            
             return result && !result.isValid;
         };
 
@@ -3106,8 +3193,8 @@ class UKDataCleanerApp {
         .bg-amber-50 {
             background-color: #fffbeb !important;
         }
-        .bg-blue-50 {
-            background-color: #eff6ff !important;
+        .bg-amber-100 {
+            background-color: #fef3c7 !important;
         }
         .bg-green-50 {
             background-color: #f0fdf4 !important;
@@ -3124,14 +3211,11 @@ class UKDataCleanerApp {
         .border-amber-400 {
             border-left-color: #fbbf24 !important;
         }
-        .border-blue-400 {
-            border-left-color: #60a5fa !important;
+        .border-yellow-500 {
+            border-left-color: #eab308 !important;
         }
         tr.hover\\:bg-amber-100:hover {
             background-color: #fef3c7 !important;
-        }
-        tr.hover\\:bg-blue-100:hover {
-            background-color: #dbeafe !important;
         }
         tr.hover\\:bg-gray-50:hover {
             background-color: #f9fafb !important;
@@ -3141,12 +3225,6 @@ class UKDataCleanerApp {
         }
         .text-amber-800 {
             color: #92400e !important;
-        }
-        .bg-blue-200 {
-            background-color: #bfdbfe !important;
-        }
-        .text-blue-800 {
-            color: #1e40af !important;
         }
         .inline-flex {
             display: inline-flex;
@@ -3194,23 +3272,24 @@ class UKDataCleanerApp {
             border: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             text-decoration: none;
+            white-space: nowrap;
         }
         .print-btn {
             background: #ffffff;
-            color: #1e40af;
-            border: 2px solid #3b82f6;
+            color: #92400e;
+            border: 2px solid #eab308;
         }
         .print-btn:hover {
-            background: #dbeafe;
+            background: #fffbeb;
             transform: translateY(-1px);
             box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
         .download-btn {
-            background: #3b82f6;
-            color: #ffffff;
+            background: #eab308;
+            color: #0a0a0a;
         }
         .download-btn:hover {
-            background: #2563eb;
+            background: #ca8a04;
             transform: translateY(-1px);
             box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
@@ -3270,8 +3349,8 @@ class UKDataCleanerApp {
                         <strong>Red cells</strong> - Invalid values detected but cannot be cleaned (require manual correction)
                     </li>
                     <li style="padding: 4px 0;">
-                        <span style="display: inline-block; width: 20px; height: 16px; background-color: #eff6ff; border-left: 4px solid #60a5fa; margin-right: 8px; vertical-align: middle;"></span>
-                        <strong>Blue rows</strong> - Original rows that have duplicates elsewhere
+                        <span style="display: inline-block; width: 20px; height: 16px; background-color: #fffbeb; border-left: 4px solid #eab308; margin-right: 8px; vertical-align: middle;"></span>
+                        <strong>Amber rows</strong> - Original rows that have duplicates elsewhere
                     </li>
                     <li style="padding: 4px 0;">
                         <span style="display: inline-block; width: 20px; height: 16px; background-color: #fffbeb; border-left: 4px solid #fbbf24; margin-right: 8px; vertical-align: middle;"></span>
@@ -3341,6 +3420,9 @@ class UKDataCleanerApp {
 
         const { html, reportId } = result;
 
+        // Keep in memory so report page can request via postMessage when localStorage is empty
+        window.__lastPreviewReport = html;
+
         // Store in localStorage for restoration on refresh
         try {
             localStorage.setItem('previewReport', html);
@@ -3349,8 +3431,8 @@ class UKDataCleanerApp {
             console.warn('Could not store report in localStorage:', e);
         }
 
-        // Open the dedicated report viewer page
-        window.open('/preview-report.php', '_blank');
+        // Open the dedicated report viewer page on the same origin so localStorage is shared
+        window.open(window.location.origin + '/preview-report.php', '_blank');
         
         // Reset flag after a delay
         setTimeout(() => {
@@ -3365,6 +3447,7 @@ class UKDataCleanerApp {
             'postcode': 'Postcodes',
             'sort_code': 'Sort Codes',
             'bank_account': 'Bank Account Numbers',
+            'email': 'Email Addresses',
             'name_split': 'Full Names (Split)',
             'unknown': 'Other Issues'
         };
@@ -3406,13 +3489,16 @@ class UKDataCleanerApp {
         this._isOpeningReport = true;
         
         const result = this.generateDetailedIssuesReport();
-        if (!result || !result.html) {
-            this._isOpeningReport = false;
-            this.showError('No issues found to generate report');
-            return;
+        const reportId = (result && result.reportId) ? result.reportId : Date.now().toString();
+        let html;
+        if (result && result.html) {
+            html = result.html;
+        } else {
+            html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Detailed Validation Issues Report</title><style>body{font-family:system-ui,sans-serif;padding:40px;text-align:center;max-width:480px;margin:0 auto;}h1{font-size:1.5rem;margin-bottom:1rem;}p{color:#374151;line-height:1.6;}a{color:#2563eb;text-decoration:none;}a:hover{text-decoration:underline;}.links{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.75rem;align-items:center;}</style></head><body><h1>No Issues Found in This Run</h1><p>All validated values in the selected columns passed. No validation issues were detected.</p><div class="links"><a href="/">Home</a><a href="/index.php">Upload &amp; clean data</a></div></body></html>`;
         }
 
-        const { html, reportId } = result;
+        // Keep in memory so report page can request via postMessage when localStorage is empty
+        window.__lastIssuesReport = html;
 
         // Store in localStorage for restoration on refresh
         try {
@@ -3422,9 +3508,9 @@ class UKDataCleanerApp {
             console.warn('Could not store report in localStorage:', e);
         }
 
-        // Open the dedicated report viewer page
+        // Open the dedicated report viewer page on the same origin so localStorage is shared
         // This page will load the report from localStorage and can be refreshed
-        window.open('/issues-report.php', '_blank');
+        window.open(window.location.origin + '/issues-report.php', '_blank');
         
         // Reset flag after a delay
         setTimeout(() => {
@@ -3483,10 +3569,10 @@ class UKDataCleanerApp {
                 hoverClass = 'hover:bg-amber-100';
                 badge = '<span class="ml-1 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-200 text-amber-800">DUPLICATE</span>';
             } else if (isOriginal) {
-                // Original row (has duplicates) - blue
-                rowBgClass = 'bg-blue-50 border-l-4 border-blue-400';
-                hoverClass = 'hover:bg-blue-100';
-                badge = '<span class="ml-1 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-200 text-blue-800">HAS DUPLICATES</span>';
+                // Original row (has duplicates) - amber
+                rowBgClass = 'bg-amber-50 border-l-4 border-yellow-500';
+                hoverClass = 'hover:bg-amber-100';
+                badge = '<span class="ml-1 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-200 text-amber-800">HAS DUPLICATES</span>';
             } else {
                 // Normal row - alternating white/gray
                 rowBgClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
@@ -3501,12 +3587,12 @@ class UKDataCleanerApp {
                     </td>
                     ${row.map((cell, colIndex) => {
                         const wasModified = this.wasCellModified(index, headers[colIndex]);
-                        // Cell background: duplicates get amber, originals get blue, modified get green
+                        // Cell background: duplicates get amber, originals get amber (design system), modified get green
                         let bgClass = '';
                         if (isDuplicate) {
-                            bgClass = 'bg-amber-50';
+                            bgClass = 'bg-amber-100';
                         } else if (isOriginal) {
-                            bgClass = 'bg-blue-50';
+                            bgClass = 'bg-amber-50';
                         } else if (wasModified) {
                             bgClass = 'bg-green-50';
                         }
@@ -3522,11 +3608,7 @@ class UKDataCleanerApp {
     }
 
     buildFullCleanedDataset() {
-        if (!this.results || !this.fileData) return { cleanedData: [], issuesByRow: [] };
-
-        // #region agent log
-        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3408',message:'buildFullCleanedDataset entry',data:{totalRows:this.fileData.length,processedRowsCount:this.results.processedRows?.length,selectedFields:this.selectedFields?.length,nameSplits:this.selectedNameSplits?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-        // #endregion
+        if (!this.results) return { cleanedData: [], issuesByRow: [], headers: this.fileHeaders || [] };
 
         const cleanedData = [];
         const issuesByRow = [];
@@ -3535,34 +3617,27 @@ class UKDataCleanerApp {
         const headers = this.results.processedHeaders || this.fileHeaders;
         const useProcessedData = this.results.processedData && this.results.processedData.length > 0;
 
-        // #region agent log
-        fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3416',message:'Dataset build config',data:{headersCount:headers.length,useProcessedData:useProcessedData,processedDataLength:this.results.processedData?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-        // #endregion
+        // Row source for fallback when processedData is missing: results.originalData or fileData.
+        const rowSource = this.results.originalData && this.results.originalData.length > 1
+            ? this.results.originalData
+            : (this.fileData && this.fileData.length > 1 ? this.fileData : null);
 
-        // For each original row (skip header row which is index 0)
-        for (let i = 1; i < this.fileData.length; i++) {
-            // Use processed data if available (includes name splits), otherwise use original
-            const originalRow = useProcessedData && this.results.processedData[i - 1] 
-                ? [...this.results.processedData[i - 1]]
-                : [...this.fileData[i]];
-            
-            const cleanedRow = [...originalRow]; // Start with original/processed
+        // Iterate by processed row count so we always show every row that was actually processed.
+        // processedRows and processedData have one entry per data row (same length).
+        const numRows = this.results.processedRows ? this.results.processedRows.length : 0;
+        if (numRows === 0) {
+            return { cleanedData: [], issuesByRow: [], headers };
+        }
+
+        for (let idx = 0; idx < numRows; idx++) {
+            // Row data: prefer processedData (same length as processedRows), else rowSource[idx+1] (header at 0).
+            const originalRow = useProcessedData && this.results.processedData[idx]
+                ? [...this.results.processedData[idx]]
+                : [...(rowSource && rowSource[idx + 1] ? rowSource[idx + 1] : [])];
+
+            const cleanedRow = [...originalRow];
             const issuesList = [];
-
-            // Find validation results for this row (row numbers are 1-indexed, starting from 2 for data)
-            // In processRows: dataRows.forEach((row, index) => { rowNumber = index + 2 })
-            //   - index=0 (first data row) -> rowNumber = 2
-            //   - index=1 (second data row) -> rowNumber = 3
-            // In buildFullCleanedDataset: loop starts at i=1 (skipping header at index 0)
-            //   - fileData[1] (first data row) -> i=1, expectedRowNumber should be 2
-            //   - fileData[2] (second data row) -> i=2, expectedRowNumber should be 3
-            // So expectedRowNumber = i + 1 (not i + 2)
-            const expectedRowNumber = i + 1;
-            const rowResults = this.results.processedRows.find(r => r.rowNumber === expectedRowNumber);
-
-            // #region agent log
-            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3436',message:'Row processing',data:{rowIndex:i,expectedRowNumber:expectedRowNumber,hasRowResults:!!rowResults,validationResultsCount:rowResults?.validationResults?.length,originalRowSample:originalRow.slice(0,3)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-            // #endregion
+            const rowResults = this.results.processedRows[idx];
 
             if (rowResults) {
                 // Apply cleaned values to selected columns only and collect issues
@@ -3579,33 +3654,12 @@ class UKDataCleanerApp {
                         const beforeValue = cleanedRow[colIndex];
                         cleanedRow[colIndex] = result.fixed;
                         appliedCount++;
-                        // #region agent log
-                        if (i <= 20) { // Log first 20 rows only
-                            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3460',message:'Applied cleaned value',data:{rowIndex:i,column:result.column,before:beforeValue,after:result.fixed,detectedType:result.detectedType},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-                        }
-                        // #endregion
                     } else if (colIndex !== -1 && !result.isValid) {
                         // Track invalid values for Issues column
                         issuesList.push(result.column);
                         invalidCount++;
-                        // #region agent log
-                        if (i <= 20) { // Log first 20 rows only
-                            fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3465',message:'Invalid value not cleaned',data:{rowIndex:i,column:result.column,value:result.value,error:result.error,detectedType:result.detectedType},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-                        }
-                        // #endregion
                     }
                 });
-                // #region agent log
-                if (i <= 20) {
-                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3472',message:'Row validation summary',data:{rowIndex:i,appliedCount:appliedCount,invalidCount:invalidCount,totalResults:rowResults.validationResults.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-                }
-                // #endregion
-            } else {
-                // #region agent log
-                if (i <= 20) {
-                    fetch('http://127.0.0.1:7244/ingest/f4b795a6-59bf-4d16-914e-33211b89c823',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app.js:3478',message:'No validation results found',data:{rowIndex:i,expectedRowNumber:expectedRowNumber,availableRowNumbers:this.results.processedRows?.map(r => r.rowNumber).slice(0,5)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-                }
-                // #endregion
             }
             
             // Ensure valid NI numbers are consistently formatted, even if not selected for cleaning
@@ -3812,15 +3866,21 @@ class UKDataCleanerApp {
     }
 
     switchTab(tabName) {
-        // Update active tab button
         const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabBar = document.querySelector('.tab-bar');
+        const isDarkTheme = tabBar?.dataset?.tabTheme === 'dark';
+        const activeClasses = isDarkTheme ? ['border-yellow-500', 'text-white', 'tab-active'] : ['border-yellow-500', 'text-amber-800'];
+        const inactiveClasses = isDarkTheme ? ['border-transparent', 'text-neutral-400'] : ['border-transparent', 'text-gray-700'];
         tabBtns.forEach(btn => {
-            if (btn.dataset.tab === tabName) {
-                btn.classList.add('border-slate-700', 'text-slate-700', 'font-semibold');
-                btn.classList.remove('border-transparent', 'text-gray-500');
+            const isActive = btn.dataset.tab === tabName;
+            if (isActive) {
+                btn.classList.add(...activeClasses);
+                btn.classList.remove(...inactiveClasses, 'text-gray-500');
+                btn.setAttribute('aria-selected', 'true');
             } else {
-                btn.classList.remove('border-slate-700', 'text-slate-700', 'font-semibold');
-                btn.classList.add('border-transparent', 'text-gray-500');
+                btn.classList.remove(...activeClasses);
+                btn.classList.add(...inactiveClasses);
+                btn.setAttribute('aria-selected', 'false');
             }
         });
 

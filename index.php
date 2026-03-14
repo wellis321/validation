@@ -19,6 +19,7 @@ if ($user) {
         $remainingRequests = 0;
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,10 +28,10 @@ if ($user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://simple-data-cleaner.com/">
     <title>UK Data Cleaning Tool | Browser-Based & GDPR Compliant | Simple Data Cleaner</title>
-    <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, and split names in your browser. 100% private - your data never leaves your device. GDPR compliant data cleaning for UK businesses. Try free example page.">
+    <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, email addresses, and split names in your browser. 100% private - your data never leaves your device. GDPR compliant data cleaning for UK businesses. Try free example page.">
     <meta name="keywords" content="UK data cleaning, UK data validation, GDPR compliant data cleaning, browser-based data cleaning, UK phone number cleaning, UK postcode validation, NI number validation, privacy-first data cleaning, UK data cleaning tool, browser data validation">
     <meta property="og:title" content="Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant">
-    <meta property="og:description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private - your data never leaves your device.">
+    <meta property="og:description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, email addresses, and split names in your browser. 100% private - your data never leaves your device.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simple-data-cleaner.com/">
     <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
@@ -39,7 +40,7 @@ if ($user) {
     <meta property="og:image:alt" content="Simple Data Cleaner - UK Data Validation Tool">
     <meta property="og:site_name" content="Simple Data Cleaner">
     <meta property="og:locale" content="en_GB">
-    
+
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Simple Data Cleaner - 100% Private UK Data Validation">
@@ -48,20 +49,19 @@ if ($user) {
     <meta name="twitter:image:alt" content="Simple Data Cleaner Logo">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
     <link rel="stylesheet" href="/assets/css/output.css">
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js" defer></script>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
-    
+
     <!-- JSON-LD Structured Data for Rich Results -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Simple Data Cleaner",
-      "description": "UK data cleaning and validation tool. Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and split names in your browser. 100% private, GDPR compliant - your data never leaves your device.",
+      "description": "UK data cleaning and validation tool. Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, email addresses, and split names in your browser. 100% private, GDPR compliant - your data never leaves your device.",
       "url": "https://simple-data-cleaner.com",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web Browser",
@@ -78,6 +78,7 @@ if ($user) {
         "UK Postcode Validation",
         "Bank Sort Code Validation",
         "Bank Account Number Validation",
+        "Email Address Validation and Cleaning",
         "Name Splitting (Title, First Name, Last Name)",
         "Browser-based Processing",
         "GDPR Compliant",
@@ -88,7 +89,7 @@ if ($user) {
       "softwareVersion": "1.0"
     }
     </script>
-    
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -103,7 +104,7 @@ if ($user) {
       }
     }
     </script>
-    
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -122,7 +123,7 @@ if ($user) {
           "name": "What UK data formats can I validate?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Simple Data Cleaner validates UK phone numbers (mobile and landline), National Insurance numbers, UK postcodes, bank sort codes, bank account numbers, and can split full names into title, first name, and last name. All validation follows official UK standards."
+            "text": "Simple Data Cleaner validates UK phone numbers (mobile and landline), National Insurance numbers, UK postcodes, bank sort codes, bank account numbers, email addresses, and can split full names into title, first name, and last name. All validation follows official UK standards."
           }
         },
         {
@@ -145,260 +146,349 @@ if ($user) {
     }
     </script>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <!-- Main Content -->
-    <main id="main-content" class="container mx-auto px-4 py-8">
+    <main id="main-content" class="min-h-screen">
         <?php if (!$user): ?>
-            <!-- Hero Section for Non-Authenticated Users -->
-            <div class="text-center mb-16">
-                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-amber-100 text-amber-900 text-sm font-semibold tracking-wide uppercase mb-5">
-                    Open Beta - lifetime access available now
-                </div>
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                    Clean Your UK Data <span class="text-slate-700">Instantly</span>
-                </h1>
-                <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-6 max-w-4xl mx-auto">
-                    <p class="text-xl text-gray-600 text-center md:text-left flex-1">
-                        The only UK data validation tool that processes everything in your browser.
-                        Personally Identifiable Information (PII) <strong>never leaves your device</strong> - perfect for GDPR compliance.
-                        Join our beta to lock in lifetime access to phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, and name splitting for just £99.99.
-                    </p>
-                    <div class="flex-shrink-0">
-                        <img src="/assets/images/transparent-logo.png" alt="Simple Data Cleaner Logo" class="h-24 w-auto" loading="lazy">
-                    </div>
-                </div>
-                <div class="max-w-3xl mx-auto bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-4 mb-8">
-                    <p class="text-sm md:text-base">
-                        Lifetime beta licence covers today's feature set forever. As we add new data types, you'll be first in line to preview them, and we'll use your feedback to shape the roadmap.
-                    </p>
-                </div>
-
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="/beta-offer.php" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
-                        Join Lifetime Beta (£99.99)
-                    </a>
-                    <a href="/example.php" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
-                        Try Interactive Demo
-                    </a>
-                    <a href="/feedback.php" class="inline-block bg-white text-slate-700 border border-slate-300 px-8 py-3 rounded-lg hover:border-slate-500 font-semibold transition-colors">
-                        Share Your Feedback
-                    </a>
-                    <a href="/pricing.php" class="inline-block text-slate-700 hover:text-slate-900 font-semibold border-b-2 border-transparent hover:border-slate-700 transition-colors">
-                        View Full Pricing
-                    </a>
-                </div>
-            </div>
-        <?php endif; ?>
-
-        <?php if (!$user): ?>
-        <!-- Features Section -->
-        <div class="mt-16">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">What We Clean</h2>
-            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-                HMRC-compliant validation for sensitive UK business data. All processing happens in your browser -
-                no data ever transmitted to our servers.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- Phone Numbers -->
-                <a href="/validation-rules.php#phone_numbersTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-blue-600 mb-4 group-hover:text-blue-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Phone Numbers</h3>
-                    <p class="text-gray-600">Format UK mobile and landline numbers with proper spacing</p>
-                </a>
-
-                <!-- NI Numbers -->
-                <a href="/validation-rules.php#national_insuranceTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-indigo-600 mb-4 group-hover:text-indigo-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a2 2 0 100-4 2 2 0 000 4z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-indigo-600 transition-colors">NI Numbers</h3>
-                    <p class="text-gray-600">HMRC compliant validation with proper formatting</p>
-                </a>
-
-                <!-- Postcodes -->
-                <a href="/validation-rules.php#postcodesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-teal-600 mb-4 group-hover:text-teal-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-teal-600 transition-colors">Postcodes</h3>
-                    <p class="text-gray-600">Validate and format UK postcodes correctly</p>
-                </a>
-
-                <!-- Sort Codes -->
-                <a href="/validation-rules.php#sort_codesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-amber-600 mb-4 group-hover:text-amber-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-amber-600 transition-colors">Sort Codes</h3>
-                    <p class="text-gray-600">Format bank sort codes with proper hyphens</p>
-                </a>
-
-                <!-- Bank Account Numbers -->
-                <a href="/validation-rules.php#bank_accountTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-orange-600 mb-4 group-hover:text-orange-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-orange-600 transition-colors">Bank Account Numbers</h3>
-                    <p class="text-gray-600">Validate and format 8-digit UK bank account numbers</p>
-                </a>
-
-                <!-- Name Splitting -->
-                <a href="/validation-rules.php#namesTab" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100">
-                    <div class="text-pink-600 mb-4 group-hover:text-pink-700 transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-pink-600 transition-colors">Name Splitting</h3>
-                    <p class="text-gray-600">Split full names into title, first name, and last name</p>
-                </a>
-            </div>
-        </div>
-        <?php endif; ?>
-
-        <?php if (!$user): ?>
-            <!-- Why Choose Browser-Based Processing -->
-            <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-16 mt-16">
-                <h2 class="text-3xl font-bold text-center mb-8">Why Businesses Choose Browser-Based Processing</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                            <svg class="w-7 h-7 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                            Zero Data Transmission
-                        </h3>
-                        <p class="text-gray-700 mb-4">
-                            Unlike cloud-based solutions, your sensitive Personally Identifiable Information (NI numbers, bank sort codes, phone numbers)
-                            stays entirely on your device. No upload risks, no data breaches, no third-party exposure.
+            <!-- Hero: Animated shader background with gradient headline -->
+            <section id="hero-shader-section" class="relative w-full overflow-hidden bg-black" style="height: 100vh; min-height: 600px;">
+                <canvas
+                    class="hero-shader-canvas absolute inset-0 z-0 w-full h-full object-cover touch-none"
+                    style="background: black"
+                    aria-hidden="true"
+                ></canvas>
+                <!-- Hero Content Overlay -->
+                <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-white -translate-y-10">
+                    <!-- Trust Badge -->
+                    <div class="mb-8 hero-animate-fade-in-down">
+                        <p class="flex items-center justify-center gap-2 px-5 py-2.5 bg-yellow-500/15 border border-yellow-400/30 rounded-full text-sm text-yellow-100">
+                            <svg class="w-5 h-5 text-yellow-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                            100% private · GDPR compliant · No uploads
                         </p>
-                        <ul class="space-y-2 text-gray-600">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                No server-side processing costs
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                No database scaling concerns
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                No compliance documentation needed
-                            </li>
-                        </ul>
                     </div>
-
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                            <svg class="w-7 h-7 text-teal-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            Instant Processing
-                        </h3>
-                        <p class="text-gray-700 mb-4">
-                            Process data instantly in your browser. No upload wait times,
-                            no network bottlenecks. Your browser's processing power handles everything.
-                        </p>
-                        <ul class="space-y-2 text-gray-600">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                Works with files up to several hundred MB
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                No API rate limits
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-slate-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                Export results instantly
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="max-w-6xl mx-auto bg-slate-900 text-white rounded-2xl shadow-xl p-8 md:p-12 mb-16" id="beta-program">
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
-                    <div class="lg:w-1/2">
-                        <h2 class="text-3xl font-bold mb-4">Help Shape Simple Data Cleaner</h2>
-                        <p class="text-slate-200 text-base md:text-lg mb-6">
-                            We're in active beta and focused on the core UK data validators you already use daily. Purchase the lifetime licence once, keep access to phone numbers, NI numbers, postcodes, sort codes, bank account numbers, and name splitting forever, and tell us what to improve next.
-                        </p>
-                        <ul class="space-y-4 text-sm md:text-base text-slate-200">
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                                Lifetime access to today's feature set (phone numbers, NI numbers, postcodes, sort codes, bank account numbers, name splitting)
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                                Direct feedback channel with the product team - influence our roadmap
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="lg:w-2/5 bg-white/10 border border-white/10 rounded-xl p-6">
-                        <h3 class="text-xl font-semibold mb-4">How the beta works</h3>
-                        <ol class="space-y-4 text-slate-100 text-sm md:text-base">
-                            <li>
-                                <span class="block font-semibold text-sky-300">1. Purchase the lifetime beta licence</span>
-                                <span class="block mt-1">One-time £99.99 payment - no renewals. Access stays active for all current validators forever.</span>
-                            </li>
-                            <li>
-                                <span class="block font-semibold text-sky-300">2. Clean your data securely</span>
-                                <span class="block mt-1">Run files locally in your browser and see improvements as we ship them.</span>
-                            </li>
-                            <li>
-                                <span class="block font-semibold text-sky-300">3. Share feedback any time</span>
-                                <span class="block mt-1">Use our feedback form to report wins, pain points, or custom validator requests.</span>
-                            </li>
-                        </ol>
-                        <div class="mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
-                            <a href="/beta-offer.php" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
-                                Lock in lifetime access
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    <div class="text-center space-y-6 max-w-5xl mx-auto px-4">
+                        <!-- Main Heading -->
+                        <div class="space-y-3 hero-animate-fade-in-up hero-animation-delay-200">
+                            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                                Clean UK data in your browser
+                            </h1>
+                            <p class="text-xl md:text-2xl text-yellow-100/90 font-light max-w-2xl mx-auto">
+                                Phone numbers, postcodes, NI numbers, sort codes — validated instantly. Your data never leaves your device.
+                            </p>
+                        </div>
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10 hero-animate-fade-in-up hero-animation-delay-600">
+                            <a href="/register.php" class="px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-black rounded-full font-semibold text-lg transition-colors text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                                Start Free Trial
                             </a>
-                            <a href="/feedback.php" class="inline-flex items-center justify-center gap-2 text-slate-200 hover:text-white font-semibold">
-                                Give feedback now
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9M12 4h9M3 4h.01M3 20h.01M3 12h18" /></svg>
+                            <a href="/example.php" class="px-8 py-4 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-400/30 text-yellow-100 rounded-full font-semibold text-lg transition-colors text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                                Try Example
+                            </a>
+                        </div>
+                        <p class="text-sm text-neutral-400 hero-animate-fade-in-up hero-animation-delay-600">
+                            <span>7-day free trial · No card required</span>
+                            <span class="mx-2">·</span>
+                            <a href="/pricing.php" class="text-yellow-400 hover:text-yellow-300 font-medium underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded">View pricing</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pain points: prose + before/after data visuals -->
+            <section class="ds-scroll-reveal pain-points-section max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" aria-labelledby="pain-points-heading">
+                <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+                    <!-- Left: Prose -->
+                    <div class="flex flex-col min-h-0">
+                        <h2 id="pain-points-heading" class="ds-reveal-item pain-points-heading text-4xl md:text-5xl lg:text-[2.75rem] font-extrabold text-white tracking-tight pl-8 border-l-[6px] border-yellow-400 mb-8 transition-colors duration-300">Sound familiar?</h2>
+                        <div class="space-y-6 text-neutral-200 text-lg md:text-xl leading-relaxed flex-1 flex flex-col justify-start">
+                            <p class="ds-reveal-item">Phone numbers in every format. Postcodes with no spaces. NI numbers in lowercase. One export from your CRM, another from a survey — same data, five different styles.</p>
+                            <p class="ds-reveal-item">Manually fixing it means find-and-replace, copy-paste, and hoping you didn&rsquo;t miss a typo.</p>
+                            <p class="ds-reveal-item text-neutral-300">And you can&rsquo;t just upload this anywhere. Postcodes, NI numbers, customer details — it&rsquo;s sensitive.</p>
+                            <p class="ds-reveal-item text-neutral-400 space-y-1" data-stagger-add="1">
+                                <span class="block">Another cloud tool?</span>
+                                <span class="block">GDPR paperwork?</span>
+                            </p>
+                            <p class="ds-reveal-item pain-points-callout inline-flex self-start" data-stagger-add="2">No thanks!!!</p>
+                        </div>
+                    </div>
+                    <!-- Right: Before + After cards stacked, equal height -->
+                    <div class="ds-reveal-item grid grid-rows-[1fr_auto_1fr] gap-4 items-stretch min-h-[340px]">
+                        <div class="flex flex-col min-h-0">
+                            <p class="text-sm font-bold uppercase tracking-widest text-amber-500/90 mb-3">Your data today</p>
+                            <div class="before-after-card before-after-before rounded-xl border-2 border-amber-500/40 bg-neutral-900/95 shadow-lg shadow-amber-950/30 p-5 overflow-hidden flex-1 min-h-0 flex flex-col justify-center">
+                                <div class="space-y-2.5 font-mono text-base">
+                                    <div class="text-amber-400 font-medium">07700900461</div>
+                                    <div class="text-neutral-400">+44 770 0 90 04 61</div>
+                                    <div class="text-neutral-500">SW1A1AA</div>
+                                    <div class="text-neutral-500">ab123456c</div>
+                                    <div class="text-red-400 line-through">0044770000000</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="before-after-arrow text-yellow-400 flex items-center justify-center py-2" aria-hidden="true">
+                            <svg class="w-8 h-8 animate-bounce-slow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                        </div>
+                        <div class="flex flex-col min-h-0">
+                            <p class="text-sm font-bold uppercase tracking-widest text-green-400/90 mb-3">After Simple Data Cleaner</p>
+                            <div class="before-after-card before-after-after rounded-xl border-2 border-green-500/50 bg-neutral-900/95 shadow-xl shadow-green-950/20 p-5 overflow-hidden flex-1 min-h-0 flex flex-col justify-center ring-1 ring-green-500/20">
+                                <div class="space-y-2.5 font-mono text-base">
+                                    <div class="before-after-row flex items-center justify-between gap-3 text-green-400 font-medium">
+                                        <span>+44 7700 900461</span>
+                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                    </div>
+                                    <div class="before-after-row flex items-center justify-between gap-3 text-neutral-200">
+                                        <span>+44 7700 900461</span>
+                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                    </div>
+                                    <div class="before-after-row flex items-center justify-between gap-3 text-neutral-200">
+                                        <span>SW1A 1AA</span>
+                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                    </div>
+                                    <div class="before-after-row flex items-center justify-between gap-3 text-neutral-200">
+                                        <span>AB 12 34 56 C</span>
+                                        <span class="before-after-check text-green-500 shrink-0" aria-hidden="true">✓</span>
+                                    </div>
+                                    <div class="before-after-row before-after-row-invalid flex items-center justify-between gap-3 text-red-400">
+                                        <span>Invalid — in report</span>
+                                        <span class="before-after-check-invalid text-amber-500 shrink-0" aria-hidden="true">!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="ds-reveal-item mt-6 text-center text-neutral-400 text-base flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-yellow-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    <span>All in your browser. No uploads, no cloud, no risk.</span>
+                </p>
+            </section>
+
+            <!-- GDPR & Privacy banner: why we're different -->
+            <section id="privacy-banner" class="ds-scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" aria-labelledby="privacy-banner-heading">
+                <hr class="ds-section-hr ds-section-hr-section-top" aria-hidden="true">
+                <div class="grid lg:grid-cols-[1fr,minmax(300px,420px)] gap-8 lg:gap-12 items-center">
+                    <div>
+                        <h2 id="privacy-banner-heading" class="ds-reveal-item text-2xl md:text-3xl font-bold text-white mb-4">GDPR &amp; privacy done right</h2>
+                        <p class="ds-reveal-item text-neutral-300 text-lg leading-relaxed mb-6">Other tools upload your data to their servers. That means DPAs, processor agreements, and risk. Simple Data Cleaner runs entirely in your browser — your files never leave your device.</p>
+                        <ul class="space-y-3">
+                            <li class="ds-reveal-item privacy-bullet group flex items-start gap-3 text-neutral-200 rounded-lg px-3 py-2 -mx-3 -my-1 transition-colors duration-200 hover:bg-neutral-800/40">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5 text-green-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                </span>
+                                <span><strong class="text-white">We're not a data processor</strong> — no GDPR Article 28 paperwork</span>
+                            </li>
+                            <li class="ds-reveal-item privacy-bullet group flex items-start gap-3 text-neutral-200 rounded-lg px-3 py-2 -mx-3 -my-1 transition-colors duration-200 hover:bg-neutral-800/40">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5 text-green-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                </span>
+                                <span><strong class="text-white">Zero uploads</strong> — sensitive PII stays on your machine</span>
+                            </li>
+                            <li class="ds-reveal-item privacy-bullet group flex items-start gap-3 text-neutral-200 rounded-lg px-3 py-2 -mx-3 -my-1 transition-colors duration-200 hover:bg-neutral-800/40">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5 text-green-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                </span>
+                                <span><strong class="text-white">Full reports in-browser</strong> — audit trail without sending data anywhere</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ds-reveal-item">
+                        <div class="privacy-report-card rounded-xl border border-neutral-700 overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/5 bg-neutral-900 transition-all duration-300 hover:border-neutral-600 hover:shadow-2xl hover:shadow-green-500/5">
+                            <img src="/assets/images/cleaned-data-report.png" alt="Cleaned Data Report showing phone numbers, NI numbers, postcodes and more — all processed in your browser with original and cleaned values side by side" class="w-full h-auto block">
+                        </div>
+                        <p class="mt-4 text-center text-sm text-neutral-500">Example report — generated locally, never sent to a server</p>
+                    </div>
+                </div>
+                <hr class="ds-section-hr ds-section-hr-section-bottom ds-section-hr-tight-top" aria-hidden="true">
+            </section>
+
+            <!-- How It Works + What You Get (merged) -->
+            <section class="ds-scroll-reveal max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" aria-labelledby="how-it-works-heading">
+                <h2 id="how-it-works-heading" class="ds-reveal-item text-2xl font-bold text-white mb-2">How it works</h2>
+                <p class="ds-reveal-item text-neutral-400 mb-2">Three steps. Your data never leaves your device.</p>
+                <p class="ds-reveal-item flex items-center gap-2 text-neutral-500 text-sm mb-10">
+                    <svg class="w-4 h-4 text-yellow-500/80 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    <span>100% in your browser</span>
+                </p>
+                <ol class="space-y-6" role="list">
+                    <li class="ds-reveal-item">
+                        <div class="hiw-step-card flex gap-5 group">
+                            <span class="hiw-step-num flex-shrink-0 w-12 h-12 rounded-none bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-lg ring-1 ring-yellow-500/25" aria-hidden="true">1</span>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="upload" class="w-5 h-5 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    Upload
+                                </h3>
+                                <p class="text-neutral-300 text-base mt-1 leading-relaxed">CSV, Excel, or JSON. <span class="text-yellow-100/90">Your file stays on your computer.</span></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="ds-reveal-item">
+                        <div class="hiw-step-card flex gap-5 group">
+                            <span class="hiw-step-num flex-shrink-0 w-12 h-12 rounded-none bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-lg ring-1 ring-yellow-500/25" aria-hidden="true">2</span>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="list-checks" class="w-5 h-5 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    Select &amp; clean
+                                </h3>
+                                <p class="text-neutral-300 text-base mt-1 leading-relaxed">Pick columns (phone, NI, postcode, sort code, email, names). <span class="text-yellow-100/90">Auto-detect available.</span></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="ds-reveal-item">
+                        <div class="hiw-step-card flex gap-5 group">
+                            <span class="hiw-step-num flex-shrink-0 w-12 h-12 rounded-none bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-lg ring-1 ring-yellow-500/25" aria-hidden="true">3</span>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="download" class="w-5 h-5 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    Download
+                                </h3>
+                                <p class="text-neutral-300 text-base mt-1 leading-relaxed">Export CSV, Excel, or JSON. <span class="text-yellow-100/90">Full issues report included.</span></p>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+                <hr class="ds-section-hr ds-reveal-item" aria-hidden="true">
+                <div class="ds-reveal-item">
+                    <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+                        <!-- Left: We validate data types -->
+                        <div class="ds-vocab-card shadow-2xl shadow-black/40 ring-1 ring-white/10">
+                            <div class="px-6 py-4 border-b border-white/5">
+                                <h3 class="text-lg font-semibold text-white">We validate</h3>
+                                <p class="text-sm text-neutral-500 mt-0.5">7 UK data types</p>
+                            </div>
+                            <div class="ds-vocab-list">
+                                <div class="ds-reveal-item ds-vocab-item group">
+                                    <i data-lucide="phone" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    <span class="ds-vocab-label">Phone numbers</span>
+                                </div>
+                                <div class="ds-reveal-item ds-vocab-item group">
+                                    <i data-lucide="badge" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    <span class="ds-vocab-label">NI numbers</span>
+                                </div>
+                                <div class="ds-reveal-item ds-vocab-item group">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    <span class="ds-vocab-label">Postcodes</span>
+                                </div>
+                                <div class="ds-reveal-item ds-vocab-item group">
+                                    <i data-lucide="hash" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    <span class="ds-vocab-label">Sort codes</span>
+                                </div>
+                                <div class="ds-reveal-item ds-vocab-item group">
+                                    <i data-lucide="landmark" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    <span class="ds-vocab-label">Bank accounts</span>
+                                </div>
+                                <div class="ds-reveal-item ds-vocab-item group">
+                                    <i data-lucide="mail" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    <span class="ds-vocab-label">Emails</span>
+                                </div>
+                                <div class="ds-reveal-item ds-vocab-item group">
+                                    <i data-lucide="type" class="w-5 h-5 text-yellow-400/80 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                    <span class="ds-vocab-label">Name splitting</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right: Try it - Interactive demo -->
+                        <div class="ds-reveal-item flex flex-col">
+                            <h3 id="try-demo-heading" class="text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">Try it now</h3>
+                            <p class="text-base md:text-lg font-medium text-neutral-300 mb-5">Messy data in. Clean data out. <span class="text-yellow-400 font-semibold">Instant.</span></p>
+                            <div class="try-demo-card flex-1 flex flex-col bg-neutral-900/95 rounded-2xl border border-neutral-600/80 p-6 md:p-8 transition-all duration-300 focus-within:border-yellow-500/50 focus-within:shadow-[0_0_0_1px_rgba(234,179,8,0.2)] min-h-[280px]">
+                                <label for="mini-demo-input" class="ds-reveal-item block text-sm font-semibold uppercase tracking-wider text-neutral-400 mb-3">Paste or type any UK data</label>
+                                <div class="ds-reveal-item flex flex-wrap gap-1.5 mb-3">
+                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide bg-yellow-500/10 text-yellow-400/90 border border-yellow-500/20">Phone</span>
+                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide bg-yellow-500/10 text-yellow-400/90 border border-yellow-500/20">NI</span>
+                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide bg-yellow-500/10 text-yellow-400/90 border border-yellow-500/20">Postcode</span>
+                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide bg-yellow-500/10 text-yellow-400/90 border border-yellow-500/20">Sort code</span>
+                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide bg-yellow-500/10 text-yellow-400/90 border border-yellow-500/20">Email</span>
+                                </div>
+                                <input type="text" id="mini-demo-input" placeholder="e.g. 07700900123, AB123456C, SW1A1AA..." class="ds-reveal-item w-full px-4 py-4 text-base md:text-lg bg-neutral-800/80 border-2 border-neutral-600 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-yellow-500/60 focus:bg-neutral-800 transition-colors duration-200" aria-describedby="mini-demo-output">
+                                <div class="ds-reveal-item mt-5 p-5 bg-neutral-800/60 rounded-xl border border-neutral-700/80 flex-1 flex flex-col justify-center min-h-[4.5rem]">
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-2">Result</p>
+                                    <div id="mini-demo-output" class="try-demo-result is-empty flex items-center gap-2 min-h-[1.75rem] text-lg md:text-xl font-mono" role="status" aria-live="polite">
+                                        <span class="try-demo-check hidden flex-shrink-0 text-green-400" aria-hidden="true">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                        </span>
+                                        <span class="try-demo-text">—</span>
+                                    </div>
+                                </div>
+                                <p class="mt-5 flex items-center gap-2 text-sm font-semibold text-neutral-400">
+                                    <svg class="w-5 h-5 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                    <span>100% in-browser. Nothing leaves your device.</span>
+                                </p>
+                            </div>
+                            <a href="/validation-rules.php" class="hiw-rules-link mt-4 inline-flex items-center gap-1.5 text-yellow-400 hover:text-yellow-300 font-medium text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded">
+                                Full rules <span class="hiw-arrow" aria-hidden="true">→</span>
                             </a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Key info (always visible, no toggles) -->
+            <section id="key-info" class="ds-scroll-reveal max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-0 md:pt-12" aria-labelledby="key-info-heading">
+                <hr class="ds-section-hr ds-section-hr-section-top" aria-hidden="true">
+                <h2 id="key-info-heading" class="ds-reveal-item text-2xl font-bold text-white mb-2">What you should know</h2>
+                <p class="ds-reveal-item text-neutral-400 text-sm mb-6">Everything you need in one place.</p>
+                <div class="space-y-6">
+                    <article class="ds-reveal-item key-info-item group flex gap-4 transition-colors duration-200">
+                        <span class="flex-shrink-0 w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 group-hover:border-yellow-500/40 transition-colors" aria-hidden="true">
+                            <i data-lucide="lock" class="w-6 h-6 text-yellow-400 group-hover:text-yellow-300 transition-colors"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-semibold text-yellow-200 mb-1.5 transition-colors duration-200 group-hover:text-yellow-100">Is my data private?</h3>
+                            <p class="text-neutral-300 text-base leading-relaxed">Yes, 100% private. All data processing happens in your browser — your files never leave your device. No servers, no databases, no third parties can access your data.</p>
+                        </div>
+                    </article>
+                    <article class="ds-reveal-item key-info-item group flex gap-4 transition-colors duration-200">
+                        <span class="flex-shrink-0 w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 group-hover:border-yellow-500/40 transition-colors" aria-hidden="true">
+                            <i data-lucide="list" class="w-6 h-6 text-yellow-400 group-hover:text-yellow-300 transition-colors"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-semibold text-yellow-200 mb-1.5 transition-colors duration-200 group-hover:text-yellow-100">What UK data formats can I validate?</h3>
+                            <p class="text-neutral-300 text-base leading-relaxed">UK phone numbers (mobile and landline), National Insurance numbers, postcodes, bank sort codes and account numbers, email addresses, and name splitting. All validation follows official UK standards.</p>
+                        </div>
+                    </article>
+                    <article class="ds-reveal-item key-info-item group flex gap-4 transition-colors duration-200">
+                        <span class="flex-shrink-0 w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 group-hover:border-yellow-500/40 transition-colors" aria-hidden="true">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-yellow-400 group-hover:text-yellow-300 transition-colors"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-semibold text-yellow-200 mb-1.5 transition-colors duration-200 group-hover:text-yellow-100">Is it GDPR compliant?</h3>
+                            <p class="text-neutral-300 text-base leading-relaxed">Yes. Because all processing happens in your browser, we are not a data processor under GDPR. Your data never leaves your device.</p>
+                        </div>
+                    </article>
+                    <article class="ds-reveal-item key-info-item group flex gap-4 transition-colors duration-200">
+                        <span class="flex-shrink-0 w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 group-hover:border-yellow-500/40 transition-colors" aria-hidden="true">
+                            <i data-lucide="file-text" class="w-6 h-6 text-yellow-400 group-hover:text-yellow-300 transition-colors"></i>
+                        </span>
+                        <div>
+                            <h3 class="font-semibold text-yellow-200 mb-1.5 transition-colors duration-200 group-hover:text-yellow-100">What file formats are supported?</h3>
+                            <p class="text-neutral-300 text-base leading-relaxed">Upload CSV, Excel (XLSX/XLS), or JSON. Export cleaned data in CSV, Excel, or JSON.</p>
+                        </div>
+                    </article>
+                </div>
+                <hr class="ds-section-hr ds-section-hr-tight ds-reveal-item" aria-hidden="true">
+                <div class="ds-reveal-item key-info-cta flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="/register.php" class="key-cta-link group inline-flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold shadow-lg shadow-black/20 transition-all duration-200 hover:shadow-xl hover:shadow-yellow-500/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                        Start free trial
+                        <span class="key-cta-arrow opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" aria-hidden="true">→</span>
+                    </a>
+                    <a href="/pricing.php" class="key-pricing-link inline-flex items-center justify-center px-5 py-2.5 rounded-lg border-2 border-neutral-600 text-neutral-300 hover:border-yellow-500/60 hover:text-white transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                        Pricing
+                    </a>
+                </div>
+            </section>
+
         <?php endif; ?>
 
         <!-- File Upload Section -->
         <?php if ($user): ?>
-            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
-                <h2 class="text-2xl font-bold text-center mb-2">Upload & Clean Your Data</h2>
-                <p class="text-center text-slate-700 mb-6 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="max-w-4xl mx-auto bg-neutral-900 rounded-xl border border-neutral-700 p-8">
+                <h2 class="text-2xl font-bold text-center text-white mb-2">Upload & Clean Your Data</h2>
+                <p class="text-center text-neutral-400 mb-6 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                     Your files are processed in your browser - 100% private & secure
@@ -406,27 +496,71 @@ if ($user) {
 
                 <?php if (!$subscription): ?>
                     <!-- Subscription Info Message -->
-                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Choose a Plan to Get Started</h3>
-                        <p class="text-gray-700 mb-4">
-                            Choose Lifetime Beta (£99.99 one-time) or subscribe monthly (£29.99) or annually (£249.99) for ongoing access.
+                    <div class="bg-neutral-800 border border-neutral-700 rounded-lg p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-white mb-2">Start Your 7-Day Free Trial</h3>
+                        <p class="text-neutral-400 mb-4">
+                            New users get 7 days of full access — upload your own files, clean unlimited data, export results. No card required.
                         </p>
-                        <a href="/pricing.php" class="inline-block bg-slate-700 text-white px-6 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+                        <a href="/register.php" class="inline-block ds-btn-primary px-6 py-2">
+                            Sign Up Free
+                        </a>
+                        <span class="text-neutral-500 mx-3">or</span>
+                        <a href="/pricing.php" class="inline-block text-yellow-400 hover:text-yellow-300 underline">
                             View Plans
                         </a>
                     </div>
+                <?php else: ?>
+                    <?php
+                    // Check if current subscription is a trial
+                    $subscriptionFeatures = json_decode($subscription['features'] ?? '{}', true) ?: [];
+                    $isTrial = !empty($subscriptionFeatures['trial']);
+                    if ($isTrial && isset($subscription['end_date'])) {
+                        $endDate = new DateTime($subscription['end_date']);
+                        $now = new DateTime();
+                        $daysLeft = $now->diff($endDate)->days;
+                        $hoursLeft = $now->diff($endDate)->h;
+                        $isExpiringSoon = $daysLeft <= 2;
+                    ?>
+                        <!-- Trial Countdown Message -->
+                        <div class="bg-gradient-to-r from-green-500/10 to-yellow-500/10 border border-green-500/30 rounded-lg p-6 mb-6">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-white mb-1 flex items-center">
+                                        <svg class="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Free Trial Active
+                                    </h3>
+                                    <p class="text-neutral-300 mb-2">
+                                        <?php if ($daysLeft > 0): ?>
+                                            You have <span class="font-bold text-green-400"><?php echo $daysLeft; ?> day<?php echo $daysLeft !== 1 ? 's' : ''; ?></span> left in your free trial.
+                                        <?php else: ?>
+                                            Your trial expires in <span class="font-bold text-green-400"><?php echo $hoursLeft; ?> hour<?php echo $hoursLeft !== 1 ? 's' : ''; ?></span>.
+                                        <?php endif; ?>
+                                    </p>
+                                    <p class="text-sm text-neutral-400">
+                                        Full access to all features. Subscribe before it ends to continue cleaning your data.
+                                    </p>
+                                </div>
+                                <a href="/pricing.php" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap ml-4">
+                                    <?php echo $isExpiringSoon ? 'Subscribe Now' : 'View Plans'; ?>
+                                </a>
+                            </div>
+                        </div>
+                    <?php } ?>
                 <?php endif; ?>
 
                 <!-- File Upload Form (always visible to authenticated users) -->
                 <form id="uploadForm" class="space-y-6 <?php echo !$subscription ? 'opacity-50 pointer-events-none' : ''; ?>">
-                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors">
+                    <div class="border-2 border-dashed border-neutral-600 rounded-xl p-6 text-center hover:border-yellow-500 transition-colors">
                         <input type="file" id="fileInput" class="hidden" accept=".csv,.xlsx,.xls,.txt,.json" <?php echo !$subscription ? 'disabled' : ''; ?>>
                         <label for="fileInput" class="cursor-pointer">
-                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                             </svg>
-                            <p class="text-lg text-gray-600">Drop your file here or click to browse</p>
-                            <p class="text-sm text-gray-500 mt-2">Supports CSV, Excel, JSON, and text files</p>
+                            <p class="text-lg text-gray-600">Drop your file here or click to choose</p>
+                            <p class="text-sm text-gray-500 mt-2">CSV, Excel (.xlsx, .xls), JSON, or text files</p>
+                            <?php if ($subscription): ?><p class="text-xs text-neutral-500 mt-3">First time? <a href="/example.php" class="text-yellow-400 hover:text-yellow-300 underline">Try with sample data</a> to see how it works.</p><?php endif; ?>
                             <p id="fileSizeLimit" class="text-xs text-gray-400 mt-1"></p>
                         </label>
                     </div>
@@ -456,7 +590,7 @@ if ($user) {
                                     <svg class="w-4 h-4 mr-2 mt-0.5 text-slate-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                     </svg>
-                                    All data types: Phone, NI, Postcodes, Sort Codes, Bank Accounts, Name Splitting
+                                    All data types: Phone, NI, Postcodes, Sort Codes, Bank Accounts, Email, Name Splitting
                                 </li>
                                 <?php
                                 $features = json_decode($subscription['features'], true);
@@ -480,57 +614,65 @@ if ($user) {
 
                     <!-- Field Selection (hidden by default) -->
                     <div id="fieldSelection" class="hidden">
-                        <h3 class="text-lg font-bold mb-4">Select columns to clean:</h3>
+                        <h3 class="text-lg font-bold mb-1 text-white">Select columns to clean</h3>
+                        <p class="text-sm text-neutral-400 mb-4">Pick which columns contain UK data to validate. Use Auto-Select to detect phone, NI, postcode, sort code, email, and name columns automatically.</p>
                         <div id="fieldCheckboxes"></div>
                         <div class="flex gap-2 mt-4">
-                            <button type="button" id="selectAllBtn" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" style="cursor: pointer;">Select All</button>
-                            <button type="button" id="clearAllBtn" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" style="cursor: pointer;">Clear All</button>
-                            <button type="button" id="autoSelectBtn" class="px-4 py-2 bg-slate-200 rounded hover:bg-slate-300 transition-colors" style="cursor: pointer;">Auto-Select</button>
+                            <button type="button" id="selectAllBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 font-medium" style="cursor: pointer;">Select All</button>
+                            <button type="button" id="clearAllBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 font-medium" style="cursor: pointer;">Clear All</button>
+                            <button type="button" id="autoSelectBtn" class="px-4 py-2 bg-yellow-500 text-black rounded hover:bg-yellow-400 font-medium transition-colors" style="cursor: pointer;">Auto-Select</button>
                         </div>
-                        <div id="fieldSelectionStatus" class="mt-3"></div>
+                        <div id="fieldSelectionStatus" class="mt-3 text-neutral-300"></div>
 
                         <!-- Phone Number Format Selection -->
-                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold mb-3">Phone Number Format:</h4>
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg border border-neutral-600">
+                            <h4 class="font-semibold mb-3 text-gray-900">Phone Number Format:</h4>
                             <div class="flex gap-6">
-                                <label class="flex items-center cursor-pointer">
+                                <label class="flex items-center cursor-pointer text-gray-900">
                                     <input type="radio" name="phoneFormat" value="international" checked class="mr-2">
                                     <span>International (+44 7700 900123)</span>
                                 </label>
-                                <label class="flex items-center cursor-pointer">
+                                <label class="flex items-center cursor-pointer text-gray-900">
                                     <input type="radio" name="phoneFormat" value="uk" class="mr-2">
                                     <span>UK (07700 900123)</span>
                                 </label>
                             </div>
                             <p class="text-sm text-gray-600 mt-2">Choose how you want phone numbers formatted in the output</p>
                         </div>
+
+                        <!-- Custom email domain corrections (shown when an email column is selected) -->
+                        <div id="emailDomainTyposSection" class="hidden mt-6 p-4 bg-gray-50 rounded-lg border border-neutral-600">
+                            <h4 class="font-semibold mb-2 text-gray-900">Custom email domain corrections</h4>
+                            <p class="text-sm text-gray-700 mb-2">Add your own domain typo fixes (e.g. <code class="bg-gray-200 px-1 rounded text-gray-800">my-orgcom</code> → <code class="bg-gray-200 px-1 rounded text-gray-800">myorg.com</code>). One per line: <code class="bg-gray-200 px-1 rounded text-gray-800">typo → correct</code> or <code class="bg-gray-200 px-1 rounded text-gray-800">typo=correct</code>.</p>
+                            <textarea id="emailDomainTyposInput" class="w-full rounded border border-gray-300 p-2 text-sm font-mono min-h-[80px] text-gray-900 bg-white" placeholder="my-orgcom → myorg.com&#10;myorgcom → myorg.com"></textarea>
+                        </div>
                     </div>
 
                     <!-- Preview Section (hidden by default) -->
-                    <div id="previewSection" class="hidden mt-6 p-4 bg-blue-50 border-2 border-blue-400 rounded">
-                        <h4 class="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                    <div id="previewSection" class="hidden mt-6 p-4 bg-amber-50 border-2 border-yellow-500/60 rounded text-gray-900">
+                        <h4 class="font-semibold text-amber-900 mb-3 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                             </svg>
                             Preview: What will happen
                         </h4>
-                        <div id="transformationSummary" class="mb-4">
+                        <div id="transformationSummary" class="mb-4 text-gray-900">
                             <!-- Plain English descriptions will be inserted here -->
                         </div>
                         <div id="previewBeforeAfter" class="mt-4">
                             <div class="flex items-center justify-between mb-2">
-                                <h5 class="text-sm font-semibold text-blue-800">Data Preview (first 5 rows):</h5>
+                                <h5 class="text-sm font-semibold text-amber-900">Data Preview (first 5 rows):</h5>
                                 <div class="flex items-center gap-2">
-                                    <button type="button" id="previewToggleBefore" class="px-3 py-1 text-xs font-medium rounded border-2 border-blue-600 bg-blue-600 text-white">
+                                    <button type="button" id="previewToggleBefore" class="px-3 py-1 text-xs font-medium rounded border-2 border-yellow-500 bg-yellow-500 text-black">
                                         Before
                                     </button>
-                                    <button type="button" id="previewToggleAfter" class="px-3 py-1 text-xs font-medium rounded border-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                                    <button type="button" id="previewToggleAfter" class="px-3 py-1 text-xs font-medium rounded border-2 border-gray-300 bg-white text-gray-800 hover:bg-gray-50">
                                         After
                                     </button>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto bg-white rounded border border-blue-200">
+                            <div class="overflow-x-auto bg-white rounded border border-amber-200">
                                 <table class="min-w-full border-collapse text-xs" id="previewBeforeAfterTable">
                                     <thead id="previewBeforeAfterHeader" class="bg-gray-100">
                                         <!-- Headers will be inserted here -->
@@ -563,7 +705,7 @@ if ($user) {
                                 </div>
                                 <div id="errorSuggestion" class="hidden mt-3 text-sm">
                                     <div class="bg-red-100 border border-red-200 rounded-md p-3">
-                                        <p class="font-medium text-red-800 mb-1">How to fix:</p>
+                                        <p class="font-medium text-red-800 mb-1">What to try:</p>
                                         <p id="errorSuggestionText" class="text-red-700"></p>
                                     </div>
                                 </div>
@@ -571,29 +713,45 @@ if ($user) {
                         </div>
                     </div>
 
-                    <!-- Loading Overlay (hidden by default) -->
-                    <div id="loadingOverlay" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-                        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
-                            <div class="text-center">
-                                <!-- Spinner -->
-                                <div class="inline-flex items-center justify-center w-16 h-16 mb-4">
-                                    <svg class="animate-spin h-16 w-16 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
+                    <!-- Loading Overlay – upload-style progress card with animations -->
+                    <div id="loadingOverlay" class="hidden fixed inset-0 flex items-center justify-center z-50 ds-loading-overlay-backdrop" style="background: rgba(0,0,0,0.75);">
+                        <div id="loadingOverlayCard" class="ds-loading-overlay-card bg-neutral-900 rounded-2xl border border-neutral-700 shadow-2xl p-6 md:p-8 max-w-md w-full mx-4 overflow-hidden">
+                            <!-- Processing state -->
+                            <div id="loadingProcessingState" class="space-y-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-yellow-500/15 flex items-center justify-center">
+                                        <svg class="animate-spin h-6 w-6 text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-neutral-400 uppercase tracking-wide">Processing</p>
+                                        <p class="text-lg font-semibold text-white truncate" id="loadingFileName">Your file</p>
+                                        <p class="text-sm text-neutral-500" id="loadingFileSize">—</p>
+                                    </div>
                                 </div>
-
-                                <!-- Loading Text -->
-                                <h3 class="text-xl font-bold text-gray-900 mb-2" id="loadingTitle">Processing Your Data</h3>
-                                <p class="text-gray-600 mb-4" id="loadingMessage">Please wait while we validate your data...</p>
-
-                                <!-- Progress Bar -->
-                                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
-                                    <div id="loadingProgressBar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                <div class="space-y-2">
+                                    <div class="ds-progress-bar-track w-full bg-neutral-800 rounded-full h-2.5">
+                                        <div id="loadingProgressBar" class="ds-progress-bar-fill bg-gradient-to-r from-yellow-500 to-yellow-400 h-2.5 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-neutral-400" id="loadingMessage">Validating your data…</span>
+                                        <span class="font-medium text-yellow-400 tabular-nums" id="loadingProgress">0%</span>
+                                    </div>
                                 </div>
-
-                                <!-- Progress Text -->
-                                <p class="text-sm text-gray-500" id="loadingProgress">Preparing...</p>
+                            </div>
+                            <!-- Success state (hidden by default) -->
+                            <div id="loadingSuccessState" class="hidden flex flex-col items-center justify-center py-4 text-center">
+                                <div class="ds-loading-success-glow relative w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-3">
+                                    <div class="ds-loading-success-circle w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
+                                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                            <path class="ds-check-path" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-lg font-semibold text-white">Complete!</p>
+                                <p class="text-sm text-neutral-400 mt-0.5">Your data is ready</p>
                             </div>
                         </div>
                     </div>
@@ -618,15 +776,15 @@ if ($user) {
                                         You're about to permanently remove <strong id="duplicateRemovalCount" class="text-amber-700">0</strong> duplicate row(s) from your export. This action cannot be undone.
                                     </p>
 
-                                    <div class="bg-blue-50 border-l-4 border-blue-400 p-3">
+                                    <div class="bg-amber-50 border-l-4 border-yellow-500 p-3">
                                         <div class="flex items-start">
                                             <div class="flex-shrink-0">
-                                                <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg class="h-5 w-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                                                 </svg>
                                             </div>
                                             <div class="ml-3 flex-1">
-                                                <p class="text-xs md:text-sm text-blue-700">
+                                                <p class="text-xs md:text-sm text-amber-800">
                                                     The first occurrence of each duplicate will be kept. All subsequent duplicates will be removed.
                                                 </p>
                                             </div>
@@ -652,23 +810,21 @@ if ($user) {
                         <!-- Data Profiling Section -->
                         <div id="dataProfilingSection" class="mb-8 hidden">
                             <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                 </svg>
                                 1. Data Profiling
                             </h4>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                    <p class="text-sm text-blue-700 font-medium">Missing Values</p>
-                                    <p class="text-2xl font-bold text-blue-900" id="totalMissing">0</p>
-                                    <button type="button" id="showMissingValuesBtn" class="hidden mt-2 text-xs text-blue-600 hover:text-blue-800 underline" onclick="document.getElementById('missingValuesTable').scrollIntoView({behavior: 'smooth', block: 'start'});">
-                                        View details
-                                    </button>
-                                    <p class="text-xs text-blue-600 mt-1 opacity-75">Empty, null, or N/A values</p>
+                                <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                                    <p class="text-sm text-amber-800 font-medium">Missing Values</p>
+                                    <p class="text-2xl font-bold text-amber-900" id="totalMissing">0</p>
+                                    <button type="button" id="showMissingValuesBtn" class="hidden mt-2 text-xs text-amber-600 hover:text-amber-800 underline focus:outline-none">View details</button>
+                                    <p class="text-xs text-amber-600 mt-1 opacity-75">Empty, null, or N/A values</p>
                                 </div>
-                                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                    <p class="text-sm text-purple-700 font-medium">Duplicate Rows</p>
-                                    <p class="text-2xl font-bold text-purple-900" id="totalDuplicates">0</p>
+                                <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                                    <p class="text-sm text-amber-800 font-medium">Duplicate Rows</p>
+                                    <p class="text-2xl font-bold text-amber-900" id="totalDuplicates">0</p>
                                 </div>
                                 <div class="bg-green-50 p-4 rounded-lg border border-green-200">
                                     <p class="text-sm text-green-700 font-medium">Unique Rows</p>
@@ -715,10 +871,10 @@ if ($user) {
                             </div>
                         </div>
 
-                        <!-- Tabs -->
-                        <div class="border-b mb-4">
-                            <button type="button" class="tab-btn border-b-2 border-slate-700 text-slate-700 px-4 py-2 font-semibold" data-tab="summary">Summary</button>
-                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="preview">
+                        <!-- Tabs (light bar so labels are visible on dark section) -->
+                        <div class="border-b border-neutral-600 mb-4 bg-white rounded-t-lg px-2 pt-2">
+                            <button type="button" class="tab-btn border-b-2 border-yellow-500 text-amber-800 px-4 py-2 font-semibold" data-tab="summary">Summary</button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-700 px-4 py-2 font-semibold hover:text-gray-900" data-tab="preview">
                                 <span class="flex items-center gap-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -727,20 +883,20 @@ if ($user) {
                                     Full Preview
                                 </span>
                             </button>
-                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="cleaned">Cleaned</button>
-                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-500 px-4 py-2 font-semibold" data-tab="issues">Issues</button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-700 px-4 py-2 font-semibold hover:text-gray-900" data-tab="cleaned">Cleaned</button>
+                            <button type="button" class="tab-btn border-b-2 border-transparent text-gray-700 px-4 py-2 font-semibold hover:text-gray-900" data-tab="issues">Issues</button>
                         </div>
 
-                        <!-- Tab Content -->
-                        <div id="summaryTab" class="tab-content active">
+                        <!-- Tab Content (light bg so readable on dark section) -->
+                        <div id="summaryTab" class="tab-content active bg-white rounded-b-lg px-4 py-4 text-gray-900">
                             <div class="overflow-x-auto">
                                 <table class="min-w-full">
                                     <thead>
                                         <tr>
-                                            <th class="px-4 py-2 text-left">Row</th>
-                                            <th class="px-4 py-2 text-left">Column</th>
-                                            <th class="px-4 py-2 text-left">Original</th>
-                                            <th class="px-4 py-2 text-left">Cleaned</th>
+                                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Row</th>
+                                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Column</th>
+                                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Original</th>
+                                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Cleaned</th>
                                         </tr>
                                     </thead>
                                     <tbody id="summaryTableBody"></tbody>
@@ -748,15 +904,15 @@ if ($user) {
                             </div>
                         </div>
 
-                        <div id="previewTab" class="tab-content hidden">
-                            <div class="bg-blue-50 border-2 border-blue-400 p-6 rounded text-center">
-                                <svg class="w-12 h-12 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div id="previewTab" class="tab-content hidden bg-white rounded-b-lg px-4 py-4">
+                            <div class="bg-amber-50 border-2 border-yellow-500/60 p-6 rounded text-center">
+                                <svg class="w-12 h-12 text-yellow-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">View Full Preview Report</h3>
                                 <p class="text-gray-600 mb-4">See exactly what your downloaded file will contain. All columns preserved in their original order, with cleaned values applied only to selected fields.</p>
-                                <button type="button" id="previewReportBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto">
+                                <button type="button" id="previewReportBtn" class="px-6 py-3 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors flex items-center gap-2 mx-auto">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -766,14 +922,14 @@ if ($user) {
                             </div>
                         </div>
 
-                        <div id="cleanedTab" class="tab-content hidden">
-                            <div class="bg-blue-50 border-2 border-blue-400 p-6 rounded text-center">
-                                <svg class="w-12 h-12 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div id="cleanedTab" class="tab-content hidden bg-white rounded-b-lg px-4 py-4">
+                            <div class="bg-amber-50 border-2 border-yellow-500/60 p-6 rounded text-center">
+                                <svg class="w-12 h-12 text-yellow-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">View Cleaned Data Report</h3>
                                 <p class="text-gray-600 mb-4">See a detailed report of all cleaned data with original and fixed values</p>
-                                <button type="button" id="cleanedReportBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto">
+                                <button type="button" id="cleanedReportBtn" class="px-6 py-3 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors flex items-center gap-2 mx-auto">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
@@ -782,7 +938,7 @@ if ($user) {
                             </div>
                         </div>
 
-                        <div id="issuesTab" class="tab-content hidden">
+                        <div id="issuesTab" class="tab-content hidden bg-white rounded-b-lg px-4 py-4">
                             <div class="bg-red-50 border-2 border-red-400 p-6 rounded text-center">
                                 <svg class="w-12 h-12 text-red-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -814,10 +970,10 @@ if ($user) {
                         </div>
 
                         <!-- Export Options -->
-                        <div class="mt-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-6 space-y-5">
+                        <div class="mt-6 bg-amber-50 border-2 border-amber-200 rounded-lg p-6 space-y-5">
                             <div>
                                 <h4 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                     </svg>
                                     Download Options - Customize Your Export
@@ -827,13 +983,13 @@ if ($user) {
 
                             <div>
                                 <label class="block text-sm font-semibold text-gray-900 mb-2">Select Your Download Format:</label>
-                                <select id="downloadFormat" class="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white font-medium text-gray-900">
+                                <select id="downloadFormat" class="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white font-medium text-gray-900">
                                     <option value="csv">CSV (Comma Separated Values)</option>
                                     <option value="excel">Excel (.xlsx)</option>
                                     <option value="json">JSON</option>
                                 </select>
-                                <p class="text-xs text-blue-700 mt-2 flex items-center gap-1 font-medium">
-                                    <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <p class="text-xs text-amber-800 mt-2 flex items-center gap-1 font-medium">
+                                    <svg class="w-4 h-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                     </svg>
                                     <span>You can download in any format, regardless of what you uploaded!</span>
@@ -849,7 +1005,7 @@ if ($user) {
                                             <span class="text-sm font-medium text-gray-900 block">Remove Duplicate Rows (Keep First Occurrence)</span>
                                             <span class="text-sm text-gray-600 block mt-1">
                                                 <span id="duplicateCountMessage">Checking for duplicates...</span>
-                                                <span class="block mt-1 text-blue-700"><svg class="inline w-4 h-4 text-blue-700 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> In the Full Preview tab: <strong>Blue</strong> = original rows with duplicates, <strong>Yellow</strong> = duplicate rows to be removed.</span>
+                                                <span class="block mt-1 text-amber-800"><svg class="inline w-4 h-4 text-yellow-500 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> In the Full Preview tab: <strong>Amber</strong> = original rows with duplicates, <strong>Yellow</strong> = duplicate rows to be removed.</span>
                                             </span>
                                         </div>
                                     </label>
@@ -867,14 +1023,14 @@ if ($user) {
                                 <h5 class="text-sm font-semibold text-gray-900 mb-3">Export Customisation:</h5>
                                 <div class="space-y-4">
                                     <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
-                                        <input type="checkbox" id="includeIssuesColumn" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked>
+                                        <input type="checkbox" id="includeIssuesColumn" class="mt-1 mr-3 h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded" checked>
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-gray-900 block">Include "Issues" Column</span>
                                             <span class="text-sm text-gray-600 block mt-1">Add a column listing any fields that still need attention. This helps you identify which rows may require manual review.</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start cursor-pointer group hover:bg-gray-50 p-2 rounded -m-2 transition-colors">
-                                        <input type="checkbox" id="onlyRowsWithIssues" class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                        <input type="checkbox" id="onlyRowsWithIssues" class="mt-1 mr-3 h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded">
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-gray-900 block">Export Only Rows With Issues (Optional)</span>
                                             <span class="text-sm text-gray-600 block mt-1">When checked, you'll download <strong>only</strong> the rows that have validation issues (instead of the full file). Perfect for creating a focused review file to fix manually before merging back into your main dataset.</span>
@@ -898,16 +1054,16 @@ if ($user) {
                         </div>
 
                         <!-- Download Confirmation Summary -->
-                        <div id="downloadSummary" class="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-6 shadow-md">
+                        <div id="downloadSummary" class="hidden mt-6 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-xl p-6 shadow-md">
                             <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 Ready to Download
                             </h4>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div class="bg-white rounded-lg p-4 border border-blue-200">
-                                    <div class="text-2xl font-bold text-blue-600" id="summaryTotalRows">0</div>
+                                <div class="bg-white rounded-lg p-4 border border-amber-200">
+                                    <div class="text-2xl font-bold text-amber-800" id="summaryTotalRows">0</div>
                                     <div class="text-sm text-gray-600">Total rows</div>
                                 </div>
                                 <div class="bg-white rounded-lg p-4 border border-green-200">
@@ -919,7 +1075,7 @@ if ($user) {
                                     <div class="text-sm text-gray-600">Rows with issues</div>
                                 </div>
                             </div>
-                            <div class="bg-white rounded-lg p-4 border border-blue-200 space-y-2 text-sm">
+                            <div class="bg-white rounded-lg p-4 border border-amber-200 space-y-2 text-sm">
                                 <div class="flex items-center gap-2">
                                     <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -953,7 +1109,7 @@ if ($user) {
 
                         <!-- Export Buttons -->
                         <div class="mt-8 flex flex-wrap gap-4">
-                            <button type="button" id="exportBtn" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl font-semibold">
+                            <button type="button" id="exportBtn" class="bg-yellow-500 text-black px-8 py-3 rounded-lg hover:bg-yellow-400 transition-colors shadow-lg hover:shadow-xl font-semibold">
                                 Download Cleaned File
                             </button>
                             <button type="button" id="processNewBtn" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
@@ -966,254 +1122,153 @@ if ($user) {
         <?php endif; ?>
 
         <?php if (!$user): ?>
-        <!-- Additional Features Section -->
-        <div class="mt-16">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Powerful Data Cleaning Features</h2>
-            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-                Beyond validation - comprehensive data cleaning tools to prepare your data for use
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- Duplicate Removal -->
-                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
-                    <div class="text-amber-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Duplicate Removal</h3>
-                    <p class="text-gray-600 mb-3">Automatically detect and remove exact duplicate rows. Keep the first occurrence, remove the rest. Visual preview shows which rows will be removed.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Exact duplicate detection</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Visual preview before export</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Optional removal on export</span>
-                        </li>
-                    </ul>
-                </div>
+        <!-- What you get when you upload - flows with dark theme -->
+        <section class="ds-scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6 md:pt-16 md:pb-8">
+            <hr class="ds-section-hr ds-section-hr-section-top" aria-hidden="true">
+            <h2 class="ds-reveal-item text-2xl font-bold text-white mb-2">What you get when you upload</h2>
+            <p class="ds-reveal-item text-neutral-400 max-w-2xl mb-10">Beyond UK validation — duplicates, whitespace, export formats, and detailed reports. All in your browser.</p>
 
-                <!-- Whitespace Cleaning -->
-                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
-                    <div class="text-green-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
+                <div class="ds-animate-fade-slide ds-animate-delay-1 ds-hover-lift bg-neutral-900 rounded-xl border border-neutral-700 p-6 hover:border-neutral-600 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white mb-1">Duplicate removal</h3>
+                            <p class="text-neutral-400 text-sm">Detect exact duplicate rows, preview before export, optionally remove on download.</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Whitespace Cleaning</h3>
-                    <p class="text-gray-600 mb-3">Remove leading and trailing spaces, and collapse multiple spaces to single spaces across all cells. Ensures consistent formatting throughout your dataset.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Trim leading/trailing spaces</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Normalize multiple spaces</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Applied to all columns</span>
-                        </li>
-                    </ul>
                 </div>
-
-                <!-- Multiple Export Formats -->
-                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
-                    <div class="text-purple-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
+                <div class="ds-animate-fade-slide ds-animate-delay-2 ds-hover-lift bg-neutral-900 rounded-xl border border-neutral-700 p-6 hover:border-neutral-600 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white mb-1">Whitespace cleaning</h3>
+                            <p class="text-neutral-400 text-sm">Trim spaces, normalize formatting across all columns automatically.</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Multiple Export Formats</h3>
-                    <p class="text-gray-600 mb-3">Export your cleaned data in CSV, Excel (.xlsx), or JSON format. Choose the format that works best for your workflow, regardless of what you uploaded.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-purple-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>CSV, Excel, or JSON</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-purple-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Export only rows with issues</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-purple-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Optional "Issues" column</span>
-                        </li>
-                    </ul>
                 </div>
-
-                <!-- Comprehensive Reports -->
-                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
+                <div class="ds-animate-fade-slide ds-animate-delay-3 ds-hover-lift bg-neutral-900 rounded-xl border border-neutral-700 p-6 hover:border-neutral-600 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white mb-1">Export your way</h3>
+                            <p class="text-neutral-400 text-sm">CSV, Excel, or JSON — regardless of upload format. Include an issues column if you need it.</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Comprehensive Reports</h3>
-                    <p class="text-gray-600 mb-3">Get detailed HTML reports for issues, cleaned data, and full preview. Exportable, printable, and perfect for sharing with your team or documenting data quality.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Detailed Issues Report</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Cleaned Data Report</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Full Preview Report</span>
-                        </li>
-                    </ul>
                 </div>
-
-                <!-- Data Profiling -->
-                <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
-                    <div class="text-teal-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
+                <div class="ds-animate-fade-slide ds-animate-delay-4 ds-hover-lift bg-neutral-900 rounded-xl border border-neutral-700 p-6 hover:border-neutral-600 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white mb-1">Detailed reports</h3>
+                            <p class="text-neutral-400 text-sm">HTML reports for issues, cleaned data, and preview — exportable, shareable, UK-standard explanations.</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Data Profiling</h3>
-                    <p class="text-gray-600 mb-3">Automatically analyze your data to identify missing values, duplicate rows, and data quality issues. Get insights before cleaning to understand your data better.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-teal-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Missing values detection</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-teal-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Duplicate row counting</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-teal-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Summary statistics</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Detailed Issues Report Feature -->
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 shadow-lg border-2 border-blue-200">
-                    <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-100 text-blue-900 mb-3">
-                        Detailed Reports
-                    </div>
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900">Detailed Issues Report</h3>
-                    <p class="text-gray-600 mb-3">Get comprehensive explanations for every validation issue. See exactly what's wrong, why it's invalid, and how to fix it according to UK standards.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Specific problem identification</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Clear explanations & guidance</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Exportable HTML reports</span>
-                        </li>
-                    </ul>
                 </div>
             </div>
-        </div>
+        </section>
+
+            <!-- Try the example – sample data, reports, full workflow -->
+            <section class="ds-scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" aria-labelledby="try-example-heading">
+                <hr class="ds-section-hr ds-section-hr-section-top" aria-hidden="true">
+                <div class="grid lg:grid-cols-[1fr,minmax(300px,420px)] gap-8 lg:gap-12 items-center">
+                    <div>
+                        <h2 id="try-example-heading" class="ds-reveal-item ds-section-title text-3xl font-bold text-white mb-4 text-left">Try it with sample data — no signup</h2>
+                        <p class="ds-reveal-item text-neutral-300 text-lg leading-relaxed mb-6">Upload our pre-built test file and run through the full workflow. Validate UK data, see the issues report, preview cleaned results, and export — exactly what you'd get with your own files.</p>
+                        <ul class="ds-reveal-item space-y-3">
+                            <li class="flex items-start gap-3 text-neutral-200">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-yellow-500/20 flex items-center justify-center mt-0.5" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5 text-yellow-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                </span>
+                                <span><strong class="text-white">Pre-loaded test file</strong> — phones, NI numbers, postcodes, and more</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-neutral-200">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-yellow-500/20 flex items-center justify-center mt-0.5" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5 text-yellow-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                </span>
+                                <span><strong class="text-white">Full HTML reports</strong> — issues, cleaned data preview, audit trail</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-neutral-200">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-yellow-500/20 flex items-center justify-center mt-0.5" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5 text-yellow-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                </span>
+                                <span><strong class="text-white">Export CSV or Excel</strong> — same output you'd get with your own data</span>
+                            </li>
+                        </ul>
+                        <a href="/example.php" class="ds-reveal-item mt-6 inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                            Open the example
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                        </a>
+                    </div>
+                    <div class="ds-reveal-item">
+                        <a href="/example.php" class="block group focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 rounded-xl">
+                            <div class="rounded-xl border border-neutral-700 overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/5 bg-neutral-900 transition-all duration-300 group-hover:border-neutral-600">
+                                <img src="/assets/images/try-with-example-data.png" alt="Try with Example Data — load sample UK data to try the tool in your browser, 100% private &amp; secure" class="w-full h-auto block">
+                            </div>
+                            <p class="mt-4 text-center text-sm text-neutral-500 group-hover:text-neutral-400 transition-colors">What you'll see when you try the example</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
         <?php endif; ?>
 
         <?php if (!$user): ?>
         <!-- Bespoke & Enterprise Services -->
-        <section id="bespoke-services" class="mt-20">
-            <div class="max-w-6xl mx-auto bg-slate-900 text-white rounded-2xl shadow-2xl p-10 md:p-14 relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at top right, #38bdf8 0%, transparent 55%), radial-gradient(circle at bottom left, #6366f1 0%, transparent 60%);"></div>
-                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <section id="bespoke-services" class="ds-scroll-reveal max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12 md:pt-8 md:pb-16">
+            <hr class="ds-section-hr ds-section-hr-section-top" aria-hidden="true">
+            <div class="ds-animate-fade-slide ds-animate-delay-1 ds-hover-lift max-w-6xl mx-auto bg-neutral-900 rounded-2xl border border-neutral-700 p-8 md:p-12 lg:p-14">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
                     <div>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-slate-800/70 border border-slate-700">Bespoke Data Cleaning</span>
-                        <h2 class="mt-4 text-3xl md:text-4xl font-bold leading-tight">Need specialist rules for internal data?</h2>
-                        <p class="mt-4 text-slate-200 text-base md:text-lg leading-relaxed">
-                            We partner with compliance, ops, and data teams to build in-browser validation for bespoke fields - everything from <span class="font-semibold">region_description</span> to <span class="font-semibold">staff_employee_number</span> and beyond. Share your edge cases and we'll deliver tailor-made rules that run entirely in your users' browsers, keeping sensitive records on-premise and fully GDPR aligned.
+                        <span class="ds-reveal-item inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-neutral-800 border border-neutral-700 text-yellow-400 mb-4">Bespoke Data Cleaning</span>
+                        <h2 class="ds-reveal-item text-2xl md:text-3xl font-bold text-white leading-tight">Need specialist rules for internal data?</h2>
+                        <p class="ds-reveal-item mt-4 text-neutral-400 text-base md:text-lg leading-relaxed">
+                            We partner with compliance, ops, and data teams to build in-browser validation for bespoke fields — from <span class="font-semibold text-white">region_description</span> to <span class="font-semibold text-white">staff_employee_number</span> and beyond. Share your edge cases and we'll deliver tailor-made rules that run entirely in your users' browsers, keeping sensitive records on-premise and fully GDPR aligned.
                         </p>
-                        <ul class="mt-6 space-y-3 text-slate-200 text-sm md:text-base">
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        <ul class="mt-6 space-y-3 text-neutral-300 text-sm md:text-base">
+                            <li class="ds-reveal-item bespoke-benefit-item group flex items-start gap-3 transition-colors duration-200">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-yellow-400 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                 <span>Custom validators for proprietary fields and internal reference codes</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <li class="ds-reveal-item bespoke-benefit-item group flex items-start gap-3 transition-colors duration-200">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-yellow-400 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                 <span>Browser-based deployment ensures zero data leaves your environment</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <li class="ds-reveal-item bespoke-benefit-item group flex items-start gap-3 transition-colors duration-200">
+                                <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-yellow-400 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                 <span>Direct collaboration with your domain experts to codify complex rules</span>
                             </li>
                         </ul>
                     </div>
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-8 backdrop-blur">
-                        <h3 class="text-xl font-semibold">How the bespoke process works</h3>
-                        <ol class="mt-4 space-y-4 text-slate-100 text-sm md:text-base">
-                            <li>
-                                <span class="block font-semibold text-sky-300">1. Discovery workshop</span>
-                                <span class="block mt-1">Share the fields, sample data, and desired outcomes. We map the validation flow together.</span>
+                    <div class="bespoke-process-card bg-neutral-800/50 border border-neutral-700 rounded-xl p-6 md:p-8 transition-all duration-200">
+                        <h3 class="ds-reveal-item text-lg font-semibold text-white">How the bespoke process works</h3>
+                        <ol class="mt-4 space-y-4 text-sm md:text-base">
+                            <li class="ds-reveal-item bespoke-process-step group rounded-lg px-3 py-2 -mx-3 -my-2 transition-colors duration-200 group-hover:bg-neutral-700/30">
+                                <span class="block font-semibold text-yellow-400 transition-colors duration-200 group-hover:text-yellow-300">1. Discovery workshop</span>
+                                <span class="block mt-1 text-neutral-400">Share the fields, sample data, and desired outcomes. We map the validation flow together.</span>
                             </li>
-                            <li>
-                                <span class="block font-semibold text-sky-300">2. Prototype & testing</span>
-                                <span class="block mt-1">We build tailored rules inside our client-side engine and iterate with your team.</span>
+                            <li class="ds-reveal-item bespoke-process-step group rounded-lg px-3 py-2 -mx-3 -my-2 transition-colors duration-200 group-hover:bg-neutral-700/30">
+                                <span class="block font-semibold text-yellow-400 transition-colors duration-200 group-hover:text-yellow-300">2. Prototype & testing</span>
+                                <span class="block mt-1 text-neutral-400">We build tailored rules inside our client-side engine and iterate with your team.</span>
                             </li>
-                            <li>
-                                <span class="block font-semibold text-sky-300">3. Deployment & handover</span>
-                                <span class="block mt-1">Validated rules are shipped into your Simple Data Cleaner workspace with full documentation.</span>
+                            <li class="ds-reveal-item bespoke-process-step group rounded-lg px-3 py-2 -mx-3 -my-2 transition-colors duration-200 group-hover:bg-neutral-700/30">
+                                <span class="block font-semibold text-yellow-400 transition-colors duration-200 group-hover:text-yellow-300">3. Deployment & handover</span>
+                                <span class="block mt-1 text-neutral-400">Validated rules are shipped into your Simple Data Cleaner workspace with full documentation.</span>
                             </li>
                         </ol>
-                        <div class="mt-6 inline-flex flex-col sm:flex-row sm:items-center gap-4">
-                            <a href="/bespoke.php" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all">
+                        <div class="ds-reveal-item mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                            <a href="/bespoke.php" class="inline-flex items-center justify-center gap-2.5 ds-btn-primary px-6 py-3">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10a9 9 0 11-18 0 9 9 0 0118 0zm-9 3l-3-3m0 0l3-3m-3 3h8" /></svg>
-                                Book a discovery call
+                                <span>Book a discovery call</span>
                             </a>
-                            <a href="/how-it-works.php" class="inline-flex items-center justify-center gap-2 text-slate-200 hover:text-white font-semibold">
+                            <a href="/how-it-works.php" class="inline-flex items-center justify-center gap-2 text-neutral-400 hover:text-white font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-900 rounded">
                                 Learn more about our approach
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                             </a>
@@ -1227,10 +1282,48 @@ if ($user) {
 
     <?php include __DIR__ . '/includes/footer.php'; ?>
 
-    <!-- Scripts -->
-    <script src="validators.js?v=<?php echo time(); ?>" defer></script>
-    <script src="fileProcessor.js?v=<?php echo time(); ?>" defer></script>
-    <script src="app.js?v=<?php echo time(); ?>" defer></script>
+    <!-- Scripts: homepage needs only validators (mini-demo); fileProcessor/app load on example.php -->
+    <?php if (!$user): ?>
+    <script src="/hero-shader.js?v=<?php echo time(); ?>" defer></script>
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+    <script <?php echo script_nonce(); ?>>if (typeof lucide !== 'undefined') lucide.createIcons();</script>
+    <?php endif; ?>
+    <script src="/validators.js?v=<?php echo time(); ?>" defer></script>
+    <?php if (!$user): ?>
+    <script <?php echo script_nonce(); ?>>
+    document.addEventListener('DOMContentLoaded', function() {
+        var inp = document.getElementById('mini-demo-input');
+        var out = document.getElementById('mini-demo-output');
+        if (!inp || !out || typeof autoValidate === 'undefined') return;
+        var textEl = out.querySelector('.try-demo-text');
+        var checkEl = out.querySelector('.try-demo-check');
+        function update() {
+            var val = inp.value.trim();
+            out.classList.remove('is-valid', 'is-invalid', 'is-empty', 'is-updated');
+            if (!val) {
+                textEl.textContent = '\u2014';
+                out.classList.add('is-empty');
+                if (checkEl) checkEl.classList.add('hidden');
+                return;
+            }
+            var r = autoValidate(val);
+            var display = r.fixed || r.value || (r.error ? 'Invalid: ' + r.error : '\u2014');
+            textEl.textContent = display;
+            if (r.fixed) {
+                out.classList.add('is-valid');
+                if (checkEl) checkEl.classList.remove('hidden');
+            } else {
+                out.classList.add('is-invalid');
+                if (checkEl) checkEl.classList.add('hidden');
+            }
+            out.classList.add('is-updated');
+            setTimeout(function() { out.classList.remove('is-updated'); }, 400);
+        }
+        inp.addEventListener('input', update);
+        inp.addEventListener('paste', function() { setTimeout(update, 10); });
+    });
+    </script>
+    <?php endif; ?>
 
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
     <?php include __DIR__ . '/includes/analytics.php'; ?>

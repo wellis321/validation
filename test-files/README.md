@@ -41,12 +41,18 @@ This folder contains test files for validating the Simple Data Cleaner workflow.
 - **Contains**: 20 rows with ID, Name, Email, and all UK data fields
 - **Use case**: Test performance with larger files and verify all columns are preserved
 
+### 4. `sample-data-very-large.csv`
+- **Purpose**: Very large dataset for stress and performance testing
+- **Contains**: 10,000 rows with ID, Name, Email, Phone Number, Mobile, National Insurance, Postcode, Sort Code, Bank Account, Address, Notes. Email column includes valid addresses, common typos (e.g. gmial.com, gmail.con), and some invalid values for issue detection.
+- **Use case**: Test browser performance with large files, verify email cleaning at scale, and confirm all validators (including email) behave correctly under load.
+- **Regenerate**: Run `node generate-large-sample.js` in this folder to recreate the file.
+
 ## Test Scenarios
 
 ### Scenario 1: Basic CSV Workflow
 1. Upload `sample-data.csv`
-2. Verify field selection shows all cleanable columns
-3. Select "Phone Number", "Mobile", "National Insurance", "Postcode", "Sort Code"
+2. Verify field selection shows all cleanable columns (including Email when present)
+3. Select "Phone Number", "Mobile", "National Insurance", "Postcode", "Sort Code", "Email" (if column exists)
 4. Process and verify results
 5. Download cleaned file
 
@@ -68,12 +74,18 @@ This folder contains test files for validating the Simple Data Cleaner workflow.
 
 ### Scenario 4: Large File Workflow
 1. Upload `sample-data-large.csv`
-2. Test with all fields selected
+2. Test with all fields selected (including Email)
 3. Verify performance and data integrity
 4. Test duplicate removal
 5. Test export with issues column
 
-### Scenario 5: Error Handling
+### Scenario 5: Very Large File (Stress Test)
+1. Upload `sample-data-very-large.csv` (10,000 rows)
+2. Use Auto-Select to detect all cleanable columns (phone, email, NI, postcode, sort code, bank account)
+3. Process and verify performance; check Issues tab for invalid emails and other validation errors
+4. Optionally export cleaned CSV/Excel to confirm email typo fixes and format normalisation at scale
+
+### Scenario 6: Error Handling
 - The files contain invalid data (invalid phone numbers, postcodes)
 - Missing data fields
 - Duplicate rows
@@ -93,5 +105,6 @@ This folder contains test files for validating the Simple Data Cleaner workflow.
 - All NI numbers follow HMRC standards
 - Postcodes are valid UK postcodes
 - Sort codes are 6-digit UK bank sort codes
+- Email columns (in comprehensive-test-data.csv and sample-data-very-large.csv) include valid addresses, common domain typos (gmial, gmail.con, etc.), and invalid values for testing
 - Some test data intentionally contains errors to test validation
 

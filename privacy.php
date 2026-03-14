@@ -62,7 +62,7 @@ require_once __DIR__ . '/includes/init.php';
                         <svg class="w-5 h-5 text-green-600 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
-                        <span>Validate and clean UK data formats (phone numbers, NI numbers, postcodes, sort codes)</span>
+                        <span>Validate and clean UK data formats (phone numbers, NI numbers, postcodes, sort codes, email addresses)</span>
                     </div>
                     <div class="flex items-start">
                         <svg class="w-5 h-5 text-green-600 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
@@ -121,21 +121,21 @@ require_once __DIR__ . '/includes/init.php';
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">GDPR Compliance</h2>
                 <p class="text-gray-700 mb-4">This application is designed to be fully GDPR compliant:</p>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-blue-900 mb-2">Data Minimization</h4>
-                        <p class="text-sm text-blue-800">We only process the data you explicitly choose to clean</p>
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-amber-900 mb-2">Data Minimization</h4>
+                        <p class="text-sm text-amber-800">We only process the data you explicitly choose to clean</p>
                     </div>
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-blue-900 mb-2">Purpose Limitation</h4>
-                        <p class="text-sm text-blue-800">Data is only used for the stated purpose of validation and cleaning</p>
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-amber-900 mb-2">Purpose Limitation</h4>
+                        <p class="text-sm text-amber-800">Data is only used for the stated purpose of validation and cleaning</p>
                     </div>
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-blue-900 mb-2">Storage Limitation</h4>
-                        <p class="text-sm text-blue-800">No data is stored beyond your current session</p>
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-amber-900 mb-2">Storage Limitation</h4>
+                        <p class="text-sm text-amber-800">No data is stored beyond your current session</p>
                     </div>
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-blue-900 mb-2">Transparency</h4>
-                        <p class="text-sm text-blue-800">All processing happens locally and is visible to you</p>
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-amber-900 mb-2">Transparency</h4>
+                        <p class="text-sm text-amber-800">All processing happens locally and is visible to you</p>
                     </div>
                 </div>
             </section>
@@ -149,23 +149,23 @@ require_once __DIR__ . '/includes/init.php';
                     <li><strong>Cookie consent preferences:</strong> Stored for 365 days to remember your cookie choices</li>
                     <li><strong>Analytics cookies (optional):</strong> Google Analytics 4 to understand how visitors use our website</li>
                 </ul>
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                    <h4 class="font-semibold text-blue-900 mb-2">Google Analytics</h4>
-                    <p class="text-sm text-blue-800 mb-2">
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                    <h4 class="font-semibold text-amber-900 mb-2">Google Analytics</h4>
+                    <p class="text-sm text-amber-800 mb-2">
                         We use Google Analytics 4 to collect anonymous usage statistics about our website, such as:
                     </p>
-                    <ul class="list-disc list-inside space-y-1 text-sm text-blue-800 ml-4">
+                    <ul class="list-disc list-inside space-y-1 text-sm text-amber-800 ml-4">
                         <li>Number of visitors and page views</li>
                         <li>How users navigate through the site</li>
                         <li>Traffic sources (how users found our site)</li>
                         <li>General geographic location (country-level, not specific addresses)</li>
                     </ul>
-                    <p class="text-sm text-blue-800 mt-2">
+                    <p class="text-sm text-amber-800 mt-2">
                         <strong>Important:</strong> Google Analytics only loads if you accept cookies via our cookie banner. 
                         We have enabled IP anonymization, and no personally identifiable information is collected. 
                         Your data cleaning activities (file uploads, processing) are never tracked by analytics.
                     </p>
-                    <p class="text-sm text-blue-800 mt-2">
+                    <p class="text-sm text-amber-800 mt-2">
                         You can opt out of analytics cookies by clicking "Decline" on the cookie banner, or by 
                         <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" class="underline">installing the Google Analytics Opt-out Browser Add-on</a>.
                     </p>
@@ -202,13 +202,13 @@ require_once __DIR__ . '/includes/init.php';
             <!-- Contact -->
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Contact</h2>
-                <p class="text-gray-700 mb-3">If you have any questions about this privacy policy or how your data is handled, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a>.</p>
+                <p class="text-gray-700 mb-3">If you have any questions about this privacy policy or how your data is handled, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>.</p>
             </section>
 
             <!-- CTA -->
             <div class="border-t border-gray-200 pt-8">
                 <div class="text-center">
-                    <a href="/" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold">
+                    <a href="/" class="inline-block bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-400 font-semibold">
                         Back to Home
                     </a>
                 </div>

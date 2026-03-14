@@ -43,7 +43,7 @@ require_once __DIR__ . '/includes/init.php';
                     <p><strong>Client-Side Processing:</strong> Simple Data Cleaner performs all data validation and cleaning entirely within your web browser. Your files are never uploaded to our servers.</p>
                     <p><strong>Acceptable Use:</strong> You may use our service to:</p>
                     <ul class="list-disc list-inside ml-4 space-y-1">
-                        <li>Validate and clean UK phone numbers, National Insurance numbers, postcodes, and bank sort codes</li>
+                        <li>Validate and clean UK phone numbers, National Insurance numbers, postcodes, bank sort codes, and email addresses</li>
                         <li>Process your own data or data for which you have legal authorization</li>
                         <li>Use the API for legitimate business purposes</li>
                     </ul>
@@ -63,7 +63,7 @@ require_once __DIR__ . '/includes/init.php';
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">3. Subscription Terms</h2>
                 <div class="space-y-3 text-gray-700">
                     <p><strong>Subscription Plans:</strong> We offer various subscription plans with different features and pricing. All subscriptions are billed according to the terms outlined on our pricing page.</p>
-                    <p><strong>Lifetime Beta Licence:</strong> The Lifetime Beta plan is a one-time payment that grants you perpetual access to the Simple Data Cleaner validator set available at the time of purchase (currently UK phone numbers, National Insurance numbers, postcodes, and bank sort codes) together with maintenance fixes and usability improvements for that specific feature set. The licence does not automatically include future validator families, enterprise integrations, or major feature versions released after the beta period.</p>
+                    <p><strong>Lifetime Beta Licence:</strong> The Lifetime Beta plan is a one-time payment that grants you perpetual access to the Simple Data Cleaner validator set available at the time of purchase (currently UK phone numbers, National Insurance numbers, postcodes, bank sort codes, and email addresses) together with maintenance fixes and usability improvements for that specific feature set. The licence does not automatically include future validator families, enterprise integrations, or major feature versions released after the beta period.</p>
                     <p><strong>Payment:</strong></p>
                     <ul class="list-disc list-inside ml-4 space-y-1">
                         <li>Subscriptions are billed in advance on a recurring basis (monthly or yearly)</li>
@@ -90,7 +90,7 @@ require_once __DIR__ . '/includes/init.php';
                         <li>Usage metrics (for billing and service limits)</li>
                     </ul>
                     <p><strong>GDPR Compliance:</strong> Since we do not process your data, we are not acting as a data processor under GDPR. You retain full responsibility for any data you clean using our service.</p>
-                    <p>For more information about our privacy practices, please see our <a href="/security.php" class="text-blue-600 hover:underline">Security & Privacy page</a>.</p>
+                    <p>For more information about our privacy practices, please see our <a href="/security.php" class="text-yellow-500 hover:underline">Security & Privacy page</a>.</p>
                 </div>
             </section>
 
@@ -170,7 +170,7 @@ require_once __DIR__ . '/includes/init.php';
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">12. Contact Information</h2>
                 <p class="text-gray-700 mb-3">
-                    If you have any questions about these Terms, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-blue-600 hover:underline">contact us</a> or visit our website at <a href="/" class="text-blue-600 hover:underline">simple-data-cleaner.com</a>.
+                    If you have any questions about these Terms, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a> or visit our website at <a href="/" class="text-yellow-500 hover:underline">simple-data-cleaner.com</a>.
                 </p>
             </section>
 

@@ -2,9 +2,11 @@
 class Security {
     private static $instance = null;
     private $config;
+    private $cspNonce = null;
 
     private function __construct() {
         $this->config = require __DIR__ . '/../config/config.php';
+        $this->cspNonce = base64_encode(random_bytes(16));
         $this->initSession();
     }
 
@@ -117,16 +119,29 @@ class Security {
         return true;
     }
 
+    public function getCspNonce() {
+        return $this->cspNonce;
+    }
+
     public function secureHeaders() {
         // Security headers
         header('X-Content-Type-Options: nosniff');
         header('X-Frame-Options: DENY');
         header('X-XSS-Protection: 1; mode=block');
         header('Referrer-Policy: strict-origin-when-cross-origin');
+        header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
 
-        if ($this->config['app']['env'] === 'production') {
-            header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'");
-        }
+        // CSP with nonce for inline scripts (allows specific inline scripts while blocking XSS)
+        // Note: 'unsafe-inline' for style-src is kept for Tailwind compatibility
+        $nonce = $this->cspNonce;
+        $csp = "default-src 'self'; " .
+               "script-src 'self' 'nonce-{$nonce}' https://js.stripe.com https://cdn.sheetjs.com https://www.googletagmanager.com https://unpkg.com; " .
+               "style-src 'self' 'unsafe-inline'; " .
+               "img-src 'self' data: https://*.stripe.com; " .
+               "font-src 'self'; " .
+               "connect-src 'self' https://api.stripe.com https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com; " .
+               "frame-src https://js.stripe.com https://hooks.stripe.com";
+        header("Content-Security-Policy: {$csp}");
     }
 
     public function validateJson($json) {
