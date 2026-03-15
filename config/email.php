@@ -29,19 +29,15 @@ if (!function_exists('getEmailConfig')) {
         $envLoaded = true;
     }
 
-    // Validate required environment variables (skip in local so app runs without SMTP)
-    // Use getenv() and $_ENV - on some PHP setups (e.g. PHP-FPM) getenv() doesn't see putenv() values
-    $smtpPassword = getenv('MAIL_SMTP_PASSWORD') ?: ($_ENV['MAIL_SMTP_PASSWORD'] ?? '');
-    $appEnv = getenv('APP_ENV') ?: ($_ENV['APP_ENV'] ?? 'production');
-    if (empty($smtpPassword) && $appEnv !== 'local') {
-        throw new RuntimeException('MAIL_SMTP_PASSWORD environment variable is required. Check your .env file.');
-    }
-
+    // Use getenv() and $_ENV - on some PHP setups (e.g. PHP-FPM, shared hosting) getenv() doesn't see .env
     $get = function ($key, $default = '') {
         $v = getenv($key) ?: ($_ENV[$key] ?? $default);
         return $v !== '' ? $v : $default;
     };
 
+    $smtpPassword = $get('MAIL_SMTP_PASSWORD', '');
+
+    // No throw: app uses PHP mail() for sending; SMTP config is for future use. Empty password is OK.
     return [
         'driver' => 'smtp',
         'smtp' => [

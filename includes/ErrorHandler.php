@@ -160,18 +160,52 @@ class ErrorHandler {
 
     public function addError($message) {
         $this->errors[] = $message;
+        $this->pushFlash('errors', $message);
     }
 
     public function addWarning($message) {
         $this->warnings[] = $message;
+        $this->pushFlash('warnings', $message);
     }
 
     public function addInfo($message) {
         $this->info[] = $message;
+        $this->pushFlash('info', $message);
     }
 
     public function addSuccess($message) {
         $this->success[] = $message;
+        $this->pushFlash('success', $message);
+    }
+
+    /**
+     * Persist message to session so it survives redirects (e.g. after register → redirect).
+     */
+    private function pushFlash($type, $message) {
+        if (session_status() === PHP_SESSION_ACTIVE && isset($_SESSION)) {
+            $key = '_flash_' . $type;
+            if (!isset($_SESSION[$key])) {
+                $_SESSION[$key] = [];
+            }
+            $_SESSION[$key][] = $message;
+        }
+    }
+
+    /**
+     * Load flash messages from session into instance arrays (call before displaying).
+     * Uses session data when present so redirects show the message; avoids duplicate on same request.
+     */
+    private function loadFlashMessages() {
+        if (session_status() !== PHP_SESSION_ACTIVE || !isset($_SESSION)) {
+            return;
+        }
+        $map = ['_flash_errors' => 'errors', '_flash_warnings' => 'warnings', '_flash_info' => 'info', '_flash_success' => 'success'];
+        foreach ($map as $sessionKey => $property) {
+            if (!empty($_SESSION[$sessionKey])) {
+                $this->$property = $_SESSION[$sessionKey];
+                unset($_SESSION[$sessionKey]);
+            }
+        }
     }
 
     public function hasErrors() {
@@ -230,6 +264,7 @@ class ErrorHandler {
     }
 
     public function displayErrors($theme = 'dark') {
+        $this->loadFlashMessages();
         if ($this->hasErrors()) {
             foreach ($this->errors as $error) {
                 echo $this->formatMessage($error, 'error', $theme);
