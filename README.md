@@ -1,6 +1,6 @@
 # Simple Data Cleaner - PHP Application
 
-A complete PHP application for cleaning and validating UK data formats including phone numbers, National Insurance numbers, postcodes, and bank sort codes. Features user authentication, subscription management, and 100% client-side data processing for maximum privacy.
+A complete PHP application for cleaning and validating UK data formats (phone, NI, postcode, sort code, and more). including phone numbers, National Insurance numbers, postcodes, and bank sort codes. Features user authentication, subscription management, and 100% client-side data processing for maximum privacy.
 
 ## Features
 
