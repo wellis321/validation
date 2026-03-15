@@ -605,6 +605,58 @@
     .ds-hover-lift:hover { transform: none; }
 }
 
+/* Pricing page delight: CTA press + card hover shadow */
+.ds-pricing-cta {
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.2s ease,
+                background-color 0.2s ease;
+}
+@media (hover: hover) {
+    .ds-pricing-cta:hover {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    }
+    .ds-pricing-cta:active {
+        transform: translateY(2px);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-pricing-cta:active { transform: none; }
+}
+
+.ds-pricing-card.ds-hover-lift {
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                border-color 0.2s ease;
+}
+@media (hover: hover) {
+    .ds-pricing-card.ds-hover-lift:hover {
+        box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.35),
+                    0 6px 12px -6px rgba(0, 0, 0, 0.2);
+    }
+}
+.ds-pricing-card.ds-hover-lift.ds-pricing-popular:hover {
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.35),
+                0 6px 12px -6px rgba(0, 0, 0, 0.2),
+                0 0 40px rgba(234, 179, 8, 0.12);
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-pricing-card.ds-hover-lift:hover { box-shadow: none; }
+    .ds-pricing-card.ds-hover-lift.ds-pricing-popular:hover { box-shadow: none; }
+}
+
+.ds-pricing-feature svg {
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@media (hover: hover) {
+    .ds-pricing-feature li:hover svg {
+        transform: scale(1.1);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-pricing-feature li:hover svg { transform: none; }
+}
+
 /* ===== Complex animations (upload/progress card style) ===== */
 
 /* Loading overlay entrance – scale + fade pop-in */

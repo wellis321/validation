@@ -151,7 +151,7 @@ if ($user) {
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             <!-- Monthly Plan -->
             <!-- Annual Plan -->
             <!-- Plans will be rendered here -->
@@ -171,14 +171,14 @@ if ($user) {
                 $isAnnual = $plan['name'] === 'Annual';
 
                 $ctaLabel = 'Subscribe Now';
-                $cardClasses = 'ds-card ds-animate-fade-slide ds-hover-lift overflow-hidden';
+                $cardClasses = 'ds-card ds-pricing-card ds-animate-fade-slide ds-hover-lift overflow-hidden';
                 $cardClasses .= ' ds-animate-delay-' . min($planIndex, 6);
                 if ($isMonthly) {
-                    $cardClasses .= ' border-2 border-yellow-500/60 ring-2 ring-yellow-500/30 relative z-10 md:scale-[1.02]';
+                    $cardClasses .= ' ds-pricing-popular border-2 border-yellow-500/60 ring-2 ring-yellow-500/30 relative z-10 md:scale-[1.02]';
                 }
                 ?>
                 <div class="<?php echo $cardClasses; ?>" <?php echo $isLifetime ? 'id="lifetime-beta-plan"' : ''; ?>>
-                    <div class="p-8">
+                    <div class="p-8 md:p-10 min-h-[420px] flex flex-col">
                         <?php if ($isMonthly): ?>
                             <p class="ds-badge-popular mb-3">Most popular</p>
                         <?php endif; ?>
@@ -205,7 +205,7 @@ if ($user) {
                             <div class="mb-6"></div>
                         <?php endif; ?>
 
-                        <ul class="space-y-3 mb-8">
+                        <ul class="ds-pricing-feature space-y-3 mb-8 flex-grow">
                             <?php if (!empty($features['unlimited_files'])): ?>
                                 <li class="flex items-start">
                                     <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -253,7 +253,7 @@ if ($user) {
                             </button>
                         <?php else: ?>
                             <a href="/checkout.php?plan=<?php echo $plan['id']; ?>"
-                                class="block w-full text-center py-3 px-6 rounded-lg font-semibold transition-colors <?php echo $isMonthly ? 'bg-yellow-400 hover:bg-yellow-500 text-black' : 'bg-white hover:bg-neutral-200 text-black'; ?>">
+                                class="ds-pricing-cta block w-full text-center py-3 px-6 rounded-lg font-semibold <?php echo $isMonthly ? 'bg-yellow-400 hover:bg-yellow-500 text-black' : 'bg-white hover:bg-neutral-200 text-black'; ?>">
                                 <?php echo $ctaLabel; ?>
                             </a>
                         <?php endif; ?>
@@ -263,8 +263,8 @@ if ($user) {
             <?php endif; ?>
 
             <!-- Bespoke Services Card -->
-            <div class="ds-card ds-animate-fade-slide ds-animate-delay-4 ds-hover-lift overflow-hidden border-2 border-yellow-500/40">
-                <div class="p-8">
+            <div class="ds-card ds-pricing-card ds-animate-fade-slide ds-animate-delay-4 ds-hover-lift overflow-hidden border-2 border-yellow-500/40">
+                <div class="p-8 md:p-10 min-h-[420px] flex flex-col">
                     <p class="ds-badge-popular mb-3">Enterprise</p>
                     <h2 class="text-xl font-bold text-white mb-2">Bespoke Services</h2>
                     <p class="text-neutral-400 text-sm mb-4">Custom data validation rules built for your specific needs. Perfect for unique fields, compliance requirements, and enterprise solutions.</p>
@@ -274,7 +274,7 @@ if ($user) {
                     </div>
                     <p class="text-sm text-yellow-400 mb-6">Tailored to your requirements</p>
 
-                    <ul class="space-y-3 mb-8">
+                    <ul class="ds-pricing-feature space-y-3 mb-8 flex-grow">
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -308,7 +308,7 @@ if ($user) {
                     </ul>
 
                     <a href="/bespoke.php"
-                        class="block w-full text-center py-3 px-6 rounded-lg font-semibold transition-colors bg-yellow-500 hover:bg-yellow-400 text-black">
+                        class="ds-pricing-cta block w-full text-center py-3 px-6 rounded-lg font-semibold bg-yellow-500 hover:bg-yellow-400 text-black">
                         Get Started
                     </a>
                 </div>

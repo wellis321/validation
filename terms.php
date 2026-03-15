@@ -115,8 +115,10 @@ require_once __DIR__ . '/includes/init.php';
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Intellectual Property</h2>
                 <div class="space-y-3 text-gray-700">
                     <p><strong>Our Rights:</strong> The service and its original content, features, and functionality are owned by Simple Data Cleaner and protected by international copyright, trademark, and other intellectual property laws.</p>
+                    <p><strong>Brand and Marks:</strong> "Simple Data Cleaner" and the Simple Data Cleaner logo are trademarks used by us. You may not use our name, logo, or branding to endorse or promote your own products or services without our prior written permission. You may refer to the service by name when describing your use of it (e.g. "cleaned with Simple Data Cleaner") in a truthful, non-misleading way.</p>
+                    <p><strong>No Derivative Use:</strong> You may not copy, scrape, resell, or build a derivative product or service that replicates or competes with Simple Data Cleaner using our branding, design, or proprietary validation logic, except as permitted by any separate open source licence we may publish.</p>
                     <p><strong>Your Rights:</strong> Your data files remain your property. We do not claim ownership of any data you process through our service.</p>
-                    <p><strong>Open Source:</strong> Our validation algorithms are available as open source software. You may review, modify, and use the validation logic according to the applicable open source license.</p>
+                    <p><strong>Open Source:</strong> Where we make validation algorithms available under an open source licence, you may use them according to that licence. Use of the Simple Data Cleaner service and website remains subject to these Terms.</p>
                 </div>
             </section>
 

@@ -50,7 +50,7 @@
         <div class="border-t border-neutral-800 pt-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-neutral-400 text-sm">
-                    © <?php echo date('Y'); ?> Simple Data Cleaner. All rights reserved.
+                    © <?php echo date('Y'); ?> Simple Data Cleaner™. All rights reserved.
                 </p>
                 <div class="flex items-center gap-4 flex-wrap justify-center">
                     <?php if (!$user): ?>
