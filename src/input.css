@@ -240,8 +240,9 @@
 .hiw-step-delay-2 { animation-delay: 0.25s; }
 .hiw-step-delay-3 { animation-delay: 0.4s; }
 .hiw-step-card {
-    @apply rounded-none border border-neutral-700 border-l-4 border-l-yellow-500/50 bg-neutral-900 p-6 transition-all duration-300;
+    @apply rounded-none border-2 border-neutral-700 border-l-4 border-l-yellow-500/60 bg-neutral-900 p-6 md:p-8 transition-all duration-300;
     transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.35);
 }
 .hiw-step-card .hiw-step-num {
     transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
@@ -249,13 +250,14 @@
 }
 @media (hover: hover) {
     .hiw-step-card:hover {
-        @apply border-neutral-600 border-l-yellow-500/70;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4);
+        @apply border-neutral-600 border-l-yellow-500;
+        transform: translateY(-4px);
+        box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(234, 179, 8, 0.08);
     }
     .hiw-step-card:hover .hiw-step-num {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.3);
+        transform: scale(1.08);
+        box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.4);
     }
 }
 @media (prefers-reduced-motion: reduce) {

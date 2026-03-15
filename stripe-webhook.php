@@ -18,7 +18,10 @@ require_once __DIR__ . '/includes/env_loader.php';
 require_once __DIR__ . '/includes/Database.php';
 require_once __DIR__ . '/config/stripe_config.php';
 
-// Set headers for webhook response
+// Security headers (subset of init.php — webhook skips full bootstrap)
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('Referrer-Policy: strict-origin-when-cross-origin');
 header('Content-Type: application/json');
 
 // Get the raw POST body

@@ -329,46 +329,46 @@ if ($user) {
 
             <!-- How It Works + What You Get (merged) -->
             <section class="ds-scroll-reveal max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-24 pb-12 md:pb-16" aria-labelledby="how-it-works-heading">
-                <h2 id="how-it-works-heading" class="ds-reveal-item text-2xl font-bold text-white mb-2">How it works</h2>
-                <p class="ds-reveal-item text-neutral-400 mb-2">Three steps. Your data never leaves your device.</p>
-                <p class="ds-reveal-item flex items-center gap-2 text-neutral-500 text-sm mb-10">
-                    <svg class="w-4 h-4 text-yellow-500/80 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                    <span>100% in your browser</span>
+                <h2 id="how-it-works-heading" class="ds-reveal-item text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">How it works</h2>
+                <p class="ds-reveal-item text-neutral-300 text-lg md:text-xl mb-2">Three steps. Your data never leaves your device.</p>
+                <p class="ds-reveal-item flex items-center gap-2 text-neutral-500 text-sm mb-12">
+                    <svg class="w-5 h-5 text-yellow-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    <span class="font-medium text-neutral-400">100% in your browser</span>
                 </p>
-                <ol class="space-y-6" role="list">
+                <ol class="space-y-8" role="list">
                     <li class="ds-reveal-item">
-                        <div class="hiw-step-card flex gap-5 group">
-                            <span class="hiw-step-num flex-shrink-0 w-12 h-12 rounded-none bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-lg ring-1 ring-yellow-500/25" aria-hidden="true">1</span>
+                        <div class="hiw-step-card flex gap-6 group">
+                            <span class="hiw-step-num flex-shrink-0 w-14 h-14 rounded-none bg-yellow-500/25 text-yellow-400 flex items-center justify-center font-bold text-xl ring-2 ring-yellow-500/40" aria-hidden="true">1</span>
                             <div class="min-w-0 flex-1">
-                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                    <i data-lucide="upload" class="w-5 h-5 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                <h3 class="text-xl font-bold text-white flex items-center gap-2 tracking-tight">
+                                    <i data-lucide="upload" class="w-6 h-6 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     Upload
                                 </h3>
-                                <p class="text-neutral-300 text-base mt-1 leading-relaxed">CSV, Excel, or JSON. <span class="text-yellow-100/90">Your file stays on your computer.</span></p>
+                                <p class="text-neutral-300 text-base md:text-lg mt-2 leading-relaxed">CSV, Excel, or JSON. <span class="text-yellow-400 font-semibold">Your file stays on your computer.</span></p>
                             </div>
                         </div>
                     </li>
                     <li class="ds-reveal-item">
-                        <div class="hiw-step-card flex gap-5 group">
-                            <span class="hiw-step-num flex-shrink-0 w-12 h-12 rounded-none bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-lg ring-1 ring-yellow-500/25" aria-hidden="true">2</span>
+                        <div class="hiw-step-card flex gap-6 group">
+                            <span class="hiw-step-num flex-shrink-0 w-14 h-14 rounded-none bg-yellow-500/25 text-yellow-400 flex items-center justify-center font-bold text-xl ring-2 ring-yellow-500/40" aria-hidden="true">2</span>
                             <div class="min-w-0 flex-1">
-                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                    <i data-lucide="list-checks" class="w-5 h-5 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                <h3 class="text-xl font-bold text-white flex items-center gap-2 tracking-tight">
+                                    <i data-lucide="list-checks" class="w-6 h-6 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     Select &amp; clean
                                 </h3>
-                                <p class="text-neutral-300 text-base mt-1 leading-relaxed">Pick columns (phone, NI, postcode, sort code, email, names). <span class="text-yellow-100/90">Auto-detect available.</span></p>
+                                <p class="text-neutral-300 text-base md:text-lg mt-2 leading-relaxed">Pick columns (phone, NI, postcode, sort code, email, names). <span class="text-yellow-400 font-semibold">Auto-detect available.</span></p>
                             </div>
                         </div>
                     </li>
                     <li class="ds-reveal-item">
-                        <div class="hiw-step-card flex gap-5 group">
-                            <span class="hiw-step-num flex-shrink-0 w-12 h-12 rounded-none bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-lg ring-1 ring-yellow-500/25" aria-hidden="true">3</span>
+                        <div class="hiw-step-card flex gap-6 group">
+                            <span class="hiw-step-num flex-shrink-0 w-14 h-14 rounded-none bg-yellow-500/25 text-yellow-400 flex items-center justify-center font-bold text-xl ring-2 ring-yellow-500/40" aria-hidden="true">3</span>
                             <div class="min-w-0 flex-1">
-                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                    <i data-lucide="download" class="w-5 h-5 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
+                                <h3 class="text-xl font-bold text-white flex items-center gap-2 tracking-tight">
+                                    <i data-lucide="download" class="w-6 h-6 text-yellow-400 flex-shrink-0 group-hover:text-yellow-300 transition-colors" aria-hidden="true"></i>
                                     Download
                                 </h3>
-                                <p class="text-neutral-300 text-base mt-1 leading-relaxed">Export CSV, Excel, or JSON. <span class="text-yellow-100/90">Full issues report included.</span></p>
+                                <p class="text-neutral-300 text-base md:text-lg mt-2 leading-relaxed">Export CSV, Excel, or JSON. <span class="text-yellow-400 font-semibold">Full issues report included.</span></p>
                             </div>
                         </div>
                     </li>

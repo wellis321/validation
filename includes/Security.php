@@ -129,7 +129,7 @@ class Security {
         header('X-Frame-Options: DENY');
         header('X-XSS-Protection: 1; mode=block');
         header('Referrer-Policy: strict-origin-when-cross-origin');
-        header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+        header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
 
         // CSP with nonce for inline scripts (allows specific inline scripts while blocking XSS)
         // Note: 'unsafe-inline' for style-src is kept for Tailwind compatibility
@@ -168,13 +168,20 @@ class Security {
         // Use database-based rate limiting instead of APCu (not available on all hosts)
         $db = Database::getInstance();
 
-        // Clean old entries first
+        // Insert the request first (optimistic recording)
+        $db->insert('rate_limits', [
+            'ip_address' => $ip,
+            'route' => $route,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        // Clean old entries for this ip/route only (avoids deleting other keys mid-check)
         $db->query(
-            "DELETE FROM rate_limits WHERE created_at < DATE_SUB(NOW(), INTERVAL ? SECOND)",
-            [$period]
+            "DELETE FROM rate_limits WHERE ip_address = ? AND route = ? AND created_at < DATE_SUB(NOW(), INTERVAL ? SECOND)",
+            [$ip, $route, $period]
         );
 
-        // Count current requests for this IP/route
+        // Count requests within the window — includes the one we just inserted
         $stmt = $db->query(
             "SELECT COUNT(*) as count FROM rate_limits
              WHERE ip_address = ? AND route = ? AND created_at > DATE_SUB(NOW(), INTERVAL ? SECOND)",
@@ -183,16 +190,9 @@ class Security {
         $result = $stmt->fetch();
         $current = $result['count'];
 
-        if ($current >= $limit) {
+        if ($current > $limit) {
             throw new Exception('Too many requests. Please try again later.');
         }
-
-        // Log this request
-        $db->insert('rate_limits', [
-            'ip_address' => $ip,
-            'route' => $route,
-            'created_at' => date('Y-m-d H:i:s')
-        ]);
 
         return true;
     }

@@ -32,10 +32,11 @@ class Email {
 
             $result = $this->send($email, $subject, $message);
 
+            $emailRef = substr(hash('sha256', $email), 0, 8);
             if ($result) {
-                error_log("Verification email sent successfully to: {$email}");
+                error_log("Verification email sent successfully (ref: {$emailRef})");
             } else {
-                error_log("Failed to send verification email to: {$email}");
+                error_log("Failed to send verification email (ref: {$emailRef})");
             }
 
             return $result;
@@ -74,10 +75,11 @@ class Email {
 
             $result = $this->send($email, $subject, $message);
 
+            $emailRef = substr(hash('sha256', $email), 0, 8);
             if ($result) {
-                error_log("Password reset email sent successfully to: {$email}");
+                error_log("Password reset email sent successfully (ref: {$emailRef})");
             } else {
-                error_log("Failed to send password reset email to: {$email}");
+                error_log("Failed to send password reset email (ref: {$emailRef})");
             }
 
             return $result;
@@ -107,11 +109,11 @@ class Email {
                 $fromAddress = 'noreply@simple-data-cleaner.com';
             }
 
-            // Log the email attempt with actual From address being used
+            // Log the email attempt (recipient hashed to avoid PII in logs)
+            $toRef = substr(hash('sha256', $to), 0, 8);
             $logMessage = "=== SENDING VIA MAIL FUNCTION ===\n";
-            $logMessage .= "To: {$to}\n";
+            $logMessage .= "To (ref): {$toRef}\n";
             $logMessage .= "Subject: {$subject}\n";
-            $logMessage .= "From Config: {$this->config['from']['address']}\n";
             $logMessage .= "From Address Used: {$fromAddress}\n";
             $logMessage .= "From Name: {$this->config['from']['name']}\n";
             $logMessage .= "Timestamp: " . date('Y-m-d H:i:s') . "\n";
@@ -134,17 +136,17 @@ class Email {
             error_reporting($errorReporting); // Restore error reporting
 
             if ($result) {
-                $successLog = "Email sent successfully to: {$to}\n";
+                $successLog = "Email sent successfully (ref: {$toRef})\n";
                 $successLog .= "From: {$fromAddress}\n";
                 $successLog .= "Subject: {$subject}\n";
                 $successLog .= "Timestamp: " . date('Y-m-d H:i:s') . "\n\n";
                 error_log($successLog, 3, __DIR__ . '/../logs/email.log');
-                error_log("Email sent successfully to: {$to}");
+                error_log("Email sent successfully (ref: {$toRef})");
                 return true;
             } else {
                 $errorMsg = $lastError ? $lastError['message'] : 'Unknown error';
-                error_log("Email failed to send to: {$to} - Error: {$errorMsg}");
-                error_log("Email send failure for {$to}: {$errorMsg}", 3, __DIR__ . '/../logs/email.log');
+                error_log("Email failed to send (ref: {$toRef}) - Error: {$errorMsg}");
+                error_log("Email send failure (ref: {$toRef}): {$errorMsg}", 3, __DIR__ . '/../logs/email.log');
                 return false;
             }
 

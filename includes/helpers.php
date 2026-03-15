@@ -173,22 +173,22 @@ function mask_card_number($number) {
 }
 
 function get_client_ip() {
-    $ipaddress = '';
-    if (isset($_SERVER['HTTP_CLIENT_IP']))
-        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    else if(isset($_SERVER['HTTP_X_FORWARDED']))
-        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
-        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-    else if(isset($_SERVER['HTTP_FORWARDED']))
-        $ipaddress = $_SERVER['HTTP_FORWARDED'];
-    else if(isset($_SERVER['REMOTE_ADDR']))
-        $ipaddress = $_SERVER['REMOTE_ADDR'];
-    else
-        $ipaddress = 'UNKNOWN';
-    return $ipaddress;
+    // Always use REMOTE_ADDR to prevent IP spoofing via user-controlled headers.
+    // If behind a trusted reverse proxy, set TRUSTED_PROXY_IP in .env to the
+    // proxy's IP and we will then trust X-Forwarded-For from that proxy only.
+    $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? 'UNKNOWN';
+
+    $trustedProxy = getenv('TRUSTED_PROXY_IP') ?: ($_ENV['TRUSTED_PROXY_IP'] ?? '');
+    if ($trustedProxy && $remoteAddr === $trustedProxy) {
+        $forwarded = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
+        // X-Forwarded-For may be a comma-separated list; take the first (client) IP
+        $clientIp = trim(explode(',', $forwarded)[0]);
+        if (filter_var($clientIp, FILTER_VALIDATE_IP)) {
+            return $clientIp;
+        }
+    }
+
+    return $remoteAddr;
 }
 
 function display_messages($theme = 'dark') {

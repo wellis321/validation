@@ -161,24 +161,30 @@ class User extends Model {
         }
 
         try {
+            $this->db->beginTransaction();
+
+            // Delete the token FIRST inside the transaction to prevent reuse.
+            // If rowCount is 0, a concurrent request already consumed it.
+            $deleted = $this->db->delete('password_reset_tokens', 'token = ?', [$token]);
+            if (!$deleted) {
+                $this->db->rollback();
+                error_log("User: Token already consumed (concurrent request) for user ID: {$this->id}");
+                return false;
+            }
+
             // Update password
             $success = $this->update($this->id, ['password' => $newPassword]);
 
             if (!$success) {
+                $this->db->rollback();
                 error_log("User: Password update failed for user ID: {$this->id}");
                 return false;
             }
 
-            // Delete used token (don't log the token value)
-            try {
-                $this->db->delete('password_reset_tokens', 'token = ?', [$token]);
-            } catch (Exception $e) {
-                // Don't fail if token deletion fails - password is already updated
-                error_log("User: Token cleanup failed for user ID: {$this->id}");
-            }
-
+            $this->db->commit();
             return true;
         } catch (Exception $e) {
+            $this->db->rollback();
             error_log("User: Password reset error for user ID: {$this->id}");
             return false;
         }

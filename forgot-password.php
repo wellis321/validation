@@ -43,11 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception($error);
         }
 
-        // Add rate limiting for password reset requests
+        // Add rate limiting for password reset requests (by IP and by email)
         try {
             $security->rateLimit(get_client_ip(), 'password_reset', 5, 300);
         } catch (Exception $e) {
-            error_log("Rate limit exceeded for: " . get_client_ip());
+            error_log("Rate limit exceeded (IP) for password_reset");
+            $error = 'Too many requests. Please try again later.';
+            throw new Exception($error);
+        }
+        try {
+            // Per-email limit prevents inbox flooding even from multiple IPs
+            $security->rateLimit(hash('sha256', strtolower($email)), 'password_reset_email', 3, 3600);
+        } catch (Exception $e) {
+            error_log("Rate limit exceeded (email) for password_reset");
             $error = 'Too many requests. Please try again later.';
             throw new Exception($error);
         }
