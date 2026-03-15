@@ -212,9 +212,18 @@ class Auth {
         return $this->user;
     }
 
-    public function requireAuth() {
+    /**
+     * Require authenticated user. If not logged in, redirect to login or sign-up.
+     * @param string|null $returnTo Optional URL path to return to after login (e.g. /checkout.php?plan=1)
+     * @param bool $preferSignUp If true, send to register page (e.g. for subscription flow) instead of login
+     */
+    public function requireAuth($returnTo = null, $preferSignUp = false) {
         if (!$this->isLoggedIn()) {
-            header('Location: /login.php');
+            $url = $preferSignUp ? '/register.php' : '/login.php';
+            if ($returnTo !== null && $returnTo !== '') {
+                $url .= '?redirect=' . rawurlencode($returnTo);
+            }
+            header('Location: ' . $url);
             exit;
         }
     }

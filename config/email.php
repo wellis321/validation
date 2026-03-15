@@ -29,9 +29,10 @@ if (!function_exists('getEmailConfig')) {
         $envLoaded = true;
     }
 
-    // Validate required environment variables
+    // Validate required environment variables (skip in local so app runs without SMTP)
     $smtpPassword = getenv('MAIL_SMTP_PASSWORD');
-    if (empty($smtpPassword)) {
+    $appEnv = getenv('APP_ENV') ?: 'production';
+    if (empty($smtpPassword) && $appEnv !== 'local') {
         throw new RuntimeException('MAIL_SMTP_PASSWORD environment variable is required. Check your .env file.');
     }
 

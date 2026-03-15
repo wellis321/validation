@@ -3,10 +3,10 @@ require_once __DIR__ . '/includes/init.php';
 require_once __DIR__ . '/config/stripe_config.php';
 
 $auth = Auth::getInstance();
-$auth->requireAuth();
+$planId = $_GET['plan'] ?? null;
+$auth->requireAuth($planId ? '/checkout.php?plan=' . $planId : null, true);
 
 $user = $auth->getCurrentUser();
-$planId = $_GET['plan'] ?? null;
 
 if (!$planId) {
     header('Location: /pricing.php');
@@ -65,6 +65,7 @@ try {
         'customer_email' => $user['email'],
         'client_reference_id' => (string) $user['id'],
         'metadata' => [
+            'app' => 'simple_data_cleaner',
             'user_id' => $user['id'],
             'plan_id' => $plan['id'],
             'plan_name' => $plan['name'],

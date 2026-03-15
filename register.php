@@ -4,9 +4,14 @@ require_once __DIR__ . '/includes/init.php';
 $auth = Auth::getInstance();
 $errorHandler = ErrorHandler::getInstance();
 
-// If already logged in, redirect to homepage
+// If already logged in, redirect to return URL or homepage
 if ($auth->isLoggedIn()) {
-    header('Location: index.php');
+    $redirect = $_GET['redirect'] ?? '';
+    if (is_safe_redirect($redirect)) {
+        header('Location: ' . $redirect);
+    } else {
+        header('Location: index.php');
+    }
     exit;
 }
 
@@ -50,7 +55,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'last_name' => $lastName
         ]);
 
-        add_success('Registration successful! Your 7-day free trial has started. Please check your email to verify your account, then you can start cleaning your data.');
+        $redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? '';
+        $isCheckoutRedirect = (strpos($redirect, '/checkout.php') === 0);
+        if ($isCheckoutRedirect && is_safe_redirect($redirect)) {
+            add_success('Account created! Please check your email to verify your address, then log in to complete your purchase.');
+        } else {
+            add_success('Registration successful! Your 7-day free trial has started. Please check your email to verify your account, then you can start cleaning your data.');
+        }
+        // Preserve redirect so after verification they can use "Log in" with return URL
+        if (is_safe_redirect($redirect)) {
+            header('Location: register.php?redirect=' . rawurlencode($redirect));
+            exit;
+        }
     } catch (Exception $e) {
         add_error($e->getMessage());
     }
@@ -100,8 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php display_messages(); ?>
 
             <div class="bg-neutral-900 rounded-xl border border-neutral-700 p-8">
-                <form method="POST" action="register.php">
+                <form method="POST" action="register.php<?php echo (isset($_GET['redirect']) && is_safe_redirect($_GET['redirect'])) ? '?redirect=' . rawurlencode($_GET['redirect']) : ''; ?>">
                     <?php echo csrf_field(); ?>
+                    <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($_GET['redirect'] ?? ''); ?>">
                     <div class="grid grid-cols-2 gap-4 mb-6">
                         <div>
                             <label for="first_name" class="block text-neutral-300 text-sm font-medium mb-2">First Name</label>
@@ -165,7 +182,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mt-6 text-center">
                     <p class="text-neutral-400">
                         Already have an account?
-                        <a href="login.php" class="text-yellow-400 hover:text-yellow-300 font-medium">
+                        <?php
+                        $loginUrl = '/login.php';
+                        if (!empty($_GET['redirect']) && is_safe_redirect($_GET['redirect'])) {
+                            $loginUrl .= '?redirect=' . rawurlencode($_GET['redirect']);
+                        }
+                        ?>
+                        <a href="<?php echo htmlspecialchars($loginUrl); ?>" class="text-yellow-400 hover:text-yellow-300 font-medium">
                             Log in
                         </a>
                     </p>

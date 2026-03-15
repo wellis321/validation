@@ -79,6 +79,26 @@ function redirect($url) {
     exit;
 }
 
+/**
+ * Validate redirect URL to prevent open redirects. Only allows relative paths.
+ */
+function is_safe_redirect($url) {
+    if (!is_string($url)) {
+        return false;
+    }
+    $url = trim($url);
+    if ($url === '') {
+        return false;
+    }
+    if ($url[0] !== '/') {
+        return false;
+    }
+    if (strpos($url, '//') !== false) {
+        return false;
+    }
+    return true;
+}
+
 function is_ajax_request() {
     return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';

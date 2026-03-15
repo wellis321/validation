@@ -4,10 +4,15 @@ require_once __DIR__ . '/includes/init.php';
 $auth = Auth::getInstance();
 $errorHandler = ErrorHandler::getInstance();
 
-// If already logged in with valid session, redirect to homepage
+// If already logged in with valid session, redirect to return URL or homepage
 // Check for valid user session (not just session ID from Brave's cookie blocking)
 if ($auth->isLoggedIn() && $auth->getCurrentUser() && isset($auth->getCurrentUser()['id'])) {
-    header('Location: index.php');
+    $redirect = $_GET['redirect'] ?? '';
+    if (is_safe_redirect($redirect)) {
+        header('Location: ' . $redirect);
+    } else {
+        header('Location: index.php');
+    }
     exit;
 }
 
@@ -34,7 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $auth->login($email, $password);
         add_success('Login successful! Redirecting...');
-        header('Location: index.php');
+        $redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? '';
+        if (is_safe_redirect($redirect)) {
+            header('Location: ' . $redirect);
+        } else {
+            header('Location: index.php');
+        }
         exit;
     } catch (Exception $e) {
         add_error($e->getMessage());
@@ -83,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="bg-neutral-900 rounded-xl border border-neutral-700 p-8">
                 <form method="POST" action="login.php">
                     <?php echo csrf_field(); ?>
+                    <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($_GET['redirect'] ?? ''); ?>">
                     <div class="mb-6">
                         <label for="email" class="block text-neutral-300 text-sm font-medium mb-2">Email Address</label>
                         <input type="email" id="email" name="email" required

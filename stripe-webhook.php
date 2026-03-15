@@ -46,6 +46,14 @@ if (!$event) {
 // Log the event type for debugging (but not sensitive data)
 error_log("Stripe webhook received: {$event['type']} (ID: {$event['id']})");
 
+// Ignore events from other apps in the same Stripe account (e.g. other "categories")
+if (!isEventForSimpleDataCleaner($event)) {
+    error_log("Stripe webhook: Skipping event (not for Simple Data Cleaner)");
+    http_response_code(200);
+    echo json_encode(['status' => 'ignored', 'reason' => 'app_filter']);
+    exit;
+}
+
 // Handle the event
 try {
     $db = Database::getInstance();
@@ -83,6 +91,50 @@ try {
     error_log("Stripe webhook error: " . $e->getMessage());
     http_response_code(500);
     echo json_encode(['error' => 'Internal error']);
+}
+
+/**
+ * Return true if this event belongs to Simple Data Cleaner (same Stripe account, multiple apps).
+ */
+function isEventForSimpleDataCleaner($event) {
+    $type = $event['type'] ?? '';
+    $obj = $event['data']['object'] ?? [];
+
+    // Checkout: our sessions have metadata.app = 'simple_data_cleaner'
+    if ($type === 'checkout.session.completed') {
+        return ($obj['metadata']['app'] ?? '') === 'simple_data_cleaner';
+    }
+
+    // Known Simple Data Cleaner price IDs (from .env)
+    $ourPriceIds = array_filter([
+        defined('STRIPE_PRICE_PAY_PER_USE') ? STRIPE_PRICE_PAY_PER_USE : '',
+        defined('STRIPE_PRICE_MONTHLY') ? STRIPE_PRICE_MONTHLY : '',
+        defined('STRIPE_PRICE_ANNUAL') ? STRIPE_PRICE_ANNUAL : '',
+        defined('STRIPE_PRICE_LIFETIME') ? STRIPE_PRICE_LIFETIME : '',
+    ]);
+
+    // Subscription events: check subscription metadata or first price
+    if (in_array($type, ['customer.subscription.updated', 'customer.subscription.deleted'], true)) {
+        if (($obj['metadata']['app'] ?? '') === 'simple_data_cleaner') {
+            return true;
+        }
+        $items = $obj['items']['data'] ?? [];
+        $priceId = $items[0]['price']['id'] ?? null;
+        return $priceId && in_array($priceId, $ourPriceIds, true);
+    }
+
+    // Invoice events: check line items' price ids
+    if (in_array($type, ['invoice.paid', 'invoice.payment_failed'], true)) {
+        foreach ($obj['lines']['data'] ?? [] as $line) {
+            $priceId = $line['price']['id'] ?? null;
+            if ($priceId && in_array($priceId, $ourPriceIds, true)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    return false;
 }
 
 /**
