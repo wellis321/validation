@@ -2,6 +2,12 @@
 // Load environment variables first
 require_once __DIR__ . '/env_loader.php';
 
+// Composer autoload (required for Stripe SDK etc.)
+$autoload = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($autoload)) {
+    require_once $autoload;
+}
+
 // Initialize core functionality
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/Security.php';

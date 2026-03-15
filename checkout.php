@@ -34,69 +34,56 @@ $priceMapping = [
 $priceId = $priceMapping[$plan['name']] ?? null;
 
 if (!$priceId) {
-    error_log("No price mapping found for plan ID: " . $plan['id'] . ", name: " . $plan['name']);
-    error_log("Available plans: " . json_encode(array_keys($priceMapping)));
-    error_log("Plan data: " . json_encode($plan));
+    error_log("Checkout: No price mapping for plan ID: " . $plan['id'] . ", name: " . $plan['name']);
     die('Invalid plan configuration. Plan: ' . htmlspecialchars($plan['name']) . '. Please contact support.');
 }
 
-// Create Stripe Checkout Session
-$successUrl = 'https://simple-data-cleaner.com/checkout-success.php?session_id={CHECKOUT_SESSION_ID}';
-$cancelUrl = 'https://simple-data-cleaner.com/pricing.php';
+// Base URL from config (works for staging and production)
+$config = require __DIR__ . '/config/config.php';
+$baseUrl = rtrim($config['app']['url'], '/');
+$successUrl = $baseUrl . '/checkout-success.php?session_id={CHECKOUT_SESSION_ID}';
+$cancelUrl = $baseUrl . '/pricing.php';
 
-$sessionData = [
-    'payment_method_types' => ['card'],
-    'line_items' => [[
-        'price' => $priceId,
-        'quantity' => 1,
-    ]],
-    'mode' => $plan['duration_months'] === 0 ? 'payment' : 'subscription',  // payment for one-time, subscription for recurring
-    'success_url' => $successUrl,
-    'cancel_url' => $cancelUrl,
-    'customer_email' => $user['email'],
-    'client_reference_id' => $user['id'],  // To identify user in success page
-    'metadata' => [
-        'user_id' => $user['id'],
-        'plan_id' => $plan['id'],
-        'plan_name' => $plan['name']
-    ]
-];
+// Stripe SDK: create Checkout Session
+if (!class_exists(\Stripe\Stripe::class)) {
+    error_log('Checkout: Stripe SDK not loaded. Run: composer install');
+    die('Payment system unavailable. Please try again later or contact support.');
+}
 
-// Create checkout session via Stripe API
-$ch = curl_init('https://api.stripe.com/v1/checkout/sessions');
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_USERPWD => STRIPE_SECRET_KEY . ':',
-    CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
-    CURLOPT_POSTFIELDS => http_build_query($sessionData)
-]);
+try {
+    \Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
 
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$curlError = curl_error($ch);
-curl_close($ch);
+    $sessionParams = [
+        'payment_method_types' => ['card'],
+        'line_items' => [[
+            'price' => $priceId,
+            'quantity' => 1,
+        ]],
+        'mode' => $plan['duration_months'] === 0 ? 'payment' : 'subscription',
+        'success_url' => $successUrl,
+        'cancel_url' => $cancelUrl,
+        'customer_email' => $user['email'],
+        'client_reference_id' => (string) $user['id'],
+        'metadata' => [
+            'user_id' => $user['id'],
+            'plan_id' => $plan['id'],
+            'plan_name' => $plan['name'],
+        ],
+    ];
 
-if ($httpCode !== 200) {
-    // Log error without sensitive data
-    error_log("Checkout: Stripe API error - HTTP {$httpCode}");
-    if ($curlError) {
-        error_log("Checkout: cURL error - " . $curlError);
+    $session = \Stripe\Checkout\Session::create($sessionParams);
+
+    if (empty($session->url)) {
+        error_log('Checkout: Stripe session created but no URL returned');
+        die('Unable to start checkout. Please try again or contact support.');
     }
 
-    $errorData = json_decode($response, true);
-    $errorMessage = isset($errorData['error']['message']) ? $errorData['error']['message'] : 'Unknown error';
-
+    header('Location: ' . $session->url);
+    exit;
+} catch (\Stripe\Exception\ApiErrorException $e) {
+    error_log('Checkout: Stripe API error - ' . $e->getMessage());
     die('Unable to create checkout session. Please try again or contact support.');
+} catch (Exception $e) {
+    error_log('Checkout: Error - ' . $e->getMessage());
+    die('Something went wrong. Please try again or contact support.');
 }
-
-$session = json_decode($response, true);
-
-if (isset($session['error'])) {
-    error_log("Stripe Error: " . $session['error']['message']);
-    die('Error: ' . $session['error']['message']);
-}
-
-// Redirect to Stripe Checkout
-header('Location: ' . $session['url']);
-exit;

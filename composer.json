@@ -1,0 +1,12 @@
+{
+    "name": "simple-data-cleaner/app",
+    "description": "Simple Data Cleaner - UK data validation and cleaning",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "stripe/stripe-php": "^17.0"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
