@@ -25,24 +25,24 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                             aria-controls="product-menu"
-                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php', 'sample-reports.php', 'issues-report-demo.php', 'cleaned-data-report-demo.php', 'full-preview-report-demo.php']) ? 'text-white border-yellow-500' : ''; ?>">
+                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo in_array($currentPath, ['why-choose-us.php', 'how-it-works.php', 'documentation.php', 'sample-reports.php', 'issues-report-demo.php', 'cleaned-data-report-demo.php', 'full-preview-report-demo.php']) ? 'text-white border-yellow-500' : ''; ?>">
                             Product
                             <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
                         <div id="product-menu" role="menu" class="absolute left-0 w-48 mt-2 py-2 bg-neutral-800 shadow-xl border border-neutral-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
-                            <a href="/how-it-works.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'how-it-works.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
-                                How It Works
-                            </a>
                             <a href="/why-choose-us.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'why-choose-us.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Why Choose Us
                             </a>
-                            <a href="/documentation.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
-                                Documentation
-                            </a>
                             <a href="/sample-reports.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'sample-reports.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Sample Reports
+                            </a>
+                            <a href="/how-it-works.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'how-it-works.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                                How It Works
+                            </a>
+                            <a href="/documentation.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                                Documentation
                             </a>
                         </div>
                     </div>
@@ -183,17 +183,17 @@
             <!-- Product Section -->
             <div class="px-3 py-2">
                 <p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-1">Product</p>
-                <a href="/how-it-works.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
-                    How It Works
-                </a>
                 <a href="/why-choose-us.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'why-choose-us.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Why Choose Us
                 </a>
-                <a href="/documentation.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
-                    Documentation
-                </a>
                 <a href="/sample-reports.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'sample-reports.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Sample Reports
+                </a>
+                <a href="/how-it-works.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'how-it-works.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                    How It Works
+                </a>
+                <a href="/documentation.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                    Documentation
                 </a>
             </div>
 

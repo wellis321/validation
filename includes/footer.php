@@ -21,8 +21,8 @@
             <div>
                 <h3 class="text-sm font-semibold uppercase tracking-wider text-neutral-300 mb-4">Product</h3>
                 <ul class="space-y-2 text-neutral-400">
-                    <li><a href="/how-it-works.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">How It Works</a></li>
                     <li><a href="/why-choose-us.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Why Choose Us</a></li>
+                    <li><a href="/how-it-works.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">How It Works</a></li>
                     <li><a href="/documentation.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Documentation</a></li>
                     <li><a href="/validation-rules.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Validation Rules</a></li>
                     <li><a href="/blog/ai-data-cleaning-limitations.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Blog</a></li>
