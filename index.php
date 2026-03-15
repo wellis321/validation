@@ -279,7 +279,7 @@ if ($user) {
                         </div>
                     </div>
                 </div>
-                <div class="ds-reveal-item flex items-center justify-center mt-12 pt-12 pb-6 md:mt-16 md:pt-16 md:pb-8">
+                <div class="ds-reveal-item flex items-center justify-center mt-20 pt-12 pb-6 md:mt-20 md:pt-16 md:pb-8">
                     <div class="px-6 py-5 border-l-4 border-yellow-500 bg-yellow-500/5 max-w-2xl">
                         <p class="text-center text-white text-lg md:text-xl font-semibold flex items-center justify-center gap-3">
                             <svg class="w-7 h-7 text-yellow-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
