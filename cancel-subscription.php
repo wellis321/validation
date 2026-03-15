@@ -73,18 +73,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="min-h-screen bg-gray-50">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <main class="max-w-3xl mx-auto py-12 px-4">
-        <div class="bg-white rounded-lg shadow">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h1 class="text-2xl font-bold text-gray-900">Cancel Subscription</h1>
+        <div class="bg-neutral-800/60 border border-neutral-600 shadow">
+            <div class="px-6 py-4 border-b border-neutral-600">
+                <h1 class="text-2xl font-bold text-white">Cancel Subscription</h1>
             </div>
 
             <div class="p-6">
                 <?php if ($success): ?>
-                    <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-4">
+                    <div class="bg-green-500/15 border border-green-500/30 text-green-300 px-4 py-3 mb-4">
                         <?php echo htmlspecialchars($success); ?>
                     </div>
                     <div class="mt-4">
@@ -93,18 +93,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </a>
                     </div>
                 <?php elseif ($error): ?>
-                    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+                    <div class="bg-red-500/15 border border-red-500/30 text-red-300 px-4 py-3 mb-4">
                         <?php echo htmlspecialchars($error); ?>
                     </div>
                 <?php else: ?>
                     <div class="mb-6">
-                        <h2 class="text-lg font-semibold text-gray-900 mb-2">Are you sure you want to cancel?</h2>
-                        <p class="text-gray-600 mb-4">
+                        <h2 class="text-lg font-semibold text-white mb-2">Are you sure you want to cancel?</h2>
+                        <p class="text-neutral-400 mb-4">
                             You're currently subscribed to the <strong><?php echo htmlspecialchars($subscription['name']); ?></strong> plan.
                         </p>
 
-                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                            <p class="text-sm text-yellow-800">
+                        <div class="bg-yellow-500/15 border border-yellow-500/30 p-4 mb-6">
+                            <p class="text-sm text-yellow-200">
                                 <strong>Important:</strong> Your subscription will remain active until <strong><?php echo date('F j, Y', strtotime($subscription['end_date'])); ?></strong>.
                                 You'll continue to have full access until then. You won't be charged again.
                             </p>
@@ -118,16 +118,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     Yes, Cancel Subscription
                                 </button>
                                 <a href="/account.php"
-                                    class="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-300 font-medium">
+                                    class="bg-neutral-600 text-white px-6 py-2 rounded-lg hover:bg-neutral-500 font-medium">
                                     Keep My Subscription
                                 </a>
                             </div>
                         </form>
                     </div>
 
-                    <div class="border-t border-gray-200 pt-6">
-                        <h3 class="text-md font-semibold text-gray-900 mb-3">Why are you cancelling?</h3>
-                        <p class="text-sm text-gray-600 mb-4">
+                    <div class="border-t border-neutral-600 pt-6">
+                        <h3 class="text-md font-semibold text-white mb-3">Why are you cancelling?</h3>
+                        <p class="text-sm text-neutral-400 mb-4">
                             We'd love to hear your feedback. Email us at <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500">noreply@simple-data-cleaner.com</a>
                         </p>
                     </div>

@@ -88,8 +88,27 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
             font-family: 'Courier New', monospace;
             font-size: 0.875rem;
             line-height: 1.5;
-            white-space: pre-wrap;
         }
+        .code-block-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .code-block-table th,
+        .code-block-table td {
+            text-align: left;
+            padding: 0.25rem 0.5rem 0.25rem 0;
+            vertical-align: top;
+        }
+        .code-block-table th {
+            border-bottom: 1px solid rgba(226, 232, 240, 0.35);
+            padding-bottom: 0.5rem;
+        }
+        .code-block-table td {
+            padding-top: 0.125rem;
+        }
+        .code-block-table .col-original { min-width: 18ch; }
+        .code-block-table .col-arrow { width: 1%; white-space: nowrap; padding-left: 0.5rem; padding-right: 0.5rem; }
+        .code-block-table .col-result { min-width: 14ch; }
 
         /* Colour swatch styles */
         .color-swatch {
@@ -1106,11 +1125,23 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     <li>4. Adds spacing for readability (+44 7123 456789)</li>
                                 </ul>
                                 <h4 class="font-semibold text-white mb-2">Examples:</h4>
-                                <div class="code-block">Original value → Cleaned result
-07123456789        →  +44 7123 456789
-+447123456789      →  +44 7123 456789
-(020) 7123 4567    →  +44 20 7123 4567
-0207-123-4567      →  +44 20 7123 4567</div>
+                                <div class="code-block">
+                                    <table class="code-block-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-original">Original value</th>
+                                                <th class="col-arrow">→</th>
+                                                <th class="col-result">Cleaned result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>07123456789</td><td class="col-arrow">→</td><td>+44 7123 456789</td></tr>
+                                            <tr><td>+447123456789</td><td class="col-arrow">→</td><td>+44 7123 456789</td></tr>
+                                            <tr><td>(020) 7123 4567</td><td class="col-arrow">→</td><td>+44 20 7123 4567</td></tr>
+                                            <tr><td>0207-123-4567</td><td class="col-arrow">→</td><td>+44 20 7123 4567</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
@@ -1128,10 +1159,22 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
                                     <li>4. Formats with spaces (AB 12 34 56 C)</li>
                                 </ul>
                                 <h4 class="font-semibold text-white mb-2">Examples:</h4>
-                                <div class="code-block">Original value → Cleaned result
-ab123456c          →  AB 12 34 56 C
-AB-123456-C        →  AB 12 34 56 C
-ab 12 34 56 c      →  AB 12 34 56 C</div>
+                                <div class="code-block">
+                                    <table class="code-block-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-original">Original value</th>
+                                                <th class="col-arrow">→</th>
+                                                <th class="col-result">Cleaned result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>ab123456c</td><td class="col-arrow">→</td><td>AB 12 34 56 C</td></tr>
+                                            <tr><td>AB-123456-C</td><td class="col-arrow">→</td><td>AB 12 34 56 C</td></tr>
+                                            <tr><td>ab 12 34 56 c</td><td class="col-arrow">→</td><td>AB 12 34 56 C</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
@@ -1153,11 +1196,23 @@ ab 12 34 56 c      →  AB 12 34 56 C</div>
                                     <li>4. Validates format against UK postcode patterns</li>
                                 </ul>
                                 <h4 class="font-semibold text-white mb-2">Examples:</h4>
-                                <div class="code-block">Original value → Cleaned result
-sw1a1aa            →  SW1A 1AA
-m11aa              →  M1 1AA
-EC1A1BB            →  EC1A 1BB
-w1a 1aa            →  W1A 1AA</div>
+                                <div class="code-block">
+                                    <table class="code-block-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-original">Original value</th>
+                                                <th class="col-arrow">→</th>
+                                                <th class="col-result">Cleaned result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>sw1a1aa</td><td class="col-arrow">→</td><td>SW1A 1AA</td></tr>
+                                            <tr><td>m11aa</td><td class="col-arrow">→</td><td>M1 1AA</td></tr>
+                                            <tr><td>EC1A1BB</td><td class="col-arrow">→</td><td>EC1A 1BB</td></tr>
+                                            <tr><td>w1a 1aa</td><td class="col-arrow">→</td><td>W1A 1AA</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
@@ -1174,10 +1229,22 @@ w1a 1aa            →  W1A 1AA</div>
                                     <li>3. Formats with hyphens (XX-XX-XX)</li>
                                 </ul>
                                 <h4 class="font-semibold text-white mb-2">Examples:</h4>
-                                <div class="code-block">Original value → Cleaned result
-123456             →  12-34-56
-12 34 56           →  12-34-56
-12-34-56           →  12-34-56</div>
+                                <div class="code-block">
+                                    <table class="code-block-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-original">Original value</th>
+                                                <th class="col-arrow">→</th>
+                                                <th class="col-result">Cleaned result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>123456</td><td class="col-arrow">→</td><td>12-34-56</td></tr>
+                                            <tr><td>12 34 56</td><td class="col-arrow">→</td><td>12-34-56</td></tr>
+                                            <tr><td>12-34-56</td><td class="col-arrow">→</td><td>12-34-56</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

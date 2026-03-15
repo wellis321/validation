@@ -63,7 +63,7 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="min-h-screen bg-slate-50">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <main class="max-w-5xl mx-auto py-12 px-4">

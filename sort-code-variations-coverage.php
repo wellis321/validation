@@ -17,7 +17,7 @@ $pageTitle = 'Bank Sort Code Format Support';
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="min-h-screen bg-gray-50">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <main class="container mx-auto px-4 py-8 max-w-6xl">

@@ -31,14 +31,14 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
     </style>
 </head>
 
-<body class="min-h-screen bg-gray-50">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <main class="container mx-auto px-4 py-8 max-w-7xl">
         <!-- Header -->
         <header class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Validation Rules & Standards</h1>
-            <p class="text-xl text-gray-600 max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold text-white mb-4">Validation Rules & Standards</h1>
+            <p class="text-xl text-neutral-400 max-w-4xl mx-auto">
                 Explore all the validation rules we currently support and see examples of how we process different data
                 formats. Learn about automatic fixes and understand what makes data valid or invalid.
             </p>
@@ -57,47 +57,47 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
         </header>
 
         <!-- Tab Navigation -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-            <div class="border-b border-gray-200">
+        <div id="validation-tab-nav" class="bg-neutral-800/60 border border-neutral-600 shadow-lg p-6 mb-8">
+            <div class="border-b border-neutral-600">
                 <nav class="-mb-px flex space-x-8 overflow-x-auto">
                     <button
-                        class="tab-btn active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-yellow-500 text-amber-800"
+                        class="tab-btn active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-yellow-500 text-yellow-400"
                         data-tab="phone_numbers">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                         Phone Numbers
                     </button>
                     <button
-                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-500"
                         data-tab="national_insurance">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
                         NI Numbers
                     </button>
                     <button
-                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-500"
                         data-tab="postcodes">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         Postcodes
                     </button>
                     <button
-                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-500"
                         data-tab="sort_codes">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                         Sort Codes
                     </button>
                     <button
-                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-500"
                         data-tab="bank_account">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                         Bank Accounts
                     </button>
                     <button
-                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-500"
                         data-tab="emails">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                         Email
                     </button>
                     <button
-                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        class="tab-btn whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-transparent text-neutral-400 hover:text-neutral-300 hover:border-neutral-500"
                         data-tab="names">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         Names
@@ -1175,11 +1175,11 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                 // Update active tab button
                 tabBtns.forEach(b => {
                     if (b.dataset.tab === targetTab) {
-                        b.classList.add('border-yellow-500', 'text-amber-800');
-                        b.classList.remove('border-transparent', 'text-gray-500');
+                        b.classList.add('border-yellow-500', 'text-yellow-400');
+                        b.classList.remove('border-transparent', 'text-neutral-400');
                     } else {
-                        b.classList.remove('border-yellow-500', 'text-amber-800');
-                        b.classList.add('border-transparent', 'text-gray-500');
+                        b.classList.remove('border-yellow-500', 'text-yellow-400');
+                        b.classList.add('border-transparent', 'text-neutral-400');
                     }
                 });
 
@@ -1211,7 +1211,7 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
 
                         // Scroll to the tab section after a brief delay to ensure tab is visible
                         setTimeout(() => {
-                            const tabSection = document.querySelector('.bg-white.rounded-lg.shadow-lg.p-6.mb-8');
+                            const tabSection = document.getElementById('validation-tab-nav');
                             if (tabSection) {
                                 tabSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }

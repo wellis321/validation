@@ -763,18 +763,22 @@ class UKDataCleanerApp {
         // Show preview section if fields are selected
         if (this.selectedFields.length > 0 || this.selectedNameSplits.length > 0) {
             previewSection.classList.remove('hidden');
+            // Retrigger entrance animation when section is revealed (delight)
+            previewSection.classList.remove('ds-animate-fade-slide');
+            void previewSection.offsetWidth;
+            previewSection.classList.add('ds-animate-fade-slide');
             
             // Generate transformation descriptions
             const transformations = this.generateTransformationSummary();
             
             if (transformations.length > 0) {
                 transformationSummary.innerHTML = `
-                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-900">
+                    <ul class="list-disc list-inside space-y-2 text-sm text-neutral-300">
                         ${transformations.map(t => `<li>${t}</li>`).join('')}
                     </ul>
                 `;
             } else {
-                transformationSummary.innerHTML = '<p class="text-sm text-gray-800">No transformations selected.</p>';
+                transformationSummary.innerHTML = '<p class="text-sm text-neutral-400">No transformations selected.</p>';
             }
             
             // Show before/after preview
@@ -840,24 +844,26 @@ class UKDataCleanerApp {
     updatePreviewToggleButtons() {
         const beforeBtn = document.getElementById('previewToggleBefore');
         const afterBtn = document.getElementById('previewToggleAfter');
+        const activeClasses = ['border-yellow-500', 'bg-yellow-500', 'text-black'];
+        const inactiveClasses = ['border-neutral-600', 'bg-neutral-700', 'text-neutral-300'];
         
         if (this.previewViewMode === 'before') {
             if (beforeBtn) {
-                beforeBtn.classList.add('border-yellow-500', 'bg-yellow-500', 'text-black');
-                beforeBtn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
+                beforeBtn.classList.add(...activeClasses);
+                beforeBtn.classList.remove(...inactiveClasses);
             }
             if (afterBtn) {
-                afterBtn.classList.remove('border-yellow-500', 'bg-yellow-500', 'text-black');
-                afterBtn.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
+                afterBtn.classList.remove(...activeClasses);
+                afterBtn.classList.add(...inactiveClasses);
             }
         } else {
             if (afterBtn) {
-                afterBtn.classList.add('border-yellow-500', 'bg-yellow-500', 'text-black');
-                afterBtn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
+                afterBtn.classList.add(...activeClasses);
+                afterBtn.classList.remove(...inactiveClasses);
             }
             if (beforeBtn) {
-                beforeBtn.classList.remove('border-yellow-500', 'bg-yellow-500', 'text-black');
-                beforeBtn.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
+                beforeBtn.classList.remove(...activeClasses);
+                beforeBtn.classList.add(...inactiveClasses);
             }
         }
     }
@@ -868,12 +874,12 @@ class UKDataCleanerApp {
         const headers = this.previewViewMode === 'before' ? this.previewHeaders : this.previewProcessedHeaders;
         const sampleRows = this.previewSampleRows;
         
-        // Build header row (explicit text-gray-900 so readable inside dark parent)
+        // Build header row — dark theme, single-line cells
         headerEl.innerHTML = `
             <tr>
-                <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-900">#</th>
+                <th class="px-2 py-1.5 text-left border-b border-neutral-600 bg-neutral-800 text-xs font-semibold text-neutral-300 whitespace-nowrap">#</th>
                 ${headers.map(header => `
-                    <th class="px-2 py-1 text-left border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-900">
+                    <th class="px-2 py-1.5 text-left border-b border-neutral-600 bg-neutral-800 text-xs font-semibold text-neutral-300 whitespace-nowrap">
                         ${this.escapeHtml(header)}
                     </th>
                 `).join('')}
@@ -892,16 +898,16 @@ class UKDataCleanerApp {
         
         // Render based on view mode
         if (this.previewViewMode === 'before') {
-            // Show original data (explicit text-gray-900 so readable inside dark parent)
+            // Show original data — dark theme
             bodyEl.innerHTML = sampleRows.map((row, index) => {
                 return `
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-700 font-mono bg-gray-50">${index + 1}</td>
+                    <tr class="hover:bg-neutral-800/80 transition-colors">
+                        <td class="px-2 py-1.5 border-b border-neutral-700 text-xs text-neutral-500 font-mono bg-neutral-800/50 whitespace-nowrap">${index + 1}</td>
                         ${headers.map((header, colIndex) => {
                             const value = colIndex < row.length ? (row[colIndex] || '') : '';
                             const isSelected = this.selectedFields.includes(header) || this.selectedNameSplits.includes(header);
                             return `
-                                <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-900 ${isSelected ? 'bg-amber-50 font-medium' : 'bg-white'}">
+                                <td class="px-2 py-1.5 border-b border-neutral-700 text-xs text-neutral-200 whitespace-nowrap ${isSelected ? 'bg-yellow-500/10 font-medium text-yellow-100' : 'bg-neutral-900'}">
                                     ${this.escapeHtml(String(value))}
                                 </td>
                             `;
@@ -935,7 +941,7 @@ class UKDataCleanerApp {
                                     const splitResult = nameSplitter.split(nameValue);
                                     const value = header === 'first_name' ? (splitResult.first_name || '') : (splitResult.last_name || '');
                         return `
-                            <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50 text-green-800">
+                            <td class="px-2 py-1.5 border-b border-neutral-700 text-xs bg-green-500/15 text-green-300 whitespace-nowrap">
                                 <div class="font-medium">${this.escapeHtml(String(value))}</div>
                             </td>
                         `;
@@ -943,7 +949,7 @@ class UKDataCleanerApp {
                             }
                         }
                         return `
-                            <td class="px-2 py-1 border-b border-gray-200 text-xs bg-green-50 text-green-800">
+                            <td class="px-2 py-1.5 border-b border-neutral-700 text-xs bg-green-500/15 text-green-300 whitespace-nowrap">
                                 <div class="font-medium"></div>
                             </td>
                         `;
@@ -985,10 +991,10 @@ class UKDataCleanerApp {
                         const willChange = isSelected && originalValue !== value && value;
                         
                         return `
-                            <td class="px-2 py-1 border-b border-gray-200 text-xs ${willChange ? 'bg-green-50 text-green-800' : 'bg-white text-gray-900'}">
-                                <div class="font-medium">
+                            <td class="px-2 py-1.5 border-b border-neutral-700 text-xs whitespace-nowrap ${willChange ? 'bg-green-500/15 text-green-300' : 'bg-neutral-900 text-neutral-200'}">
+                                <div class="font-medium inline-flex items-center">
                                     ${this.escapeHtml(String(value))}
-                                    ${willChange ? '<svg class="inline w-4 h-4 text-green-600 align-middle ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>' : ''}
+                                    ${willChange ? '<svg class="inline w-4 h-4 text-green-400 align-middle ml-1 flex-shrink-0 ds-preview-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>' : ''}
                                 </div>
                             </td>
                         `;
@@ -996,8 +1002,8 @@ class UKDataCleanerApp {
                 }).join('');
                 
                 return `
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-2 py-1 border-b border-gray-200 text-xs text-gray-700 font-mono bg-gray-50">${index + 1}</td>
+                    <tr class="hover:bg-neutral-800/80 transition-colors">
+                        <td class="px-2 py-1.5 border-b border-neutral-700 text-xs text-neutral-500 font-mono bg-neutral-800/50 whitespace-nowrap">${index + 1}</td>
                         ${rowCells}
                     </tr>
                 `;
@@ -1384,9 +1390,9 @@ class UKDataCleanerApp {
 
         tbody.innerHTML = entries.map(([column, count]) => {
             return `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 text-sm font-medium text-gray-900">${this.escapeHtml(column)}</td>
-                    <td class="px-4 py-2 text-sm text-gray-700">${count}</td>
+                <tr class="hover:bg-neutral-700/50 transition-colors">
+                    <td class="px-4 py-2 text-sm font-medium text-neutral-200">${this.escapeHtml(column)}</td>
+                    <td class="px-4 py-2 text-sm text-neutral-400">${count}</td>
                 </tr>
             `;
         }).join('');
@@ -1432,23 +1438,49 @@ class UKDataCleanerApp {
         const tbody = document.getElementById('summaryTableBody');
         if (!tbody) return;
 
-        const summaryData = this.results.processedRows
+        // Prefer transformations (value changed), fallback to any validated fields so table isn't empty
+        const withChanges = this.results.processedRows
             .slice(0, 5)
             .flatMap(row =>
                 row.validationResults
-                    .slice(0, 2)
                     .filter(result => result.fixed && result.fixed !== result.value)
+                    .slice(0, 3)
                     .map(result => ({ row, result }))
             );
+        const withNoChanges = this.results.processedRows
+            .slice(0, 5)
+            .flatMap(row =>
+                row.validationResults
+                    .filter(result => result.fixed && result.fixed === result.value)
+                    .slice(0, 2)
+                    .map(result => ({ row, result }))
+            );
+        let summaryData = withChanges.length > 0
+            ? withChanges.slice(0, 10)
+            : withNoChanges.slice(0, 8);
+        // Final fallback: any validation result from first 5 rows
+        if (summaryData.length === 0) {
+            summaryData = this.results.processedRows
+                .slice(0, 5)
+                .flatMap(row =>
+                    row.validationResults.slice(0, 2).map(result => ({ row, result }))
+                )
+                .slice(0, 8);
+        }
 
-        tbody.innerHTML = summaryData.map(({ row, result }) => `
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-2 text-sm text-gray-500">${row.rowNumber}</td>
-                <td class="px-4 py-2 text-sm font-medium">${result.column}</td>
-                <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">${result.value}</code></td>
-                <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">${result.fixed}</code></td>
+        tbody.innerHTML = summaryData.map(({ row, result }) => {
+            const original = result.value ?? '';
+            const cleaned = result.fixed ?? result.value ?? '';
+            const wasChanged = result.fixed && result.fixed !== result.value;
+            return `
+            <tr class="hover:bg-neutral-800/80 transition-colors">
+                <td class="px-4 py-2 text-sm text-neutral-500">${row.rowNumber}</td>
+                <td class="px-4 py-2 text-sm font-medium text-neutral-200">${this.escapeHtml(result.column)}</td>
+                <td class="px-4 py-2 text-sm"><code class="bg-neutral-700 px-2 py-1 rounded text-neutral-300 font-mono text-xs">${this.escapeHtml(String(original))}</code></td>
+                <td class="px-4 py-2 text-sm"><code class="${wasChanged ? 'bg-green-500/20 text-green-300' : 'bg-neutral-700 text-neutral-400'} px-2 py-1 rounded font-mono text-xs">${this.escapeHtml(String(cleaned))}</code></td>
             </tr>
-        `).join('');
+        `;
+        }).join('');
     }
 
     renderCleanedTable() {
@@ -1463,12 +1495,12 @@ class UKDataCleanerApp {
             );
 
         tbody.innerHTML = cleanedData.map(({ row, result }) => `
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-2 text-sm text-gray-500">${row.rowNumber}</td>
-                <td class="px-4 py-2 text-sm font-medium">${result.column}</td>
-                <td class="px-4 py-2 text-sm"><code class="bg-gray-100 px-2 py-1 rounded">${result.value}</code></td>
-                <td class="px-4 py-2 text-sm"><code class="bg-green-100 px-2 py-1 rounded text-green-800">${result.fixed}</code></td>
-                <td class="px-4 py-2 text-sm text-amber-800">${result.detectedType}</td>
+            <tr class="hover:bg-neutral-800/80 transition-colors">
+                <td class="px-4 py-2 text-sm text-neutral-500">${row.rowNumber}</td>
+                <td class="px-4 py-2 text-sm font-medium text-neutral-200">${result.column}</td>
+                <td class="px-4 py-2 text-sm"><code class="bg-neutral-700 px-2 py-1 rounded text-neutral-300 font-mono text-xs">${result.value}</code></td>
+                <td class="px-4 py-2 text-sm"><code class="bg-green-500/20 px-2 py-1 rounded text-green-300 font-mono text-xs">${result.fixed}</code></td>
+                <td class="px-4 py-2 text-sm text-amber-400">${result.detectedType}</td>
             </tr>
         `).join('');
     }
@@ -1491,11 +1523,11 @@ class UKDataCleanerApp {
             );
 
         tbody.innerHTML = issuesData.map(({ row, result }) => `
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-2 text-sm text-gray-500">${row.rowNumber}</td>
-                <td class="px-4 py-2 text-sm font-medium">${result.column}</td>
-                <td class="px-4 py-2 text-sm"><code class="bg-red-100 px-2 py-1 rounded text-red-800">${result.value}</code></td>
-                <td class="px-4 py-2 text-sm text-red-600">${result.error}</td>
+            <tr class="hover:bg-neutral-800/80 transition-colors">
+                <td class="px-4 py-2 text-sm text-neutral-500">${row.rowNumber}</td>
+                <td class="px-4 py-2 text-sm font-medium text-neutral-200">${result.column}</td>
+                <td class="px-4 py-2 text-sm"><code class="bg-red-500/20 px-2 py-1 rounded text-red-300 font-mono text-xs">${result.value}</code></td>
+                <td class="px-4 py-2 text-sm text-red-400">${result.error}</td>
                 <td class="px-4 py-2 text-sm">
                     ${this.getComplianceStandard(result.column, result.detectedType)}
                 </td>
@@ -1517,11 +1549,11 @@ class UKDataCleanerApp {
         const column = columnName.toLowerCase();
 
         if (column.includes('ni') || column.includes('insurance')) {
-            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">HMRC Compliant</span>';
+            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-300">HMRC Compliant</span>';
         } else if (column.includes('phone') || column.includes('mobile')) {
-            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">UK Standard</span>';
+            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-300">UK Standard</span>';
         } else {
-            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Industry Standard</span>';
+            return '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-neutral-600 text-neutral-300">Industry Standard</span>';
         }
     }
 
@@ -3869,13 +3901,14 @@ class UKDataCleanerApp {
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabBar = document.querySelector('.tab-bar');
         const isDarkTheme = tabBar?.dataset?.tabTheme === 'dark';
-        const activeClasses = isDarkTheme ? ['border-yellow-500', 'text-white', 'tab-active'] : ['border-yellow-500', 'text-amber-800'];
-        const inactiveClasses = isDarkTheme ? ['border-transparent', 'text-neutral-400'] : ['border-transparent', 'text-gray-700'];
+        // Segmented control: active = filled pill, inactive = transparent
+        const activeClasses = isDarkTheme ? ['bg-yellow-500', 'text-black'] : ['border-yellow-500', 'text-amber-800'];
+        const inactiveClasses = isDarkTheme ? ['bg-transparent', 'text-neutral-400'] : ['border-transparent', 'text-gray-700'];
         tabBtns.forEach(btn => {
             const isActive = btn.dataset.tab === tabName;
             if (isActive) {
                 btn.classList.add(...activeClasses);
-                btn.classList.remove(...inactiveClasses, 'text-gray-500');
+                btn.classList.remove(...inactiveClasses);
                 btn.setAttribute('aria-selected', 'true');
             } else {
                 btn.classList.remove(...activeClasses);

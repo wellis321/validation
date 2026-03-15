@@ -242,15 +242,18 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
                         </div>
 
                         <!-- Important Warning -->
-                        <div class="bg-red-500/10 border-2 border-red-500/40 rounded-lg p-4">
-                            <div class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                </svg>
+                        <div class="relative overflow-hidden rounded-xl border-2 border-red-500/50 bg-red-500/15 pl-1 shadow-[inset_0_0_0_1px_rgba(248,113,113,0.15)]">
+                            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500" aria-hidden="true"></div>
+                            <div class="flex items-start gap-4 p-5 pl-6">
+                                <span class="flex-shrink-0 w-10 h-10 rounded-lg bg-red-500/25 flex items-center justify-center border border-red-500/40">
+                                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" stroke-width="2.25" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                </span>
                                 <div>
-                                    <p class="text-base text-red-300 font-semibold mb-1">Important: Download and Save Your File</p>
-                                    <p class="text-sm text-red-200/90">
-                                        Your cleaned data is only available in your browser session. <strong class="text-red-200">Once you close the browser tab or refresh the page, your cleaned data will be gone.</strong> We don't store files on our servers - make sure to download and save your cleaned file immediately after processing!
+                                    <p class="text-lg font-bold text-red-200 tracking-tight mb-2">Download and save your file</p>
+                                    <p class="text-sm text-red-200/85 leading-relaxed">
+                                        Your cleaned data exists only in this browser session. <strong class="text-red-100 font-semibold">Close the tab or refresh — and it's gone.</strong> We don't store files. Download and save immediately after processing.
                                     </p>
                                 </div>
                             </div>

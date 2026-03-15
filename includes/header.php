@@ -9,9 +9,12 @@
         <div class="flex justify-between h-14">
             <div class="flex items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="/" class="flex items-center group">
-                        <img src="/assets/images/smooth-white-transparent.png" alt="Simple Data Cleaner" class="h-12 w-auto mr-2 transition-transform group-hover:scale-105">
-                        <span class="text-lg font-bold transition-colors"><span class="text-white group-hover:text-yellow-400">Simple Data</span> <span class="text-yellow-400 group-hover:text-yellow-300">Cleaner</span></span>
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded px-1 -mx-1 py-0.5">
+                        <img src="/assets/images/smooth-white-transparent.png" alt="" width="40" height="40" class="h-8 sm:h-9 w-auto max-h-10 object-contain opacity-95 group-hover:opacity-100 transition-opacity group-hover:scale-105" aria-hidden="true">
+                        <span class="text-xl font-extrabold tracking-tight text-white">
+                            <span class="group-hover:text-yellow-400 transition-colors">Simple Data</span>
+                            <span class="text-yellow-400 group-hover:text-yellow-300 transition-colors"> Cleaner</span>
+                        </span>
                     </a>
                 </div>
                 <!-- Desktop Navigation -->
@@ -22,7 +25,7 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                             aria-controls="product-menu"
-                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php']) ? 'text-white border-yellow-500' : ''; ?>">
+                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo in_array($currentPath, ['how-it-works.php', 'documentation.php', 'sample-reports.php', 'issues-report-demo.php', 'cleaned-data-report-demo.php', 'full-preview-report-demo.php']) ? 'text-white border-yellow-500' : ''; ?>">
                             Product
                             <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -38,8 +41,8 @@
                             <a href="/documentation.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Documentation
                             </a>
-                            <a href="/blog/ai-data-cleaning-limitations.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo strpos($currentPath, 'blog') !== false ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
-                                Blog
+                            <a href="/sample-reports.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'sample-reports.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                                Sample Reports
                             </a>
                         </div>
                     </div>
@@ -62,6 +65,12 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- Blog (standalone) -->
+                    <a href="/blog/ai-data-cleaning-limitations.php"
+                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo strpos($currentPath, 'blog') !== false ? 'text-white border-yellow-500' : ''; ?>">
+                        Blog
+                    </a>
 
                     <!-- Pricing (standalone - important) -->
                     <a href="/pricing.php"
@@ -183,8 +192,8 @@
                 <a href="/documentation.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Documentation
                 </a>
-                <a href="/blog/ai-data-cleaning-limitations.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
-                    Blog
+                <a href="/sample-reports.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'sample-reports.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                    Sample Reports
                 </a>
             </div>
 
@@ -195,6 +204,11 @@
                     Bespoke Services
                 </a>
             </div>
+
+            <!-- Blog (standalone) -->
+            <a href="/blog/ai-data-cleaning-limitations.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                Blog
+            </a>
 
             <!-- Pricing (standalone) -->
             <a href="/pricing.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'pricing.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">

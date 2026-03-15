@@ -31,7 +31,7 @@ require_once __DIR__ . '/includes/init.php';
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="bg-gray-50">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <!-- Main Content -->

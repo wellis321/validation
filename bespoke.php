@@ -128,29 +128,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="min-h-screen bg-slate-50">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
-    <main class="max-w-5xl mx-auto py-12 px-4">
-        <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-            <div class="bg-slate-900 text-white px-6 py-10" id="enquiry">
-                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-400/20 text-emerald-200 text-xs font-semibold uppercase tracking-wide">Enterprise & Bespoke</span>
-                <h1 class="text-3xl sm:text-4xl font-bold mt-4">Tell us about the data you need cleaned</h1>
-                <p class="text-slate-200 mt-4 text-base leading-relaxed">
-                    We build custom, browser-based validators tailored to your internal data fields.
-                    Share the essentials and we'll respond within one working day with next steps and any questions we need to scope the solution.
-                </p>
-            </div>
+    <main id="main-content" class="max-w-4xl mx-auto px-4 py-8 md:py-12 mt-8">
+        <div class="bg-neutral-900 rounded-xl shadow-lg border border-neutral-700 p-8">
+            <h2 class="text-2xl font-bold text-center text-white mb-2">Tell us about the data you need cleaned</h2>
+            <p class="text-center text-neutral-400 mb-8 flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                We build custom validators tailored to your data — 100% browser-based & private
+            </p>
 
-            <div class="px-6 py-8">
+            <!-- Form in example-style dashed zone -->
+            <div class="border-2 border-dashed border-neutral-500 rounded-2xl p-8 md:p-10 lg:p-12 bg-yellow-500/[0.04] hover:bg-yellow-500/[0.06] hover:border-yellow-500/60 transition-all duration-300" id="enquiry">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full ring-2 ring-yellow-500/25 ring-offset-4 ring-offset-neutral-900 mb-4">
+                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <p class="text-base text-neutral-400">Share the essentials and we'll respond within one working day.</p>
+                </div>
                 <?php if ($submitted): ?>
-                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-lg mb-6">
-                        Thanks for sharing the details. We'll review your requirements and get back to you shortly to scope the bespoke solution.
+                    <div class="bespoke-success-message flex items-start gap-3 bg-green-500/10 border border-green-500/30 text-green-200 px-5 py-4 rounded-xl mb-6">
+                        <svg class="w-5 h-5 shrink-0 mt-0.5 text-green-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-base font-medium">Thanks for sharing the details. We'll review your requirements and get back to you shortly to scope the bespoke solution.</p>
                     </div>
                 <?php endif; ?>
 
                 <?php if (!empty($errors)): ?>
-                    <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+                    <div class="bg-red-500/10 border border-red-500/30 text-red-200 px-4 py-3 rounded-lg mb-6">
                         <ul class="list-disc list-inside space-y-1 text-sm">
                             <?php foreach ($errors as $error): ?>
                                 <li><?php echo htmlspecialchars($error); ?></li>
@@ -164,49 +175,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <section class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="contact_name" class="block text-sm font-semibold text-gray-800">Contact name *</label>
-                                <input type="text" id="contact_name" name="contact_name" required value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['contact_name'] ?? ($user['name'] ?? ''))); ?>" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                            <div class="bespoke-field">
+                                <label for="contact_name" class="ds-input-bold-label">Contact name *</label>
+                                <input type="text" id="contact_name" name="contact_name" required value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['contact_name'] ?? ($user['name'] ?? ''))); ?>" class="ds-input-bold">
                             </div>
-                            <div>
-                                <label for="email" class="block text-sm font-semibold text-gray-800">Email address *</label>
-                                <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['email'] ?? $defaultEmail)); ?>" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                            <div class="bespoke-field">
+                                <label for="email" class="ds-input-bold-label">Email address *</label>
+                                <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['email'] ?? $defaultEmail)); ?>" class="ds-input-bold">
                             </div>
-                            <div>
-                                <label for="company" class="block text-sm font-semibold text-gray-800">Company <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <input type="text" id="company" name="company" value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['company'] ?? '')); ?>" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="Organisation name or client you're supporting">
+                            <div class="bespoke-field">
+                                <label for="company" class="ds-input-bold-label">Company <span class="optional">(optional)</span></label>
+                                <input type="text" id="company" name="company" value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['company'] ?? '')); ?>" class="ds-input-bold" placeholder="Organisation name or client you're supporting">
                             </div>
-                            <div>
-                                <label for="role" class="block text-sm font-semibold text-gray-800">Role / job title <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <input type="text" id="role" name="role" value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['role'] ?? '')); ?>" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="Operations manager, data analyst, CTO, etc.">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="issue" class="block text-sm font-semibold text-gray-800">What do you need help with? *</label>
-                            <textarea id="issue" name="issue" required rows="5" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="Tell us about the data, the rules you need, or the workflow you're trying to support."><?php echo htmlspecialchars($submitted ? '' : ($_POST['issue'] ?? '')); ?></textarea>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="current_format" class="block text-sm font-semibold text-gray-800">Current format(s) <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <textarea id="current_format" name="current_format" rows="3" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="e.g. CSV exports from Salesforce, Excel spreadsheets, JSON API payloads"><?php echo htmlspecialchars($submitted ? '' : ($_POST['current_format'] ?? '')); ?></textarea>
-                            </div>
-                            <div>
-                                <label for="desired_format" class="block text-sm font-semibold text-gray-800">Desired output format(s) <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <textarea id="desired_format" name="desired_format" rows="3" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="e.g. Clean CSV for upload, Excel template for finance, JSON for API ingestion"><?php echo htmlspecialchars($submitted ? '' : ($_POST['desired_format'] ?? '')); ?></textarea>
+                            <div class="bespoke-field">
+                                <label for="role" class="ds-input-bold-label">Role / job title <span class="optional">(optional)</span></label>
+                                <input type="text" id="role" name="role" value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['role'] ?? '')); ?>" class="ds-input-bold" placeholder="Operations manager, data analyst, CTO, etc.">
                             </div>
                         </div>
 
-                        <div>
-                            <label for="data_sources" class="block text-sm font-semibold text-gray-800">Where does the data originate? <span class="text-gray-400 font-normal">(optional)</span></label>
-                            <textarea id="data_sources" name="data_sources" rows="3" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="Line-of-business apps, internal databases, HR system, CRM exports, etc."><?php echo htmlspecialchars($submitted ? '' : ($_POST['data_sources'] ?? '')); ?></textarea>
+                        <div class="bespoke-field">
+                            <label for="issue" class="ds-input-bold-label">What do you need help with? *</label>
+                            <textarea id="issue" name="issue" required rows="5" class="ds-input-bold resize-y min-h-[140px]" placeholder="Tell us about the data, the rules you need, or the workflow you're trying to support."><?php echo htmlspecialchars($submitted ? '' : ($_POST['issue'] ?? '')); ?></textarea>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="data_volume" class="block text-sm font-semibold text-gray-800">Approximate data volume <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <select id="data_volume" name="data_volume" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                            <div class="bespoke-field">
+                                <label for="current_format" class="ds-input-bold-label">Current format(s) <span class="optional">(optional)</span></label>
+                                <textarea id="current_format" name="current_format" rows="3" class="ds-input-bold resize-y min-h-[100px]" placeholder="e.g. CSV exports from Salesforce, Excel spreadsheets, JSON API payloads"><?php echo htmlspecialchars($submitted ? '' : ($_POST['current_format'] ?? '')); ?></textarea>
+                            </div>
+                            <div class="bespoke-field">
+                                <label for="desired_format" class="ds-input-bold-label">Desired output format(s) <span class="optional">(optional)</span></label>
+                                <textarea id="desired_format" name="desired_format" rows="3" class="ds-input-bold resize-y min-h-[100px]" placeholder="e.g. Clean CSV for upload, Excel template for finance, JSON for API ingestion"><?php echo htmlspecialchars($submitted ? '' : ($_POST['desired_format'] ?? '')); ?></textarea>
+                            </div>
+                        </div>
+
+                        <div class="bespoke-field">
+                            <label for="data_sources" class="ds-input-bold-label">Where does the data originate? <span class="optional">(optional)</span></label>
+                            <textarea id="data_sources" name="data_sources" rows="3" class="ds-input-bold resize-y min-h-[100px]" placeholder="Line-of-business apps, internal databases, HR system, CRM exports, etc."><?php echo htmlspecialchars($submitted ? '' : ($_POST['data_sources'] ?? '')); ?></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bespoke-field">
+                                <label for="data_volume" class="ds-input-bold-label">Approximate data volume <span class="optional">(optional)</span></label>
+                                <select id="data_volume" name="data_volume" class="ds-input-bold cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 24 24%27 stroke=%27%23a3a3a3%27%3E%3Cpath stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M19 9l-7 7-7-7%27/%3E%3C/svg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_0.75rem_center] bg-no-repeat pr-10">
                                     <option value="" <?php echo ($submitted || empty($_POST['data_volume'])) ? 'selected' : ''; ?>>Select a range (optional)</option>
                                     <option value="Under 10,000 rows" <?php echo (!$submitted && ($_POST['data_volume'] ?? '') === 'Under 10,000 rows') ? 'selected' : ''; ?>>Under 10,000 rows</option>
                                     <option value="10,000 - 50,000 rows" <?php echo (!$submitted && ($_POST['data_volume'] ?? '') === '10,000 - 50,000 rows') ? 'selected' : ''; ?>>10,000 - 50,000 rows</option>
@@ -215,9 +226,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <option value="Over 1 million rows" <?php echo (!$submitted && ($_POST['data_volume'] ?? '') === 'Over 1 million rows') ? 'selected' : ''; ?>>Over 1 million rows</option>
                                 </select>
                             </div>
-                            <div>
-                                <label for="clean_frequency" class="block text-sm font-semibold text-gray-800">How often do you need this cleaned? <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <select id="clean_frequency" name="clean_frequency" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500">
+                            <div class="bespoke-field">
+                                <label for="clean_frequency" class="ds-input-bold-label">How often do you need this cleaned? <span class="optional">(optional)</span></label>
+                                <select id="clean_frequency" name="clean_frequency" class="ds-input-bold cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 24 24%27 stroke=%27%23a3a3a3%27%3E%3Cpath stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M19 9l-7 7-7-7%27/%3E%3C/svg%3E')] bg-[length:1.25rem_1.25rem] bg-[right_0.75rem_center] bg-no-repeat pr-10">
                                     <option value="" <?php echo ($submitted || empty($_POST['clean_frequency'])) ? 'selected' : ''; ?>>Select cadence (optional)</option>
                                     <option value="One-off project" <?php echo (!$submitted && ($_POST['clean_frequency'] ?? '') === 'One-off project') ? 'selected' : ''; ?>>One-off project</option>
                                     <option value="Weekly" <?php echo (!$submitted && ($_POST['clean_frequency'] ?? '') === 'Weekly') ? 'selected' : ''; ?>>Weekly</option>
@@ -226,34 +237,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <option value="Ad-hoc / when-needed" <?php echo (!$submitted && ($_POST['clean_frequency'] ?? '') === 'Ad-hoc / when-needed') ? 'selected' : ''; ?>>Ad-hoc / when-needed</option>
                                 </select>
                             </div>
-                            <div>
-                                <label for="timeline" class="block text-sm font-semibold text-gray-800">Target timeline <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <input type="text" id="timeline" name="timeline" value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['timeline'] ?? '')); ?>" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="e.g. Need a prototype by end of month">
+                            <div class="bespoke-field">
+                                <label for="timeline" class="ds-input-bold-label">Target timeline <span class="optional">(optional)</span></label>
+                                <input type="text" id="timeline" name="timeline" value="<?php echo htmlspecialchars($submitted ? '' : ($_POST['timeline'] ?? '')); ?>" class="ds-input-bold" placeholder="e.g. Need a prototype by end of month">
                             </div>
-                            <div class="flex items-center gap-3 pt-6">
-                                <input type="checkbox" id="needs_automation" name="needs_automation" class="h-4 w-4 text-yellow-500 border-gray-300 rounded" <?php echo (!$submitted && !empty($_POST['needs_automation'])) ? 'checked' : ''; ?>>
-                                <label for="needs_automation" class="text-sm text-gray-700">We're interested in automation or ongoing integration</label>
+                            <div class="flex items-center gap-4 pt-6">
+                                <input type="checkbox" id="needs_automation" name="needs_automation" class="bespoke-checkbox h-5 w-5 shrink-0 rounded border-2 border-neutral-600 bg-neutral-800 text-yellow-500 focus:border-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-500/20 accent-yellow-500" <?php echo (!$submitted && !empty($_POST['needs_automation'])) ? 'checked' : ''; ?>>
+                                <label for="needs_automation" class="text-base font-semibold text-neutral-200 cursor-pointer">We're interested in automation or ongoing integration</label>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="compliance" class="block text-sm font-semibold text-gray-800">Compliance or security requirements <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <textarea id="compliance" name="compliance" rows="3" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="GDPR, ISO, data residency, security approvals, etc."><?php echo htmlspecialchars($submitted ? '' : ($_POST['compliance'] ?? '')); ?></textarea>
+                            <div class="bespoke-field">
+                                <label for="compliance" class="ds-input-bold-label">Compliance or security requirements <span class="optional">(optional)</span></label>
+                                <textarea id="compliance" name="compliance" rows="3" class="ds-input-bold resize-y min-h-[100px]" placeholder="GDPR, ISO, data residency, security approvals, etc."><?php echo htmlspecialchars($submitted ? '' : ($_POST['compliance'] ?? '')); ?></textarea>
                             </div>
-                            <div>
-                                <label for="additional_notes" class="block text-sm font-semibold text-gray-800">Anything else we should know? <span class="text-gray-400 font-normal">(optional)</span></label>
-                                <textarea id="additional_notes" name="additional_notes" rows="4" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500" placeholder="Share example fields, success metrics, internal stakeholders, or anything that's top of mind."><?php echo htmlspecialchars($submitted ? '' : ($_POST['additional_notes'] ?? '')); ?></textarea>
+                            <div class="bespoke-field">
+                                <label for="additional_notes" class="ds-input-bold-label">Anything else we should know? <span class="optional">(optional)</span></label>
+                                <textarea id="additional_notes" name="additional_notes" rows="4" class="ds-input-bold resize-y min-h-[120px]" placeholder="Share example fields, success metrics, internal stakeholders, or anything that's top of mind."><?php echo htmlspecialchars($submitted ? '' : ($_POST['additional_notes'] ?? '')); ?></textarea>
                             </div>
                         </div>
                     </section>
 
                     <div class="flex flex-wrap items-center gap-4">
-                        <button type="submit" class="bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-400 transition-colors font-semibold shadow-lg">
+                        <button type="submit" class="bespoke-submit-btn ds-btn-primary px-6 py-3 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
                             Submit bespoke enquiry
                         </button>
-                        <a href="mailto:team@simple-data-cleaner.com" class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                        <a href="mailto:team@simple-data-cleaner.com" class="bespoke-email-link focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded px-1 -mx-1" aria-label="Send your requirements by email">
                             Prefer email? Drop us your requirements directly.
+                            <span class="bespoke-email-arrow inline-block" aria-hidden="true">→</span>
                         </a>
                     </div>
                 </form>

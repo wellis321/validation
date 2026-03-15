@@ -2,7 +2,7 @@
 <!-- Footer -->
 <footer class="bg-neutral-950 border-t border-neutral-800 text-white mt-12 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 max-sm:grid-cols-1 gap-8 mb-8">
             <div>
                 <a href="/" class="flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">
                     <img src="/assets/images/transparent-white-logo.png" alt="Simple Data Cleaner Logo" class="h-10 w-auto" loading="lazy">

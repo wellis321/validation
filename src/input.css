@@ -5,6 +5,11 @@
 @tailwind utilities;
 
 @layer base {
+    html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
     body {
         font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     }
@@ -87,6 +92,67 @@
 
     .ds-badge-beta {
         @apply text-xs font-semibold text-yellow-400 uppercase tracking-wide;
+    }
+
+    /* Bold form inputs – substantial presence, confident focus */
+    .ds-input-bold {
+        @apply mt-1 block w-full rounded-xl border-2 border-neutral-600 bg-neutral-800 text-white placeholder-neutral-500;
+        @apply py-3.5 px-4 text-base;
+        @apply transition-all duration-200;
+        transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .ds-input-bold::placeholder {
+        @apply text-neutral-500;
+    }
+    @media (hover: hover) {
+        .ds-input-bold:hover {
+            @apply border-neutral-500 bg-neutral-800/90;
+        }
+    }
+    .ds-input-bold:focus {
+        @apply outline-none border-yellow-500;
+        box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.15);
+    }
+    .ds-input-bold:focus-visible {
+        @apply outline-none border-yellow-500;
+        box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.15);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ds-input-bold {
+            transition-duration: 0.01ms;
+        }
+    }
+    .ds-input-bold:focus::placeholder {
+        @apply text-neutral-500;
+    }
+
+    /* Download format select – subtle delight */
+    .ds-download-format-select {
+        transition: border-color 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+                    background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+                    box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    @media (hover: hover) {
+        .ds-download-format-select:hover {
+            border-color: rgb(82 82 82);
+            background-color: rgb(38 38 38 / 0.9);
+        }
+    }
+    .ds-download-format-select:focus {
+        box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ds-download-format-select {
+            transition-duration: 0.01ms;
+        }
+    }
+
+    /* Labels above bold inputs – slightly bolder for hierarchy */
+    .ds-input-bold-label {
+        @apply block text-sm font-bold text-neutral-200 mb-1.5;
+    }
+    .ds-input-bold-label .optional {
+        @apply font-normal text-neutral-500;
     }
 
     /* Documentation TOC – high-spec nav links */
@@ -319,6 +385,28 @@
 .try-demo-card:focus-within .try-demo-label {
     color: rgb(234 179 8 / 0.85);
 }
+
+/* "Flash of brilliance" when data is cleaned successfully */
+@keyframes try-demo-celebrate-glow {
+    0% {
+        box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.15),
+                    0 0 30px 8px rgba(34, 197, 94, 0.35),
+                    0 0 60px 16px rgba(234, 179, 8, 0.08);
+    }
+    50% {
+        box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.25),
+                    0 0 50px 20px rgba(34, 197, 94, 0.25),
+                    0 0 90px 24px rgba(234, 179, 8, 0.12);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0),
+                    0 0 0 0 rgba(34, 197, 94, 0),
+                    0 0 0 0 rgba(234, 179, 8, 0);
+    }
+}
+.try-demo-card.is-celebrating {
+    animation: try-demo-celebrate-glow 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
 .try-demo-result.is-updated {
     animation: try-demo-result-in 0.35s ease-out;
 }
@@ -333,6 +421,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
     .try-demo-card { animation: none; opacity: 1; }
+    .try-demo-card.is-celebrating { animation: none; }
     .try-demo-result.is-updated { animation: none; }
 }
 
@@ -425,6 +514,36 @@
 }
 
 /* ===== Reusable animation utilities (design system) ===== */
+
+/* ds-preview-card: preview section in upload flow — dark theme, subtle accent */
+.ds-preview-card {
+    border-left: 3px solid rgba(234, 179, 8, 0.5);
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-preview-card { border-left-width: 2px; }
+}
+
+/* ds-preview-check: subtle checkmark pop when cell shows transformation */
+.ds-preview-check {
+    animation: ds-preview-check-in 0.35s ease-out forwards;
+}
+@keyframes ds-preview-check-in {
+    from { opacity: 0; transform: scale(0.6); }
+    to { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-preview-check { animation: none; opacity: 1; transform: none; }
+}
+
+/* Preview toggle buttons: subtle press feedback (delight) */
+.ds-preview-toggle-btn:active {
+    transform: scale(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-preview-toggle-btn:active {
+        transform: none;
+    }
+}
 
 /* ds-animate-fade-slide: generic entrance for steps, cards, sections */
 @keyframes ds-fade-slide-in {
@@ -751,6 +870,92 @@
     }
 }
 
+/* Bespoke form – subtle delight */
+@keyframes bespoke-success-in {
+    from {
+        opacity: 0;
+        transform: scale(0.97) translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+.bespoke-success-message {
+    animation: bespoke-success-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+    .bespoke-success-message {
+        animation: none;
+    }
+}
+
+/* Label gently highlights when field is focused */
+.bespoke-field .ds-input-bold-label {
+    transition: color 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.bespoke-field:focus-within .ds-input-bold-label {
+    color: rgb(250 250 250);
+}
+.bespoke-field:focus-within .ds-input-bold-label .optional {
+    color: rgb(163 163 163);
+}
+@media (prefers-reduced-motion: reduce) {
+    .bespoke-field .ds-input-bold-label {
+        transition: none;
+    }
+}
+
+/* Prefer email link – arrow slides on hover */
+.bespoke-email-link {
+    @apply inline-flex items-center gap-2 text-sm text-neutral-400 transition-colors duration-200;
+    transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
+.bespoke-email-link:hover {
+    @apply text-yellow-400;
+}
+.bespoke-email-link .bespoke-email-arrow {
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@media (hover: hover) {
+    .bespoke-email-link:hover .bespoke-email-arrow {
+        transform: translateX(4px);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .bespoke-email-link:hover .bespoke-email-arrow {
+        transform: none;
+    }
+}
+
+/* Submit button – satisfying press feedback */
+.bespoke-submit-btn {
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.15s ease;
+}
+.bespoke-submit-btn:active {
+    transform: translateY(1px) scale(0.99);
+}
+@media (prefers-reduced-motion: reduce) {
+    .bespoke-submit-btn:active {
+        transform: none;
+    }
+}
+
+/* Checkbox – subtle scale pop when checked */
+.bespoke-checkbox {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bespoke-checkbox:checked {
+    transform: scale(1.08);
+}
+@media (prefers-reduced-motion: reduce) {
+    .bespoke-checkbox:checked {
+        transform: none;
+    }
+}
+
 /* Before/after data cards – pain points section */
 @keyframes before-after-jitter {
     0%, 100% { transform: translate(0, 0) rotate(-0.3deg); }
@@ -854,6 +1059,11 @@
 @media (prefers-reduced-motion: reduce) {
     .pain-points-section:hover .pain-points-heading { text-shadow: none; }
     .before-after-check, .before-after-check-invalid { opacity: 1; animation: none; }
+}
+
+/* Pain points: compact vocab list (no min-height) */
+.pain-points-section .ds-vocab-card .ds-vocab-list {
+    min-height: 0;
 }
 
 /* Vocabulary-style list (card with staggered items) */

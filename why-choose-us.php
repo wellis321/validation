@@ -223,7 +223,7 @@ require_once __DIR__ . '/includes/init.php';
             </section>
 
             <!-- Use Cases -->
-            <section class="mb-16 ds-scroll-reveal">
+            <section class="mt-20 mb-16 ds-scroll-reveal">
                 <h2 class="text-3xl font-bold text-white mb-8 text-center ds-reveal-item">Perfect For</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="ds-reveal-item ds-hover-lift ds-usecase-card bg-neutral-900/80 rounded-xl p-6 border border-neutral-700/80 hover:border-neutral-600 transition-all duration-200">

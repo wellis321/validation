@@ -130,11 +130,11 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/output.css">
 </head>
-<body class="min-h-screen bg-gray-50">
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
 
     <main class="max-w-4xl mx-auto py-12 px-4" id="main-content">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="bg-neutral-800/60 border border-neutral-600 shadow-xl overflow-hidden">
             <div class="bg-yellow-500 text-black px-6 py-8">
                 <h1 class="text-3xl font-bold">Contact Us</h1>
                 <p class="text-amber-100 mt-3 text-base">
@@ -144,7 +144,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
 
             <div class="px-6 py-8">
                 <?php if ($contactSubmitted): ?>
-                    <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6">
+                    <div class="bg-green-500/15 border border-green-500/30 text-green-300 px-4 py-3 mb-6">
                         <div class="flex items-start gap-3">
                             <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -158,7 +158,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                 <?php endif; ?>
 
                 <?php if (!empty($errors)): ?>
-                    <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+                    <div class="bg-red-500/15 border border-red-500/30 text-red-300 px-4 py-3 mb-6">
                         <div class="flex items-start gap-3">
                             <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
@@ -180,53 +180,53 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="name" class="block text-sm font-semibold text-gray-800 mb-1">Name *</label>
+                            <label for="name" class="block text-sm font-semibold text-neutral-300 mb-1">Name *</label>
                             <input 
                                 type="text" 
                                 id="name" 
                                 name="name" 
                                 required 
                                 value="<?php echo htmlspecialchars($contactSubmitted ? '' : ($defaultName ?: ($_POST['name'] ?? ''))); ?>" 
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                class="block w-full rounded-lg border-neutral-600 bg-neutral-900/50 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                                 placeholder="Your full name"
                             >
                         </div>
 
                         <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-800 mb-1">Email Address *</label>
+                            <label for="email" class="block text-sm font-semibold text-neutral-300 mb-1">Email Address *</label>
                             <input 
                                 type="email" 
                                 id="email" 
                                 name="email" 
                                 required 
                                 value="<?php echo htmlspecialchars($contactSubmitted ? '' : ($defaultEmail ?: ($_POST['email'] ?? ''))); ?>" 
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                                class="block w-full rounded-lg border-neutral-600 bg-neutral-900/50 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                                 placeholder="your.email@example.com"
                             >
                         </div>
                     </div>
 
                     <div>
-                        <label for="subject" class="block text-sm font-semibold text-gray-800 mb-1">Subject *</label>
+                        <label for="subject" class="block text-sm font-semibold text-neutral-300 mb-1">Subject *</label>
                         <input 
                             type="text" 
                             id="subject" 
                             name="subject" 
                             required 
                             value="<?php echo htmlspecialchars($contactSubmitted ? '' : ($_POST['subject'] ?? '')); ?>" 
-                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            class="block w-full rounded-lg border-neutral-600 bg-neutral-900/50 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             placeholder="What is your message about?"
                         >
                     </div>
 
                     <div>
-                        <label for="message" class="block text-sm font-semibold text-gray-800 mb-1">Message *</label>
+                        <label for="message" class="block text-sm font-semibold text-neutral-300 mb-1">Message *</label>
                         <textarea 
                             id="message" 
                             name="message" 
                             required 
                             rows="8" 
-                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                            class="block w-full rounded-lg border-neutral-600 bg-neutral-900/50 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
                             placeholder="Please provide as much detail as possible so we can help you effectively..."
                         ><?php echo htmlspecialchars($contactSubmitted ? '' : ($_POST['message'] ?? '')); ?></textarea>
                     </div>
@@ -238,15 +238,15 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                         >
                             Send Message
                         </button>
-                        <p class="text-sm text-gray-600">
+                        <p class="text-sm text-neutral-400">
                             We typically respond within 24-48 hours during business days.
                         </p>
                     </div>
                 </form>
 
-                <div class="mt-8 pt-8 border-t border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Other Ways to Reach Us</h3>
-                    <div class="space-y-3 text-gray-700">
+                <div class="mt-8 pt-8 border-t border-neutral-600">
+                    <h3 class="text-lg font-semibold text-white mb-4">Other Ways to Reach Us</h3>
+                    <div class="space-y-3 text-neutral-300">
                         <p class="flex items-start gap-3">
                             <svg class="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
