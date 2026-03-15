@@ -30,28 +30,34 @@ if (!function_exists('getEmailConfig')) {
     }
 
     // Validate required environment variables (skip in local so app runs without SMTP)
-    $smtpPassword = getenv('MAIL_SMTP_PASSWORD');
-    $appEnv = getenv('APP_ENV') ?: 'production';
+    // Use getenv() and $_ENV - on some PHP setups (e.g. PHP-FPM) getenv() doesn't see putenv() values
+    $smtpPassword = getenv('MAIL_SMTP_PASSWORD') ?: ($_ENV['MAIL_SMTP_PASSWORD'] ?? '');
+    $appEnv = getenv('APP_ENV') ?: ($_ENV['APP_ENV'] ?? 'production');
     if (empty($smtpPassword) && $appEnv !== 'local') {
         throw new RuntimeException('MAIL_SMTP_PASSWORD environment variable is required. Check your .env file.');
     }
 
+    $get = function ($key, $default = '') {
+        $v = getenv($key) ?: ($_ENV[$key] ?? $default);
+        return $v !== '' ? $v : $default;
+    };
+
     return [
         'driver' => 'smtp',
         'smtp' => [
-            'host' => getenv('MAIL_SMTP_HOST') ?: 'smtp.hostinger.com',
-            'port' => getenv('MAIL_SMTP_PORT') ?: 587,
-            'username' => getenv('MAIL_SMTP_USERNAME') ?: 'noreply@simple-data-cleaner.com',
+            'host' => $get('MAIL_SMTP_HOST', 'smtp.hostinger.com'),
+            'port' => (int) $get('MAIL_SMTP_PORT', '587'),
+            'username' => $get('MAIL_SMTP_USERNAME', 'noreply@simple-data-cleaner.com'),
             'password' => $smtpPassword,
-            'encryption' => getenv('MAIL_SMTP_ENCRYPTION') ?: 'tls'
+            'encryption' => $get('MAIL_SMTP_ENCRYPTION', 'tls')
         ],
         'from' => [
-            'address' => getenv('MAIL_FROM_ADDRESS') ?: 'noreply@simple-data-cleaner.com',
-            'name' => getenv('MAIL_FROM_NAME') ?: 'Simple Data Cleaner'
+            'address' => $get('MAIL_FROM_ADDRESS', 'noreply@simple-data-cleaner.com'),
+            'name' => $get('MAIL_FROM_NAME', 'Simple Data Cleaner')
         ],
         'reply_to' => [
-            'address' => getenv('MAIL_FROM_ADDRESS') ?: 'noreply@simple-data-cleaner.com',
-            'name' => getenv('MAIL_FROM_NAME') ?: 'Simple Data Cleaner Support'
+            'address' => $get('MAIL_FROM_ADDRESS', 'noreply@simple-data-cleaner.com'),
+            'name' => $get('MAIL_FROM_NAME', 'Simple Data Cleaner Support')
         ]
     ];
     }
