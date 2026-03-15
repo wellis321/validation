@@ -22,9 +22,7 @@ Thumbs.db
 !.env.example
 !.env.test
 
-# Config files with sensitive data
-config/stripe_config.php
-
+# Config files with sensitive data (stripe_config.php is committed; it only uses getenv() from .env)
 important/
 
 
