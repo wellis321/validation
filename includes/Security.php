@@ -137,7 +137,7 @@ class Security {
         $csp = "default-src 'self'; " .
                "script-src 'self' 'nonce-{$nonce}' https://js.stripe.com https://cdn.sheetjs.com https://www.googletagmanager.com https://unpkg.com; " .
                "style-src 'self' 'unsafe-inline'; " .
-               "img-src 'self' data: https://*.stripe.com; " .
+               "img-src 'self' data: https://*.stripe.com https://api.producthunt.com; " .
                "font-src 'self'; " .
                "connect-src 'self' https://api.stripe.com https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com; " .
                "frame-src https://js.stripe.com https://hooks.stripe.com";

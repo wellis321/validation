@@ -33,7 +33,7 @@ require_once __DIR__ . '/includes/init.php';
     <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="max-w-4xl mx-auto">
             <!-- Hero Section -->
-            <div class="text-center mb-16 ds-animate-fade-slide ds-animate-delay-1">
+            <div class="text-center mb-10 ds-animate-fade-slide ds-animate-delay-1">
                 <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
                     Why Choose Simple Data Cleaner?
                 </h1>
@@ -41,6 +41,18 @@ require_once __DIR__ . '/includes/init.php';
                     The only UK data validation tool that processes everything in your browser. Your data never leaves your device — guaranteed.
                 </p>
             </div>
+
+            <!-- Social proof: Featured on Product Hunt -->
+            <section class="mb-16">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-neutral-900/70 border border-neutral-700/80 shadow-sm">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                        Featured on
+                    </span>
+                    <a href="https://www.producthunt.com/products/simple-data-cleaner?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-simple-data-cleaner" target="_blank" rel="noopener noreferrer" aria-label="View Simple Data Cleaner on Product Hunt">
+                        <img alt="Simple Data Cleaner - Privacy-first UK data cleaning. 100% in your browser. | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1099010&amp;theme=light&amp;t=1773666969855">
+                    </a>
+                </div>
+            </section>
 
             <!-- Key Differentiators -->
             <section class="mb-16">

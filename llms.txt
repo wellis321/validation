@@ -1,0 +1,32 @@
+# Simple Data Cleaner
+
+> UK data validation and cleaning in your browser. Your files never leave your device.
+
+Simple Data Cleaner validates and normalises UK data formats—phone numbers, National Insurance numbers, postcodes, bank sort codes, and emails—entirely in the browser. No uploads, no server-side processing of your data. GDPR-friendly and privacy-first.
+
+## Core
+
+- [Home](https://simple-data-cleaner.com/)
+- [Pricing](https://simple-data-cleaner.com/pricing.php): 7-day free trial, Monthly, Annual, Bespoke
+- [How it works](https://simple-data-cleaner.com/how-it-works.php)
+- [Documentation](https://simple-data-cleaner.com/documentation.php)
+- [Validation rules](https://simple-data-cleaner.com/validation-rules.php)
+
+## Product
+
+- [Register](https://simple-data-cleaner.com/register.php)
+- [Login](https://simple-data-cleaner.com/login.php)
+- [Example / Try it](https://simple-data-cleaner.com/example.php)
+
+## Legal & support
+
+- [Terms of Service](https://simple-data-cleaner.com/terms.php)
+- [Privacy Policy](https://simple-data-cleaner.com/privacy.php)
+- [GDPR](https://simple-data-cleaner.com/gdpr.php)
+- [Contact / Feedback](https://simple-data-cleaner.com/feedback.php)
+
+## Optional
+
+- [Why choose us](https://simple-data-cleaner.com/why-choose-us.php)
+- [Bespoke services](https://simple-data-cleaner.com/bespoke.php)
+- [Blog](https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php)

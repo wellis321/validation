@@ -1,0 +1,63 @@
+# Simple Data Cleaner
+
+> UK data validation and cleaning in your browser. Your files never leave your device.
+
+## Summary
+
+Simple Data Cleaner is a web application that validates and normalises UK data formats entirely in the browser. Supported types: UK phone numbers (mobile and landline), National Insurance numbers, UK postcodes, bank sort codes, bank account numbers, email addresses, and name splitting (titles, first name, last name). All processing runs client-side; user files are never uploaded to the server. This makes the product GDPR-friendly and removes the need for data processing agreements when cleaning sensitive data.
+
+## How it works
+
+1. User uploads a file (CSV, Excel XLSX/XLS, or JSON) or uses the in-browser example.
+2. User selects which columns to clean (or uses Auto-Select). Optional: choose phone format (International +44 or UK 0).
+3. Click "Clean My Data". Validation and formatting run in the browser via JavaScript.
+4. User reviews results in Full Preview, then exports cleaned data and optionally an issues report (CSV, Excel, or JSON).
+
+No data is sent to the server for cleaning. The server is used only for authentication, subscription status, and account management.
+
+## Supported data types and behaviour
+
+- **Phone numbers**: Normalised to E.164 or UK national format; invalid numbers flagged.
+- **National Insurance numbers**: Format AB123456C; validated and normalised.
+- **Postcodes**: UK postcode format; cleaned (case, spaces) and validated.
+- **Sort codes**: Format XX-XX-XX; validated against UK bank sort code rules.
+- **Bank account numbers**: 8-digit UK account numbers; validated with sort code.
+- **Emails**: Trimmed, typo hints (e.g. gmial → gmail), format validation.
+- **Names**: Split into title, first name, last name (e.g. "Dr. John Smith").
+
+## Pricing and access
+
+- 7-day free trial (no card required).
+- Monthly subscription.
+- Annual subscription.
+- Bespoke/enterprise: custom validation rules and support.
+- Pay Per Use option (one-time) available via direct link.
+
+Plans and pricing: https://simple-data-cleaner.com/pricing.php
+
+## Core pages
+
+- Home: https://simple-data-cleaner.com/
+- Pricing: https://simple-data-cleaner.com/pricing.php
+- How it works: https://simple-data-cleaner.com/how-it-works.php
+- Documentation: https://simple-data-cleaner.com/documentation.php
+- Validation rules: https://simple-data-cleaner.com/validation-rules.php
+- Example / Try it: https://simple-data-cleaner.com/example.php
+- Register: https://simple-data-cleaner.com/register.php
+- Login: https://simple-data-cleaner.com/login.php
+
+## Legal and support
+
+- Terms of Service: https://simple-data-cleaner.com/terms.php
+- Privacy Policy: https://simple-data-cleaner.com/privacy.php
+- GDPR: https://simple-data-cleaner.com/gdpr.php
+- Contact / Feedback: https://simple-data-cleaner.com/feedback.php
+- Why choose us: https://simple-data-cleaner.com/why-choose-us.php
+- Bespoke services: https://simple-data-cleaner.com/bespoke.php
+- Blog: https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php
+
+## Technical notes
+
+- Client-side logic: validators.js, fileProcessor.js, app.js.
+- Backend: PHP (auth, subscriptions, email); MySQL; Stripe for payments.
+- Export formats: CSV, Excel (XLSX), JSON. Options: remove duplicates, trim whitespace, include issues column, export only rows with issues.
