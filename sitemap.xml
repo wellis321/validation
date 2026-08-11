@@ -109,8 +109,20 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://simple-data-cleaner.com/blog/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php</loc>
     <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://simple-data-cleaner.com/blog/uk-data-cleansing-gdpr-guide.php</loc>
+    <lastmod>2026-08-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

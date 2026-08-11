@@ -327,6 +327,33 @@ if ($user) {
                 <hr class="ds-section-hr ds-section-hr-section-bottom ds-section-hr-tight-top" aria-hidden="true">
             </section>
 
+            <!-- Why a UK-specific data cleaner -->
+            <section id="uk-data-cleaner" class="ds-scroll-reveal max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 pb-12 md:pb-16" aria-labelledby="uk-data-cleaner-heading">
+                <div class="text-center max-w-3xl mx-auto mb-10">
+                    <h2 id="uk-data-cleaner-heading" class="ds-reveal-item text-2xl md:text-3xl font-bold text-white mb-4">A UK data cleaner built on official standards</h2>
+                    <p class="ds-reveal-item text-neutral-300 text-lg leading-relaxed">
+                        Generic data cleansing tools guess. Simple Data Cleaner checks every field against the exact rules HMRC, Royal Mail, and Ofcom actually use for UK phone numbers, National Insurance numbers, postcodes, and sort codes.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="ds-reveal-item border border-neutral-700 rounded-lg p-6 bg-neutral-900/40">
+                        <h3 class="text-lg font-semibold text-white mb-3">UK-specific by design</h3>
+                        <p class="text-neutral-400 text-sm leading-relaxed">Not a generic international data cleansing tool retrofitted for the UK - every rule is written against HMRC, Royal Mail, and Ofcom standards from the start.</p>
+                    </div>
+                    <div class="ds-reveal-item border border-neutral-700 rounded-lg p-6 bg-neutral-900/40">
+                        <h3 class="text-lg font-semibold text-white mb-3">Deterministic, not probabilistic</h3>
+                        <p class="text-neutral-400 text-sm leading-relaxed">Every check is an exact rule, not an AI guess - so results are consistent every time. <a href="/blog/ai-data-cleaning-limitations.php" class="text-yellow-400 hover:text-yellow-300 underline">Why this matters more than AI</a>.</p>
+                    </div>
+                    <div class="ds-reveal-item border border-neutral-700 rounded-lg p-6 bg-neutral-900/40">
+                        <h3 class="text-lg font-semibold text-white mb-3">An alternative to a consultant</h3>
+                        <p class="text-neutral-400 text-sm leading-relaxed">For standard UK formats, get accurate results in minutes instead of a scoped engagement. <a href="/blog/uk-data-cleansing-gdpr-guide.php" class="text-yellow-400 hover:text-yellow-300 underline">Consultant vs. self-serve tool</a>.</p>
+                    </div>
+                </div>
+                <p class="ds-reveal-item mt-8 text-center text-neutral-400">
+                    See the <a href="/validation-rules.php" class="text-yellow-400 hover:text-yellow-300 underline font-semibold">exact UK data cleansing rules</a> we validate against.
+                </p>
+            </section>
+
             <!-- How It Works + What You Get (merged) -->
             <section class="ds-scroll-reveal max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-24 pb-12 md:pb-16" aria-labelledby="how-it-works-heading">
                 <h2 id="how-it-works-heading" class="ds-reveal-item text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">How it works</h2>

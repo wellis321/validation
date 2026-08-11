@@ -2,8 +2,8 @@
 require_once __DIR__ . '/includes/init.php';
 
 // Set page meta
-$pageTitle = 'Validation Rules & Standards';
-$pageDescription = 'Comprehensive guide to all validation rules for UK data formats including phone numbers, NI numbers, postcodes, bank sort codes, and email addresses';
+$pageTitle = 'UK Phone, NI, Postcode & Sort Code Rules';
+$pageDescription = 'See the exact UK format rules for phone numbers, NI numbers, postcodes and sort codes - then validate and clean your data free, right in your browser.';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +14,47 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
     <link rel="canonical" href="https://simple-data-cleaner.com/validation-rules.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://simple-data-cleaner.com/validation-rules.php">
+    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:site_name" content="Simple Data Cleaner">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
+    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner",
+      "description": "<?php echo htmlspecialchars($pageDescription); ?>",
+      "author": {
+        "@type": "Organization",
+        "name": "Simple Data Cleaner"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Simple Data Cleaner",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://simple-data-cleaner.com/validation-rules.php"
+      }
+    }
+    </script>
+
     <link rel="stylesheet" href="/assets/css/output.css">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
@@ -37,10 +78,10 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
     <main class="container mx-auto px-4 py-8 max-w-7xl">
         <!-- Header -->
         <header class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-white mb-4">Validation Rules & Standards</h1>
+            <h1 class="text-4xl font-bold text-white mb-4">UK Phone, NI, Postcode & Sort Code Format Rules</h1>
             <p class="text-xl text-neutral-400 max-w-4xl mx-auto">
-                Explore all the validation rules we currently support and see examples of how we process different data
-                formats. Learn about automatic fixes and understand what makes data valid or invalid.
+                The exact rules our validator checks for UK phone numbers, National Insurance numbers, postcodes,
+                bank sort codes, and email addresses - with examples of automatic fixes and what makes data valid or invalid.
             </p>
 
             <!-- Navigation back to main validator -->
@@ -1158,6 +1199,22 @@ $pageDescription = 'Comprehensive guide to all validation rules for UK data form
                     <span
                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">planned</span>
                 </div>
+            </div>
+        </div>
+
+        <!-- CTA: put the rules into practice -->
+        <div class="bg-gradient-to-br from-neutral-900 to-neutral-800 border border-neutral-700 rounded-lg shadow-lg p-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-3">Ready to clean your own data?</h2>
+            <p class="text-neutral-400 mb-6 max-w-2xl mx-auto">
+                Every rule above runs automatically when you upload a file - right in your browser, nothing ever leaves your device.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/example.php" class="inline-flex items-center justify-center gap-2 border-2 border-neutral-600 text-neutral-200 hover:border-yellow-500/60 hover:text-white px-6 py-3 rounded-lg font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
+                    Try it free - no signup
+                </a>
+                <a href="/register.php" class="inline-flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
+                    Start free trial
+                </a>
             </div>
         </div>
     </main>

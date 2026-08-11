@@ -1,0 +1,1395 @@
+[
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW1A 1AA (standard)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW1A1AA (no space)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW1 A1AA (space in wrong place)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW 1A 1AA (extra space)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW1A  1AA (double space)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW1A   1AA (triple space)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "S W1A 1AA (space in area code)",
+    "isValid": true,
+    "fixed": "W1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW 1A1AA (space after area)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "SW1 A 1AA (multiple wrong spaces)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "sw1a 1aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "sw1a1aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "Sw1a 1aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "SW1a 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "sw1A 1aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "Sw1A 1Aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "sW1a 1Aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "SW1A-1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "SW1A -1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "SW1A- 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "SW1A - 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "SW-1A-1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "SW1-A1-AA",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK postcode format"
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "SW1A-1-AA",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK postcode format"
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "SW1A.1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "SW1A .1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "SW1A. 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "SW1A . 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "SW.1A.1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Slashes",
+    "value": "SW1A/1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "SW1A /1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "SW1A/ 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "SW1A / 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "SW1A_1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "SW1A _1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "SW1A_ 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "SW1A _ 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "SW1A,1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "SW1A, 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "SW1A , 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Colons",
+    "value": "SW1A:1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Colons",
+    "value": "SW1A: 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Colons",
+    "value": "SW1A : 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Semicolons",
+    "value": "SW1A;1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Semicolons",
+    "value": "SW1A; 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Pipes",
+    "value": "SW1A|1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Pipes",
+    "value": "SW1A| 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Pipes",
+    "value": "SW1A | 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(SW1A) 1AA",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK postcode format"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "SW1A (1AA)",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK postcode format"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(SW1A 1AA)",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK postcode format"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "[SW1A] 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "SW1A [1AA]",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "[SW1A 1AA]",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "{SW1A} 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" SW1A 1AA\"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"SW1A 1AA \"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" SW1A 1AA \"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"  SW1A 1AA\"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"SW1A 1AA  \"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" SW1A1AA \"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Postcode: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Post Code: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "PC: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Postal Code: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "SW1A 1AA (postcode)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Postcode - SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "P/C: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "P.C: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "#SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "ZIP: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Code: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Postcode\" or \"PC\" Prefix",
+    "value": "PC SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Postcode\" or \"PC\" Prefix",
+    "value": "PC: SW1A1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With \"Postcode\" or \"PC\" Prefix",
+    "value": "PC-SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Postcode\" or \"PC\" Prefix",
+    "value": "P/C SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Postcode\" or \"PC\" Prefix",
+    "value": "P.C. SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Postcode\" or \"PC\" Prefix",
+    "value": "POSTCODE: SW1A1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With \"Postcode\" or \"PC\" Prefix",
+    "value": "POST CODE SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Tab Characters",
+    "value": "SW1A\t1AA (tab)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Tab Characters",
+    "value": "SW1A\t\t1AA (double tab)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Tab Characters",
+    "value": "SW1A \t 1AA (mixed)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "\"SW1A 1AA\"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "'SW1A 1AA'",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "\"SW1A1AA\"",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "'SW1A1AA'",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Plus Signs",
+    "value": "SW1A+1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Plus Signs",
+    "value": "SW1A +1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Ampersands",
+    "value": "SW1A&1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "*SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "SW1A 1AA*",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "#SW1A1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "SW1A 1AA#",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "﻿SW1A 1AA (with BOM character)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "SW1A 1AA﻿",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "SW1A 1AA  (with non-breaking space)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Excel/Spreadsheet Formatting",
+    "value": "'SW1A 1AA (leading apostrophe)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Excel/Spreadsheet Formatting",
+    "value": "'SW1A1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "UK SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "GB SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "UK: SW1A1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "GB-SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "(UK) SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "United Kingdom SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With City/Area Names",
+    "value": "London SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With City/Area Names",
+    "value": "Manchester M1 1AA",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "With City/Area Names",
+    "value": "Birmingham B1 1AA",
+    "isValid": true,
+    "fixed": "B1 1AA",
+    "error": null
+  },
+  {
+    "section": "With City/Area Names",
+    "value": "SW1A 1AA London",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With City/Area Names",
+    "value": "SW1A 1AA, London",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Country/Region",
+    "value": "SW1A 1AA, UK",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Country/Region",
+    "value": "SW1A 1AA, England",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Country/Region",
+    "value": "SW1A 1AA, United Kingdom",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Country/Region",
+    "value": "England, SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "HTML/Special Encoding",
+    "value": "SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "HTML/Special Encoding",
+    "value": "SW1A–1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "SW1A 1AA (Home)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "SW1A 1AA - Office",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "Personal: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "John Smith SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "Delivery: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Address Context",
+    "value": "Address: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Address Context",
+    "value": "Postcode: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Address Context",
+    "value": "Del. Postcode: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "SW1A- 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "SW1A -1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "SW1A. 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "SW1A .1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "SW1A/1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "sw1A 1aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "Sw1a 1Aa",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "SW1a-1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Outward Code Variations (first part)",
+    "value": "M1 1AA (A# #AA)",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "Outward Code Variations (first part)",
+    "value": "M60 1AA (A## #AA)",
+    "isValid": true,
+    "fixed": "M60 1AA",
+    "error": null
+  },
+  {
+    "section": "Outward Code Variations (first part)",
+    "value": "CR2 6XH (AA# #AA)",
+    "isValid": true,
+    "fixed": "CR2 6XH",
+    "error": null
+  },
+  {
+    "section": "Outward Code Variations (first part)",
+    "value": "DN55 1PT (AA## #AA)",
+    "isValid": true,
+    "fixed": "DN55 1PT",
+    "error": null
+  },
+  {
+    "section": "Outward Code Variations (first part)",
+    "value": "W1A 1AA (A#A #AA)",
+    "isValid": true,
+    "fixed": "W1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Outward Code Variations (first part)",
+    "value": "EC1A 1BB (AA#A #AA)",
+    "isValid": true,
+    "fixed": "EC1A 1BB",
+    "error": null
+  },
+  {
+    "section": "With Different Spacing Issues",
+    "value": "M11AA (M1 format, no space)",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Different Spacing Issues",
+    "value": "M601AA (M60 format, no space)",
+    "isValid": true,
+    "fixed": "M60 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Different Spacing Issues",
+    "value": "CR26XH (CR2 format, no space)",
+    "isValid": true,
+    "fixed": "CR2 6XH",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Different Spacing Issues",
+    "value": "DN551PT (DN55 format, no space)",
+    "isValid": true,
+    "fixed": "N55 1PT",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Different Spacing Issues",
+    "value": "W1A1AA (W1A format, no space)",
+    "isValid": true,
+    "fixed": "W1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Different Spacing Issues",
+    "value": "EC1A1BB (EC1A format, no space)",
+    "isValid": true,
+    "fixed": "EC1A 1BB",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "m1 1aa",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "M1-1AA",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "M1.1AA",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "M1/1AA",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "M1_1AA",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "PC: M1 1AA",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "Postcode: M60 1AA",
+    "isValid": true,
+    "fixed": "M60 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "cr2 6xh",
+    "isValid": true,
+    "fixed": "CR2 6XH",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "CR2-6XH",
+    "isValid": true,
+    "fixed": "CR2 6XH",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "dn55 1pt",
+    "isValid": true,
+    "fixed": "DN55 1PT",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "DN55-1PT",
+    "isValid": true,
+    "fixed": "DN55 1PT",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "w1a 1aa",
+    "isValid": true,
+    "fixed": "W1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "W1A-1AA",
+    "isValid": true,
+    "fixed": "W1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "ec1a 1bb",
+    "isValid": true,
+    "fixed": "EC1A 1BB",
+    "error": null
+  },
+  {
+    "section": "Same Variations as Above Applied",
+    "value": "EC1A-1BB",
+    "isValid": true,
+    "fixed": "EC1A 1BB",
+    "error": null
+  },
+  {
+    "section": "With Form Field Names",
+    "value": "postcode: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Form Field Names",
+    "value": "post_code SW1A1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Form Field Names",
+    "value": "postal_code: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Form Field Names",
+    "value": "zip_code: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Currency/Special Symbols",
+    "value": "£SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Currency/Special Symbols",
+    "value": "@SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Currency/Special Symbols",
+    "value": "~SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "✓ SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "Valid: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "SW1A 1AA ✓",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "SW1A 1AA (verified)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Checkboxes/Bullets",
+    "value": "☐ SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Checkboxes/Bullets",
+    "value": "• SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Checkboxes/Bullets",
+    "value": "SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Hyphen Variations",
+    "value": "SW1A–1AA (en dash)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Hyphen Variations",
+    "value": "SW1A—1AA (em dash)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Hyphen Variations",
+    "value": "SW1A−1AA (minus sign)",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Full Address",
+    "value": "10 Downing Street, SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Full Address",
+    "value": "SW1A 1AA, 10 Downing Street",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Full Address",
+    "value": "London, SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Full Address",
+    "value": "SW1A 1AA, London, UK",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Split Format",
+    "value": "SW1A / 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Split Format",
+    "value": "SW1A - 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "Split Format",
+    "value": "SW1A . 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Area\" or \"District\"",
+    "value": "Area: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Area\" or \"District\"",
+    "value": "District: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With \"Area\" or \"District\"",
+    "value": "Zone: SW1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Multiple Spaces in Wrong Places",
+    "value": "S W1A 1AA",
+    "isValid": true,
+    "fixed": "W1A 1AA",
+    "error": null
+  },
+  {
+    "section": "With Multiple Spaces in Wrong Places",
+    "value": "SW 1A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Multiple Spaces in Wrong Places",
+    "value": "SW1 A 1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Multiple Spaces in Wrong Places",
+    "value": "SW1A 1 AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "With Multiple Spaces in Wrong Places",
+    "value": "SW1A 1A A",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "SW1A1AA",
+    "isValid": true,
+    "fixed": "SW1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "M11AA",
+    "isValid": true,
+    "fixed": "M1 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "M601AA",
+    "isValid": true,
+    "fixed": "M60 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "CR26XH",
+    "isValid": true,
+    "fixed": "CR2 6XH",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "DN551PT",
+    "isValid": true,
+    "fixed": "N55 1PT",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "W1A1AA",
+    "isValid": true,
+    "fixed": "W1A 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "EC1A1BB",
+    "isValid": true,
+    "fixed": "EC1A 1BB",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "B11AA",
+    "isValid": true,
+    "fixed": "B1 1AA",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "G12QQ",
+    "isValid": true,
+    "fixed": "G1 2QQ",
+    "error": "Added proper spacing"
+  },
+  {
+    "section": "Completely No Space Variations (all formats)",
+    "value": "EH11YZ",
+    "isValid": true,
+    "fixed": "EH1 1YZ",
+    "error": "Added proper spacing"
+  }
+]

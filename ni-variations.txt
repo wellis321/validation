@@ -69,8 +69,8 @@ ab123456c
 ab 12 34 56 c
 Ab123456C
 aB123456C
-AB123456c (only suffix lowercase)
-ab123456C (only prefix lowercase)
+AB123456c
+ab123456C
 Ab 12 34 56 C
 aB 12 34 56 C
 
@@ -109,9 +109,9 @@ N.I.N.O AB123456C
 
 Tab Characters/Multiple Spaces
 
-AB123456		C (tabs)
-AB  12  34  56  C (double spaces)
-AB   123456   C (triple spaces)
+AB123456		C
+AB  12  34  56  C
+AB   123456   C
 
 With Commas
 
@@ -162,13 +162,13 @@ AB123456C#
 
 Copy-Paste Artifacts
 
-﻿AB123456C (with BOM character)
+﻿AB123456C
 AB123456C﻿
-AB123456C  (with non-breaking space)
+AB123456C  
 
 Excel/Spreadsheet Formatting
 
-'AB123456C (leading apostrophe)
+'AB123456C
 
 With UK/GB Prefix (cleanable)
 

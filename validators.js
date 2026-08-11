@@ -41,14 +41,17 @@ class PhoneNumberValidator {
             return new ValidationResult(false, value, 'Invalid phone number: multiple plus signs');
         }
 
-        // Step 1: Remove labels, icons, and descriptive text
-        let cleaned = this.removeLabelsAndIcons(value);
+        // Step 1: Remove quotes and wrapping characters first - the multi-number
+        // and label removal below are anchored to the end of the string, so a
+        // trailing quote (e.g. "07123456789 / 07987654321") would otherwise
+        // block them from matching
+        let cleaned = this.removeWrapping(value);
 
-        // Step 2: Remove extension-style clutter
+        // Step 2: Remove labels, icons, and descriptive text
+        cleaned = this.removeLabelsAndIcons(cleaned);
+
+        // Step 3: Remove extension-style clutter
         cleaned = this.removeExtensions(cleaned);
-
-        // Step 3: Remove quotes and wrapping characters
-        cleaned = this.removeWrapping(cleaned);
 
         // Step 4: Handle the specific case of +44 (0) format first
         if (cleaned.includes('(0)')) {
@@ -196,7 +199,6 @@ class PhoneNumberValidator {
         // UK phone number patterns
         const patterns = [
             { pattern: /^7\d{9}$/, type: 'Mobile' },           // Mobile: 7xxxxxxxxx
-            { pattern: /^1\d{10}$/, type: 'UK Number' },       // UK numbers: 1xxxxxxxxxx
             { pattern: /^44\d{10}$/, type: 'International' },  // International: 44xxxxxxxxxx
             { pattern: /^0\d{10}$/, type: 'UK Landline' },     // UK landline: 0xxxxxxxxx
             { pattern: /^0\d{4}\d{6}$/, type: 'UK Landline' }, // UK landline with area code: 0xxx xxxxxx
@@ -384,8 +386,8 @@ class NINumberValidator {
             return new ValidationResult(false, value, 'This is a TRN (Temporary Reference Number), not a valid NI number');
         }
 
-        // NI number format: 2 letters, 6 digits, 1 letter (required)
-        const pattern = /^[A-Z]{2}\d{6}[A-Z]$/;
+        // NI number format: 2 letters, 6 digits, 1 letter - HMRC only issues A, B, C, or D as the final letter
+        const pattern = /^[A-Z]{2}\d{6}[ABCD]$/;
 
         if (pattern.test(cleaned)) {
             // Check for invalid prefixes according to HMRC standards
@@ -434,7 +436,7 @@ class NINumberValidator {
             }
         }
 
-        return new ValidationResult(false, value, 'Invalid NI number format (should be 2 letters + 6 digits + 1 letter)');
+        return new ValidationResult(false, value, 'Invalid NI number format (should be 2 letters + 6 digits + a final letter of A, B, C, or D)');
     }
 
     removeLabelsAndPrefixes(value) {
@@ -766,13 +768,13 @@ class BankAccountValidator {
         // Step 3: Remove wrapping characters
         cleaned = this.removeWrapping(cleaned);
 
-        // Step 4: Remove all non-digit characters to get just the digits
-        const digits = cleaned.replace(/\D/g, '');
-
-        // Step 5: If the value contains letters (after cleaning), it's not valid
-        if (/[A-Za-z]/.test(value) && digits.length === 0) {
+        // Step 4: If the cleaned value contains letters, it's not valid
+        if (/[A-Za-z]/.test(cleaned)) {
             return new ValidationResult(false, value, 'Bank account numbers cannot contain letters');
         }
+
+        // Step 5: Remove all non-digit characters to get just the digits
+        const digits = cleaned.replace(/\D/g, '');
 
         // Step 6: UK bank account numbers are typically 7-12 digits
         // Most common are 8 digits

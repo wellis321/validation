@@ -1,0 +1,1024 @@
+[
+  {
+    "section": "Basic Spacing Variations",
+    "value": "07123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "0712 345 6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "07 123 456 789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "071 234 567 89",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "0 7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "07 12 34 56 78 9",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "071 23 45 67 89",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "0712 3 456 789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "+44 7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "+44 712 345 6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "+447 123 456 789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "+44 71 23 45 67 89",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "+4 47 123 456 789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "0044 7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "0044 712 345 6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Country Code + Spacing",
+    "value": "00 44 7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "07123-456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "0712-345-6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "07-123-456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "071-234-567-89",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "0-7123-456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "+44-7123-456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "+44-712-345-6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "+44-71-23-45-67-89",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "0044-7123-456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dashes/Hyphens",
+    "value": "0044-712-345-6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "(07123) 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "(0712) 345 6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "(071) 234 567 89",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "(0)7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "(0) 7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "+44 (0)7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "+44(0)7123456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "+44 (0) 7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "+44 (7123) 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "+44(7123)456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "0044 (0)7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Parentheses",
+    "value": "(0044) 7123 456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dots/Periods",
+    "value": "07123.456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dots/Periods",
+    "value": "0712.345.6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dots/Periods",
+    "value": "07.123.456.789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dots/Periods",
+    "value": "071.234.567.89",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dots/Periods",
+    "value": "+44.7123.456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dots/Periods",
+    "value": "+44.712.345.6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Dots/Periods",
+    "value": "0044.7123.456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "07123-456 789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "07 123-456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "07-123 456 789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "(07123) 456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "(07123)-456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "(0712)-345-6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "+44 (0)7123-456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "+44(0)7123-456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "+44 (0) 7123-456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "+44-7123 456 789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "+44 7123-456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "0044 (0) 7123-456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "(0)7123-456-789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Underscores",
+    "value": "07123_456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Underscores",
+    "value": "0712_345_6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Underscores",
+    "value": "07_123_456_789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Underscores",
+    "value": "+44_7123_456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Underscores",
+    "value": "+44_712_345_6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Slashes",
+    "value": "07123/456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Slashes",
+    "value": "0712/345/6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Slashes",
+    "value": "07/123/456/789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Slashes",
+    "value": "+44/7123/456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Slashes",
+    "value": "+44/712/345/6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Commas",
+    "value": "07123,456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Commas",
+    "value": "0712,345,6789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Commas",
+    "value": "07,123,456,789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Commas",
+    "value": "+44,7123,456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Brackets (Square/Curly)",
+    "value": "07[123]456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Brackets (Square/Curly)",
+    "value": "07{123}456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Brackets (Square/Curly)",
+    "value": "[07123]456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Brackets (Square/Curly)",
+    "value": "{07123}456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Brackets (Square/Curly)",
+    "value": "+44[7123]456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Brackets (Square/Curly)",
+    "value": "+44{7123}456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"07123456789 \"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" 07123456789 \"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" 07123 456789 \"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"  07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"+44 7123456789 \"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" +447123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"07123456789 (mobile)\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"07123456789 (UK)\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"mob: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"mobile: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"M: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"Tel: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"Phone: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"07123456789 - mobile\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"UK: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"Call 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"Contact: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"#07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "\"No: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Country Code Variations",
+    "value": "447123456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Country Code Variations",
+    "value": "00447123456789",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Country Code Variations",
+    "value": "++447123456789",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid phone number: multiple plus signs"
+  },
+  {
+    "section": "Country Code Variations",
+    "value": "+440 7123456789",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK phone number format"
+  },
+  {
+    "section": "Country Code Variations",
+    "value": "+44 0 7123456789",
+    "isValid": false,
+    "fixed": null,
+    "error": "Contains incorrect +44 (0) format that needs manual correction"
+  },
+  {
+    "section": "Country Code Variations",
+    "value": "0044 0 7123456789",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK phone number format"
+  },
+  {
+    "section": "Country Code Variations",
+    "value": "+44 07123456789",
+    "isValid": false,
+    "fixed": null,
+    "error": "Contains incorrect +44 (0) format that needs manual correction"
+  },
+  {
+    "section": "Multiple Numbers (User Error)",
+    "value": "\"07123456789 / 07987654321\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Multiple Numbers (User Error)",
+    "value": "\"07123456789 or 07987654321\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Multiple Numbers (User Error)",
+    "value": "\"07123456789; 07987654321\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Multiple Numbers (User Error)",
+    "value": "\"07123456789, 07987654321\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Multiple Numbers (User Error)",
+    "value": "\"07123456789 & 07987654321\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Names/Context",
+    "value": "\"07123456789 (John)\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Names/Context",
+    "value": "\"07123456789 - John Smith\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Names/Context",
+    "value": "\"John: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Names/Context",
+    "value": "\"Sarah 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Names/Context",
+    "value": "\"07123456789 work mobile\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Extensions (Mistakenly Added)",
+    "value": "\"07123456789 ext 123\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Extensions (Mistakenly Added)",
+    "value": "\"07123456789 x123\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Extensions (Mistakenly Added)",
+    "value": "\"07123456789 #123\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Special Characters/Symbols",
+    "value": "\"£07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Special Characters/Symbols",
+    "value": "\"@07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Special Characters/Symbols",
+    "value": "\"*07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Special Characters/Symbols",
+    "value": "\"~07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Special Characters/Symbols",
+    "value": "\"|07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Special Characters/Symbols",
+    "value": "\"\\07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Unusual Spacing Patterns",
+    "value": "\"0 71 23 45 67 89\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Unusual Spacing Patterns",
+    "value": "\"07 1 2 3 4 5 6 7 8 9\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Unusual Spacing Patterns",
+    "value": "\"071 2 345 6789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Unusual Spacing Patterns",
+    "value": "\"07 1234 56789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Unusual Spacing Patterns",
+    "value": "\"0712 34 56789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Tab Characters/Multiple Spaces",
+    "value": "\"07123\t\t456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Tab Characters/Multiple Spaces",
+    "value": "\"07123  456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Tab Characters/Multiple Spaces",
+    "value": "\"07123   456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Tab Characters/Multiple Spaces",
+    "value": "\"+44  7123  456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Case Variations (with country code letters)",
+    "value": "\"+44 7123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Case Variations (with country code letters)",
+    "value": "\"GB +44 7123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Case Variations (with country code letters)",
+    "value": "\"gb: 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Case Variations (with country code letters)",
+    "value": "\"UK 07123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "HTML/Special Encoding Issues",
+    "value": "\"07123 456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "HTML/Special Encoding Issues",
+    "value": "\"07123–456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "HTML/Special Encoding Issues",
+    "value": "\"‭07123456789‬\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "With Extra Digits (User Typos)",
+    "value": "\"007123456789\"",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK phone number format"
+  },
+  {
+    "section": "With Extra Digits (User Typos)",
+    "value": "\"+4447123456789\"",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK phone number format"
+  },
+  {
+    "section": "With Extra Digits (User Typos)",
+    "value": "\"071234567890\"",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid UK phone number format"
+  },
+  {
+    "section": "Completely Non-Standard but Valid",
+    "value": "\"7123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Completely Non-Standard but Valid",
+    "value": "\"44 7123456789\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  },
+  {
+    "section": "Completely Non-Standard but Valid",
+    "value": "\"+44(7123456789)\"",
+    "isValid": true,
+    "fixed": "+447123456789",
+    "error": null
+  }
+]

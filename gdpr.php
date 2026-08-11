@@ -229,6 +229,14 @@ require_once __DIR__ . '/includes/init.php';
                 </div>
             </section>
 
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Further Reading</h2>
+                <p class="text-gray-700">
+                    For a deeper look at what UK GDPR requires from your customer data, and how to decide between a data cleansing consultant and a self-serve tool, see our guide:
+                    <a href="/blog/uk-data-cleansing-gdpr-guide.php" class="text-yellow-500 hover:underline font-semibold">UK Data Cleansing for GDPR Compliance</a>.
+                </p>
+            </section>
+
             <!-- Bottom CTA -->
             <div class="border-t border-gray-200 pt-8">
                 <div class="text-center">

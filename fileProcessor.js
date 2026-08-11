@@ -70,6 +70,11 @@ class FileProcessor {
         reader.onload = (e) => {
             let result = e.target?.result;
             if (typeof result === 'string') {
+                // Strip UTF-8 BOM (common when Excel exports "CSV UTF-8") so it
+                // doesn't get prepended to the first column header
+                if (result.charCodeAt(0) === 0xFEFF) {
+                    result = result.slice(1);
+                }
                 // Fix scientific notation that Excel might have added
                 result = result.replace(/([\d.]+[Ee][\+\-]?\d+)/gi, (match) => {
                     const num = parseFloat(match);
@@ -140,7 +145,11 @@ class FileProcessor {
         const reader = new FileReader();
         reader.onload = (e) => {
             try {
-                const jsonContent = e.target.result;
+                let jsonContent = e.target.result;
+                // Strip UTF-8 BOM - JSON.parse throws on a leading BOM character
+                if (typeof jsonContent === 'string' && jsonContent.charCodeAt(0) === 0xFEFF) {
+                    jsonContent = jsonContent.slice(1);
+                }
                 const jsonData = JSON.parse(jsonContent);
                 resolve({ type: 'json', data: jsonData });
             } catch (error) {

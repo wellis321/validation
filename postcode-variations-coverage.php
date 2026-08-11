@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/includes/init.php';
+require_once __DIR__ . '/includes/parse-variations.php';
 
 $pageTitle = 'UK Postcode Format Support';
+$postcodeCorpus = groupVariationsBySection(parseVariationsFile(__DIR__ . '/postcode-variations.txt'));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,138 +24,28 @@ $pageTitle = 'UK Postcode Format Support';
 
     <main class="container mx-auto px-4 py-8 max-w-6xl">
         <header class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">UK Postcode Format Support</h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h1 class="text-4xl font-bold text-white mb-4">UK Postcode Format Support</h1>
+            <p class="text-xl text-neutral-400 max-w-3xl mx-auto">
                 We clean UK postcodes from many different input formats. See what we support below.
             </p>
         </header>
 
-        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 class="text-2xl font-bold mb-6 flex items-center">
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8 text-gray-900">
+            <h2 class="text-2xl font-bold mb-2 flex items-center text-gray-900">
                 <svg class="w-6 h-6 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 Supported Format Variations
             </h2>
-
-            <!-- Spacing Variations -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                    Spacing Variations
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW 1A 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A  1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">M1 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">M11AA</code></div>
-                </div>
-            </div>
-
-            <!-- Separator Types -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                    </svg>
-                    Separator Types Handled
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A-1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A.1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A/1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A_1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A:1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A;1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A,1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A|1AA</code></div>
-                </div>
-            </div>
-
-            <!-- Labels & Prefixes -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                    </svg>
-                    Labels & Prefixes Removed
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Postcode: SW1A 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">PC: SW1A1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Address: SW1A 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA (postcode)</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">UK SW1A 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">London SW1A 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA, UK</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1A 1AA, London</code></div>
-                </div>
-            </div>
-
-            <!-- Wrapping Characters -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    Wrapping Characters
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">"SW1A 1AA"</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">'SW1A1AA'</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">*SW1A 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">#SW1A1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm"> SW1A 1AA </code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">'SW1A 1AA</code></div>
-                </div>
-            </div>
-
-            <!-- Lowercase Variations -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-                    </svg>
-                    Lowercase & Case Variations
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sw1a 1aa</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sw1a1aa</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Sw1a 1aa</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">SW1a 1AA</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sw1A 1aa</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">Sw1A 1Aa</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">sW1a 1Aa</code></div>
-                    <div class="bg-green-50 p-3 rounded"><code class="text-sm">m1 1aa</code></div>
-                </div>
-                <p class="text-sm text-gray-600 mt-3">All postcodes are normalized to uppercase during validation.</p>
-            </div>
-
-            <!-- Different Postcode Formats -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                    All UK Postcode Formats
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">M1 1AA</code><br><small class="text-gray-600">A# #AA</small></div>
-                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">M60 1AA</code><br><small class="text-gray-600">A## #AA</small></div>
-                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">CR2 6XH</code><br><small class="text-gray-600">AA# #AA</small></div>
-                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">DN55 1PT</code><br><small class="text-gray-600">AA## #AA</small></div>
-                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">W1A 1AA</code><br><small class="text-gray-600">A#A #AA</small></div>
-                    <div class="bg-amber-50 p-3 rounded"><code class="text-sm">EC1A 1BB</code><br><small class="text-gray-600">AA#A #AA</small></div>
-                </div>
+            <p id="corpus-summary" class="text-sm text-gray-500 mb-6">Running live validation in your browser&hellip;</p>
+            <script type="application/json" id="corpus-data"><?php echo json_encode($postcodeCorpus); ?></script>
+            <div data-live-coverage data-validator="postcode">
+                <p class="text-gray-500">Running live validation in your browser&hellip;</p>
             </div>
 
             <!-- Special Cases -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <div class="mb-8 mt-4 border-t pt-8">
+                <h3 class="text-xl font-semibold mb-4 flex items-center text-gray-900">
                     <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                     </svg>
@@ -162,19 +54,19 @@ $pageTitle = 'UK Postcode Format Support';
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-amber-50 p-3 rounded">
                         <strong>No Space Variation:</strong><br>
-                        <code class="text-sm">SW1A1AA</code> → <code class="text-sm">SW1A 1AA</code>
+                        <code class="text-sm">SW1A1AA</code> &rarr; <code class="text-sm js-live-value" data-type="postcode" data-input="SW1A1AA">&hellip;</code>
                     </div>
                     <div class="bg-amber-50 p-3 rounded">
                         <strong>Missing Space:</strong><br>
-                        <code class="text-sm">M11AA</code> → <code class="text-sm">M1 1AA</code>
+                        <code class="text-sm">M11AA</code> &rarr; <code class="text-sm js-live-value" data-type="postcode" data-input="M11AA">&hellip;</code>
                     </div>
                     <div class="bg-amber-50 p-3 rounded">
                         <strong>With Address:</strong><br>
-                        <code class="text-sm">10 Downing Street, SW1A 1AA</code> → <code class="text-sm">SW1A 1AA</code>
+                        <code class="text-sm">10 Downing Street, SW1A 1AA</code> &rarr; <code class="text-sm js-live-value" data-type="postcode" data-input="10 Downing Street, SW1A 1AA">&hellip;</code>
                     </div>
                     <div class="bg-amber-50 p-3 rounded">
                         <strong>With City:</strong><br>
-                        <code class="text-sm">London SW1A 1AA</code> → <code class="text-sm">SW1A 1AA</code>
+                        <code class="text-sm">London SW1A 1AA</code> &rarr; <code class="text-sm js-live-value" data-type="postcode" data-input="London SW1A 1AA">&hellip;</code>
                     </div>
                 </div>
             </div>
@@ -201,7 +93,7 @@ $pageTitle = 'UK Postcode Format Support';
 
         <!-- Get in Touch -->
         <div class="bg-amber-50 border border-amber-200 rounded-lg p-8">
-            <h2 class="text-2xl font-bold mb-4 flex items-center">
+            <h2 class="text-2xl font-bold mb-4 flex items-center text-amber-900">
                 <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                 </svg>
@@ -226,5 +118,7 @@ $pageTitle = 'UK Postcode Format Support';
 
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
+    <script src="/validators.js?v=<?php echo time(); ?>" defer></script>
+    <script src="/coverage-live.js?v=<?php echo time(); ?>" defer></script>
 </body>
 </html>

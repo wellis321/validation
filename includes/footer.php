@@ -25,7 +25,7 @@
                     <li><a href="/how-it-works.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">How It Works</a></li>
                     <li><a href="/documentation.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Documentation</a></li>
                     <li><a href="/validation-rules.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Validation Rules</a></li>
-                    <li><a href="/blog/ai-data-cleaning-limitations.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Blog</a></li>
+                    <li><a href="/blog/" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Blog</a></li>
                 </ul>
             </div>
             <div>

@@ -2,8 +2,8 @@
 require_once __DIR__ . '/includes/init.php';
 
 // Set page meta
-$pageTitle = 'Documentation';
-$pageDescription = 'Complete documentation for Simple Data Cleaner - detailed guides, features, visual references, troubleshooting, and FAQs for cleaning UK data formats.';
+$pageTitle = 'UK Data Cleaning Guide & Documentation';
+$pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbers, NI numbers, postcodes and sort codes with Simple Data Cleaner - free and 100% browser-based.';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -180,7 +180,7 @@ $pageDescription = 'Complete documentation for Simple Data Cleaner - detailed gu
 
     <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <header class="ds-scroll-reveal text-center mb-12">
-            <h1 class="ds-reveal-item text-4xl md:text-5xl font-bold text-white mb-4">Documentation</h1>
+            <h1 class="ds-reveal-item text-4xl md:text-5xl font-bold text-white mb-4">UK Data Cleaning Guide & Documentation</h1>
             <p class="ds-reveal-item text-xl text-neutral-400 max-w-3xl mx-auto">
                 Everything you need to know about Simple Data Cleaner.<br class="hidden sm:inline"> Clean and validate your UK data.
             </p>

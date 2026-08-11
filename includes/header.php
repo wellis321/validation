@@ -1,4 +1,8 @@
-<?php $currentPath = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)); ?>
+<?php
+$currentUrlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$currentPath = basename($currentUrlPath);
+$isBlogSection = strpos($currentUrlPath, '/blog/') === 0;
+?>
 <!-- Skip to main content link for keyboard navigation -->
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-yellow-400 text-black px-4 py-2 rounded-lg font-medium shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
     Skip to main content
@@ -25,7 +29,7 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                             aria-controls="product-menu"
-                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo in_array($currentPath, ['why-choose-us.php', 'how-it-works.php', 'documentation.php', 'sample-reports.php', 'issues-report-demo.php', 'cleaned-data-report-demo.php', 'full-preview-report-demo.php']) ? 'text-white border-yellow-500' : ''; ?>">
+                            class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo in_array($currentPath, ['why-choose-us.php', 'how-it-works.php', 'documentation.php', 'validation-rules.php', 'sample-reports.php', 'issues-report-demo.php', 'cleaned-data-report-demo.php', 'full-preview-report-demo.php']) ? 'text-white border-yellow-500' : ''; ?>">
                             Product
                             <svg aria-hidden="true" class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -43,6 +47,9 @@
                             </a>
                             <a href="/documentation.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                                 Documentation
+                            </a>
+                            <a href="/validation-rules.php" role="menuitem" class="block px-4 py-2 transition-colors focus:outline-none focus:bg-neutral-700 focus:ring-2 focus:ring-yellow-500 focus:ring-inset mx-2 <?php echo $currentPath === 'validation-rules.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                                Validation Rules
                             </a>
                         </div>
                     </div>
@@ -67,8 +74,8 @@
                     </div>
 
                     <!-- Blog (standalone) -->
-                    <a href="/blog/ai-data-cleaning-limitations.php"
-                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo strpos($currentPath, 'blog') !== false ? 'text-white border-yellow-500' : ''; ?>">
+                    <a href="/blog/"
+                       class="inline-flex items-center border-b-2 border-transparent pb-1 font-medium transition-all text-neutral-300 hover:text-white hover:border-yellow-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 px-1 -mx-1 <?php echo $isBlogSection ? 'text-white border-yellow-500' : ''; ?>">
                         Blog
                     </a>
 
@@ -195,6 +202,9 @@
                 <a href="/documentation.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'documentation.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                     Documentation
                 </a>
+                <a href="/validation-rules.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $currentPath === 'validation-rules.php' ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+                    Validation Rules
+                </a>
             </div>
 
             <!-- Business Section -->
@@ -206,7 +216,7 @@
             </div>
 
             <!-- Blog (standalone) -->
-            <a href="/blog/ai-data-cleaning-limitations.php" class="block px-3 py-2 text-base font-medium transition-colors <?php echo strpos($currentPath, 'blog') !== false ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
+            <a href="/blog/" class="block px-3 py-2 text-base font-medium transition-colors <?php echo $isBlogSection ? 'bg-yellow-400/20 text-yellow-400 font-semibold' : 'text-neutral-200 hover:bg-neutral-700'; ?>">
                 Blog
             </a>
 

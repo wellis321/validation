@@ -134,13 +134,13 @@ With Text/Labels
 
 Country Code Variations
 
-447123456789 (missing +)
-00447123456789 (00 instead of +)
-++447123456789 (double +)
-+440 7123456789 (extra 0 after country code)
+447123456789
+00447123456789
+++447123456789
++440 7123456789
 +44 0 7123456789
 0044 0 7123456789
-+44 07123456789 (includes the 0)
++44 07123456789
 
 Multiple Numbers (User Error)
 
@@ -183,14 +183,14 @@ Unusual Spacing Patterns
 
 Tab Characters/Multiple Spaces
 
-"07123		456789" (tabs)
-"07123  456789" (double space)
-"07123   456789" (triple space)
+"07123		456789"
+"07123  456789"
+"07123   456789"
 "+44  7123  456789"
 
 Case Variations (with country code letters)
 
-"+44 7123456789" (standard)
+"+44 7123456789"
 "GB +44 7123456789"
 "gb: 07123456789"
 "UK 07123456789"
@@ -199,16 +199,16 @@ HTML/Special Encoding Issues
 
 "07123 456789"
 "07123–456789"
-"‭07123456789‬" (with invisible unicode characters)
+"‭07123456789‬"
 
 With Extra Digits (User Typos)
 
-"007123456789" (extra 0)
-"+4447123456789" (extra 4)
-"071234567890" (extra digit at end)
+"007123456789"
+"+4447123456789"
+"071234567890"
 
 Completely Non-Standard but Valid
 
-"7123456789" (missing leading 0 entirely)
-"44 7123456789" (+ missing from country code)
-"+44(7123456789)" (whole number in brackets)
+"7123456789"
+"44 7123456789"
+"+44(7123456789)"

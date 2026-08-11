@@ -1,0 +1,779 @@
+[
+  {
+    "section": "Basic Spacing Variations",
+    "value": "AB 12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "AB12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "AB 123456 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "AB 12 3456 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "AB 1234 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "AB123 456 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "A B 12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "AB 1 2 3 4 5 6 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "AB-12-34-56-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "AB12-34-56-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "AB-123456-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "AB-12-3456-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "AB-1234-56-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "AB123-456-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens",
+    "value": "A-B-12-34-56-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "AB.12.34.56.C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "AB12.34.56.C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "AB.123456.C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "AB.12.3456.C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "A.B.12.34.56.C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "AB/12/34/56/C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "AB12/34/56/C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "AB/123456/C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "AB/12/3456/C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "AB_12_34_56_C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "AB12_34_56_C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "AB_123456_C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "A_B_12_34_56_C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(AB)12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "AB(12)34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "AB 12 34 56(C)",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(AB) 123456 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "[AB]12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "{AB}12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "AB[123456]C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(AB123456C)",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB 12-34-56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB-12 34 56-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB.12-34.56-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB 12.34.56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB-12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB12-34 56-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB 123456-C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "AB-123456 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "ab123456c",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "ab 12 34 56 c",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "Ab123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "aB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "AB123456c",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "ab123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "Ab 12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Lowercase Variations",
+    "value": "aB 12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" AB123456C\"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"AB123456C \"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" AB123456C \"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" AB 12 34 56 C \"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"  AB123456C\"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"AB 12 34 56 C  \"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "NI: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "NI Number: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "NINO: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "National Insurance: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "AB123456C (NI)",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "NI - AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "NINo: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "N.I: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "N.I.N: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "No: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels (cleanable if pattern is clear)",
+    "value": "Number: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With \"NI\" or \"NINO\" Prefix",
+    "value": "NI AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With \"NI\" or \"NINO\" Prefix",
+    "value": "NINO AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With \"NI\" or \"NINO\" Prefix",
+    "value": "NI-AB123456C",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid NI number format (should be 2 letters + 6 digits + a final letter of A, B, C, or D)"
+  },
+  {
+    "section": "With \"NI\" or \"NINO\" Prefix",
+    "value": "NINO-AB123456C",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid NI number format (should be 2 letters + 6 digits + a final letter of A, B, C, or D)"
+  },
+  {
+    "section": "With \"NI\" or \"NINO\" Prefix",
+    "value": "NI: AB 12 34 56 C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With \"NI\" or \"NINO\" Prefix",
+    "value": "N.I. AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With \"NI\" or \"NINO\" Prefix",
+    "value": "N.I.N.O AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Tab Characters/Multiple Spaces",
+    "value": "AB123456\t\tC",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Tab Characters/Multiple Spaces",
+    "value": "AB  12  34  56  C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Tab Characters/Multiple Spaces",
+    "value": "AB   123456   C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "AB,12,34,56,C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "AB12,34,56,C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "AB,123456,C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "\"AB123456C\"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "'AB123456C'",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "\"AB 12 34 56 C\"",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "'AB 12 34 56 C'",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Colon Separators",
+    "value": "AB:12:34:56:C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Colon Separators",
+    "value": "AB12:34:56:C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Colon Separators",
+    "value": "AB:123456:C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Semicolon Separators",
+    "value": "AB;12;34;56;C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Semicolon Separators",
+    "value": "AB12;34;56;C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Semicolon Separators",
+    "value": "AB;123456;C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Pipe Separators",
+    "value": "AB|12|34|56|C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Pipe Separators",
+    "value": "AB12|34|56|C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Pipe Separators",
+    "value": "AB|123456|C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Plus Signs",
+    "value": "AB+12+34+56+C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Plus Signs",
+    "value": "AB12+34+56+C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Ampersands",
+    "value": "AB&12&34&56&C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "*AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "AB123456C*",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "#AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "AB123456C#",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "﻿AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "AB123456C﻿",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "AB123456C  ",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "Excel/Spreadsheet Formatting",
+    "value": "'AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix (cleanable)",
+    "value": "UK AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix (cleanable)",
+    "value": "GB AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix (cleanable)",
+    "value": "UK: AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix (cleanable)",
+    "value": "GB-AB123456C",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid NI number format (should be 2 letters + 6 digits + a final letter of A, B, C, or D)"
+  },
+  {
+    "section": "With UK/GB Prefix (cleanable)",
+    "value": "(UK) AB123456C",
+    "isValid": true,
+    "fixed": "AB 123456 C",
+    "error": null
+  }
+]

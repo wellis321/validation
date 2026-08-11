@@ -218,10 +218,7 @@ With Checkboxes/Bullets (from forms)
 ☐ 12-34-56
 • 12-34-56
 
-
 12-34-56
-
-
 
 With Account Number Context
 

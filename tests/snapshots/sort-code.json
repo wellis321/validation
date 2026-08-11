@@ -1,0 +1,1073 @@
+[
+  {
+    "section": "Basic Spacing Variations",
+    "value": "12 34 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "123 456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "12 3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "1234 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "1 2 3 4 5 6",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "12  34  56 (double spaces)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Basic Spacing Variations",
+    "value": "12   34   56 (triple spaces)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens (Standard)",
+    "value": "12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens (Standard)",
+    "value": "12-3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens (Standard)",
+    "value": "1234-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens (Standard)",
+    "value": "123-456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dashes/Hyphens (Standard)",
+    "value": "1-2-3-4-5-6",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "12.34.56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "12.3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "1234.56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Dots/Periods",
+    "value": "123.456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "12/34/56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "12/3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "1234/56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Slashes",
+    "value": "123/456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "12_34_56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "12_3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "1234_56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Underscores",
+    "value": "123_456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Colons",
+    "value": "12:34:56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Colons",
+    "value": "12:3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Colons",
+    "value": "1234:56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Colons",
+    "value": "123:456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Semicolons",
+    "value": "12;34;56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Semicolons",
+    "value": "12;3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Semicolons",
+    "value": "1234;56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Pipes",
+    "value": "12|34|56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Pipes",
+    "value": "12|3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Pipes",
+    "value": "1234|56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "12,34,56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "12,3456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "1234,56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Commas",
+    "value": "123,456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(12)34 56",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort code must be exactly 6 digits (found 4 digits)"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "12(34)56",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort code must be exactly 6 digits (found 4 digits)"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "12 34(56)",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort code must be exactly 6 digits (found 4 digits)"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(12) 34 56",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort code must be exactly 6 digits (found 4 digits)"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "(12-34-56)",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort code must be exactly 6 digits (found 0 digits)"
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "[12]34 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "{12}34 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "[12-34-56]",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Parentheses/Brackets",
+    "value": "{12-34-56}",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12-34 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12 34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12.34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12-34.56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12/34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12-34/56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12 34.56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12.34 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12_34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Mixed Formatting",
+    "value": "12-34_56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" 123456\"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"123456 \"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" 123456 \"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\" 12-34-56 \"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"  12-34-56\"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Leading/Trailing Spaces",
+    "value": "\"12-34-56  \"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Sort Code: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "SC: 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Sort: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "S/C: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Bank Sort Code: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "12-34-56 (sort code)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Sort Code - 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "SC - 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "S.C: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "#12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "No: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Text/Labels",
+    "value": "Code: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"SC\" or Similar Prefix",
+    "value": "SC 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"SC\" or Similar Prefix",
+    "value": "SC: 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"SC\" or Similar Prefix",
+    "value": "SC-12-34-56",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort codes cannot contain letters"
+  },
+  {
+    "section": "With \"SC\" or Similar Prefix",
+    "value": "S/C 12-34-56",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort codes cannot contain letters"
+  },
+  {
+    "section": "With \"SC\" or Similar Prefix",
+    "value": "S.C. 12-34-56",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort codes cannot contain letters"
+  },
+  {
+    "section": "With \"SC\" or Similar Prefix",
+    "value": "SORTCODE: 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"SC\" or Similar Prefix",
+    "value": "SORT CODE 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Tab Characters",
+    "value": "12\t34\t56 (tabs)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Tab Characters",
+    "value": "12-34\t56 (mixed)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Tab Characters",
+    "value": "12\t34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "\"12-34-56\"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "'123456'",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "\"12 34 56\"",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Quotation Marks",
+    "value": "'12-34-56'",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Plus Signs",
+    "value": "12+34+56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Plus Signs",
+    "value": "12+34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Ampersands",
+    "value": "12&34&56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "*12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "12-34-56*",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "#123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Asterisks/Hash",
+    "value": "12-34-56#",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "﻿12-34-56 (with BOM character)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "12-34-56﻿",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Copy-Paste Artifacts",
+    "value": "12-34-56  (with non-breaking space)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Excel/Spreadsheet Formatting",
+    "value": "'12-34-56 (leading apostrophe)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Excel/Spreadsheet Formatting",
+    "value": "'123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "UK 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "GB 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "UK: 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "GB-12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With UK/GB Prefix",
+    "value": "(UK) 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Bank Name",
+    "value": "Barclays 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Bank Name",
+    "value": "HSBC: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Bank Name",
+    "value": "Lloyds - 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Bank Name",
+    "value": "NatWest 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"Bank\" Label",
+    "value": "Bank: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"Bank\" Label",
+    "value": "Bank Code: 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"Bank\" Label",
+    "value": "Bank Sort: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "HTML/Special Encoding",
+    "value": "12 34 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "HTML/Special Encoding",
+    "value": "12–34–56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Leading Zeros (edge case)",
+    "value": "012-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": "Removed leading zero"
+  },
+  {
+    "section": "Leading Zeros (edge case)",
+    "value": "012345",
+    "isValid": true,
+    "fixed": "01-23-45",
+    "error": null
+  },
+  {
+    "section": "Leading Zeros (edge case)",
+    "value": "01-23-45",
+    "isValid": true,
+    "fixed": "01-23-45",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "12-34-56 (Main Account)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "12-34-56 - Business",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "Personal: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Context/Names",
+    "value": "John Smith 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Double Punctuation",
+    "value": "12--34--56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Double Punctuation",
+    "value": "12..34..56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Double Punctuation",
+    "value": "12//34//56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"Code\" Suffix",
+    "value": "12-34-56 (code)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"Code\" Suffix",
+    "value": "123456 code",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With \"Code\" Suffix",
+    "value": "Code 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Checkboxes/Bullets (from forms)",
+    "value": "☐ 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Checkboxes/Bullets (from forms)",
+    "value": "• 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Checkboxes/Bullets (from forms)",
+    "value": "12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Account Number Context",
+    "value": "Sort: 12-34-56 Account: 12345678",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort codes cannot contain letters"
+  },
+  {
+    "section": "With Account Number Context",
+    "value": "12-34-56 / 12345678",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Account Number Context",
+    "value": "SC: 12-34-56 Acc: 12345678",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort codes cannot contain letters"
+  },
+  {
+    "section": "Hyphen Variations",
+    "value": "12–34–56 (en dash)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Hyphen Variations",
+    "value": "12—34—56 (em dash)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Hyphen Variations",
+    "value": "12−34−56 (minus sign)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "✓ 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "Valid: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "12-34-56 ✓",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Validation Markers",
+    "value": "12-34-56 (verified)",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Split Format (user might separate pairs)",
+    "value": "12 - 34 - 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Split Format (user might separate pairs)",
+    "value": "12 / 34 / 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Split Format (user might separate pairs)",
+    "value": "12 . 34 . 56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Form Field Names Still Attached",
+    "value": "sortcode: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Form Field Names Still Attached",
+    "value": "sort_code 123456",
+    "isValid": false,
+    "fixed": null,
+    "error": "Sort codes cannot contain letters"
+  },
+  {
+    "section": "With Form Field Names Still Attached",
+    "value": "bank_sort_code: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Currency/Special Symbols",
+    "value": "£12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Currency/Special Symbols",
+    "value": "$123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "Currency/Special Symbols",
+    "value": "@12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Additional Text",
+    "value": "Branch: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Additional Text",
+    "value": "Location: 12-34-56",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  },
+  {
+    "section": "With Additional Text",
+    "value": "Office: 123456",
+    "isValid": true,
+    "fixed": "12-34-56",
+    "error": null
+  }
+]

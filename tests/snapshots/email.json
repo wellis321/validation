@@ -1,0 +1,226 @@
+[
+  {
+    "section": "Valid formats",
+    "value": "user@example.com",
+    "isValid": true,
+    "fixed": "user@example.com",
+    "error": null
+  },
+  {
+    "section": "Valid formats",
+    "value": "User@Example.COM",
+    "isValid": true,
+    "fixed": "user@example.com",
+    "error": null
+  },
+  {
+    "section": "Valid formats",
+    "value": "first.last@company.co.uk",
+    "isValid": true,
+    "fixed": "first.last@company.co.uk",
+    "error": null
+  },
+  {
+    "section": "Valid formats",
+    "value": "user+tag@gmail.com",
+    "isValid": true,
+    "fixed": "user+tag@gmail.com",
+    "error": null
+  },
+  {
+    "section": "Valid formats",
+    "value": "name_123@domain.org",
+    "isValid": true,
+    "fixed": "name_123@domain.org",
+    "error": null
+  },
+  {
+    "section": "Valid formats",
+    "value": "user%2B@example.com",
+    "isValid": true,
+    "fixed": "user%2b@example.com",
+    "error": null
+  },
+  {
+    "section": "Valid formats",
+    "value": "a@b.co",
+    "isValid": true,
+    "fixed": "a@b.co",
+    "error": null
+  },
+  {
+    "section": "Trimming",
+    "value": "  user@example.com",
+    "isValid": true,
+    "fixed": "user@example.com",
+    "error": null
+  },
+  {
+    "section": "Trimming",
+    "value": "user@example.com  ",
+    "isValid": true,
+    "fixed": "user@example.com",
+    "error": null
+  },
+  {
+    "section": "Trimming",
+    "value": "  user@example.com  ",
+    "isValid": true,
+    "fixed": "user@example.com",
+    "error": null
+  },
+  {
+    "section": "Trimming",
+    "value": "\tuser@example.com",
+    "isValid": true,
+    "fixed": "user@example.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@gmial.com",
+    "isValid": true,
+    "fixed": "user@gmail.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@gmai.com",
+    "isValid": true,
+    "fixed": "user@gmail.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@gmail.con",
+    "isValid": true,
+    "fixed": "user@gmail.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@gmail.cmo",
+    "isValid": true,
+    "fixed": "user@gmail.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@yaho.com",
+    "isValid": true,
+    "fixed": "user@yahoo.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@yahoo.con",
+    "isValid": true,
+    "fixed": "user@yahoo.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@hotmial.com",
+    "isValid": true,
+    "fixed": "user@hotmail.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@hotmail.con",
+    "isValid": true,
+    "fixed": "user@hotmail.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@outlok.com",
+    "isValid": true,
+    "fixed": "user@outlook.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@outlook.con",
+    "isValid": true,
+    "fixed": "user@outlook.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@icloud.con",
+    "isValid": true,
+    "fixed": "user@icloud.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@live.con",
+    "isValid": true,
+    "fixed": "user@live.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@msn.con",
+    "isValid": true,
+    "fixed": "user@msn.com",
+    "error": null
+  },
+  {
+    "section": "Domain typo fixes (expected cleaned output)",
+    "value": "user@btinternet.con",
+    "isValid": true,
+    "fixed": "user@btinternet.com",
+    "error": null
+  },
+  {
+    "section": "Invalid (should be reported as invalid)",
+    "value": "user@example",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid email: domain must have at least one dot and valid characters"
+  },
+  {
+    "section": "Invalid (should be reported as invalid)",
+    "value": "@example.com",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid email: missing or invalid @"
+  },
+  {
+    "section": "Invalid (should be reported as invalid)",
+    "value": "user@",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid email: missing or invalid @"
+  },
+  {
+    "section": "Invalid (should be reported as invalid)",
+    "value": "user example@domain.com",
+    "isValid": true,
+    "fixed": "userexample@domain.com",
+    "error": null
+  },
+  {
+    "section": "Invalid (should be reported as invalid)",
+    "value": "user@.com",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid email: domain must have at least one dot and valid characters"
+  },
+  {
+    "section": "Invalid (should be reported as invalid)",
+    "value": "user@domain",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid email: domain must have at least one dot and valid characters"
+  },
+  {
+    "section": "Invalid (should be reported as invalid)",
+    "value": "no-at-sign",
+    "isValid": false,
+    "fixed": null,
+    "error": "Invalid email: missing or invalid @"
+  }
+]

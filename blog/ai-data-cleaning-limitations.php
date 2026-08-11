@@ -101,7 +101,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php"
+          "item": "https://simple-data-cleaner.com/blog/"
         },
         {
           "@type": "ListItem",
@@ -542,13 +542,12 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
                     <p class="text-neutral-400 text-sm">Learn about <a href="/validation-rules.php" class="text-yellow-400 hover:text-yellow-300 hover:underline">HMRC, Royal Mail, and Ofcom standards</a> for UK data formats.</p>
                 </article>
                 <article class="ds-hover-lift border border-neutral-700 rounded-lg p-6 hover:border-neutral-600 transition-colors focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 focus-within:ring-offset-neutral-900">
-                    <div class="text-sm text-yellow-400 font-semibold mb-2">Coming Soon</div>
                     <h3 class="text-lg font-semibold text-white mb-2">
-                        <a href="/gdpr.php" class="hover:text-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded">
-                            GDPR Compliance and Browser-Based Data Processing
+                        <a href="/blog/uk-data-cleansing-gdpr-guide.php" class="hover:text-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded">
+                            UK Data Cleansing for GDPR Compliance
                         </a>
                     </h3>
-                    <p class="text-neutral-400 text-sm">Why <a href="/gdpr.php" class="text-yellow-400 hover:text-yellow-300 hover:underline transition-colors duration-200">processing data in your browser ensures GDPR compliance</a>.</p>
+                    <p class="text-neutral-400 text-sm">Consultant or self-serve tool? What UK GDPR actually requires from your customer data.</p>
                 </article>
             </div>
             </div>
