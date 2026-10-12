@@ -1,4 +1,13 @@
+# Resource-heavy SEO/scraper bots with no benefit to this site
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DotBot
+User-agent: PetalBot
+User-agent: Bytespider
+Disallow: /
+
 User-agent: *
+Crawl-delay: 10
 Allow: /
 Disallow: /config/
 Disallow: /includes/
@@ -7,6 +16,8 @@ Disallow: /test-files/
 Disallow: /important/
 Disallow: /database/
 Disallow: /ahrefs/
+Disallow: /*-variations-coverage.php
+Disallow: /*-demo.php
 Disallow: /*.log$
 Disallow: /*.sql$
 

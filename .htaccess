@@ -92,3 +92,9 @@ Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
 </IfModule>
+
+# Block resource-heavy scraper bots that ignore robots.txt (saves PHP workers)
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_USER_AGENT} (SemrushBot|MJ12bot|DotBot|PetalBot|Bytespider|AspiegelBot) [NC]
+    RewriteRule ^ - [F,L]
+</IfModule>
