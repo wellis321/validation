@@ -7,6 +7,14 @@ class Security {
     private function __construct() {
         $this->config = require __DIR__ . '/../config/config.php';
         $this->cspNonce = base64_encode(random_bytes(16));
+        // Only resume a session if the visitor already has one; new visitors
+        // (including bots) get one on demand via ensureSession().
+        if (isset($_COOKIE[session_name()])) {
+            $this->initSession();
+        }
+    }
+
+    public function ensureSession() {
         $this->initSession();
     }
 
@@ -31,6 +39,7 @@ class Security {
     }
 
     public function generateCsrfToken() {
+        $this->ensureSession();
         if (empty($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
@@ -38,6 +47,7 @@ class Security {
     }
 
     public function validateCsrfToken($token) {
+        $this->ensureSession();
         if (empty($_SESSION['csrf_token']) || empty($token) || !hash_equals($_SESSION['csrf_token'], $token)) {
             throw new Exception('Invalid CSRF token');
         }

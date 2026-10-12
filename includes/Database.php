@@ -37,7 +37,17 @@ class Database {
         return $column;
     }
 
+    private $connectAttempted = false;
+
     private function __construct() {
+        // Connection is lazy: see connect(). Most public pages never touch the DB.
+    }
+
+    private function connect() {
+        if ($this->connectAttempted) {
+            return;
+        }
+        $this->connectAttempted = true;
         try {
             // Load database configuration
             $config = require __DIR__ . '/../config/database.php';
@@ -72,10 +82,12 @@ class Database {
     }
 
     public function isConnected() {
+        $this->connect();
         return $this->connection !== null && $this->connectionError === null;
     }
 
     public function getConnectionError() {
+        $this->connect();
         return $this->connectionError;
     }
 
@@ -100,6 +112,7 @@ class Database {
     }
 
     public function insert($table, $data) {
+        $this->connect();
         // Validate table name against whitelist
         $this->validateTableName($table);
 
@@ -141,6 +154,7 @@ class Database {
     }
 
     public function update($table, $data, $where, $whereParams = []) {
+        $this->connect();
         // Validate table name against whitelist
         $this->validateTableName($table);
 
@@ -168,6 +182,7 @@ class Database {
     }
 
     public function delete($table, $where, $params = []) {
+        $this->connect();
         // Validate table name against whitelist
         $this->validateTableName($table);
 
@@ -183,14 +198,17 @@ class Database {
     }
 
     public function beginTransaction() {
+        $this->connect();
         return $this->connection->beginTransaction();
     }
 
     public function commit() {
+        $this->connect();
         return $this->connection->commit();
     }
 
     public function rollback() {
+        $this->connect();
         return $this->connection->rollBack();
     }
 }

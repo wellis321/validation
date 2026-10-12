@@ -30,6 +30,16 @@ $security = Security::getInstance();
 // Set all security headers including CSP with nonce
 $security->secureHeaders();
 
+// Sessions are lazy (see Security::__construct) so anonymous page views, e.g. from
+// crawlers, don't create session files. Pages that render or process forms
+// (CSRF tokens, flash messages) need the session started before any output.
+$sessionPages = ['account', 'bespoke', 'checkout-success', 'cancel-subscription', 'checkout',
+    'contact', 'feedback', 'login', 'forgot-password', 'reset-password', 'subscribe', 'register'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST'
+    || in_array(basename($_SERVER['SCRIPT_NAME'] ?? '', '.php'), $sessionPages, true)) {
+    $security->ensureSession();
+}
+
 // Initialize authentication
 $auth = Auth::getInstance();
 $user = $auth->getCurrentUser();

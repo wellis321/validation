@@ -182,6 +182,9 @@ class ErrorHandler {
      * Persist message to session so it survives redirects (e.g. after register → redirect).
      */
     private function pushFlash($type, $message) {
+        if (class_exists('Security')) {
+            Security::getInstance()->ensureSession();
+        }
         if (session_status() === PHP_SESSION_ACTIVE && isset($_SESSION)) {
             $key = '_flash_' . $type;
             if (!isset($_SESSION[$key])) {

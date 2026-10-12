@@ -5,6 +5,10 @@ class Auth {
     private static $instance = null;
 
     private function __construct() {
+        // No session cookie means no logged-in user: skip session and DB entirely.
+        if (!isset($_COOKIE[session_name()])) {
+            return;
+        }
         try {
             $this->db = Database::getInstance();
             // Only initialize session if database is available
@@ -84,6 +88,8 @@ class Auth {
 
         // Update last login timestamp
         $user->update($userData['id'], ['last_login' => date('Y-m-d H:i:s')]);
+
+        Security::getInstance()->ensureSession();
 
         // Regenerate session ID to prevent session fixation attacks
         session_regenerate_id(true);
@@ -200,7 +206,9 @@ class Auth {
     }
 
     public function logout() {
-        session_destroy();
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
         $this->user = null;
     }
 
