@@ -31,6 +31,16 @@ php_value error_reporting E_ALL
     SetHandler application/x-httpd-php
 </FilesMatch>
 
+# Internal folders and files are never downloadable: schemas and grant scripts, test data, source,
+# dependencies, planning/audit notes, build and package manifests. (robots.txt and llms*.txt stay public.)
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_URI} ^/(database|test-files|tests|src|node_modules|vendor|logs|models|includes|config)(/|$) [NC,OR]
+    RewriteCond %{REQUEST_URI} ^/[^/]+\.(md|sql|sh|lock)$ [NC,OR]
+    RewriteCond %{REQUEST_URI} ^/(composer\.json|package(-lock)?\.json|tailwind\.config\.js|phpunit\.xml)$ [NC,OR]
+    RewriteCond %{REQUEST_URI} ^/(?!robots\.txt$|llms(-full)?\.txt$)[^/]+\.txt$ [NC]
+    RewriteRule ^ - [F,L]
+</IfModule>
+
 # Protect sensitive files
 <FilesMatch "^\.env">
     Order allow,deny
