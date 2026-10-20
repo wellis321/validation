@@ -1394,13 +1394,13 @@ if ($user) {
     <script src="/validators.js?v=<?php echo time(); ?>" defer></script>
     <?php if ($user): ?>
     <!-- File upload (same as example.php) - requires validators, fileProcessor, app -->
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js" integrity="sha384-7hwyYzxURfZMLwHgvEKrYEmM5tX+1DVWK5iDR4R69bOQeY90Q8B8n9Cobuyqybhw" crossorigin="anonymous" defer></script>
+    <script src="/assets/vendor/sheetjs/xlsx.full.min.js?v=0.20.0" defer></script>
     <script src="/fileProcessor.js" defer></script>
     <script src="/app.js" defer></script>
     <?php endif; ?>
     <?php if (!$user): ?>
     <script src="/hero-shader.js?v=<?php echo time(); ?>" defer></script>
-    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+    <script src="/assets/vendor/lucide/lucide.min.js?v=0.460.0"></script>
     <script <?php echo script_nonce(); ?>>
     if (typeof lucide !== 'undefined') lucide.createIcons();
     </script>

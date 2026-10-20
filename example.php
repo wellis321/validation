@@ -11,10 +11,7 @@ require_once __DIR__ . '/includes/init.php';
     <meta name="description" content="Try Simple Data Cleaner with example data. Experience our UK data validation tool with a pre-loaded sample dataset. No sign-up required.">
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="/assets/css/output.css">
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js" 
-            integrity="sha384-7hwyYzxURfZMLwHgvEKrYEmM5tX+1DVWK5iDR4R69bOQeY90Q8B8n9Cobuyqybhw" 
-            crossorigin="anonymous" 
-            defer></script>
+    <script src="/assets/vendor/sheetjs/xlsx.full.min.js?v=0.20.0" defer></script>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">

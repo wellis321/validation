@@ -145,7 +145,7 @@ class Security {
         // Note: 'unsafe-inline' for style-src is kept for Tailwind compatibility
         $nonce = $this->cspNonce;
         $csp = "default-src 'self'; " .
-               "script-src 'self' 'nonce-{$nonce}' https://js.stripe.com https://cdn.sheetjs.com https://www.googletagmanager.com https://unpkg.com; " .
+               "script-src 'self' 'nonce-{$nonce}' https://js.stripe.com https://www.googletagmanager.com; " .
                "style-src 'self' 'unsafe-inline'; " .
                "img-src 'self' data: https://*.stripe.com https://api.producthunt.com; " .
                "font-src 'self'; " .
