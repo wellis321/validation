@@ -111,7 +111,7 @@ require_once __DIR__ . '/includes/init.php';
                     </div>
 
                     <!-- Much Lower Cost -->
-                    <div class="ds-animate-fade-slide ds-animate-delay-5 ds-hover-lift ds-highlight-glow ds-glow-animate bg-neutral-900 rounded-none p-6 border-l-4 border-l-yellow-500/60 border border-neutral-700 hover:border-neutral-600 md:col-span-2 relative z-10">
+                    <div class="ds-animate-fade-slide ds-animate-delay-5 ds-hover-lift ds-highlight-glow ds-glow-animate bg-neutral-900 p-6 border-l-4 border-l-yellow-500/60 border border-neutral-700 hover:border-neutral-600 md:col-span-2 relative z-10">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="w-8 h-8 flex items-center justify-center text-xl font-bold text-yellow-500 flex-shrink-0" aria-hidden="true">£</span>
                             <h3 class="text-xl font-bold text-white">Much Lower Cost Than Competitors</h3>

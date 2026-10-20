@@ -782,7 +782,7 @@ class UKDataCleanerApp {
 
             protectedInfo = `
 
-                <div class="mb-4 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
+                <div class="mb-4 p-4 bg-blue-50 border-l-4 border-blue-400">
 
                     <div class="flex items-start">
 
