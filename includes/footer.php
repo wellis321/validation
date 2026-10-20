@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-neutral-300 mb-4">Product</h3>
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-neutral-300 mb-4">Product</h2>
                 <ul class="space-y-2 text-neutral-400">
                     <li><a href="/why-choose-us.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Why Choose Us</a></li>
                     <li><a href="/how-it-works.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">How It Works</a></li>
@@ -29,7 +29,7 @@
                 </ul>
             </div>
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-neutral-300 mb-4">Resources</h3>
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-neutral-300 mb-4">Resources</h2>
                 <ul class="space-y-2 text-neutral-400">
                     <li><a href="/pricing.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Pricing</a></li>
                     <li><a href="/feedback.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Feedback</a></li>
@@ -37,7 +37,7 @@
                 </ul>
             </div>
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-neutral-300 mb-4">Legal</h3>
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-neutral-300 mb-4">Legal</h2>
                 <ul class="space-y-2 text-neutral-400">
                     <li><a href="/terms.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Terms of Service</a></li>
                     <li><a href="/privacy.php" class="hover:text-white transition-colors focus:outline-none focus:text-white focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-neutral-950 rounded">Privacy Policy</a></li>

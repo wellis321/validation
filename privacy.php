@@ -18,6 +18,7 @@ require_once __DIR__ . '/includes/init.php';
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
+    <main id="main-content">
 
     <!-- Main Content -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -35,7 +36,7 @@ require_once __DIR__ . '/includes/init.php';
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                     <div>
-                        <h3 class="text-lg font-semibold text-green-900 mb-2">100% Client-Side Processing</h3>
+                        <h2 class="text-lg font-semibold text-green-900 mb-2">100% Client-Side Processing</h2>
                         <p class="text-green-800">
                             All data processing happens entirely in your browser. Your files are never uploaded to our
                             servers or transmitted over the internet. Your Personally Identifiable Information (PII)
@@ -122,7 +123,7 @@ require_once __DIR__ . '/includes/init.php';
                 <p class="text-gray-700 mb-4">This application is designed to be fully GDPR compliant:</p>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-amber-900 mb-2">Data Minimization</h4>
+                        <h3 class="font-semibold text-amber-900 mb-2">Data Minimization</h3>
                         <p class="text-sm text-amber-800">We only process the data you explicitly choose to clean</p>
                     </div>
                     <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
@@ -150,7 +151,7 @@ require_once __DIR__ . '/includes/init.php';
                     <li><strong>Analytics cookies (optional):</strong> Google Analytics 4 to understand how visitors use our website</li>
                 </ul>
                 <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
-                    <h4 class="font-semibold text-amber-900 mb-2">Google Analytics</h4>
+                    <h3 class="font-semibold text-amber-900 mb-2">Google Analytics</h3>
                     <p class="text-sm text-amber-800 mb-2">
                         We use Google Analytics 4 to collect anonymous usage statistics about our website, such as:
                     </p>
@@ -202,7 +203,7 @@ require_once __DIR__ . '/includes/init.php';
             <!-- Contact -->
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Contact</h2>
-                <p class="text-gray-700 mb-3">If you have any questions about this privacy policy or how your data is handled, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>.</p>
+                <p class="text-gray-700 mb-3">If you have any questions about this privacy policy or how your data is handled, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-800 underline underline-offset-2 hover:no-underline">contact us</a>.</p>
             </section>
 
             <!-- CTA -->
@@ -216,6 +217,7 @@ require_once __DIR__ . '/includes/init.php';
         </div>
     </div>
 
+    </main>
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>

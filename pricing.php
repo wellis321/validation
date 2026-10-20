@@ -139,6 +139,7 @@ if ($user) {
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
+    <main id="main-content">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center mb-12 ds-animate-fade-slide ds-animate-delay-1">
@@ -370,7 +371,7 @@ if ($user) {
                         </svg>
                         <h3 class="text-lg font-semibold text-white">Do you offer custom validation rules?</h3>
                     </div>
-                    <p class="text-neutral-400 mt-2">Yes! Our <a href="/bespoke.php" class="text-yellow-400 hover:text-yellow-300 underline">Bespoke Services</a> team can build custom validation rules for your specific data fields and compliance requirements. Everything runs in the browser, keeping your data private and GDPR compliant. Contact us to discuss your needs. and any stability or UX improvements to this validator set. When we launch entirely new validator families or major feature versions, we’ll offer optional upgrade paths so you can choose whether to extend your licence. That keeps your original lifetime access safe while letting us keep innovating.</p>
+                    <p class="text-neutral-400 mt-2">Yes! Our <a href="/bespoke.php" class="text-yellow-400 hover:text-yellow-300 underline">Bespoke Services</a> team can build custom validation rules for your specific data fields and compliance requirements. Everything runs in the browser, keeping your data private and GDPR compliant. Contact us to discuss your needs.</p>
                 </div>
                 <div>
                     <div class="flex items-center mb-2">
@@ -390,12 +391,13 @@ if ($user) {
                         </svg>
                         <h3 class="text-lg font-semibold text-white">How do I share feedback?</h3>
                     </div>
-                    <p class="text-neutral-400 mt-2">Head to our <a href="/feedback.php" class="text-yellow-500 hover:underline">feedback form</a> any time to submit your experience, ideas, or custom validator requests. We review all feedback and use it to prioritize improvements.</p>
+                    <p class="text-neutral-400 mt-2">Head to our <a href="/feedback.php" class="text-yellow-400 underline underline-offset-2 hover:no-underline">feedback form</a> any time to submit your experience, ideas, or custom validator requests. We review all feedback and use it to prioritize improvements.</p>
                 </div>
             </div>
         </div>
     </div>
 
+    </main>
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>

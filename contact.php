@@ -137,7 +137,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
         <div class="bg-neutral-800/60 border border-neutral-600 shadow-xl overflow-hidden">
             <div class="bg-yellow-500 text-black px-6 py-8">
                 <h1 class="text-3xl font-bold">Contact Us</h1>
-                <p class="text-amber-100 mt-3 text-base">
+                <p class="text-neutral-900 mt-3 text-base">
                     Have a question, need support, or want to provide feedback? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
                 </p>
             </div>
@@ -245,7 +245,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                 </form>
 
                 <div class="mt-8 pt-8 border-t border-neutral-600">
-                    <h3 class="text-lg font-semibold text-white mb-4">Other Ways to Reach Us</h3>
+                    <h2 class="text-lg font-semibold text-white mb-4">Other Ways to Reach Us</h2>
                     <div class="space-y-3 text-neutral-300">
                         <p class="flex items-start gap-3">
                             <svg class="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -256,7 +256,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
                                 <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:text-amber-700 underline">noreply@simple-data-cleaner.com</a>
                             </span>
                         </p>
-                        <p class="text-sm text-gray-600">
+                        <p class="text-sm text-neutral-400">
                             For technical support, billing questions, or general inquiries, please use the form above or email us directly.
                         </p>
                     </div>

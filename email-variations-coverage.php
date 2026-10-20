@@ -72,7 +72,7 @@ $emailCorpus = groupVariationsBySection(parseVariationsFile(__DIR__ . '/email-va
                 </h2>
                 <p class="text-amber-800 mb-4">
                     If you have email data in a format we don't handle, or need more domain typo fixes,
-                    <a href="/feedback.php" class="text-yellow-500 hover:underline">send us feedback</a>
+                    <a href="/feedback.php" class="text-yellow-400 underline underline-offset-2 hover:no-underline">send us feedback</a>
                     with examples and we'll consider adding support.
                 </p>
             </div>

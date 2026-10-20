@@ -18,6 +18,7 @@ require_once __DIR__ . '/includes/init.php';
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
+    <main id="main-content">
 
     <!-- Main Content -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -32,7 +33,7 @@ require_once __DIR__ . '/includes/init.php';
                         <svg class="w-8 h-8 text-yellow-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
-                        <h3 class="text-xl font-semibold text-amber-200">100% Client-Side Processing</h3>
+                        <h2 class="text-xl font-semibold text-amber-200">100% Client-Side Processing</h2>
                     </div>
                     <p class="text-neutral-300">All data cleaning happens in your browser using JavaScript. Your sensitive data never leaves your computer.</p>
                 </div>
@@ -47,12 +48,12 @@ require_once __DIR__ . '/includes/init.php';
                     <p class="text-neutral-300">No file uploads. No server-side storage. No databases. Zero attack surface for your data.</p>
                 </div>
 
-                <div class="bg-purple-500/10 border border-purple-500/30 p-6">
+                <div class="bg-yellow-500/10 border border-yellow-500/30 p-6">
                     <div class="flex items-center mb-3">
-                        <svg class="w-8 h-8 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <h3 class="text-xl font-semibold text-purple-200">GDPR Compliant</h3>
+                        <h3 class="text-xl font-semibold text-yellow-200">GDPR Compliant</h3>
                     </div>
                     <p class="text-neutral-300">Since we don't process or store your data, we're not a data processor under GDPR. You maintain full control.</p>
                 </div>
@@ -187,7 +188,7 @@ require_once __DIR__ . '/includes/init.php';
             <!-- Contact -->
             <div class="border-t border-neutral-600 pt-8">
                 <h2 class="text-2xl font-bold text-white mb-4">Have Security Concerns?</h2>
-                <p class="text-neutral-300 mb-4">We take security seriously. If you discover a vulnerability or have concerns about our security practices, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>.</p>
+                <p class="text-neutral-300 mb-4">We take security seriously. If you discover a vulnerability or have concerns about our security practices, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-400 underline underline-offset-2 hover:no-underline">contact us</a>.</p>
             </div>
 
             <!-- CTA -->
@@ -199,6 +200,7 @@ require_once __DIR__ . '/includes/init.php';
         </div>
     </div>
 
+    </main>
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>

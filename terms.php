@@ -18,6 +18,7 @@ require_once __DIR__ . '/includes/init.php';
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
+    <main id="main-content">
 
     <!-- Main Content -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -90,7 +91,7 @@ require_once __DIR__ . '/includes/init.php';
                         <li>Usage metrics (for billing and service limits)</li>
                     </ul>
                     <p><strong>GDPR Compliance:</strong> Since we do not process your data, we are not acting as a data processor under GDPR. You retain full responsibility for any data you clean using our service.</p>
-                    <p>For more information about our privacy practices, please see our <a href="/security.php" class="text-yellow-500 hover:underline">Security & Privacy page</a>.</p>
+                    <p>For more information about our privacy practices, please see our <a href="/security.php" class="text-yellow-800 underline underline-offset-2 hover:no-underline">Security & Privacy page</a>.</p>
                 </div>
             </section>
 
@@ -172,7 +173,7 @@ require_once __DIR__ . '/includes/init.php';
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">12. Contact Information</h2>
                 <p class="text-gray-700 mb-3">
-                    If you have any questions about these Terms, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a> or visit our website at <a href="/" class="text-yellow-500 hover:underline">simple-data-cleaner.com</a>.
+                    If you have any questions about these Terms, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-800 underline underline-offset-2 hover:no-underline">contact us</a> or visit our website at <a href="/" class="text-yellow-800 underline underline-offset-2 hover:no-underline">simple-data-cleaner.com</a>.
                 </p>
             </section>
 
@@ -185,6 +186,7 @@ require_once __DIR__ . '/includes/init.php';
         </div>
     </div>
 
+    </main>
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>

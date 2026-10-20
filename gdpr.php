@@ -33,6 +33,7 @@ require_once __DIR__ . '/includes/init.php';
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
+    <main id="main-content">
 
     <!-- Main Content -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -48,7 +49,7 @@ require_once __DIR__ . '/includes/init.php';
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-lg font-semibold text-green-900 mb-2">We Are NOT a Data Processor</h3>
+                        <h2 class="text-lg font-semibold text-green-900 mb-2">We Are NOT a Data Processor</h2>
                         <p class="text-green-800">
                             Because Simple Data Cleaner processes all data entirely in your browser (client-side),
                             we never receive, store, or process your data. This means under GDPR,
@@ -137,22 +138,22 @@ require_once __DIR__ . '/includes/init.php';
                 <div class="space-y-4">
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Access</h3>
-                        <p class="text-gray-700">You can request a copy of all personal data we hold about you (account information only). <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">Contact us</a> to make a request.</p>
+                        <p class="text-gray-700">You can request a copy of all personal data we hold about you (account information only). <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-800 underline hover:no-underline">Contact us</a> to make a request.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Rectification</h3>
-                        <p class="text-gray-700">You can update your account information at any time through your <a href="/login.php" class="text-yellow-500 hover:underline">Account Settings</a> page.</p>
+                        <p class="text-gray-700">You can update your account information at any time through your <a href="/login.php" class="text-yellow-800 underline hover:no-underline">Account Settings</a> page.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Erasure (Right to be Forgotten)</h3>
-                        <p class="text-gray-700">You can delete your account at any time. This permanently removes all personal data we hold about you. <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">Contact us</a> to request account deletion.</p>
+                        <p class="text-gray-700">You can delete your account at any time. This permanently removes all personal data we hold about you. <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-800 underline hover:no-underline">Contact us</a> to request account deletion.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
                         <h3 class="font-semibold text-gray-900 mb-2">Right to Data Portability</h3>
-                        <p class="text-gray-700">You can export your account data in a machine-readable format. <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">Contact us</a> to request an export.</p>
+                        <p class="text-gray-700">You can export your account data in a machine-readable format. <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-800 underline hover:no-underline">Contact us</a> to request an export.</p>
                     </div>
 
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
@@ -186,7 +187,7 @@ require_once __DIR__ . '/includes/init.php';
                         <li>Regular security updates</li>
                         <li>Access controls and authentication</li>
                     </ul>
-                    <p>For more details, see our <a href="/security.php" class="text-yellow-500 hover:underline">Security & Privacy page</a>.</p>
+                    <p>For more details, see our <a href="/security.php" class="text-yellow-800 underline underline-offset-2 hover:no-underline">Security & Privacy page</a>.</p>
                 </div>
             </section>
 
@@ -221,10 +222,10 @@ require_once __DIR__ . '/includes/init.php';
             <section class="mb-8 border-t border-gray-200 pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Contact & Complaints</h2>
                 <div class="space-y-3 text-gray-700">
-                    <p>If you have any questions about our GDPR compliance or wish to exercise your rights, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>.</p>
+                    <p>If you have any questions about our GDPR compliance or wish to exercise your rights, please <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-800 underline underline-offset-2 hover:no-underline">contact us</a>.</p>
                     <p class="mt-4">
                         You also have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at
-                        <a href="https://ico.org.uk" target="_blank" class="text-yellow-500 hover:underline">ico.org.uk</a>
+                        <a href="https://ico.org.uk" target="_blank" class="text-yellow-800 underline underline-offset-2 hover:no-underline">ico.org.uk</a>
                     </p>
                 </div>
             </section>
@@ -233,7 +234,7 @@ require_once __DIR__ . '/includes/init.php';
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Further Reading</h2>
                 <p class="text-gray-700">
                     For a deeper look at what UK GDPR requires from your customer data, and how to decide between a data cleansing consultant and a self-serve tool, see our guide:
-                    <a href="/blog/uk-data-cleansing-gdpr-guide.php" class="text-yellow-500 hover:underline font-semibold">UK Data Cleansing for GDPR Compliance</a>.
+                    <a href="/blog/uk-data-cleansing-gdpr-guide.php" class="text-yellow-800 underline underline-offset-2 hover:no-underline font-semibold">UK Data Cleansing for GDPR Compliance</a>.
                 </p>
             </section>
 
@@ -248,6 +249,7 @@ require_once __DIR__ . '/includes/init.php';
         </div>
     </div>
 
+    </main>
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>

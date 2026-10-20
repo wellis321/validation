@@ -102,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>
+    <main id="main-content">
     <div id="main-content" class="container mx-auto px-4 py-16">
         <div class="max-w-md mx-auto">
             <div class="text-center mb-8">
@@ -150,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="password" id="password" name="password" required
                             class="w-full px-4 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-500 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder="••••••••">
-                        <p class="mt-1 text-sm text-neutral-500">Must be at least 8 characters long</p>
+                        <p class="mt-1 text-sm text-neutral-400">Must be at least 8 characters long</p>
                     </div>
 
                     <div class="mb-6">
@@ -197,6 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
+    </main>
     <?php include __DIR__ . '/includes/footer.php'; ?>
     <?php include __DIR__ . '/includes/cookie-banner.php'; ?>
 </body>

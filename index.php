@@ -165,7 +165,7 @@ if ($user) {
                     <div class="mb-8 hero-animate-fade-in-down">
                         <p class="flex items-center justify-center gap-2 px-5 py-2.5 bg-yellow-500/15 border border-yellow-400/30 rounded-full text-sm text-yellow-100">
                             <svg class="w-5 h-5 text-yellow-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                            100% private · GDPR compliant · No uploads
+                            Runs in your browser · Nothing is uploaded
                         </p>
                     </div>
                     <div class="text-center space-y-6 max-w-5xl mx-auto px-4">
@@ -1139,7 +1139,7 @@ if ($user) {
                                 <h5 class="text-sm font-semibold text-white mb-3">Name Splitting Options:</h5>
                                 <div class="space-y-4">
                                     <label class="flex items-start cursor-pointer group hover:bg-neutral-700/50 p-2 rounded -m-2 transition-colors">
-                                        <input type="checkbox" id="removeOriginalNameColumns" class="mt-1 mr-3 h-4 w-4 text-pink-500 focus:ring-pink-500 border-neutral-600 rounded bg-neutral-800">
+                                        <input type="checkbox" id="removeOriginalNameColumns" class="mt-1 mr-3 h-4 w-4 text-yellow-500 focus:ring-pink-500 border-neutral-600 rounded bg-neutral-800">
                                         <div class="flex-1">
                                             <span class="text-sm font-medium text-neutral-200 block">Remove Original Name Columns</span>
                                             <span class="text-sm text-neutral-400 block mt-1">When checked, the original name columns (e.g., <code class="bg-neutral-700 px-1 rounded text-yellow-400 font-mono text-xs">full_name</code>) will be removed from the export, keeping only the new <code class="bg-neutral-700 px-1 rounded text-yellow-400 font-mono text-xs">first_name</code> and <code class="bg-neutral-700 px-1 rounded text-yellow-400 font-mono text-xs">last_name</code> columns.</span>

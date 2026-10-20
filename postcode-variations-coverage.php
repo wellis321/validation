@@ -101,7 +101,7 @@ $postcodeCorpus = groupVariationsBySection(parseVariationsFile(__DIR__ . '/postc
             </h2>
             <p class="text-amber-800 mb-4">
                 If you have postcode data in a format we don't currently handle, please
-                <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-500 hover:underline">contact us</a>
+                <a href="mailto:noreply@simple-data-cleaner.com" class="text-yellow-400 underline underline-offset-2 hover:no-underline">contact us</a>
                 with examples and we'll add support!
             </p>
         </div>

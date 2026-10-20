@@ -23,7 +23,7 @@ require_once __DIR__ . '/includes/init.php';
     <main class="container mx-auto px-4 py-8 max-w-7xl">
         <!-- File Upload Section (Demo Mode) -->
         <div class="max-w-4xl mx-auto bg-neutral-900 rounded-xl shadow-lg border border-neutral-700 p-8 mt-8">
-            <h2 class="text-2xl font-bold text-center text-white mb-2">Try with Example Data</h2>
+            <h1 class="text-2xl font-bold text-center text-white mb-2">Try with Example Data</h1>
             <p class="text-center text-neutral-400 mb-6 flex items-center justify-center">
                 <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -38,7 +38,7 @@ require_once __DIR__ . '/includes/init.php';
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
                 </div>
-                <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">Load sample data to try the tool</h3>
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Load sample data to try the tool</h2>
                 <p class="text-base text-neutral-400 max-w-lg mx-auto mb-2">A sample dataset with UK phone numbers, NI numbers, postcodes, sort codes, emails, and names. You’ll pick columns, clean, then export — all in your browser.</p>
                 <p class="text-sm text-neutral-500 mb-8">No sign-up. No uploads. Your data stays private.</p>
                 <button type="button" id="loadExampleBtn" class="ds-btn-primary px-8 py-4 text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 rounded-lg">

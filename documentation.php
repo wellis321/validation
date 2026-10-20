@@ -190,7 +190,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
             <!-- Table of Contents (Sidebar) -->
             <aside class="lg:col-span-1">
                 <nav class="sticky-toc ds-card p-6 ds-scroll-reveal" aria-label="Table of contents">
-                    <h3 class="ds-reveal-item text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-4">Contents</h3>
+                    <h2 class="ds-reveal-item text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-4">Contents</h2>
                     <ul class="space-y-0.5" role="list">
                         <li class="ds-reveal-item"><a href="#getting-started" class="doc-toc-link">Getting Started</a></li>
                         <li class="ds-reveal-item"><a href="#interactive-example" class="doc-toc-link">Interactive Example</a></li>
@@ -334,7 +334,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                         <!-- JSON -->
                         <div class="border border-neutral-600 rounded-lg p-4 bg-neutral-800/40">
                             <div class="flex items-center gap-3 mb-3">
-                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                 </svg>
                                 <h3 class="text-lg font-semibold text-white">JSON</h3>
@@ -475,8 +475,8 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                                     </div>
                                 </div>
 
-                                <div class="md:col-span-2 border border-pink-500/30 rounded-lg p-4 bg-pink-500/10">
-                                    <h4 class="font-semibold text-white mb-2 flex items-center gap-2"><svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> Full Names (Split)</h4>
+                                <div class="md:col-span-2 border border-yellow-500/30 rounded-lg p-4 bg-yellow-500/10">
+                                    <h4 class="font-semibold text-white mb-2 flex items-center gap-2"><svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> Full Names (Split)</h4>
                                     <p class="text-sm text-neutral-400 mb-2">Split full names into separate columns</p>
                                     <div class="text-sm text-neutral-400">
                                         <p class="font-medium mb-1">Creates:</p>
@@ -526,9 +526,9 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                                     <li>For name columns, check &ldquo;Split into first_name and last_name&rdquo; to split full names</li>
                                     <li>We validate and clean based on your selection</li>
                                 </ol>
-                                <div class="bg-pink-500/10 border-l-4 border-pink-500 p-4 mt-4 rounded-r-lg">
+                                <div class="bg-yellow-500/10 border-l-4 border-yellow-500 p-4 mt-4 rounded-r-lg">
                                     <p class="text-sm text-neutral-200">
-                                        <strong><svg class="inline w-5 h-5 text-pink-400 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Name Splitting:</strong> When you select a name column for splitting, it creates three new columns: <code class="bg-neutral-800 px-1.5 py-0.5 rounded">title</code>, <code class="bg-neutral-800 px-1.5 py-0.5 rounded">first_name</code>, and <code class="bg-neutral-800 px-1.5 py-0.5 rounded">last_name</code>. The original name column is preserved unless you choose to remove it during export.
+                                        <strong><svg class="inline w-5 h-5 text-yellow-400 align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Name Splitting:</strong> When you select a name column for splitting, it creates three new columns: <code class="bg-neutral-800 px-1.5 py-0.5 rounded">title</code>, <code class="bg-neutral-800 px-1.5 py-0.5 rounded">first_name</code>, and <code class="bg-neutral-800 px-1.5 py-0.5 rounded">last_name</code>. The original name column is preserved unless you choose to remove it during export.
                                     </p>
                                 </div>
                             </div>
@@ -618,7 +618,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                                     <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
-                                    <h4 class="font-semibold text-white">Missing Values</h4>
+                                    <h3 class="font-semibold text-white">Missing Values</h3>
                                 </div>
                                 <p class="text-sm text-neutral-400">Count of empty or null cells across all columns</p>
                             </div>
@@ -747,7 +747,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                                 <div class="flex items-start gap-3">
                                     <div class="color-swatch bg-yellow-500/30 border-2 border-yellow-500"></div>
                                     <div class="flex-1">
-                                        <h4 class="font-semibold text-neutral-200 mb-1">Amber Rows</h4>
+                                        <h3 class="font-semibold text-neutral-200 mb-1">Amber Rows</h3>
                                         <p class="text-sm text-neutral-200 mb-2">Original rows that have duplicates elsewhere in the file</p>
                                         <div class="bg-amber-100 rounded px-2 py-1 inline-block text-xs font-medium text-amber-950">
                                             Badge: "HAS DUPLICATES"
@@ -910,7 +910,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                                         <li>• Preserves data types</li>
                                     </ul>
                                 </div>
-                                <div class="border border-purple-500/30 bg-purple-500/10 rounded-lg p-4">
+                                <div class="border border-yellow-500/30 bg-yellow-500/10 rounded-lg p-4">
                                     <h4 class="font-semibold text-neutral-200 mb-2">JSON</h4>
                                     <ul class="text-sm text-neutral-300 space-y-1">
                                         <li>• Developer-friendly</li>
@@ -926,7 +926,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                             <div class="space-y-4">
                                 <div class="border border-neutral-600 rounded-lg p-4 bg-neutral-800/40">
                                     <div class="flex items-start gap-3">
-                                        <input type="checkbox" class="mt-1" disabled>
+                                        <input type="checkbox" class="mt-1" disabled aria-label="Example option">
                                         <div>
                                             <h4 class="font-semibold text-white mb-1">Remove Duplicate Rows</h4>
                                             <p class="text-sm text-neutral-400">Automatically removes exact duplicate rows, keeping only the first occurrence. Duplicates are highlighted in the preview so you can review before removing.</p>
@@ -935,7 +935,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                                 </div>
                                 <div class="border border-neutral-600 rounded-lg p-4 bg-neutral-800/40">
                                     <div class="flex items-start gap-3">
-                                        <input type="checkbox" class="mt-1" checked disabled>
+                                        <input type="checkbox" class="mt-1" checked disabled aria-label="Example option, selected">
                                         <div>
                                             <h4 class="font-semibold text-white mb-1">Clean Whitespace in All Cells</h4>
                                             <p class="text-sm text-neutral-400">Trims leading/trailing spaces and normalizes multiple spaces to single spaces across all cells. This ensures consistent formatting. Enabled by default.</p>
@@ -950,7 +950,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                             <div class="space-y-4">
                                 <div class="border border-neutral-600 rounded-lg p-4 bg-neutral-800/40">
                                     <div class="flex items-start gap-3">
-                                        <input type="checkbox" class="mt-1" disabled>
+                                        <input type="checkbox" class="mt-1" disabled aria-label="Example option">
                                         <div>
                                             <h4 class="font-semibold text-white mb-1">Include "Issues" Column</h4>
                                             <p class="text-sm text-neutral-400">Adds an extra column listing any validation issues found in each row. Helps you quickly identify which rows may need manual review.</p>
@@ -959,7 +959,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                                 </div>
                                 <div class="border border-neutral-600 rounded-lg p-4 bg-neutral-800/40">
                                     <div class="flex items-start gap-3">
-                                        <input type="checkbox" class="mt-1" disabled>
+                                        <input type="checkbox" class="mt-1" disabled aria-label="Example option">
                                         <div>
                                             <h4 class="font-semibold text-white mb-1">Export Only Rows With Issues</h4>
                                             <p class="text-sm text-neutral-400">Downloads ONLY the rows that have validation problems. Perfect for creating a focused review file that you can fix manually and merge back into your main dataset.</p>
@@ -1256,7 +1256,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
 
                     <div class="space-y-6">
                         <div class="border-l-4 border-red-500 bg-red-500/10 rounded-r-lg p-4">
-                            <h4 class="font-semibold text-neutral-200 mb-2">File won't upload or processing fails</h4>
+                            <h3 class="font-semibold text-neutral-200 mb-2">File won't upload or processing fails</h3>
                             <ul class="text-sm text-neutral-300 space-y-1 ml-4">
                                 <li>• Check file size - very large files may exceed browser memory</li>
                                 <li>• Ensure file has a valid header row</li>
@@ -1286,7 +1286,7 @@ $pageDescription = 'Step-by-step guide to validating and cleaning UK phone numbe
                             </ul>
                         </div>
 
-                        <div class="border-l-4 border-purple-500 bg-purple-500/10 rounded-r-lg p-4">
+                        <div class="border-l-4 border-yellow-500 bg-yellow-500/10 rounded-r-lg p-4">
                             <h4 class="font-semibold text-neutral-200 mb-2">Duplicate detection seems incorrect</h4>
                             <ul class="text-sm text-neutral-300 space-y-1 ml-4">
                                 <li>• Duplicates are detected AFTER cleaning - compare cleaned values, not original</li>
