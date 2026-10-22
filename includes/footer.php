@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pt-6 border-t border-neutral-800">
-        <p class="text-neutral-400 text-sm">Also by the same maker: <a href="https://findcarescotland.com/software" class="text-yellow-400 underline underline-offset-2 hover:no-underline">software for care providers, including Digital ID and contracts management</a>.</p>
+        <p class="text-neutral-400 text-sm">Also by the same maker: <a href="https://findcarescotland.com/software/digital-id" class="text-yellow-400 underline underline-offset-2 hover:no-underline">Digital ID</a> &middot; <a href="https://findcarescotland.com/software/contracts" class="text-yellow-400 underline underline-offset-2 hover:no-underline">Contracts</a> &middot; <a href="https://findcarescotland.com/software/staff-service" class="text-yellow-400 underline underline-offset-2 hover:no-underline">Staff records</a> &middot; <a href="https://findcarescotland.com/software/team-service" class="text-yellow-400 underline underline-offset-2 hover:no-underline">Teams</a> &middot; <a href="https://findcarescotland.com/software/people-service" class="text-yellow-400 underline underline-offset-2 hover:no-underline">People we support</a> &middot; <a href="https://findcarescotland.com/software/strategic-plan" class="text-yellow-400 underline underline-offset-2 hover:no-underline">Strategic plans</a>. <a href="https://findcarescotland.com/software" class="text-yellow-400 underline underline-offset-2 hover:no-underline">All software for care providers</a></p>
     </div>
 </footer>
 <?php include __DIR__ . '/analytics.php'; ?>
