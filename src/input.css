@@ -519,7 +519,7 @@
 
 /* ds-preview-card: preview section in upload flow — dark theme, subtle accent */
 .ds-preview-card {
-    border-left: 3px solid rgba(234, 179, 8, 0.5);
+    border-left: 3px solid rgba(234, 179, 8, 0.5); border-radius: 0;
 }
 @media (prefers-reduced-motion: reduce) {
     .ds-preview-card { border-left-width: 2px; }
