@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $subject = 'Feedback from ' . $email;
 
             $messageLines = [
-                'Feedback received via simple-data-cleaner.com',
+                'Feedback received via Simple Data Cleaner',
                 '--------------------------------------------------',
                 'Email: ' . $email,
                 'Wants follow-up call: ' . ($wantsCall ? 'Yes' : 'No'),
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/feedback.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/feedback.php">
     <title>Feedback - Simple Data Cleaner</title>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">

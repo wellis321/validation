@@ -45,7 +45,26 @@ class User extends Model {
             AND us.end_date >= NOW()",
             [$this->id]
         );
-        return $stmt->fetch();
+        $row = $stmt->fetch();
+        return $row ?: $this->bundledSubscription();
+    }
+
+    /**
+     * A care provider on the Find Care Scotland Pro plan has Simple Data Cleaner included. When they have no subscription of their own,
+     * and their (verified) email has an active Pro listing there, they get the full plan's features, named for what it is.
+     * Verified email only: otherwise anyone could register with a provider's address and borrow their access.
+     */
+    private function bundledSubscription() {
+        if (!$this->id || !Bundle::enabled()) return false;
+        $u = $this->find($this->id);
+        if (!$u || empty($u['email']) || empty($u['email_verified']) || !Bundle::proEntitlement($u['email'])) return false;
+        $plan = $this->db->query("SELECT * FROM subscription_plans WHERE name = 'Annual' AND is_active = 1 LIMIT 1")->fetch();
+        if (!$plan) return false;
+        return array_merge($plan, [
+            'plan_id' => $plan['id'], 'user_id' => $this->id, 'start_date' => date('Y-m-d H:i:s'), 'end_date' => date('Y-m-d H:i:s', time() + 86400),
+            'status' => 'active', 'payment_status' => 'completed', 'stripe_price_id' => null, 'license_scope' => 'bundle', 'bundled' => true,
+            'name' => 'Included with Find Care Scotland Pro', 'description' => 'Included with your Pro plan at findcarescotland.com.',
+        ]);
     }
 
     public function hasActiveSubscription() {

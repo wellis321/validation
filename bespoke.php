@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $subject = 'Bespoke data cleaning enquiry from ' . $contactName;
 
             $messageLines = [
-                'New bespoke data cleaning enquiry via simple-data-cleaner.com',
+                'New bespoke data cleaning enquiry via Simple Data Cleaner',
                 '-------------------------------------------------------------',
                 'Contact name: ' . $contactName,
                 'Email: ' . $email,
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/bespoke.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/bespoke.php">
     <title>Bespoke Data Cleaning - Simple Data Cleaner</title>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">

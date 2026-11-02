@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class='value'>" . nl2br(htmlspecialchars($message)) . "</div>
                         </div>
                         <div class='footer'>
-                            <p>This message was sent from the contact form on simple-data-cleaner.com</p>
+                            <p>This message was sent from the contact form on Simple Data Cleaner</p>
                             <p>Reply directly to this email to respond to " . htmlspecialchars($name) . "</p>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ $pageDescription = 'Get in touch with Simple Data Cleaner support team. We\'re h
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/contact.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/contact.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">

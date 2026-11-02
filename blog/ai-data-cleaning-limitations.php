@@ -11,7 +11,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/blog/ai-data-cleaning-limitations.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> | Simple Data Cleaner Blog</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($pageKeywords); ?>">
@@ -22,8 +22,8 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/blog/ai-data-cleaning-limitations.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/blog/ai-data-cleaning-limitations.php">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/blog/ai-data-cleaning-limitations.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="AI Data Cleaning Analysis - Rule-based vs AI validation comparison">
@@ -41,7 +41,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/blog/ai-data-cleaning-limitations.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/blog/ai-data-cleaning-limitations.png">
     <meta name="twitter:image:alt" content="AI Data Cleaning Analysis">
     
     <!-- Article Schema -->
@@ -54,14 +54,14 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
       "author": {
         "@type": "Organization",
         "name": "Simple Data Cleaner",
-        "url": "https://simple-data-cleaner.com"
+        "url": "https://cleaner.findcarescotland.com"
       },
       "publisher": {
         "@type": "Organization",
         "name": "Simple Data Cleaner",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png",
+          "url": "https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png",
           "width": 300,
           "height": 300
         }
@@ -70,11 +70,11 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
       "dateModified": "2026-01-04T00:00:00+00:00",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php"
+        "@id": "https://cleaner.findcarescotland.com/blog/ai-data-cleaning-limitations.php"
       },
       "image": {
         "@type": "ImageObject",
-        "url": "https://simple-data-cleaner.com/assets/images/blog/ai-data-cleaning-limitations.png",
+        "url": "https://cleaner.findcarescotland.com/assets/images/blog/ai-data-cleaning-limitations.png",
         "width": 1200,
         "height": 630
       },
@@ -95,19 +95,19 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://simple-data-cleaner.com/"
+          "item": "https://cleaner.findcarescotland.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://simple-data-cleaner.com/blog/"
+          "item": "https://cleaner.findcarescotland.com/blog/"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "<?php echo htmlspecialchars($pageTitle); ?>",
-          "item": "https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php"
+          "item": "https://cleaner.findcarescotland.com/blog/ai-data-cleaning-limitations.php"
         }
       ]
     }

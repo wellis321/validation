@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/register.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/register.php">
     <title>Register - Simple Data Cleaner</title>
     <meta name="description" content="Create your free Simple Data Cleaner account to clean UK phone numbers, NI numbers, postcodes, sort codes, and email addresses. 100% browser-based, GDPR compliant data validation.">
 
@@ -85,14 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta property="og:title" content="Register - Simple Data Cleaner">
     <meta property="og:description" content="Create your free account to access UK data validation tools. 100% browser-based, GDPR compliant data cleaning.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://simple-data-cleaner.com/register.php">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/register.php">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Register - Simple Data Cleaner">
     <meta name="twitter:description" content="Create your free account to access UK data validation tools.">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

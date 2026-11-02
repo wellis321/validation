@@ -11,7 +11,7 @@ $pageDescription = 'See the exact UK format rules for phone numbers, NI numbers,
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/validation-rules.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/validation-rules.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
 
@@ -19,15 +19,15 @@ $pageDescription = 'See the exact UK format rules for phone numbers, NI numbers,
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://simple-data-cleaner.com/validation-rules.php">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/validation-rules.php">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta property="og:site_name" content="Simple Data Cleaner">
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
 
     <!-- Article Schema -->
     <script type="application/ld+json">
@@ -45,12 +45,12 @@ $pageDescription = 'See the exact UK format rules for phone numbers, NI numbers,
         "name": "Simple Data Cleaner",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png"
+          "url": "https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png"
         }
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://simple-data-cleaner.com/validation-rules.php"
+        "@id": "https://cleaner.findcarescotland.com/validation-rules.php"
       }
     }
     </script>

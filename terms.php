@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/init.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/terms.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/terms.php">
     <title>Terms of Service - Simple Data Cleaner</title>
     <meta name="description" content="Read our terms of service for Simple Data Cleaner - understand your rights and responsibilities when using our data cleaning service.">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">

@@ -28,7 +28,7 @@ $posts = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/blog/">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/blog/">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
 
@@ -36,8 +36,8 @@ $posts = [
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://simple-data-cleaner.com/blog/">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/blog/">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta property="og:site_name" content="Simple Data Cleaner">
 
     <!-- Blog Schema -->
@@ -47,7 +47,7 @@ $posts = [
       "@type": "Blog",
       "name": "Simple Data Cleaner Blog",
       "description": "<?php echo htmlspecialchars($pageDescription); ?>",
-      "url": "https://simple-data-cleaner.com/blog/"
+      "url": "https://cleaner.findcarescotland.com/blog/"
     }
     </script>
 

@@ -10,7 +10,7 @@ class Email {
         try {
             $subject = 'Verify Your Simple Data Cleaner Account';
             // Use the current domain instead of config to avoid old URLs
-            $baseUrl = 'https://simple-data-cleaner.com';
+            $baseUrl = 'https://cleaner.findcarescotland.com';
             $verificationLink = $baseUrl . "/verify-email.php?token={$token}";
 
             $message = "
@@ -51,7 +51,7 @@ class Email {
         try {
             $subject = 'Reset Your Simple Data Cleaner Password';
             // Use the current domain instead of config to avoid old URLs
-            $baseUrl = 'https://simple-data-cleaner.com';
+            $baseUrl = 'https://cleaner.findcarescotland.com';
             $resetLink = $baseUrl . "/reset-password.php?token={$token}";
 
             $message = "

@@ -10,7 +10,7 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/how-it-works.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/how-it-works.php">
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta name="keywords" content="UK data cleaning how it works, browser-based data validation, GDPR compliant data cleaning process, UK data validation tool, clean UK phone numbers postcodes NI numbers">
@@ -19,15 +19,15 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://simple-data-cleaner.com/how-it-works.php">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/how-it-works.php">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta property="og:site_name" content="Simple Data Cleaner">
     
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     
     <!-- HowTo Schema -->
     <script type="application/ld+json">
@@ -42,28 +42,28 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
           "position": 1,
           "name": "Upload Your File",
           "text": "Upload your CSV, Excel (.xlsx, .xls), or JSON file containing UK phone numbers, National Insurance numbers, postcodes, bank sort codes, bank account numbers, email addresses, or full names.",
-          "url": "https://simple-data-cleaner.com/how-it-works.php#step1"
+          "url": "https://cleaner.findcarescotland.com/how-it-works.php#step1"
         },
         {
           "@type": "HowToStep",
           "position": 2,
           "name": "Select Columns to Clean",
           "text": "Choose which columns you want to clean. Use Auto-Select for automatic detection, or manually select columns. For full name columns, you can choose to split them into title, first_name, and last_name. Select your preferred phone number format (International or UK).",
-          "url": "https://simple-data-cleaner.com/how-it-works.php#step2"
+          "url": "https://cleaner.findcarescotland.com/how-it-works.php#step2"
         },
         {
           "@type": "HowToStep",
           "position": 3,
           "name": "Review and Process",
           "text": "Review your selections and click 'Clean My Data' to process. All validation happens in your browser - your data never leaves your device. View comprehensive reports including Full Preview, Issues Report, and Cleaned Report.",
-          "url": "https://simple-data-cleaner.com/how-it-works.php#step3"
+          "url": "https://cleaner.findcarescotland.com/how-it-works.php#step3"
         },
         {
           "@type": "HowToStep",
           "position": 4,
           "name": "Download Cleaned Data",
           "text": "Customise your export options (format, remove duplicates, trim whitespace, include issues column, export only rows with issues, remove original name columns) and download your validated and cleaned data in CSV, Excel, or JSON format.",
-          "url": "https://simple-data-cleaner.com/how-it-works.php#step4"
+          "url": "https://cleaner.findcarescotland.com/how-it-works.php#step4"
         }
       ]
     }

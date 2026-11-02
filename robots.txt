@@ -23,4 +23,4 @@ Disallow: /*.log$
 Disallow: /*.sql$
 
 # Sitemap
-Sitemap: https://simple-data-cleaner.com/sitemap.xml
+Sitemap: https://cleaner.findcarescotland.com/sitemap.xml

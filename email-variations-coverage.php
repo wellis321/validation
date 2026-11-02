@@ -10,7 +10,7 @@ $emailCorpus = groupVariationsBySection(parseVariationsFile(__DIR__ . '/email-va
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/email-variations-coverage.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/email-variations-coverage.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">

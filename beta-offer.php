@@ -9,7 +9,7 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/beta-offer.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/beta-offer.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     
@@ -17,15 +17,15 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://simple-data-cleaner.com/beta-offer.php">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/beta-offer.php">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta property="og:site_name" content="Simple Data Cleaner">
     
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Simple Data Cleaner">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     
     <!-- Offer Schema -->
     <script type="application/ld+json">
@@ -37,7 +37,7 @@ $pageDescription = 'Lock in lifetime access to the Simple Data Cleaner beta vali
       "price": "99.99",
       "priceCurrency": "GBP",
       "availability": "https://schema.org/InStock",
-      "url": "https://simple-data-cleaner.com/beta-offer.php",
+      "url": "https://cleaner.findcarescotland.com/beta-offer.php",
       "seller": {
         "@type": "Organization",
         "name": "Simple Data Cleaner"

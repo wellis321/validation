@@ -33,28 +33,28 @@ No data is sent to the server for cleaning. The server is used only for authenti
 - Bespoke/enterprise: custom validation rules and support.
 - Pay Per Use option (one-time) available via direct link.
 
-Plans and pricing: https://simple-data-cleaner.com/pricing.php
+Plans and pricing: https://cleaner.findcarescotland.com/pricing.php
 
 ## Core pages
 
-- Home: https://simple-data-cleaner.com/
-- Pricing: https://simple-data-cleaner.com/pricing.php
-- How it works: https://simple-data-cleaner.com/how-it-works.php
-- Documentation: https://simple-data-cleaner.com/documentation.php
-- Validation rules: https://simple-data-cleaner.com/validation-rules.php
-- Example / Try it: https://simple-data-cleaner.com/example.php
-- Register: https://simple-data-cleaner.com/register.php
-- Login: https://simple-data-cleaner.com/login.php
+- Home: https://cleaner.findcarescotland.com/
+- Pricing: https://cleaner.findcarescotland.com/pricing.php
+- How it works: https://cleaner.findcarescotland.com/how-it-works.php
+- Documentation: https://cleaner.findcarescotland.com/documentation.php
+- Validation rules: https://cleaner.findcarescotland.com/validation-rules.php
+- Example / Try it: https://cleaner.findcarescotland.com/example.php
+- Register: https://cleaner.findcarescotland.com/register.php
+- Login: https://cleaner.findcarescotland.com/login.php
 
 ## Legal and support
 
-- Terms of Service: https://simple-data-cleaner.com/terms.php
-- Privacy Policy: https://simple-data-cleaner.com/privacy.php
-- GDPR: https://simple-data-cleaner.com/gdpr.php
-- Contact / Feedback: https://simple-data-cleaner.com/feedback.php
-- Why choose us: https://simple-data-cleaner.com/why-choose-us.php
-- Bespoke services: https://simple-data-cleaner.com/bespoke.php
-- Blog: https://simple-data-cleaner.com/blog/ai-data-cleaning-limitations.php
+- Terms of Service: https://cleaner.findcarescotland.com/terms.php
+- Privacy Policy: https://cleaner.findcarescotland.com/privacy.php
+- GDPR: https://cleaner.findcarescotland.com/gdpr.php
+- Contact / Feedback: https://cleaner.findcarescotland.com/feedback.php
+- Why choose us: https://cleaner.findcarescotland.com/why-choose-us.php
+- Bespoke services: https://cleaner.findcarescotland.com/bespoke.php
+- Blog: https://cleaner.findcarescotland.com/blog/ai-data-cleaning-limitations.php
 
 ## Technical notes
 

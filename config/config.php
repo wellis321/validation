@@ -3,7 +3,7 @@
 return [
     'app' => [
         'name' => 'Simple Data Cleaner',
-        'url' => getenv('APP_URL') ?: 'https://simple-data-cleaner.com',
+        'url' => getenv('APP_URL') ?: 'https://cleaner.findcarescotland.com',
         'env' => getenv('APP_ENV') ?: 'production',
         'debug' => getenv('APP_DEBUG') ?: false,
         'timezone' => 'Europe/London',

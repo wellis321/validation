@@ -26,15 +26,15 @@ if ($user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/">
     <title>UK Data Cleaning Tool | Browser-Based & GDPR Compliant | Simple Data Cleaner</title>
     <meta name="description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, email addresses, and split names in your browser. 100% private - your data never leaves your device. GDPR compliant data cleaning for UK businesses. Try free example page.">
     <meta name="keywords" content="UK data cleaning, UK data validation, GDPR compliant data cleaning, browser-based data cleaning, UK phone number cleaning, UK postcode validation, NI number validation, privacy-first data cleaning, UK data cleaning tool, browser data validation">
     <meta property="og:title" content="Simple Data Cleaner - 100% Private UK Data Validation | GDPR Compliant">
     <meta property="og:description" content="Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, email addresses, and split names in your browser. 100% private - your data never leaves your device.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://simple-data-cleaner.com/">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta property="og:image:width" content="300">
     <meta property="og:image:height" content="300">
     <meta property="og:image:alt" content="Simple Data Cleaner - UK Data Validation Tool">
@@ -45,7 +45,7 @@ if ($user) {
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Simple Data Cleaner - 100% Private UK Data Validation">
     <meta name="twitter:description" content="Clean UK data in your browser. Your data never leaves your device. Perfect for sensitive PII.">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta name="twitter:image:alt" content="Simple Data Cleaner Logo">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
     <link rel="stylesheet" href="/assets/css/output.css">
@@ -62,7 +62,7 @@ if ($user) {
       "@type": "WebApplication",
       "name": "Simple Data Cleaner",
       "description": "UK data cleaning and validation tool. Clean and validate UK phone numbers, NI numbers, postcodes, bank sort codes, bank account numbers, email addresses, and split names in your browser. 100% private, GDPR compliant - your data never leaves your device.",
-      "url": "https://simple-data-cleaner.com",
+      "url": "https://cleaner.findcarescotland.com",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web Browser",
       "keywords": "UK data cleaning, UK data validation, GDPR compliant data cleaning, browser-based data cleaning, UK phone number cleaning, UK postcode validation",
@@ -95,8 +95,8 @@ if ($user) {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Simple Data Cleaner",
-      "url": "https://simple-data-cleaner.com",
-      "logo": "https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png",
+      "url": "https://cleaner.findcarescotland.com",
+      "logo": "https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "Customer Service",

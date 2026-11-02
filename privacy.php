@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/init.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/privacy.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/privacy.php">
     <title>Privacy Policy - Simple Data Cleaner</title>
     <meta name="description" content="Your privacy is our priority. Learn how Simple Data Cleaner processes all data in your browser - your files never leave your device.">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">

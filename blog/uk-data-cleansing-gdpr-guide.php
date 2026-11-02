@@ -11,7 +11,7 @@ $pageKeywords = 'UK data cleansing, GDPR data cleansing, data cleansing consulta
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/blog/uk-data-cleansing-gdpr-guide.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/blog/uk-data-cleansing-gdpr-guide.php">
     <title><?php echo htmlspecialchars($pageTitle); ?> | Simple Data Cleaner Blog</title>
     <meta name="description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta name="keywords" content="<?php echo htmlspecialchars($pageKeywords); ?>">
@@ -22,8 +22,8 @@ $pageKeywords = 'UK data cleansing, GDPR data cleansing, data cleansing consulta
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://simple-data-cleaner.com/blog/uk-data-cleansing-gdpr-guide.php">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/blog/uk-data-cleansing-gdpr-guide.php">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta property="og:image:width" content="300">
     <meta property="og:image:height" content="300">
     <meta property="og:image:alt" content="Simple Data Cleaner - UK Data Validation Tool">
@@ -41,7 +41,7 @@ $pageKeywords = 'UK data cleansing, GDPR data cleansing, data cleansing consulta
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta name="twitter:image:alt" content="Simple Data Cleaner Logo">
 
     <!-- Article Schema -->
@@ -54,14 +54,14 @@ $pageKeywords = 'UK data cleansing, GDPR data cleansing, data cleansing consulta
       "author": {
         "@type": "Organization",
         "name": "Simple Data Cleaner",
-        "url": "https://simple-data-cleaner.com"
+        "url": "https://cleaner.findcarescotland.com"
       },
       "publisher": {
         "@type": "Organization",
         "name": "Simple Data Cleaner",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png",
+          "url": "https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png",
           "width": 300,
           "height": 300
         }
@@ -70,7 +70,7 @@ $pageKeywords = 'UK data cleansing, GDPR data cleansing, data cleansing consulta
       "dateModified": "2026-08-11T00:00:00+00:00",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://simple-data-cleaner.com/blog/uk-data-cleansing-gdpr-guide.php"
+        "@id": "https://cleaner.findcarescotland.com/blog/uk-data-cleansing-gdpr-guide.php"
       },
       "keywords": "<?php echo htmlspecialchars($pageKeywords); ?>",
       "articleSection": "Data Cleaning",
@@ -89,19 +89,19 @@ $pageKeywords = 'UK data cleansing, GDPR data cleansing, data cleansing consulta
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://simple-data-cleaner.com/"
+          "item": "https://cleaner.findcarescotland.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://simple-data-cleaner.com/blog/"
+          "item": "https://cleaner.findcarescotland.com/blog/"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "<?php echo htmlspecialchars($pageTitle); ?>",
-          "item": "https://simple-data-cleaner.com/blog/uk-data-cleansing-gdpr-guide.php"
+          "item": "https://cleaner.findcarescotland.com/blog/uk-data-cleansing-gdpr-guide.php"
         }
       ]
     }

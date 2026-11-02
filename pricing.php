@@ -71,7 +71,7 @@ if ($user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://simple-data-cleaner.com/pricing.php">
+    <link rel="canonical" href="https://cleaner.findcarescotland.com/pricing.php">
     <title>Pricing - Simple Data Cleaner | UK Data Validation</title>
     <meta name="description" content="Simple, transparent pricing for UK data validation. All processing happens in your browser - your data never leaves your device. Start with a 7-day free trial. Choose from Monthly or Annual plans, or contact us for bespoke solutions.">
 
@@ -79,15 +79,15 @@ if ($user) {
     <meta property="og:title" content="Pricing - Simple Data Cleaner | UK Data Validation">
     <meta property="og:description" content="Simple, transparent pricing for UK data validation. All processing happens in your browser.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://simple-data-cleaner.com/pricing.php">
-    <meta property="og:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta property="og:url" content="https://cleaner.findcarescotland.com/pricing.php">
+    <meta property="og:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta property="og:site_name" content="Simple Data Cleaner">
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Pricing - Simple Data Cleaner">
     <meta name="twitter:description" content="Simple, transparent pricing for UK data validation. All processing happens in your browser.">
-    <meta name="twitter:image" content="https://simple-data-cleaner.com/assets/images/Data Cleaning Icon 300.png">
+    <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
 
     <!-- Product/Offer Schema -->
     <script type="application/ld+json">
@@ -115,7 +115,7 @@ if ($user) {
                 "price" => number_format($plan['price'], 2),
                 "priceCurrency" => "GBP",
                 "availability" => "https://schema.org/InStock",
-                "url" => "https://simple-data-cleaner.com/pricing.php",
+                "url" => "https://cleaner.findcarescotland.com/pricing.php",
                 "priceSpecification" => [
                     "@type" => "UnitPriceSpecification",
                     "price" => number_format($plan['price'], 2),
