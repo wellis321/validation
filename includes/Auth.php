@@ -159,6 +159,8 @@ class Auth {
      */
     private function grantFreeTrial($userId) {
         try {
+            // $this->db is null for a visitor with no session cookie (the lazy constructor skips it), which is exactly who is registering
+            if (!$this->db) $this->db = Database::getInstance();
             // Check if user has ever had a subscription (including expired/cancelled)
             $stmt = $this->db->query(
                 "SELECT COUNT(*) as count FROM user_subscriptions WHERE user_id = ?",
