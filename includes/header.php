@@ -7,6 +7,15 @@ $isBlogSection = strpos($currentUrlPath, '/blog/') === 0;
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-yellow-400 text-black px-4 py-2 rounded-lg font-medium shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
     Skip to main content
 </a>
+<?php if (empty($user)): ?>
+<!-- Back to the product page and the software list on Find Care Scotland, for people who arrived from there -->
+<div class="bg-neutral-950 border-b border-neutral-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-x-6 text-sm">
+        <a href="https://findcarescotland.com/software/simple-data-cleaner" class="inline-flex items-center min-h-[44px] text-yellow-400 font-medium underline underline-offset-2 hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 rounded">&larr; Back to Simple Data Cleaner on Find Care Scotland</a>
+        <a href="https://findcarescotland.com/software" class="inline-flex items-center min-h-[44px] text-neutral-300 underline underline-offset-2 hover:text-white hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 rounded">All software for care providers</a>
+    </div>
+</div>
+<?php endif; ?>
 <!-- Navigation -->
 <nav class="bg-neutral-900 border-b border-neutral-700 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
