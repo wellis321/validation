@@ -17,7 +17,7 @@ $pageDescription = 'Simple Data Cleaner does not offer a server-side API. All pr
     <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cleaner.findcarescotland.com/api-docs.php">
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

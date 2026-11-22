@@ -51,7 +51,7 @@ $posts = [
     }
     </script>
 
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">

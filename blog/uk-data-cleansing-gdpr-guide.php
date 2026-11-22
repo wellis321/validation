@@ -107,7 +107,7 @@ $pageKeywords = 'UK data cleansing, GDPR data cleansing, data cleansing consulta
     }
     </script>
 
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <style>
         .blog-progress-bar {

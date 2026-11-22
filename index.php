@@ -48,7 +48,7 @@ if ($user) {
     <meta name="twitter:image" content="https://cleaner.findcarescotland.com/assets/images/Data Cleaning Icon 300.png">
     <meta name="twitter:image:alt" content="Simple Data Cleaner Logo">
     <meta name="google-site-verification" content="xNV1Ea4p8zh3UTiU_dspG9ii8-ppLxE4_VnbiVYU2G4" />
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

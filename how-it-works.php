@@ -69,7 +69,7 @@ $pageDescription = 'Learn how Simple Data Cleaner works - upload your file, clea
     }
     </script>
     
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">

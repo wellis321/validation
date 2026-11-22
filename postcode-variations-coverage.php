@@ -17,7 +17,7 @@ $postcodeCorpus = groupVariationsBySection(parseVariationsFile(__DIR__ . '/postc
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
     <link rel="manifest" href="/assets/images/favicon_io/site.webmanifest">
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
     <?php include __DIR__ . '/includes/header.php'; ?>

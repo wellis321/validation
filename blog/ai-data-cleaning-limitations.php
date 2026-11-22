@@ -113,7 +113,7 @@ $pageKeywords = 'AI data cleaning limitations, rule-based data validation, UK da
     }
     </script>
     
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     <style>
         /* Reading progress bar – subtle delight for long articles */

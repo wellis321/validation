@@ -14,7 +14,7 @@ require_once __DIR__ . '/includes/init.php';
     <meta property="og:description" content="The only UK data validation tool that processes everything in your browser. Your data never leaves your device - guaranteed privacy and GDPR compliance.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cleaner.findcarescotland.com/why-choose-us.php">
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
     
     <script type="application/ld+json">

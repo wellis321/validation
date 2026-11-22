@@ -37,7 +37,7 @@ $pageTitle = 'Pay Per Use — Simple Data Cleaner';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $available ? 'Pay Per Use' : 'Not Available'; ?> | Simple Data Cleaner</title>
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">

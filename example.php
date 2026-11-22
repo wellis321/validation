@@ -10,7 +10,7 @@ require_once __DIR__ . '/includes/init.php';
     <title>Try Simple Data Cleaner - Interactive Demo | Free Example</title>
     <meta name="description" content="Try Simple Data Cleaner with example data. Experience our UK data validation tool with a pre-loaded sample dataset. No sign-up required.">
     <meta name="robots" content="index, follow">
-    <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css?v=20261122">
     <script src="/assets/vendor/sheetjs/xlsx.full.min.js?v=0.20.0" defer></script>
     <link rel="icon" type="image/x-icon" href="/assets/images/favicon_io/favicon.ico">
 </head>
