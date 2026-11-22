@@ -1385,7 +1385,7 @@ if ($user) {
         <button type="button" id="privacy-lightbox-close" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-neutral-800 hover:bg-neutral-700 text-white transition-colors z-10" aria-label="Close">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
-        <img src="/assets/images/cleaned-data-report.png" alt="Cleaned Data Report — enlarged view" class="max-w-[95vw] max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()">
+        <img src="/assets/images/cleaned-data-report.png" alt="Cleaned Data Report — enlarged view" class="max-w-[95vw] max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl">
     </div>
 
     <?php include __DIR__ . '/includes/footer.php'; ?>
